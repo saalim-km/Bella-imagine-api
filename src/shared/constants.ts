@@ -1,4 +1,4 @@
-export type TRole = 'client' | 'vendor';
+export type TRole = 'client' | 'vendor'
 
 export type TStatus = 'blocked' | 'unblocked';
 

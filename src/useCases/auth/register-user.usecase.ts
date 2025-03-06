@@ -26,12 +26,12 @@ export class RegisterUsecase implements IRegisterUsecase {
     }
 
     const strategy = this.strategies[user.role];
-    console.log(`from register usecase ${strategy}`);
-    console.dir(strategy);
+    console.log(`from register usecase`);
     if (!strategy) {
       throw new CustomError("Invalid user role", HTTP_STATUS.FORBIDDEN);
     }
 
+    console.log('after checking strategy validation');
     const validUser: userDTO = {
       name: user.name ?? "Default Name",
       email: user.email ?? "default@example.com",

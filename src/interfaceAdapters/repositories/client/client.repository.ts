@@ -21,12 +21,12 @@ export class ClientRepository implements IClientRepository {
         }
     }
 
-    async findById(id: string): Promise<IClientRepository | null> {
+    async findById(id: string): Promise<IClientEntity | null> {
         return ClientModel.findById(id);
     }
 
-    async findByEmail(email: string): Promise<IClientRepository | null> {
-        return ClientModel.findOne({email : email})
+    async findByEmail(email: string): Promise<IClientEntity | null> {
+        return ClientModel.findOne({email})
     }
 
     async findByIdAndUpdatePassword(id: string, password: string): Promise<void> {

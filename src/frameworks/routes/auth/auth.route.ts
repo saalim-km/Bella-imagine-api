@@ -20,4 +20,4 @@ export class AuthRoute extends BaseRoute {
             veriryOtpController.handle(req,res)
         });
     }
-}
+}   

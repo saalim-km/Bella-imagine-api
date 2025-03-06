@@ -16,6 +16,7 @@ import { IOtpService } from "../../entities/services/otp-service.interface";
 import { OtpService } from "../../interfaceAdapters/services/otp.service";
 import { IVerifyOTPUsecase } from "../../entities/usecaseIntefaces/auth/verify-otp-usecase.interface.";
 import { VerifyOTPUsecase } from "../../useCases/auth/verfiy-otp.usecase";
+import { VendorRegisterStrategy } from "../../useCases/auth/register-strategies/vendor-register.strategy";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -25,6 +26,9 @@ export class UsecaseRegistry {
 
         //Register strategies 
         container.register<IRegisterStrategy>("IRegisterStrategy" , {useClass : ClientRegisterStrategy})
+        container.register<IRegisterStrategy>("IRegisterStrategy" , {useClass : VendorRegisterStrategy})
+
+        // services
         container.register<IEmailService>("IEmailService" , {useClass : EmailService})
         container.register<IEmailExistenceService>("IEmailExistenceService" ,{useClass: EmailExistenceService})
         container.register<IOtpService>("IOtpService" , {useClass : OtpService})

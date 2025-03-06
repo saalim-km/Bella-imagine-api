@@ -8,7 +8,7 @@ import { IClientEntity } from "../../../entities/models/client.entity";
 import { IBcrypt } from "../../../frameworks/security/bcrypt.interface";
 
 @injectable()
-export class ClientRegisterStrategy implements IRegisterStrategy {
+export class ClientRegisterStrategy implements IRegisterStrategy<IClientEntity> {
     constructor(
     @inject("IClientRepository") private clientRepository : IClientRepository,
     @inject("IBcrypt") private passwordBcrypt : IBcrypt) {}

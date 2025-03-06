@@ -24,4 +24,12 @@ export interface VendorDTO {
     services ?: [];
 }
 
+
 export type userDTO =  ClientDTO | VendorDTO;
+
+
+export interface LoginUserDto {
+    email : string,
+    password : string,
+    role : TRole
+}
