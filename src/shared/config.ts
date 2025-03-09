@@ -33,5 +33,9 @@ export const config = {
     REFRESH_SECRET_KEY : process.env.JWT_REFRESH_SECRET_KEY || "your-refresh-key",
     ACCESS_EXPIRES_IN : process.env.JWT_ACCESS_EXPIRES_IN || "",
     REFRESH_EXPIRES_IN : process.env.JWT_REFRESH_EXPIRES_IN || ""
+  },
+
+  isProduction : {
+    NODE_ENV : process.env.NODE_ENV || false
   }
 };

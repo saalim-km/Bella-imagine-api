@@ -3,6 +3,8 @@ import { IOtpService } from "../../entities/services/otp-service.interface";
 import crypto from 'crypto'
 import { IOTPRepository } from "../../entities/repositoryInterfaces/auth/otp-repository.interface";
 import { IBcrypt } from "../../frameworks/security/bcrypt.interface";
+import { resultOtpVerify } from "../../useCases/auth/verfiy-otp.usecase";
+import { SUCCESS_MESSAGES } from "../../shared/constants";
 
 @injectable()
 export class OtpService implements IOtpService {
@@ -20,23 +22,28 @@ export class OtpService implements IOtpService {
         await this.otpRepository.saveOTP(email, otp , expiresAt);
     }
 
-    async verifyOtp({ email, otp }: { email: string, otp: string }): Promise<boolean> {
+    async verifyOtp({ email, otp }: { email: string, otp: string }): Promise<resultOtpVerify> {
         const otpEntry = await this.otpRepository.findOTP({email});
 
         if(!otpEntry) {
-            return false;
+            return {success : false , message : 'Invalid Otp'}
+        }
+
+        if(! (await this.otpBcrypt.compare(otp , otpEntry.otp))){
+            return {success : false , message : 'Invalid Otp'}
         }
 
         if(
-            new Date() > otpEntry.expiresAt ||
-            ! (await this.otpBcrypt.compare(otp , otpEntry.otp))
+            new Date() > otpEntry.expiresAt
         ) {
             console.log("in otp verify ==>");
             await this.otpRepository.deleteOTP(email , otp);
-            return false;
+            return  { success : false , message : 'Otp Expired'}
         }
+
+
         await this.otpRepository.deleteOTP(email , otp);
-        return true;
+        return {success : true , message : SUCCESS_MESSAGES.VERIFICATION_SUCCESS}
     }
 
 }

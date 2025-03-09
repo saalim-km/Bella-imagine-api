@@ -4,16 +4,17 @@ import { IRegisterStrategy } from "./interfaces/register-strategy.interface";
 import { CustomError } from "../../entities/utils/custom-error";
 import { HTTP_STATUS } from "../../shared/constants";
 import { userDTO } from "../../shared/dtos/user.dto";
+import { ClientRegisterStrategy } from "./register-strategies/client-register.strategy";
 
 @injectable()
 export class RegisterUsecase implements IRegisterUsecase {
   private strategies: Record<string, IRegisterStrategy>;
   constructor(
-    @inject("IRegisterStrategy") private clientRegister: IRegisterStrategy,
-    @inject("IRegisterStrategy") private vendorStrategy: IRegisterStrategy
+    @inject("ClientRegisterStrategy") private clientStrategy: IRegisterStrategy,
+    @inject("ClientRegisterStrategy") private vendorStrategy: IRegisterStrategy
   ) {
     this.strategies = {
-      client: this.clientRegister,
+      client: this.clientStrategy,
       vendor: this.vendorStrategy,
     };
   }
@@ -26,6 +27,7 @@ export class RegisterUsecase implements IRegisterUsecase {
     }
 
     const strategy = this.strategies[user.role];
+    console.log(strategy);
     console.log(`from register usecase`);
     if (!strategy) {
       throw new CustomError("Invalid user role", HTTP_STATUS.FORBIDDEN);

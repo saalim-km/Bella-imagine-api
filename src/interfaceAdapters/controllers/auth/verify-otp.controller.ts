@@ -25,18 +25,13 @@ export class VerifyOTPController implements IVerifyOTPController {
       const validated = emailOtpVerifySchema.parse({ email, otp });
 
       await this.verifyOtpUsecase.execute(validated);
-      res
-        .status(HTTP_STATUS.OK)
+
+      res.status(HTTP_STATUS.OK)
         .json({
           success: true,
           message: SUCCESS_MESSAGES.VERIFICATION_SUCCESS,
         });
-
-
-
     } catch (error) {
-
-
       if (error instanceof ZodError) {
         const errors = error.errors.map((err) => ({
           message: err.message,

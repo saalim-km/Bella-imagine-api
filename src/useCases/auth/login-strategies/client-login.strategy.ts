@@ -28,8 +28,8 @@ export class ClientLoginStrategy implements ILoginStrategy<IClientEntity> {
 
         if(!isPassMatch) {
             throw new CustomError(
-                ERROR_MESSAGES.WRONG_CURRENT_PASSWORD,
-                HTTP_STATUS.FORBIDDEN
+                'Wrong Password',
+                HTTP_STATUS.UNAUTHORIZED
             )
         }
 

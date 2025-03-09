@@ -3,6 +3,8 @@ import { IClientRepository } from "../../entities/repositoryInterfaces/client/cl
 import { ClientRepository } from "../../interfaceAdapters/repositories/client/client.repository";
 import { IOTPRepository } from "../../entities/repositoryInterfaces/auth/otp-repository.interface";
 import { OtpRepository } from "../../interfaceAdapters/repositories/auth/otp.repository";
+import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
+import { VendorRepository } from "../../interfaceAdapters/repositories/vendor/vendor.repository";
 
 export class RepositoryRegistry {
     static registerRepositories(): void {
@@ -10,5 +12,8 @@ export class RepositoryRegistry {
         container.register<IClientRepository>("IClientRepository",{useClass : ClientRepository});
 
         container.register<IOTPRepository>("IOTPRepository" ,{useClass : OtpRepository});
+
+        container.register<IVendorRepository>("IVendorRepository" , {useClass : VendorRepository});
+
     }
 }

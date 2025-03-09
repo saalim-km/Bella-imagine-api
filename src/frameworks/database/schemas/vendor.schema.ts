@@ -17,7 +17,6 @@ export const vendorSchema = new mongoose.Schema<IVendorEntity>({
   },
   password: {
     type: String,
-    required: true,
   },
   location: {
     type: String,

@@ -17,7 +17,6 @@ export const clientSchema = new mongoose.Schema<IClientModel>(
     },
     password: {
       type: String, 
-      required: true,
     },
     phoneNumber: {
       type: String,

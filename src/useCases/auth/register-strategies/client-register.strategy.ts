@@ -14,6 +14,7 @@ export class ClientRegisterStrategy implements IRegisterStrategy<IClientEntity> 
     @inject("IBcrypt") private passwordBcrypt : IBcrypt) {}
 
     async register(user : IClientEntity): Promise<IClientEntity> {
+        console.log('in client register repository');
         if(user.role === 'client') {
             const existingClient = await this.clientRepository.findByEmail(user.email)
 
@@ -28,18 +29,14 @@ export class ClientRegisterStrategy implements IRegisterStrategy<IClientEntity> 
 
             let hashedPassword = null;
 
-            if(!password) {
-                throw new CustomError(
-                    'password is required',
-                    HTTP_STATUS.FORBIDDEN
-                )
+            if(password) {
+                hashedPassword = await this.passwordBcrypt.hash(password);
             }
 
-            hashedPassword = await this.passwordBcrypt.hash(password);
-            return await this.clientRepository.save({
+            const data = await this.clientRepository.save({
                 name,
                 email,
-                password: hashedPassword,
+                password: hashedPassword ?? "",
                 role: "client",
                 profileImage: "", 
                 phoneNumber: 0, 
@@ -51,6 +48,8 @@ export class ClientRegisterStrategy implements IRegisterStrategy<IClientEntity> 
                 createdAt: new Date(),
                 updatedAt: new Date(),
             });
+            console.log(`data from client repository after completing saving to database  ${data}`);
+            return data;
         }else {
             throw new CustomError(
                 "Invalid role for client registration",

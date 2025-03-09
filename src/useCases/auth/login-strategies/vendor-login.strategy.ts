@@ -10,12 +10,12 @@ import { LoginUserDto } from "../../../shared/dtos/user.dto";
 @injectable()
 export class VendorLoginStrategy implements ILoginStrategy {
     constructor(
-        @inject("IClientRepository") private clientRepository : IVendorRepository,
+        @inject("IVendorRepository") private vendorRepository : IVendorRepository,
         @inject("IBcrypt") private passBcrypt : IBcrypt
     ){}
 
     async login(data: LoginUserDto): Promise<IVendorEntity> {
-        const vendor = await this.clientRepository.findByEmail(data.email);
+        const vendor = await this.vendorRepository.findByEmail(data.email);
 
         if(!vendor) {
             throw new CustomError(
@@ -28,8 +28,8 @@ export class VendorLoginStrategy implements ILoginStrategy {
 
         if(!isPassMatch) {
             throw new CustomError(
-                ERROR_MESSAGES.WRONG_CURRENT_PASSWORD,
-                HTTP_STATUS.FORBIDDEN
+                'Wrong Password',
+                HTTP_STATUS.UNAUTHORIZED
             )
         }
 

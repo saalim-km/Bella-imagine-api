@@ -5,6 +5,7 @@ import cookieparser from 'cookie-parser';
 import rateLimit from "express-rate-limit";
 import { AuthRoute } from "../routes/auth/auth.route";
 import { errorHandler } from "../../interfaceAdapters/middlewares/error.middleware";
+import { PrivateRoute } from "../routes/common/private.route";
 
 export class Server {
     private _app : Application;
@@ -39,6 +40,7 @@ export class Server {
 
     private configureRoutes() : void {
         this._app.use("/api/v_1/auth" , new AuthRoute().router)
+        this._app.use("/api/v_1/_pvt" , new PrivateRoute().router)
     }
 
     private configureErrorHandler() : void {

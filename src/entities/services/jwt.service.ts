@@ -1,4 +1,4 @@
-import { JwtPayload } from "jsonwebtoken";
+import { Jwt, JwtPayload } from "jsonwebtoken";
 import { TJwtPayload } from "../../shared/types/auth/jwt-payload.type";
 
 export interface IJwtservice {
@@ -6,4 +6,5 @@ export interface IJwtservice {
     generateRefreshToken (data : TJwtPayload) : string
     verifyAccessToken (token : string) : JwtPayload | null;
     verifyRefreshToken (token : string) : JwtPayload | null;
+    decodeRefreshToken(token : string) : JwtPayload | null;
 }

@@ -6,7 +6,7 @@ export interface IClientEntity {
     name : string;
     email : string;
     profileImage ?: string;
-    password : string;
+    password ?: string;
     phoneNumber ?: number;
     location ?: string;
     googleId ?: string;
