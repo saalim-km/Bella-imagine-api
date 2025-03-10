@@ -8,7 +8,7 @@ export interface IClientRepository {
         limit : number,
     ) : Promise<{user : IClientEntity[] | [] ; total : number}>
     findByEmail(email : string) : Promise<IClientEntity | null>
-    findById(id : string) : Promise<IClientEntity | null>
+    findById(id : any) : Promise<IClientEntity | null>
     findByIdAndUpdatePassword(id : string , password : string) : Promise<void>
     updateClientProfileById(id : string , data : Partial<IClientEntity>) : Promise<void>
 }

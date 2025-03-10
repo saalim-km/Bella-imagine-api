@@ -9,11 +9,12 @@ import { VendorRepository } from "../../interfaceAdapters/repositories/vendor/ve
 export class RepositoryRegistry {
     static registerRepositories(): void {
 
-        container.register<IClientRepository>("IClientRepository",{useClass : ClientRepository});
+    // |-------------------------- Repository Registrations ----------------------------------|
+    container.register<IClientRepository>("IClientRepository", { useClass: ClientRepository });
 
-        container.register<IOTPRepository>("IOTPRepository" ,{useClass : OtpRepository});
+    container.register<IOTPRepository>("IOTPRepository", { useClass: OtpRepository });
 
-        container.register<IVendorRepository>("IVendorRepository" , {useClass : VendorRepository});
+    container.register<IVendorRepository>("IVendorRepository", { useClass: VendorRepository });
 
     }
 }

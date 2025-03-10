@@ -25,7 +25,7 @@ export class GoogleLoginController implements IGoogleLoginController {
       console.log(req.body);
 
       const { credential, role, client_id } = req.body;
-
+      console.log(role);
       const user = await this.googleLoginUsecase.execute(
         credential,
         client_id,
