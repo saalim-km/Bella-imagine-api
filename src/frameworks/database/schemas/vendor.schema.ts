@@ -75,5 +75,9 @@ export const vendorSchema = new mongoose.Schema<IVendorEntity>({
             type : Number
         }
     }
-  ]
-});
+  ],
+  isVerified: {
+    type : Boolean,
+    default : false
+  }
+}, {timestamps : true});

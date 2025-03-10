@@ -24,6 +24,9 @@ export class VendorLoginStrategy implements ILoginStrategy {
             )
         }
 
+        if(!data.password || !vendor.password) {
+            throw new Error('password is missing in vendor login strategy')
+        }
         const isPassMatch = await this.passBcrypt.compare(data.password, vendor.password)
 
         if(!isPassMatch) {

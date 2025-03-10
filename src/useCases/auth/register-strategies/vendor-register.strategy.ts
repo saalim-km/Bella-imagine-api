@@ -6,6 +6,7 @@ import { IVendorEntity } from "../../../entities/models/vendor.entity";
 import { CustomError } from "../../../entities/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
 import { IBcrypt } from "../../../frameworks/security/bcrypt.interface";
+import { hash } from "crypto";
 
 @injectable()
 export class VendorRegisterStrategy implements IRegisterStrategy<IVendorEntity> {
@@ -24,20 +25,17 @@ export class VendorRegisterStrategy implements IRegisterStrategy<IVendorEntity> 
             );
         }
 
-        if (!user.password) {
-            throw new CustomError(
-                "Password is required",
-                HTTP_STATUS.FORBIDDEN
-            );
-        }
+        let hashedPassword ;
 
-        const hashedPassword = await this.passwordBcrypt.hash(user.password);
+        if (user.password) {
+            hashedPassword = await this.passwordBcrypt.hash(user.password);
+        }
 
         const newVendor: IVendorEntity = {
             name: user.name,
             email: user.email,
             profileImage: "",
-            password: hashedPassword,
+            password: hashedPassword || "",
             phoneNumber: 0,
             location: "",
             role: "vendor", 
