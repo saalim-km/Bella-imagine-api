@@ -38,7 +38,7 @@ export class ClientRegisterStrategy implements IRegisterStrategy<IClientEntity> 
                 email,
                 password: hashedPassword ?? "",
                 role: "client",
-                profileImage: "", 
+                profileImage: user.profileImage || "", 
                 phoneNumber: 0, 
                 location: "", 
                 savedPhotographers: [],

@@ -11,7 +11,6 @@ import {
 } from "../../../shared/constants";
 import { CustomError } from "../../../entities/utils/custom-error";
 import { setAuthCookies } from "../../../shared/utils/cookie-helper.utils";
-import { privateDecrypt } from "crypto";
 
 @injectable()
 export class GoogleLoginController implements IGoogleLoginController {

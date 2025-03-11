@@ -52,7 +52,8 @@ export class GoogleLoginUsecase implements IGoogleUseCase {
         const email = payload.email;
         let name = `${payload.given_name}`;
         const profileImage = payload.picture;
-    
+        console.log('google account profile picture : ',profileImage);
+
         if (payload.family_name) {
             name += ` ${payload.family_name}`;
         }
@@ -61,7 +62,7 @@ export class GoogleLoginUsecase implements IGoogleUseCase {
             throw new CustomError("Email is required", HTTP_STATUS.BAD_REQUEST);
         }
     
-        // **Check for an existing user with the opposite role**
+        
         const oppositeRole = role === "client" ? "vendor" : "client";
         const oppositeUser = await this.loginStrategies[oppositeRole].login({ email, role: oppositeRole });
     
@@ -72,7 +73,7 @@ export class GoogleLoginUsecase implements IGoogleUseCase {
             );
         }
     
-        // **Proceed with login for the correct role**
+       
         const existingUser = await loginStrategy.login({ email, role });
     
         if (!existingUser) {
