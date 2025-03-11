@@ -34,7 +34,7 @@ export class VendorRegisterStrategy implements IRegisterStrategy<IVendorEntity> 
         const newVendor: IVendorEntity = {
             name: user.name,
             email: user.email,
-            profileImage: "",
+            profileImage: user.profileImage || "",
             password: hashedPassword || "",
             phoneNumber: 0,
             location: "",

@@ -32,6 +32,10 @@ import { IGoogleUseCase } from "../../entities/usecaseIntefaces/auth/google-logi
 import { GoogleLoginUsecase } from "../../useCases/auth/google-login.usecase";
 import { ClientGoogleLoginStrategy } from "../../useCases/auth/login-strategies/client-google-login.strategy";
 import { VendorGoogleLoginStrategy } from "../../useCases/auth/login-strategies/vendor-google-login.strategy";
+import { IGetClientDetailsUsecase } from "../../entities/usecaseIntefaces/client/get-client-details-usecase.interface";
+import { GetClientDetailsUsecase } from "../../useCases/client/get-client-details.usecase";
+import { IGetVendorDetailsUsecase } from "../../entities/usecaseIntefaces/vendor/get-vendor-details-usecase.interaface";
+import { GetVendorDetailUsecase } from "../../useCases/vendor/get-vendor-details.usecase";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -42,6 +46,8 @@ export class UsecaseRegistry {
         container.register<ILogUseCaseIninterface>("ILogUseCaseIninterface", {useClass : LoginUseCase});  
         container.register<IRefreshTokenUsecase>("IRefreshTokenUsecase" , {useClass : RefreshTokenUsecase})
         container.register<IGoogleUseCase>("IGoogleUseCase" , {useClass : GoogleLoginUsecase});
+        container.register<IGetClientDetailsUsecase>("IGetClientDetailsUsecase" , {useClass : GetClientDetailsUsecase})
+        container.register<IGetVendorDetailsUsecase>("IGetVendorDetailsUsecase" , {useClass : GetVendorDetailUsecase})
 
 
         
@@ -50,14 +56,14 @@ export class UsecaseRegistry {
         container.register<IRegisterStrategy>("VendorRegisterStrategy" , {useClass : VendorRegisterStrategy})
 
 
-    //  |----------------------------------Login Strategies----------------------------------------------|
+    //  |----------------------------------Login Strategies----------------------------------------------------|
         container.register<ILoginStrategy>("ClientLoginStrategy" , {useClass: ClientLoginStrategy})
         container.register<ILoginStrategy>("VendorLoginStrategy" , {useClass: VendorLoginStrategy})
         container.register<ILoginStrategy>("ClientGoogleLoginStrategy" , {useClass : ClientGoogleLoginStrategy})
         container.register<ILoginStrategy>("VendorGoogleLoginStrategy" , {useClass : VendorGoogleLoginStrategy})
 
 
-    //  |----------------------------------Services----------------------------------------------|
+    //  |----------------------------------Services-----------------------------------------------------------|
         container.register<IEmailService>("IEmailService" , {useClass : EmailService})
         container.register<IEmailExistenceService>("IEmailExistenceService" ,{useClass: EmailExistenceService})
         container.register<IOtpService>("IOtpService" , {useClass : OtpService})

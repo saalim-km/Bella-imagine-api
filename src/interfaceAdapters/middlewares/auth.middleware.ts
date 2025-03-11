@@ -154,3 +154,24 @@ export const verifyAuth = async (
       next();
     } catch (error) {}
   };
+
+
+
+
+
+  
+export const authorizeRole = (allowedRoles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const user = (req as CustomRequest).user;
+
+    if (!user || !allowedRoles.includes(user.role)) {
+      console.log("role not allowed");
+      res.status(HTTP_STATUS.FORBIDDEN).json({
+        message: ERROR_MESSAGES.NOT_ALLOWED,
+        userRole: user ? user.role : "None",
+      });
+      return;
+    }
+    next();
+  };
+};

@@ -4,14 +4,14 @@ import { IRegisterStrategy } from "./interfaces/register-strategy.interface";
 import { CustomError } from "../../entities/utils/custom-error";
 import { HTTP_STATUS } from "../../shared/constants";
 import { userDTO } from "../../shared/dtos/user.dto";
-import { ClientRegisterStrategy } from "./register-strategies/client-register.strategy";
+
 
 @injectable()
 export class RegisterUsecase implements IRegisterUsecase {
   private strategies: Record<string, IRegisterStrategy>;
   constructor(
     @inject("ClientRegisterStrategy") private clientStrategy: IRegisterStrategy,
-    @inject("ClientRegisterStrategy") private vendorStrategy: IRegisterStrategy
+    @inject("VendorRegisterStrategy") private vendorStrategy: IRegisterStrategy
   ) {
     this.strategies = {
       client: this.clientStrategy,

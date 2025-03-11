@@ -24,6 +24,5 @@ export class RefreshTokenUsecase implements IRefreshTokenUsecase {
         }
 
         return this.jwtService.generateAccessToken({_id , email , role})
-
     }
 }
