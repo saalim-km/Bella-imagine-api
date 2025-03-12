@@ -17,6 +17,8 @@ export class RegisterController implements IRegisterController {
 
     async handle(req: Request, res: Response): Promise<void> {
         try {
+
+          
             console.log('entered register controller');
             console.log(req.body);
             const {role} = req.body as userDTO;
@@ -37,6 +39,11 @@ export class RegisterController implements IRegisterController {
                 success: true,
                 message: SUCCESS_MESSAGES.REGISTRATION_SUCCESS,
             });
+
+
+
+
+
         } catch (error) {
             if (error instanceof ZodError) {
                 const errors = error.errors.map((err) => ({

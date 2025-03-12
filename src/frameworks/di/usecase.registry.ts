@@ -36,6 +36,7 @@ import { IGetClientDetailsUsecase } from "../../entities/usecaseIntefaces/client
 import { GetClientDetailsUsecase } from "../../useCases/client/get-client-details.usecase";
 import { IGetVendorDetailsUsecase } from "../../entities/usecaseIntefaces/vendor/get-vendor-details-usecase.interaface";
 import { GetVendorDetailUsecase } from "../../useCases/vendor/get-vendor-details.usecase";
+import { AdminLoginStrategy } from "../../useCases/auth/login-strategies/admin-login.strategy";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -59,6 +60,7 @@ export class UsecaseRegistry {
     //  |----------------------------------Login Strategies----------------------------------------------------|
         container.register<ILoginStrategy>("ClientLoginStrategy" , {useClass: ClientLoginStrategy})
         container.register<ILoginStrategy>("VendorLoginStrategy" , {useClass: VendorLoginStrategy})
+        container.register<ILoginStrategy>("AdminLoginStrategy" , {useClass : AdminLoginStrategy})
         container.register<ILoginStrategy>("ClientGoogleLoginStrategy" , {useClass : ClientGoogleLoginStrategy})
         container.register<ILoginStrategy>("VendorGoogleLoginStrategy" , {useClass : VendorGoogleLoginStrategy})
 
