@@ -1,5 +1,6 @@
 import express , { Application } from "express";
 import cors from 'cors'
+import morgan from 'morgan'
 import { config } from "../../shared/config";
 import cookieparser from 'cookie-parser';
 import rateLimit from "express-rate-limit";
@@ -28,6 +29,7 @@ export class Server {
         );
 
         this._app.use(cookieparser());
+        this._app.use(morgan('tiny'))
         this._app.use(express.json())
         this._app.use(
             rateLimit({
