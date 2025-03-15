@@ -3,6 +3,9 @@ import { IVendorEntity } from "../../../entities/models/vendor.entity";
 import { boolean } from "zod";
 
 export const vendorSchema = new mongoose.Schema<IVendorEntity>({
+  vendorId : {
+    type : String
+  },
   name: {
     type: String,
     required: true,
@@ -17,6 +20,9 @@ export const vendorSchema = new mongoose.Schema<IVendorEntity>({
   },
   password: {
     type: String,
+  },
+  googleId : {
+    type : String
   },
   location: {
     type: String,
@@ -35,6 +41,9 @@ export const vendorSchema = new mongoose.Schema<IVendorEntity>({
   },
   description: {
     type: String,
+  },
+  portfolioWebsite : {
+    type : String,
   },
   categories: {
     type: [String],

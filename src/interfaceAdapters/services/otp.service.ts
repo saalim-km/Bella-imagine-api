@@ -5,12 +5,13 @@ import { IOTPRepository } from "../../entities/repositoryInterfaces/auth/otp-rep
 import { IBcrypt } from "../../frameworks/security/bcrypt.interface";
 import { resultOtpVerify } from "../../useCases/auth/verfiy-otp.usecase";
 import { SUCCESS_MESSAGES } from "../../shared/constants";
+import { OtpBcrypt } from "../../frameworks/security/otp.bcrypt.";
 
 @injectable()
 export class OtpService implements IOtpService {
     constructor(
         @inject("IOTPRepository") private otpRepository : IOTPRepository,
-        @inject("IBcrypt") private otpBcrypt : IBcrypt
+        @inject("OtpBcrypt") private otpBcrypt : IBcrypt
     ) {}
 
     generateOtp(): string {

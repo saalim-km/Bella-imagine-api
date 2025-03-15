@@ -1,6 +1,6 @@
 import { Request , Response } from "express";
 import { BaseRoute } from "../base.route";
-import { googleLoginController, loginController, registerController, sendEmailController , veriryOtpController } from "../../di/resolver";
+import { forgotPasswordController, googleLoginController, loginController, registerController, resetPasswordController, sendEmailController , veriryOtpController } from "../../di/resolver";
 
 export class AuthRoute extends BaseRoute {
     constructor() {
@@ -26,6 +26,14 @@ export class AuthRoute extends BaseRoute {
 
         this.router.post('/google-auth',(req : Request , res : Response)=> {
             googleLoginController.handle(req,res)
+        })
+
+        this.router.post('/forgot-password/send-otp',(req : Request , res : Response)=> {
+            forgotPasswordController.handle(req,res)
+        })
+
+        this.router.post('/reset-password',(req : Request , res : Response)=> {
+            resetPasswordController.handle(req,res)
         })
     }
 }   

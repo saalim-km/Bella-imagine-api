@@ -24,6 +24,9 @@ export const clientSchema = new mongoose.Schema<IClientModel>(
     location: {
       type: String,
     },
+    googleId : {
+      type : String
+    },
     role: {
       type: String,
       enum: ["client", "vendor", "admin"],

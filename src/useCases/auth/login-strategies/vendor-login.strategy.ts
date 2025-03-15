@@ -11,7 +11,7 @@ import { LoginUserDto } from "../../../shared/dtos/user.dto";
 export class VendorLoginStrategy implements ILoginStrategy {
     constructor(
         @inject("IVendorRepository") private vendorRepository : IVendorRepository,
-        @inject("IBcrypt") private passBcrypt : IBcrypt
+        @inject("PasswordBcrypt") private passBcrypt : IBcrypt
     ){}
 
     async login(data: LoginUserDto): Promise<IVendorEntity> {

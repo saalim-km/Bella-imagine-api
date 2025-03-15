@@ -33,3 +33,22 @@ export interface LoginUserDto {
     password ?: string,
     role : TRole
 }
+
+
+export interface UpdateClientDto {
+    name: string;
+    email: string;
+    phoneNumber: number;
+    location: string;
+    profileImage?:  string; 
+}
+
+export interface UpdateVendorDto {
+    name: string;
+    phoneNumber: number;
+    location: string;
+    languages: string[];
+    portfolioWebsite: string;
+    profileDescription: string;
+    profileImage?: string; 
+}

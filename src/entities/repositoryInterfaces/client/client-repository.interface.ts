@@ -1,3 +1,4 @@
+import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 import { IClientEntity } from "../../models/client.entity";
 
 export interface IClientRepository {
@@ -6,7 +7,7 @@ export interface IClientRepository {
         filter : Record<string,any>,
         skip : number,
         limit : number,
-    ) : Promise<{user : IClientEntity[] | [] ; total : number}>
+    ) : Promise<PaginatedResponse<IClientEntity>>
     findByEmail(email : string) : Promise<IClientEntity | null>
     findById(id : any) : Promise<IClientEntity | null>
     findByIdAndUpdatePassword(id : string , password : string) : Promise<void>

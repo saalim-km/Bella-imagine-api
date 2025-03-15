@@ -13,7 +13,7 @@ import { IBcrypt } from "../../../frameworks/security/bcrypt.interface";
 export class AdminLoginStrategy implements ILoginStrategy {
   constructor(
     @inject("IAdminRepository") private adminRepository: IAdminRepository,
-    @inject("IBcrypt") private passBcrypt: IBcrypt
+    @inject("PasswordBcrypt") private passBcrypt: IBcrypt
   ) {}
 
   async login(data: LoginUserDto): Promise<IAdminEntity | null> {

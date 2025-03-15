@@ -6,6 +6,7 @@ import { CustomError } from "../../entities/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
 import { IOtpService } from "../../entities/services/otp-service.interface";
 import { IBcrypt } from "../../frameworks/security/bcrypt.interface";
+import { OtpBcrypt } from "../../frameworks/security/otp.bcrypt.";
 
 @injectable()
 export class SendEmailUseCase implements ISendEmailUseCase {
@@ -13,7 +14,7 @@ export class SendEmailUseCase implements ISendEmailUseCase {
         @inject("IEmailService") private emailService : IEmailService,
         @inject("IEmailExistenceService") private emailexistService : IEmailExistenceService,
         @inject("IOtpService") private otpService : IOtpService, 
-        @inject("IBcrypt") private otpBcrypt : IBcrypt
+        @inject("OtpBcrypt") private otpBcrypt : IBcrypt
     ){}
 
     async execute(email: string): Promise<void> {

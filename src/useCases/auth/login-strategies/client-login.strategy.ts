@@ -11,13 +11,13 @@ import { IClientEntity } from "../../../entities/models/client.entity";
 export class ClientLoginStrategy implements ILoginStrategy<IClientEntity> {
     constructor(
         @inject("IClientRepository") private clientRepository : IClientRepository,
-        @inject("IBcrypt") private passBcrypt : IBcrypt
+        @inject("PasswordBcrypt") private passBcrypt : IBcrypt
     ){}
 
     async login(data: LoginUserDto): Promise<IClientEntity> {
         const client = await this.clientRepository.findByEmail(data.email);
 
-        if(!client) {
+        if(!client || !data.password || !client.password) {
             throw new CustomError(
                 ERROR_MESSAGES.EMAIL_NOT_FOUND,
                 HTTP_STATUS.NOT_FOUND

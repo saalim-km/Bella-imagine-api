@@ -37,6 +37,20 @@ import { GetClientDetailsUsecase } from "../../useCases/client/get-client-detail
 import { IGetVendorDetailsUsecase } from "../../entities/usecaseIntefaces/vendor/get-vendor-details-usecase.interaface";
 import { GetVendorDetailUsecase } from "../../useCases/vendor/get-vendor-details.usecase";
 import { AdminLoginStrategy } from "../../useCases/auth/login-strategies/admin-login.strategy";
+import { IUpdateClientUsecase } from "../../entities/usecaseIntefaces/client/update-client-profile-usecase.interface";
+import { UpdateClientUsecase } from "../../useCases/client/update-client-profile.usecase";
+import { IUpdateVendorProfileUsecase } from "../../entities/usecaseIntefaces/vendor/update-vendor-profile-usecase.interface";
+import { UpdateVendorUsecase } from "../../useCases/vendor/update-vendor-profile.usecase";
+import { IGetAllClientUsecase } from "../../entities/usecaseIntefaces/admin/get-all-clients-usecase.interafce";
+import { GetAllClientsUsecase } from "../../useCases/admin/get-all-clients.uscase";
+import { IGetAllVendorsUsecase } from "../../entities/usecaseIntefaces/admin/get-all-vendors-usecase.interafce";
+import { GetAllVendorsUsecase } from "../../useCases/admin/get-all-vendors.uscase";
+import { IUpdateUserStatusUsecase } from "../../entities/usecaseIntefaces/admin/update-user-usecase.interface";
+import { UpdateUserStatusUsecase } from "../../useCases/admin/update-user-status.usecase";
+import { IForgotPassWordSendOtpUsecase } from "../../entities/usecaseIntefaces/auth/forgot-password-send-otp-usecase.interfac";
+import { ForgotPasswordSendOtp } from "../../useCases/auth/forgot-password-send-otp.usecase";
+import { IResetPasswordUsecase } from "../../entities/usecaseIntefaces/auth/reset-password-usecase.interface";
+import { ResetPasswordUsecase } from "../../useCases/auth/reset-password-usecase";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -49,7 +63,10 @@ export class UsecaseRegistry {
         container.register<IGoogleUseCase>("IGoogleUseCase" , {useClass : GoogleLoginUsecase});
         container.register<IGetClientDetailsUsecase>("IGetClientDetailsUsecase" , {useClass : GetClientDetailsUsecase})
         container.register<IGetVendorDetailsUsecase>("IGetVendorDetailsUsecase" , {useClass : GetVendorDetailUsecase})
-
+        container.register<IUpdateClientUsecase>("IUpdateClientUsecase" , {useClass : UpdateClientUsecase})
+        container.register<IUpdateVendorProfileUsecase>("IUpdateVendorProfileUsecase" , {useClass : UpdateVendorUsecase});
+        container.register<IForgotPassWordSendOtpUsecase>("IForgotPassWordSendOtpUsecase" , {useClass : ForgotPasswordSendOtp});
+        container.register<IResetPasswordUsecase>("IResetPasswordUsecase" , {useClass : ResetPasswordUsecase})
 
         
     //  |----------------------------------Register Strategies----------------------------------------------|
@@ -65,14 +82,20 @@ export class UsecaseRegistry {
         container.register<ILoginStrategy>("VendorGoogleLoginStrategy" , {useClass : VendorGoogleLoginStrategy})
 
 
-    //  |----------------------------------Services-----------------------------------------------------------|
+    //  |------------------------------------------Services----------------------------------------------------|
         container.register<IEmailService>("IEmailService" , {useClass : EmailService})
         container.register<IEmailExistenceService>("IEmailExistenceService" ,{useClass: EmailExistenceService})
         container.register<IOtpService>("IOtpService" , {useClass : OtpService})
         container.register<IVerifyOTPUsecase>("IVerifyOTPUsecase",{useClass : VerifyOTPUsecase})
         container.register<IJwtservice>("IJwtservice" , {useClass : JwtService});
-        container.register<IBcrypt>("IBcrypt" , {useClass : PasswordBcrypt})
-        container.register<IBcrypt>("IBcrypt" , {useClass : OtpBcrypt})
+        container.register<IBcrypt>("PasswordBcrypt" , {useClass : PasswordBcrypt})
+        container.register<IBcrypt>("OtpBcrypt" , {useClass : OtpBcrypt})
+
+        
+    //  |----------------------------------Client & Vendor-----------------------------------------------------------|
+        container.register<IGetAllClientUsecase>("IGetAllClientUsecase" , {useClass : GetAllClientsUsecase})
+        container.register<IGetAllVendorsUsecase>("IGetAllVendorsUsecase" , {useClass : GetAllVendorsUsecase})
+        container.register<IUpdateUserStatusUsecase>("IUpdateUserStatusUsecase" , {useClass : UpdateUserStatusUsecase})
     }
 
 }

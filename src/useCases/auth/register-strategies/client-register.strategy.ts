@@ -11,7 +11,7 @@ import { IBcrypt } from "../../../frameworks/security/bcrypt.interface";
 export class ClientRegisterStrategy implements IRegisterStrategy<IClientEntity> {
     constructor(
     @inject("IClientRepository") private clientRepository : IClientRepository,
-    @inject("IBcrypt") private passwordBcrypt : IBcrypt) {}
+    @inject("PasswordBcrypt") private passwordBcrypt : IBcrypt) {}
 
     async register(user : IClientEntity): Promise<IClientEntity> {
         console.log('in client register repository');
@@ -33,21 +33,41 @@ export class ClientRegisterStrategy implements IRegisterStrategy<IClientEntity> 
                 hashedPassword = await this.passwordBcrypt.hash(password);
             }
 
-            const data = await this.clientRepository.save({
-                name,
-                email,
-                password: hashedPassword ?? "",
-                role: "client",
-                profileImage: user.profileImage || "", 
-                phoneNumber: 0, 
-                location: "", 
-                savedPhotographers: [],
-                savedPhotos: [],
-                isActive: true,
-                isblocked: false,
-                createdAt: new Date(),
-                updatedAt: new Date(),
-            });
+            let data;
+            if(user.googleId) {
+                data = await this.clientRepository.save({
+                    name,
+                    email,
+                    googleId : user.googleId,
+                    password: hashedPassword ?? "",
+                    role: "client",
+                    profileImage: user.profileImage || "", 
+                    phoneNumber: 0, 
+                    location: "", 
+                    savedPhotographers: [],
+                    savedPhotos: [],
+                    isActive: true,
+                    isblocked: false,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                });
+            }else {
+                data = await this.clientRepository.save({
+                    name,
+                    email,
+                    password: hashedPassword ?? "",
+                    role: "client",
+                    profileImage: user.profileImage || "", 
+                    phoneNumber: 0, 
+                    location: "", 
+                    savedPhotographers: [],
+                    savedPhotos: [],
+                    isActive: true,
+                    isblocked: false,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                });
+            }
             console.log(`data from client repository after completing saving to database  ${data}`);
             return data;
         }else {

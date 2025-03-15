@@ -3,10 +3,23 @@ import { IVendorRepository } from "../../../entities/repositoryInterfaces/vendor
 import { IVendorEntity } from "../../../entities/models/vendor.entity";
 import { VendorModel } from "../../../frameworks/database/models/vendor.model";
 import { ObjectId } from "mongoose";
+import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 
 @injectable()
 export class VendorRepository implements IVendorRepository {
-    
+    async find(filter: Record<string, any>, skip: number, limit: number): Promise<PaginatedResponse<IVendorEntity>> {
+
+        const [user, total] = await  Promise.all([
+            VendorModel.find(filter).sort({createdAt : -1}).skip(skip).limit(limit),
+            VendorModel.countDocuments(filter),
+        ]);
+        
+        return {
+            data : user,
+            total
+        }
+    }
+
     async save(vendor: IVendorEntity): Promise<IVendorEntity> {
         return await VendorModel.create(vendor);
     }
@@ -70,7 +83,7 @@ export class VendorRepository implements IVendorRepository {
         await VendorModel.findByIdAndUpdate(id, { $pull: { services: { category: categoryId } } });
     }
 
-
+    
     async updateServiceDetails(
         id: string | ObjectId,
         categoryId: string | ObjectId,

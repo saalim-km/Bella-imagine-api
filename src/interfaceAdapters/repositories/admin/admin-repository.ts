@@ -6,18 +6,19 @@ import { IClientEntity } from "../../../entities/models/client.entity";
 import { CategoryModel } from "../../../frameworks/database/models/category.model";
 import { PaymentModel } from "../../../frameworks/database/models/payment.model";
 import { ReportModel } from "../../../frameworks/database/models/report.mode";
+import { IUserEntity } from "../../../entities/models/user.entiry";
 
 export class AdminRepository implements IAdminRepository {
     
-    async findById(id: string): Promise<IClientEntity | null> {
+    async findById(id: string): Promise<IUserEntity | null> {
         return await ClientModel.findById(id);
     }
 
-    async findByEmail(email: string): Promise<IClientEntity | null> {
+    async findByEmail(email: string): Promise<IUserEntity | null> {
         return await ClientModel.findOne({ email });
     }
 
-    async findByIDAndUpdate(id: string, data: Partial<IClientEntity>): Promise<IClientEntity | null> {
+    async findByIDAndUpdate(id: string, data: Partial<IUserEntity>): Promise<IUserEntity | null> {
         return await ClientModel.findByIdAndUpdate(id, data, { new: true });
     }
 

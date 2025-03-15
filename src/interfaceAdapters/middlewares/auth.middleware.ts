@@ -162,6 +162,7 @@ export const verifyAuth = async (
   
 export const authorizeRole = (allowedRoles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
+    console.log('---------------------------authroleMIddleware------------------------');
     const user = (req as CustomRequest).user;
 
     if (!user || !allowedRoles.includes(user.role)) {

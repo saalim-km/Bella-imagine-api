@@ -9,24 +9,42 @@ import { RefreshTokenController } from "../../interfaceAdapters/controllers/auth
 import { GoogleLoginController } from "../../interfaceAdapters/controllers/auth/google-login.controller";
 import { GetClientDetailsController } from "../../interfaceAdapters/controllers/client/get-client-details.controller";
 import { GetVendorDetailsController } from "../../interfaceAdapters/controllers/vendor/get-vendor-details-controller";
+import { UpdateClientController } from "../../interfaceAdapters/controllers/client/update-client-profile.controller";
+import { UpdateVendorController } from "../../interfaceAdapters/controllers/vendor/updat-vendor-profile.controller";
+import { GetAllClientsController } from "../../interfaceAdapters/controllers/admin/get-all-clients.controller";
+import { GetAllVendorsController } from "../../interfaceAdapters/controllers/admin/get-all-vendor.controller";
+import { UpdateUserStatusController } from "../../interfaceAdapters/controllers/admin/update-user-status.controller";
+import { ForgotPasswordSendOtpController } from "../../interfaceAdapters/controllers/auth/forgot-password-send-otp.controller";
+import { ResetPasswordController } from "../../interfaceAdapters/controllers/auth/reset-password.controller";
 
 DependencyInjection.registerAll();
 
-// |-------------------------- Register --------------------------------|
+// |==================== User Registration ==========================|
 export const registerController = container.resolve(RegisterController);
 
-// |-------------------------- Email & OTP Verification --------------------|
+// |========================= Email & OTP Verification ==================|
 export const sendEmailController = container.resolve(SendEmailController);
 export const veriryOtpController = container.resolve(VerifyOTPController);
 
-// |-------------------------- Authentication ------------------------------|
+// |========================== Authentication =============================|
 export const loginController = container.resolve(LoginController);
 export const logoutController = container.resolve(LogoutController);
 export const refreshTokenController = container.resolve(RefreshTokenController);
 export const googleLoginController = container.resolve(GoogleLoginController);
 
-// |-------------------------- Get Client Details ------------------------------------|
-export const getClientDetailsController = container.resolve(GetClientDetailsController);
+// |========================= Password Recovery =========================================|
+export const forgotPasswordController = container.resolve(ForgotPasswordSendOtpController);
+export const resetPasswordController = container.resolve(ResetPasswordController)
 
-// |-------------------------- Get Vendor Details -------------------------------------|
+// |========================= Client Management ======================================|
+export const getClientDetailsController = container.resolve(GetClientDetailsController);
+export const updateClientController = container.resolve(UpdateClientController);
+export const getAllClientController = container.resolve(GetAllClientsController);
+
+// |=============================== Vendor Management ===============================|
 export const getVendorDetialsController = container.resolve(GetVendorDetailsController);
+export const updateVendorController = container.resolve(UpdateVendorController);
+export const getAllVendorController = container.resolve(GetAllVendorsController);
+
+// |================================ User Status Management ==========================|
+export const updateUserStatusController = container.resolve(UpdateUserStatusController);
