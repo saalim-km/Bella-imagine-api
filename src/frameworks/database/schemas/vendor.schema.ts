@@ -34,7 +34,7 @@ export const vendorSchema = new mongoose.Schema<IVendorEntity>({
   role: {
     type: String,
     enum: ["client", "vendor", "admin"],
-    default: "client",
+    default: "vendor",
   },
   profileImage: {
     type: String,

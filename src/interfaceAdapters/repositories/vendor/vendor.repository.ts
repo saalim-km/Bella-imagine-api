@@ -7,10 +7,10 @@ import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 
 @injectable()
 export class VendorRepository implements IVendorRepository {
-    async find(filter: Record<string, any>, skip: number, limit: number): Promise<PaginatedResponse<IVendorEntity>> {
+    async find(filter: Record<string, any>, skip: number, limit: number , sort : any): Promise<PaginatedResponse<IVendorEntity>> {
 
         const [user, total] = await  Promise.all([
-            VendorModel.find(filter).sort({createdAt : -1}).skip(skip).limit(limit),
+            VendorModel.find(filter).sort({createdAt : sort}).skip(skip).limit(limit),
             VendorModel.countDocuments(filter),
         ]);
         

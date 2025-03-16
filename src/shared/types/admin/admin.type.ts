@@ -5,10 +5,13 @@ export interface PaginatedResponse<T> {
   total: number;
 }
 
-export interface PaginatedRequest {
+export interface PaginatedRequestUser {
   search?: string;
-  page?: number;
-  limit?: number;
+  page: number;
+  limit: number;
+  isblocked ?: boolean;
+  isActive ?: boolean;
+  createdAt ?: number;
 }
 
 

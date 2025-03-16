@@ -7,6 +7,7 @@ export interface IClientRepository {
         filter : Record<string,any>,
         skip : number,
         limit : number,
+        sort ?: any 
     ) : Promise<PaginatedResponse<IClientEntity>>
     findByEmail(email : string) : Promise<IClientEntity | null>
     findById(id : any) : Promise<IClientEntity | null>

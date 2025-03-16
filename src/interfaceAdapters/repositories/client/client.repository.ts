@@ -10,9 +10,9 @@ export class ClientRepository implements IClientRepository {
         return await ClientModel.create(data);
     }
 
-    async find(filter: Record<string, any>, skip: number, limit: number): Promise<PaginatedResponse<IClientEntity>> {
+    async find(filter: Record<string, any>, skip: number, limit: number, sort: any): Promise<PaginatedResponse<IClientEntity>> {
         const [user, total] = await  Promise.all([
-            ClientModel.find(filter).sort({createdAt : -1}).skip(skip).limit(limit),
+            ClientModel.find(filter).sort({createdAt : sort}).skip(skip).limit(limit),
             ClientModel.countDocuments(filter),
         ]);
 
