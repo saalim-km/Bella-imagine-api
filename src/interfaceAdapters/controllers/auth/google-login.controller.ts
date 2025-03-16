@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { IGoogleLoginController } from "../../../entities/controllerInterfaces/auth/google-login-controller.interface";
 import { inject, injectable } from "tsyringe";
-import { IGoogleUseCase } from "../../../entities/usecaseIntefaces/auth/google-login-usecase.interface";
-import { IGenerateTokenUsecase } from "../../../entities/usecaseIntefaces/auth/generate-token-usecase.interface";
+import { IGoogleUseCase } from "../../../entities/usecaseInterfaces/auth/google-login-usecase.interface";
+import { IGenerateTokenUsecase } from "../../../entities/usecaseInterfaces/auth/generate-token-usecase.interface";
 import { custom, ZodError } from "zod";
 import {
   ERROR_MESSAGES,

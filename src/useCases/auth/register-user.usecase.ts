@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IRegisterUsecase } from "../../entities/usecaseIntefaces/auth/register-usecase.interface";
+import { IRegisterUsecase } from "../../entities/usecaseInterfaces/auth/register-usecase.interface";
 import { IRegisterStrategy } from "./interfaces/register-strategy.interface";
 import { CustomError } from "../../entities/utils/custom-error";
 import { HTTP_STATUS } from "../../shared/constants";

@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IResetPasswordController } from "../../../entities/controllerInterfaces/auth/reset-password-controller.interface";
-import { IResetPasswordUsecase } from "../../../entities/usecaseIntefaces/auth/reset-password-usecase.interface";
+import { IResetPasswordUsecase } from "../../../entities/usecaseInterfaces/auth/reset-password-usecase.interface";
 import { Request, Response } from "express";
 import { ZodError } from "zod";
 import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../shared/constants";

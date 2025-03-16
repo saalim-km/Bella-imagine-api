@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IGetClientDetailsUsecase } from "../../entities/usecaseIntefaces/client/get-client-details-usecase.interface";
+import { IGetClientDetailsUsecase } from "../../entities/usecaseInterfaces/client/get-client-details-usecase.interface";
 import { IClientEntity } from "../../entities/models/client.entity";
 import { IClientRepository } from "../../entities/repositoryInterfaces/client/client-repository.interface";
 

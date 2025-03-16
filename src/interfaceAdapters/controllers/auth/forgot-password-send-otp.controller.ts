@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IForgotPasswordSendOtpController } from "../../../entities/controllerInterfaces/auth/forgot-password-send-otp-controller.interface";
-import { IForgotPassWordSendOtpUsecase } from "../../../entities/usecaseIntefaces/auth/forgot-password-send-otp-usecase.interfac";
+import { IForgotPassWordSendOtpUsecase } from "../../../entities/usecaseInterfaces/auth/forgot-password-send-otp-usecase.interfac";
 import { Request, Response } from "express";
 import { ZodError } from "zod";
 import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../shared/constants";

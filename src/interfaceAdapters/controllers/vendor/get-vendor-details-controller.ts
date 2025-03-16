@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { IGetVendorDetailsController } from "../../../entities/controllerInterfaces/vendor/get-vendor-details-controller.interface";
 import { CustomRequest } from "../../middlewares/auth.middleware";
-import { IGetVendorDetailsUsecase } from "../../../entities/usecaseIntefaces/vendor/get-vendor-details-usecase.interaface";
+import { IGetVendorDetailsUsecase } from "../../../entities/usecaseInterfaces/vendor/get-vendor-details-usecase.interaface";
 import { inject, injectable } from "tsyringe";
 import { ZodError } from "zod";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";

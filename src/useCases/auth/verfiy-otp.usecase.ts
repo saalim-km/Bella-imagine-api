@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IOtpService } from "../../entities/services/otp-service.interface";
-import { IVerifyOTPUsecase } from "../../entities/usecaseIntefaces/auth/verify-otp-usecase.interface.";
+import { IVerifyOTPUsecase } from "../../entities/usecaseInterfaces/auth/verify-otp-usecase.interface.";
 import { CustomError } from "../../entities/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
 

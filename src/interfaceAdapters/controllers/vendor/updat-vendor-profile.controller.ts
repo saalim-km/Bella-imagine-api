@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { IUpdateVendorController } from "../../../entities/controllerInterfaces/vendor/update-vendor-profile-controller.interface";
 import { Request, Response } from "express";
 import { CustomRequest } from "../../middlewares/auth.middleware";
-import { IUpdateVendorProfileUsecase } from "../../../entities/usecaseIntefaces/vendor/update-vendor-profile-usecase.interface";
+import { IUpdateVendorProfileUsecase } from "../../../entities/usecaseInterfaces/vendor/update-vendor-profile-usecase.interface";
 import { ZodError } from "zod";
 import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../shared/constants";
 import { CustomError } from "../../../entities/utils/custom-error";

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { authorizeRole, decodeToken, verifyAuth } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
-import { getAllClientController, getAllVendorController, logoutController, refreshTokenController, updateUserStatusController } from "../../di/resolver";
+import { getAllClientController, getAllVendorController, getPendingVendorController, logoutController, refreshTokenController, updateUserStatusController } from "../../di/resolver";
 
 export class AdminRoute extends BaseRoute {
     constructor(){
@@ -31,7 +31,11 @@ export class AdminRoute extends BaseRoute {
             updateUserStatusController.handle(req,res)
         })
 
-        this.router.get('/amdmin/vendor-pending',verifyAuth,authorizeRole(["admin"]),(req : Request , res : Response)=> {
+        this.router.route('/admin/vendor-request')
+        .get(verifyAuth,authorizeRole(["admin"]),(req : Request , res : Response)=> {
+            getPendingVendorController.handle(req,res)
+        })
+        .patch(verifyAuth,authorizeRole(["admin"]) , (req : Request , res :Response)=> {
             
         })
     }

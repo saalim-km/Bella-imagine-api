@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
-import { IUpdateVendorProfileUsecase } from "../../entities/usecaseIntefaces/vendor/update-vendor-profile-usecase.interface";
+import { IUpdateVendorProfileUsecase } from "../../entities/usecaseInterfaces/vendor/update-vendor-profile-usecase.interface";
 import { UpdateVendorDto } from "../../shared/dtos/user.dto";
 
 @injectable()

@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { ILoginControllerInterface } from "../../../entities/controllerInterfaces/auth/login-controller.interface";
 import { Request, Response } from "express";
-import { ILogUseCaseIninterface } from "../../../entities/usecaseIntefaces/auth/login-usecase.interface";
+import { ILogUseCaseIninterface } from "../../../entities/usecaseInterfaces/auth/login-usecase.interface";
 import { LoginUserDto } from "../../../shared/dtos/user.dto";
 import { userLoginSchema } from "./validation/login-validation.schema";
 import {
@@ -9,7 +9,7 @@ import {
   HTTP_STATUS,
   SUCCESS_MESSAGES,
 } from "../../../shared/constants";
-import { IGenerateTokenUsecase } from "../../../entities/usecaseIntefaces/auth/generate-token-usecase.interface";
+import { IGenerateTokenUsecase } from "../../../entities/usecaseInterfaces/auth/generate-token-usecase.interface";
 import { setAuthCookies } from "../../../shared/utils/cookie-helper.utils";
 import { ZodError } from "zod";
 import { CustomError } from "../../../entities/utils/custom-error";

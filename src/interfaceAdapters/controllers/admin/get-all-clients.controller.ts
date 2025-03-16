@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IGetAllClientController } from "../../../entities/controllerInterfaces/admin/get-all-clients-controller.interface";
 import { Request, Response } from "express";
-import { IGetAllClientUsecase } from "../../../entities/usecaseIntefaces/admin/get-all-clients-usecase.interafce";
+import { IGetAllClientUsecase } from "../../../entities/usecaseInterfaces/admin/get-all-clients-usecase.interafce";
 import { IClientEntity } from "../../../entities/models/client.entity";
 import {
   ERROR_MESSAGES,

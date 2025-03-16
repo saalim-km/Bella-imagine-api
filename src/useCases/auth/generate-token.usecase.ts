@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IGenerateTokenUsecase } from "../../entities/usecaseIntefaces/auth/generate-token-usecase.interface";
+import { IGenerateTokenUsecase } from "../../entities/usecaseInterfaces/auth/generate-token-usecase.interface";
 import { TJwtPayload } from "../../shared/types/auth/jwt-payload.type";
 import { IJwtservice } from "../../entities/services/jwt.service";
 

@@ -1,5 +1,5 @@
 import { inject, injectable, injectWithTransform } from "tsyringe";
-import { IDecoded, IRefreshTokenUsecase } from "../../entities/usecaseIntefaces/auth/refresh-token-usecase.interface";
+import { IDecoded, IRefreshTokenUsecase } from "../../entities/usecaseInterfaces/auth/refresh-token-usecase.interface";
 import { JwtPayload } from "jsonwebtoken";
 import { IJwtservice } from "../../entities/services/jwt.service";
 import { CustomError } from "../../entities/utils/custom-error";

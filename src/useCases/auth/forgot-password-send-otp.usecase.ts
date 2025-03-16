@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IForgotPassWordSendOtpUsecase } from "../../entities/usecaseIntefaces/auth/forgot-password-send-otp-usecase.interfac";
+import { IForgotPassWordSendOtpUsecase } from "../../entities/usecaseInterfaces/auth/forgot-password-send-otp-usecase.interfac";
 import { IClientRepository } from "../../entities/repositoryInterfaces/client/client-repository.interface";
 import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
 import { HTTP_STATUS, TRole } from "../../shared/constants";

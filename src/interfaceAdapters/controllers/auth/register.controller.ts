@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IRegisterController } from "../../../entities/controllerInterfaces/auth/register-controller.interface";
-import { IRegisterUsecase } from "../../../entities/usecaseIntefaces/auth/register-usecase.interface";
+import { IRegisterUsecase } from "../../../entities/usecaseInterfaces/auth/register-usecase.interface";
 import { Request, Response } from "express";
 import { userDTO } from "../../../shared/dtos/user.dto";
 import { userSchema } from "./validation/signup-validation.schema";
