@@ -30,5 +30,9 @@ export class AdminRoute extends BaseRoute {
         this.router.patch('/admin/user-status',verifyAuth,authorizeRole(["admin"]),(req : Request , res : Response)=> {
             updateUserStatusController.handle(req,res)
         })
+
+        this.router.get('/amdmin/vendor-pending',verifyAuth,authorizeRole(["admin"]),(req : Request , res : Response)=> {
+            
+        })
     }
 }

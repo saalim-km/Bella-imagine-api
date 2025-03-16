@@ -10,18 +10,41 @@ export class GetAllVendorsUsecase implements IGetAllVendorsUsecase {
         @inject("IVendorRepository") private vendorRepository : IVendorRepository
     ){}
 
-    async execute(filter: any, page?: number, limit?: number): Promise<PaginatedResponse<IVendorEntity>> {
+    async execute(filters: any, page: number, limit: number): Promise<PaginatedResponse<IVendorEntity>> {
         console.log('--------------------paginatedClientFetch----------------------');
-
-        if(!page || !limit) {
-            throw new Error("limit and page is required for pagination")
-        }
-        
+        console.log(filters);
+        console.log(page,limit);
         const skip = (page - 1) * limit;
     
-        const serach = filter ? { name: { $regex: filter, $options: "i" } } : {};
-        const result = await this.vendorRepository.find(serach, skip, limit);
-        console.log(result);
-        return result;
+      let search: any = { role: "vendor" };
+    
+    
+      if (filters) {
+        if (filters.isblocked !== undefined) {
+          search.isblocked = filters.isblocked;
+        }
+        
+        if (filters.isActive !== undefined) {
+          search.isActive = filters.isActive;
+        }
+        
+        if (typeof filters.search === 'string' && filters.search.trim() !== '') {
+          search = {
+            ...search,
+            $or: [
+              { name: { $regex: filters.search.trim(), $options: "i" } },
+              { email: { $regex: filters.search.trim(), $options: "i" } }
+            ]
+          };
+        }
+      }
+    
+      let sort : any = -1;
+      if (filters && filters.createdAt !== undefined) {
+        sort = filters.createdAt;
+      }
+      const result = await this.vendorRepository.find(search, skip, limit,sort);
+      console.log(result);
+      return result;
     }
 }

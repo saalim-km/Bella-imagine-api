@@ -10,6 +10,7 @@ import {
 } from "../../../shared/constants";
 import { ZodError } from "zod";
 import { CustomError } from "../../../entities/utils/custom-error";
+import { PaginatedRequestUser } from "../../../shared/types/admin/admin.type";
 
 export interface IPaginationQuery {
   search?: Partial<IClientEntity>;
@@ -29,10 +30,18 @@ export class GetAllClientsController implements IGetAllClientController {
         "---------------------inGetAllClientsController---------------------"
       );
       console.log(req.query);
-      const { search, page, limit }: IPaginationQuery = req.query;
+      const { page, limit }: IPaginationQuery = req.query;
 
+      const filter: PaginatedRequestUser = {
+        search: req.query.search as string,
+        page: req.query.page ? parseInt(req.query.page as string) : 1,
+        limit: req.query.limit ? parseInt(req.query.limit as string) : 10,
+        isblocked: req.query.isblocked ? req.query.isblocked === 'true' : undefined,
+        isActive: req.query.isActive ? req.query.isActive === 'true' : undefined,
+        createdAt: req.query.createdAt ? parseInt(req.query.createdAt as string) : undefined
+      };
       const clients = await this.getAllClientUsecase.execute(
-        search,
+        filter,
         page,
         limit
       );

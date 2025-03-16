@@ -35,7 +35,7 @@ export class ForgotPasswordSendOtp implements IForgotPassWordSendOtpUsecase {
             await this.emailService.sendEmail(email,'Reset Password Otp',otp)
             this.otpService.storeOtp(email,hashedOtp);
         }else if(userType === 'client') {
-            console.log('usertype is vendor');
+            console.log('usertype is client');
             const isValidUser = await this.clientRepository.findByEmail(email)
 
             if(!isValidUser) {

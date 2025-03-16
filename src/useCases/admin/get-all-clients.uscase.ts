@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { IGetAllClientUsecase } from "../../entities/usecaseIntefaces/admin/get-all-clients-usecase.interafce";
 import { IClientEntity } from "../../entities/models/client.entity";
 import { IClientRepository } from "../../entities/repositoryInterfaces/client/client-repository.interface";
-import { PaginatedResponse } from "../../shared/types/admin/admin.type";
+import { PaginatedRequestUser, PaginatedResponse } from "../../shared/types/admin/admin.type";
 
 @injectable()
 export class GetAllClientsUsecase implements IGetAllClientUsecase {
@@ -11,18 +11,44 @@ export class GetAllClientsUsecase implements IGetAllClientUsecase {
   ) {}
 
   async execute(
-    filters: Partial<IClientEntity> = {},
+    filters: PaginatedRequestUser,
     page: number = 1,
-    limit: number = 10
+    limit: number = 10,
   ): Promise<PaginatedResponse<IClientEntity>> {
     console.log('--------------------paginatedClientFetch----------------------');
+    console.log(filters);
     const skip = (page - 1) * limit;
 
-    const serach = filters
-      ? { name: { $regex: filters, $options: "i" }, role: "client" }
-      : { role: "client" };
-    const result = await this.clientRepository.find(serach, skip, limit);
-    console.log(result);
-    return result;
+
+  let search: any = { role: "client" };
+
+
+  if (filters) {
+    if (filters.isblocked !== undefined) {
+      search.isblocked = filters.isblocked;
+    }
+    
+    if (filters.isActive !== undefined) {
+      search.isActive = filters.isActive;
+    }
+    
+    if (typeof filters.search === 'string' && filters.search.trim() !== '') {
+      search = {
+        ...search,
+        $or: [
+          { name: { $regex: filters.search.trim(), $options: "i" } },
+          { email: { $regex: filters.search.trim(), $options: "i" } }
+        ]
+      };
+    }
+  }
+
+  let sort : any = -1;
+  if (filters && filters.createdAt !== undefined) {
+    sort = filters.createdAt;
+  }
+  const result = await this.clientRepository.find(search, skip, limit,sort);
+  console.log(result);
+  return result;
   }
 }
