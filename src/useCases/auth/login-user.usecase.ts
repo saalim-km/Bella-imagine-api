@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { ILogUseCaseIninterface } from "../../entities/usecaseIntefaces/auth/login-usecase.interface";
+import { ILogUseCaseIninterface } from "../../entities/usecaseInterfaces/auth/login-usecase.interface";
 import { LoginUserDto } from "../../shared/dtos/user.dto";
 import { ILoginStrategy } from "./interfaces/login-strategy.interface";
 import { CustomError } from "../../entities/utils/custom-error";

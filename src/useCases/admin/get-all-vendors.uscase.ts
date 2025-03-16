@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IGetAllVendorsUsecase } from "../../entities/usecaseIntefaces/admin/get-all-vendors-usecase.interafce";
+import { IGetAllVendorsUsecase } from "../../entities/usecaseInterfaces/admin/get-all-vendors-usecase.interafce";
 import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
 import { IVendorEntity } from "../../entities/models/vendor.entity";
 import { PaginatedResponse } from "../../shared/types/admin/admin.type";
@@ -16,7 +16,7 @@ export class GetAllVendorsUsecase implements IGetAllVendorsUsecase {
         console.log(page,limit);
         const skip = (page - 1) * limit;
     
-      let search: any = { role: "vendor" };
+      let search: any = { role: "vendor"};
     
     
       if (filters) {

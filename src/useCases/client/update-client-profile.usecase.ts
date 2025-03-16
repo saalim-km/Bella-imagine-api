@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IUpdateClientUsecase } from "../../entities/usecaseIntefaces/client/update-client-profile-usecase.interface";
+import { IUpdateClientUsecase } from "../../entities/usecaseInterfaces/client/update-client-profile-usecase.interface";
 import { UpdateClientDto } from "../../shared/dtos/user.dto";
 import { IClientRepository } from "../../entities/repositoryInterfaces/client/client-repository.interface";
 

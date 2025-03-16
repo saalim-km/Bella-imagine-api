@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IGetClientDetailsController } from "../../../entities/controllerInterfaces/client/get-client-details-controller.interface";
 import { Request, Response } from "express";
-import { IGetClientDetailsUsecase } from "../../../entities/usecaseIntefaces/client/get-client-details-usecase.interface";
+import { IGetClientDetailsUsecase } from "../../../entities/usecaseInterfaces/client/get-client-details-usecase.interface";
 import { CustomRequest } from "../../middlewares/auth.middleware";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
 import { ZodError } from "zod";

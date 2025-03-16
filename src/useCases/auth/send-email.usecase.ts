@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { ISendEmailUseCase } from "../../entities/usecaseIntefaces/auth/send-email-usecase.interface";
+import { ISendEmailUseCase } from "../../entities/usecaseInterfaces/auth/send-email-usecase.interface";
 import { IEmailService } from "../../entities/services/email-service.interface";
 import { IEmailExistenceService } from "../../entities/services/email-existence-service.interface";
 import { CustomError } from "../../entities/utils/custom-error";

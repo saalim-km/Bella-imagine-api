@@ -1,6 +1,6 @@
 import { ISendEmailController } from "../../../entities/controllerInterfaces/auth/send-email.controller.interface";
 import { Request, Response } from "express";
-import { ISendEmailUseCase } from "../../../entities/usecaseIntefaces/auth/send-email-usecase.interface";
+import { ISendEmailUseCase } from "../../../entities/usecaseInterfaces/auth/send-email-usecase.interface";
 import { inject, injectable } from "tsyringe";
 import { userDTO } from "../../../shared/dtos/user.dto";
 import {

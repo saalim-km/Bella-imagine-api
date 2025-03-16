@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IUpdateUserStatusController } from "../../../entities/controllerInterfaces/admin/update-user-status-controller.interface";
-import { IUpdateUserStatusUsecase } from "../../../entities/usecaseIntefaces/admin/update-user-usecase.interface";
+import { IUpdateUserStatusUsecase } from "../../../entities/usecaseInterfaces/admin/update-user-usecase.interface";
 import { UpdateBlockStatusRequest } from "../../../shared/types/admin/admin.type";
 import { ZodError } from "zod";
 import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../shared/constants";

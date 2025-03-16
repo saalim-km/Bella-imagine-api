@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IGetVendorDetailsUsecase } from "../../entities/usecaseIntefaces/vendor/get-vendor-details-usecase.interaface";
+import { IGetVendorDetailsUsecase } from "../../entities/usecaseInterfaces/vendor/get-vendor-details-usecase.interaface";
 import { IVendorEntity } from "../../entities/models/vendor.entity";
 import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
 

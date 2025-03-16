@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IResetPasswordUsecase } from "../../entities/usecaseIntefaces/auth/reset-password-usecase.interface";
+import { IResetPasswordUsecase } from "../../entities/usecaseInterfaces/auth/reset-password-usecase.interface";
 import { IClientRepository } from "../../entities/repositoryInterfaces/client/client-repository.interface";
 import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
 import { TRole } from "../../shared/constants";

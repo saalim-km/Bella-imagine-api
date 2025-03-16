@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { IUpdateClientController } from "../../../entities/controllerInterfaces/client/update-client-profile-controller.interface";
 import { CustomRequest } from "../../middlewares/auth.middleware";
 import { inject, injectable } from "tsyringe";
-import { IUpdateClientUsecase } from "../../../entities/usecaseIntefaces/client/update-client-profile-usecase.interface";
+import { IUpdateClientUsecase } from "../../../entities/usecaseInterfaces/client/update-client-profile-usecase.interface";
 import {
   ERROR_MESSAGES,
   HTTP_STATUS,

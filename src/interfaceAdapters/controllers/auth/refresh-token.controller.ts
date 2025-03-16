@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { IRefreshTokenController } from "../../../entities/controllerInterfaces/auth/refresh-token-controller.interface";
 import { CustomRequest } from "../../middlewares/auth.middleware";
 import { inject, injectable } from "tsyringe";
-import { IRefreshTokenUsecase } from "../../../entities/usecaseIntefaces/auth/refresh-token-usecase.interface";
+import { IRefreshTokenUsecase } from "../../../entities/usecaseInterfaces/auth/refresh-token-usecase.interface";
 import { updateCookieWithAccessToken } from "../../../shared/utils/cookie-helper.utils";
 import {
   ERROR_MESSAGES,

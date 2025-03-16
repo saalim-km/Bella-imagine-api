@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IGetAllClientUsecase } from "../../entities/usecaseIntefaces/admin/get-all-clients-usecase.interafce";
+import { IGetAllClientUsecase } from "../../entities/usecaseInterfaces/admin/get-all-clients-usecase.interafce";
 import { IClientEntity } from "../../entities/models/client.entity";
 import { IClientRepository } from "../../entities/repositoryInterfaces/client/client-repository.interface";
 import { PaginatedRequestUser, PaginatedResponse } from "../../shared/types/admin/admin.type";
