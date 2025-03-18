@@ -53,6 +53,8 @@ import { IResetPasswordUsecase } from "../../entities/usecaseInterfaces/auth/res
 import { ResetPasswordUsecase } from "../../useCases/auth/reset-password-usecase";
 import { IGetPendingVendorRequestUsecase } from "../../entities/usecaseInterfaces/admin/get-pending-vendor-request-usecase.interface";
 import { GetPendingVendorRequestUsecase } from "../../useCases/admin/get-pending-vendor-request.usecase";
+import { IUpdateVendorRequestUsecase } from "../../entities/usecaseInterfaces/admin/update-vendor-request-usecase.interface";
+import { UpdateVendorRequestUsecase } from "../../useCases/admin/update-vendor-request.usecase";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -70,6 +72,7 @@ export class UsecaseRegistry {
         container.register<IForgotPassWordSendOtpUsecase>("IForgotPassWordSendOtpUsecase" , {useClass : ForgotPasswordSendOtp});
         container.register<IResetPasswordUsecase>("IResetPasswordUsecase" , {useClass : ResetPasswordUsecase})
         container.register<IGetPendingVendorRequestUsecase>("IGetPendingVendorRequestUsecase" , {useClass : GetPendingVendorRequestUsecase})
+        container.register<IUpdateVendorRequestUsecase>("IUpdateVendorRequestUsecase" , {useClass : UpdateVendorRequestUsecase})
 
         
     //  |----------------------------------Register Strategies----------------------------------------------|

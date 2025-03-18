@@ -86,7 +86,8 @@ export const vendorSchema = new mongoose.Schema<IVendorEntity>({
     }
   ],
   isVerified: {
-    type : Boolean,
-    default : false
+    type : String,
+    enum : ['pending','accept','reject'],
+    default : 'pending'
   }
 }, {timestamps : true});

@@ -21,10 +21,13 @@ export class UpdateUserStatusUsecase implements IUpdateUserStatusUsecase {
             
         }else if(userType === 'client') {
             console.log('user type is client');
+            console.log(userType,userId);
             const client = await this.clientRepository.findById(userId);
 
             const newStatus = client?.isblocked ? false : true;
-            await this.clientRepository.updateClientProfileById(userId,{isblocked : newStatus})
+            console.log('new status : ',newStatus);
+            const res = await this.clientRepository.updateClientProfileById(userId,{isblocked : newStatus})
+            console.log(res);
         }
     }
 }

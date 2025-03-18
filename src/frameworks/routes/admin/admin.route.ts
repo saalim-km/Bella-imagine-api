@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { authorizeRole, decodeToken, verifyAuth } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
-import { getAllClientController, getAllVendorController, getPendingVendorController, logoutController, refreshTokenController, updateUserStatusController } from "../../di/resolver";
+import { getAllClientController, getAllVendorController, getPendingVendorController, logoutController, refreshTokenController, updateUserStatusController, updateVendorRequestController } from "../../di/resolver";
 
 export class AdminRoute extends BaseRoute {
     constructor(){
@@ -35,8 +35,8 @@ export class AdminRoute extends BaseRoute {
         .get(verifyAuth,authorizeRole(["admin"]),(req : Request , res : Response)=> {
             getPendingVendorController.handle(req,res)
         })
-        .patch(verifyAuth,authorizeRole(["admin"]) , (req : Request , res :Response)=> {
-            
+        .post(verifyAuth,authorizeRole(["admin"]) , (req : Request , res :Response)=> {
+            updateVendorRequestController.handle(req,res)
         })
     }
 }

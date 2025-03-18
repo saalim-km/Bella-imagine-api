@@ -7,17 +7,30 @@ import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/ve
 import { VendorRepository } from "../../interfaceAdapters/repositories/vendor/vendor.repository";
 import { IAdminRepository } from "../../entities/repositoryInterfaces/admin/admin-repository.interface";
 import { AdminRepository } from "../../interfaceAdapters/repositories/admin/admin-repository";
+import { INotificationRepository } from "../../entities/repositoryInterfaces/common/notification-repository.interface";
+import { NotificationRepository } from "../../interfaceAdapters/repositories/common/notification.repository";
 
 export class RepositoryRegistry {
-    static registerRepositories(): void {
-
+  static registerRepositories(): void {
     // |-------------------------- Repository Registrations ----------------------------------|
-    container.register<IClientRepository>("IClientRepository", { useClass: ClientRepository });
+    container.register<IClientRepository>("IClientRepository", {
+      useClass: ClientRepository,
+    });
 
-    container.register<IOTPRepository>("IOTPRepository", { useClass: OtpRepository });
+    container.register<IOTPRepository>("IOTPRepository", {
+      useClass: OtpRepository,
+    });
 
-    container.register<IVendorRepository>("IVendorRepository", { useClass: VendorRepository });
+    container.register<IVendorRepository>("IVendorRepository", {
+      useClass: VendorRepository,
+    });
 
-    container.register<IAdminRepository>("IAdminRepository" , {useClass : AdminRepository  })
-    }
+    container.register<IAdminRepository>("IAdminRepository", {
+      useClass: AdminRepository,
+    });
+
+    container.register<INotificationRepository>("INotificationRepository",{
+        useClass : NotificationRepository
+    });
+  }
 }

@@ -17,6 +17,7 @@ import { UpdateUserStatusController } from "../../interfaceAdapters/controllers/
 import { ForgotPasswordSendOtpController } from "../../interfaceAdapters/controllers/auth/forgot-password-send-otp.controller";
 import { ResetPasswordController } from "../../interfaceAdapters/controllers/auth/reset-password.controller";
 import { GetPendingVendorController } from "../../interfaceAdapters/controllers/admin/get-pending-vendor-request.controller";
+import { UpdateVendorRequestController } from "../../interfaceAdapters/controllers/admin/update-vendor-request.controller";
 
 DependencyInjection.registerAll();
 
@@ -47,6 +48,7 @@ export const getVendorDetialsController = container.resolve(GetVendorDetailsCont
 export const updateVendorController = container.resolve(UpdateVendorController);
 export const getAllVendorController = container.resolve(GetAllVendorsController);
 export const getPendingVendorController = container.resolve(GetPendingVendorController);
+export const updateVendorRequestController = container.resolve(UpdateVendorRequestController)
 
 // |================================ User Status Management ==========================|
 export const updateUserStatusController = container.resolve(UpdateUserStatusController);

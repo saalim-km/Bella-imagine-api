@@ -3,6 +3,7 @@ import { IClientRepository } from "../../../entities/repositoryInterfaces/client
 import { IClientEntity } from "../../../entities/models/client.entity";
 import { ClientModel } from "../../../frameworks/database/models/client.model";
 import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
+import { ObjectId } from "mongoose";
 
 @injectable()
 export class ClientRepository implements IClientRepository {
@@ -34,7 +35,7 @@ export class ClientRepository implements IClientRepository {
         await ClientModel.findByIdAndUpdate(id,{password : password})
     }
 
-    async updateClientProfileById(id: string, data: Partial<IClientEntity>): Promise<void> {
-        await ClientModel.findByIdAndUpdate(id,{$set : data})
+    async updateClientProfileById(id: string | ObjectId, data: Partial<IClientEntity>): Promise<any> {
+        return await ClientModel.findByIdAndUpdate(id, data, { new: true });
     }
 }

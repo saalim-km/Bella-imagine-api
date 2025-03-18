@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IGoogleUseCase } from "../../entities/usecaseInterfaces/auth/google-login-usecase.interface";
-import { IUserEntity } from "../../entities/models/user.entiry";
+import { IUserEntity } from "../../entities/models/user.entity";
 import { ERROR_MESSAGES, HTTP_STATUS, TRole } from "../../shared/constants";
 import { OAuth2Client } from "google-auth-library";
 import { IRegisterStrategy } from "./interfaces/register-strategy.interface";

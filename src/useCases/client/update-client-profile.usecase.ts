@@ -2,6 +2,8 @@ import { inject, injectable } from "tsyringe";
 import { IUpdateClientUsecase } from "../../entities/usecaseInterfaces/client/update-client-profile-usecase.interface";
 import { UpdateClientDto } from "../../shared/dtos/user.dto";
 import { IClientRepository } from "../../entities/repositoryInterfaces/client/client-repository.interface";
+import { CustomError } from "../../entities/utils/custom-error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
 
 @injectable()
 export class UpdateClientUsecase implements IUpdateClientUsecase {
@@ -10,26 +12,27 @@ export class UpdateClientUsecase implements IUpdateClientUsecase {
     ){}
     async excute(id : string , data: UpdateClientDto): Promise<void> {
         console.log('----------------------updateClientUseCase-----------------------------');
-        console.log(id,data);
-        const {name,email,profileImage,location,phoneNumber} = data;
-        console.log(email);
 
-        if (!name || !email || !profileImage || !location || !phoneNumber) {
-            throw new Error('Data for updating is missing');
-        }
-
-        const client = await this.clientRepository.findByEmail(data.email);
+        const client = await this.clientRepository.findById(id);
         console.log('client data : ',client);
-        if (!client) {
-            throw new Error('Client not found');
+        if(!client) {
+            throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND,HTTP_STATUS.BAD_REQUEST)
         }
 
-        client.name = name;
-        client.profileImage = profileImage;
-        client.location = location;
-        client.phoneNumber = phoneNumber;
+        if (data?.name !== undefined) {
+            client.name = data.name;
+        }
+        if (data?.phoneNumber !== undefined) {
+            client.phoneNumber = data.phoneNumber;
+        }
+        if (data?.profileImage !== undefined) {
+            client.profileImage = data.profileImage;
+        }
+        if (data?.location !== undefined) {
+            client.location = data.location;
+        }
 
-        const result = await this.clientRepository.updateClientProfileById(id , client);
-        console.log('updated client profile',result);
+        const result = await this.clientRepository.updateClientProfileById(id, client);
+        console.log('updated client profile', result);
     }
 }

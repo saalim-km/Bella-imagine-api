@@ -1,11 +1,11 @@
 import { Schema } from "mongoose";
+import { ICategoryModel } from "../models/category.model";
 
-export const CategorySchema = new Schema(
-    {
-        name: { type: String, required: true, unique: true, trim: true },
-        description: { type: String, trim: true },
-        isActive: { type: Boolean, default: true },
-    },
-    { timestamps: true }
+export const CategorySchema = new Schema<ICategoryModel>(
+  {
+    categoryId: { type: String, required: true, unique: true },
+    status: { type: Boolean, default: true },
+    title: { type: String, required: true },
+  },
+  { timestamps: true }
 );
-

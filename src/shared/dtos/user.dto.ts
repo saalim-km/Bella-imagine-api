@@ -36,19 +36,19 @@ export interface LoginUserDto {
 
 
 export interface UpdateClientDto {
-    name: string;
-    email: string;
-    phoneNumber: number;
-    location: string;
+    name ?: string;
+    email ?: string;
+    phoneNumber ?: number;
+    location ?: string;
     profileImage?:  string; 
 }
 
 export interface UpdateVendorDto {
-    name: string;
-    phoneNumber: number;
-    location: string;
-    languages: string[];
-    portfolioWebsite: string;
-    profileDescription: string;
+    name ?: string;
+    phoneNumber ?: number;
+    location ?: string;
+    languages ?: string[];
+    portfolioWebsite ?: string;
+    profileDescription ?: string;
     profileImage?: string; 
 }
