@@ -1,5 +1,5 @@
 import { IClientEntity } from "../../models/client.entity";
-import { IUserEntity } from "../../models/user.entiry";
+import { IUserEntity } from "../../models/user.entity";
 import { IVendorEntity } from "../../models/vendor.entity";
 
 export interface IAdminRepository {

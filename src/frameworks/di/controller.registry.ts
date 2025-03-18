@@ -16,6 +16,7 @@ import { UpdateUserStatusController } from "../../interfaceAdapters/controllers/
 import { ForgotPasswordSendOtpController } from "../../interfaceAdapters/controllers/auth/forgot-password-send-otp.controller";
 import { ResetPasswordController } from "../../interfaceAdapters/controllers/auth/reset-password.controller";
 import { GetPendingVendorController } from "../../interfaceAdapters/controllers/admin/get-pending-vendor-request.controller";
+import { UpdateVendorRequestController } from "../../interfaceAdapters/controllers/admin/update-vendor-request.controller";
 
 export class ControllerRegistry {
     static registerController() : void {
@@ -49,5 +50,6 @@ export class ControllerRegistry {
 
 
         container.register("GetPendingVendorController" , {useClass : GetPendingVendorController})
+        container.register("UpdateVendorRequestController" , {useClass : UpdateVendorRequestController})
     }
 }

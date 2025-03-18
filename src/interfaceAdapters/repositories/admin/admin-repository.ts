@@ -6,7 +6,7 @@ import { IClientEntity } from "../../../entities/models/client.entity";
 import { CategoryModel } from "../../../frameworks/database/models/category.model";
 import { PaymentModel } from "../../../frameworks/database/models/payment.model";
 import { ReportModel } from "../../../frameworks/database/models/report.mode";
-import { IUserEntity } from "../../../entities/models/user.entiry";
+import { IUserEntity } from "../../../entities/models/user.entity";
 
 export class AdminRepository implements IAdminRepository {
     

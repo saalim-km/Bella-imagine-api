@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 import { IClientEntity } from "../../models/client.entity";
 
@@ -12,5 +13,5 @@ export interface IClientRepository {
     findByEmail(email : string) : Promise<IClientEntity | null>
     findById(id : any) : Promise<IClientEntity | null>
     findByIdAndUpdatePassword(id : string , password : string) : Promise<void>
-    updateClientProfileById(id : string , data : Partial<IClientEntity>) : Promise<void>
+    updateClientProfileById(id : string | ObjectId   , data : Partial<IClientEntity>) : Promise<any>
 }

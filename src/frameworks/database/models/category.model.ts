@@ -1,15 +1,9 @@
-import { model, Document } from "mongoose";
+import { Document, model, ObjectId } from "mongoose";
 import { CategorySchema } from "../schemas/category.schema";
+import { ICategoryEntity } from "../../../entities/models/category.entity";
 
-
-export interface ICategoryEntity extends Document {
-    name: string;
-    description?: string;
-    isActive: boolean;
-    createdAt: Date;
-    updatedAt: Date;
+export interface ICategoryModel extends Omit<ICategoryEntity, "_id">, Document {
+  _id: ObjectId;
 }
 
-const CategoryModel = model<ICategoryEntity>("Category", CategorySchema);
-
-export { CategoryModel };
+export const CategoryModel = model<ICategoryModel>("Category", CategorySchema);
