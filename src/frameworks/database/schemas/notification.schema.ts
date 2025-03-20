@@ -6,10 +6,6 @@ export const notificationSchema = new mongoose.Schema(
             type : String,
             required : true
         },
-        senderId : {
-            type : mongoose.Types.ObjectId,
-            required : true
-        },
         receiverId : {
             type : mongoose.Types.ObjectId,
             required : true

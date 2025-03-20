@@ -18,6 +18,13 @@ import { ForgotPasswordSendOtpController } from "../../interfaceAdapters/control
 import { ResetPasswordController } from "../../interfaceAdapters/controllers/auth/reset-password.controller";
 import { GetPendingVendorController } from "../../interfaceAdapters/controllers/admin/get-pending-vendor-request.controller";
 import { UpdateVendorRequestController } from "../../interfaceAdapters/controllers/admin/update-vendor-request.controller";
+import { CreateNewCategoryController } from "../../interfaceAdapters/controllers/admin/create-new-category.controller";
+import { GetAllPaginatedCategoryController } from "../../interfaceAdapters/controllers/admin/get-all-paginated-category.controller";
+import { GetAllVendorCategoriesController } from "../../interfaceAdapters/controllers/vendor/get-all-vendor-categories.controller";
+import { UpdateCategoryController } from "../../interfaceAdapters/controllers/admin/update-category.controller";
+import { JoinCategoryRequestController } from "../../interfaceAdapters/controllers/vendor/join-category-request.controller";
+import { GetAllVendorNotificationController } from "../../interfaceAdapters/controllers/vendor/get-all-vendor-notification.controller";
+import { GetAllClientNotificationController } from "../../interfaceAdapters/controllers/client/get-all-client-notification.controller";
 
 DependencyInjection.registerAll();
 
@@ -52,3 +59,15 @@ export const updateVendorRequestController = container.resolve(UpdateVendorReque
 
 // |================================ User Status Management ==========================|
 export const updateUserStatusController = container.resolve(UpdateUserStatusController);
+
+// |================================ Category Management ==========================|
+export const createNewCategoryController = container.resolve(CreateNewCategoryController)
+export const getAllPaginatedCategoryController = container.resolve(GetAllPaginatedCategoryController)
+export const getAllVendorCategoriesController = container.resolve(GetAllVendorCategoriesController)
+export const updateCategoryController = container.resolve(UpdateCategoryController)
+export const joinCategoryRequestController = container.resolve(JoinCategoryRequestController)
+
+
+// |====================================== Notification Management ====================================|
+export const getAllVendorNotificationController = container.resolve(GetAllVendorNotificationController)
+export const getAllClientNotificatioController = container.resolve(GetAllClientNotificationController)

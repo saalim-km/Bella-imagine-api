@@ -55,53 +55,80 @@ import { IGetPendingVendorRequestUsecase } from "../../entities/usecaseInterface
 import { GetPendingVendorRequestUsecase } from "../../useCases/admin/get-pending-vendor-request.usecase";
 import { IUpdateVendorRequestUsecase } from "../../entities/usecaseInterfaces/admin/update-vendor-request-usecase.interface";
 import { UpdateVendorRequestUsecase } from "../../useCases/admin/update-vendor-request.usecase";
+import { ICreateNewCategoryUseCase } from "../../entities/usecaseInterfaces/admin/create-new-category-usecase.interface";
+import { CreateNewCategoryUseCase } from "../../useCases/admin/create-new-category.usecase";
+import { IGetAllPaginatedCategoryUseCase } from "../../entities/usecaseInterfaces/admin/get-all-paginated-category-usecase.interface";
+import { GetAllPaginatedCategoryUseCase } from "../../useCases/admin/get-all-paginated-category.usecase";
+import { IGetAllVendorCategoriesUsecase } from "../../entities/usecaseInterfaces/vendor/get-all-vendor-categories-usecase.interface";
+import { GetAllVendorCategoriesUsecase } from "../../useCases/vendor/get-all-vendor-categories.usecase";
+import { IUpdateCategoryUsecase } from "../../entities/usecaseInterfaces/admin/update-category-usecase.interface";
+import { UpdateCategoryUsecase } from "../../useCases/admin/update-category.usecase";
+import { IJoinCategoryRequestUsecase } from "../../entities/usecaseInterfaces/vendor/join-category-reqeust-usecase.interface";
+import { JoinCategoryRequestUseCase } from "../../useCases/vendor/join-category-request.usecase";
+import { IGetAllVendorNotificationUsecase } from "../../entities/usecaseInterfaces/vendor/get-all-vendor-notification-usecase.interface";
+import { GetAllVendorNotificationUsecase } from "../../useCases/vendor/get-all-vendor-notification.usecase";
+import { IGetAllClientNotificationUsecase } from "../../entities/usecaseInterfaces/client/get-all-notification-usecase.interface";
+import { GetAllClientNotificationUsecase } from "../../useCases/client/get-all-client-notification.usecase";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
-    //  |----------------------------------Usecases-----------------------------------------------------------|
-        container.register<IRegisterUsecase>("IRegisterUsecase",{useClass : RegisterUsecase});
-        container.register<ISendEmailUseCase>("ISendEmailUseCase" , {useClass : SendEmailUseCase});
-        container.register<IGenerateTokenUsecase>("IGenerateTokenUsecase" , {useClass : GenerateTokenUsecase});
-        container.register<ILogUseCaseIninterface>("ILogUseCaseIninterface", {useClass : LoginUseCase});  
-        container.register<IRefreshTokenUsecase>("IRefreshTokenUsecase" , {useClass : RefreshTokenUsecase})
-        container.register<IGoogleUseCase>("IGoogleUseCase" , {useClass : GoogleLoginUsecase});
-        container.register<IGetClientDetailsUsecase>("IGetClientDetailsUsecase" , {useClass : GetClientDetailsUsecase})
-        container.register<IGetVendorDetailsUsecase>("IGetVendorDetailsUsecase" , {useClass : GetVendorDetailUsecase})
-        container.register<IUpdateClientUsecase>("IUpdateClientUsecase" , {useClass : UpdateClientUsecase})
-        container.register<IUpdateVendorProfileUsecase>("IUpdateVendorProfileUsecase" , {useClass : UpdateVendorUsecase});
-        container.register<IForgotPassWordSendOtpUsecase>("IForgotPassWordSendOtpUsecase" , {useClass : ForgotPasswordSendOtp});
-        container.register<IResetPasswordUsecase>("IResetPasswordUsecase" , {useClass : ResetPasswordUsecase})
-        container.register<IGetPendingVendorRequestUsecase>("IGetPendingVendorRequestUsecase" , {useClass : GetPendingVendorRequestUsecase})
-        container.register<IUpdateVendorRequestUsecase>("IUpdateVendorRequestUsecase" , {useClass : UpdateVendorRequestUsecase})
+        // |---------------------------------- Use Cases --------------------------------------------------|
+        container.register<IRegisterUsecase>("IRegisterUsecase", { useClass: RegisterUsecase });
+        container.register<ISendEmailUseCase>("ISendEmailUseCase", { useClass: SendEmailUseCase });
+        container.register<IGenerateTokenUsecase>("IGenerateTokenUsecase", { useClass: GenerateTokenUsecase });
+        container.register<ILogUseCaseIninterface>("ILogUseCaseIninterface", { useClass: LoginUseCase });
+        container.register<IRefreshTokenUsecase>("IRefreshTokenUsecase", { useClass: RefreshTokenUsecase });
+        container.register<IGoogleUseCase>("IGoogleUseCase", { useClass: GoogleLoginUsecase });
 
-        
-    //  |----------------------------------Register Strategies----------------------------------------------|
-        container.register<IRegisterStrategy>("ClientRegisterStrategy" , {useClass : ClientRegisterStrategy})
-        container.register<IRegisterStrategy>("VendorRegisterStrategy" , {useClass : VendorRegisterStrategy})
+        container.register<IGetClientDetailsUsecase>("IGetClientDetailsUsecase", { useClass: GetClientDetailsUsecase });
+        container.register<IGetVendorDetailsUsecase>("IGetVendorDetailsUsecase", { useClass: GetVendorDetailUsecase });
+        container.register<IUpdateClientUsecase>("IUpdateClientUsecase", { useClass: UpdateClientUsecase });
+        container.register<IUpdateVendorProfileUsecase>("IUpdateVendorProfileUsecase", { useClass: UpdateVendorUsecase });
+
+        container.register<IForgotPassWordSendOtpUsecase>("IForgotPassWordSendOtpUsecase", { useClass: ForgotPasswordSendOtp });
+        container.register<IResetPasswordUsecase>("IResetPasswordUsecase", { useClass: ResetPasswordUsecase });
+
+        container.register<IGetPendingVendorRequestUsecase>("IGetPendingVendorRequestUsecase", { useClass: GetPendingVendorRequestUsecase });
+        container.register<IUpdateVendorRequestUsecase>("IUpdateVendorRequestUsecase", { useClass: UpdateVendorRequestUsecase });
+
+        // |---------------------------------- Authentication Strategies ----------------------------------|
+        // * Register Strategies
+        container.register<IRegisterStrategy>("ClientRegisterStrategy", { useClass: ClientRegisterStrategy });
+        container.register<IRegisterStrategy>("VendorRegisterStrategy", { useClass: VendorRegisterStrategy });
+
+        // * Login Strategies
+        container.register<ILoginStrategy>("ClientLoginStrategy", { useClass: ClientLoginStrategy });
+        container.register<ILoginStrategy>("VendorLoginStrategy", { useClass: VendorLoginStrategy });
+        container.register<ILoginStrategy>("AdminLoginStrategy", { useClass: AdminLoginStrategy });
+        container.register<ILoginStrategy>("ClientGoogleLoginStrategy", { useClass: ClientGoogleLoginStrategy });
+        container.register<ILoginStrategy>("VendorGoogleLoginStrategy", { useClass: VendorGoogleLoginStrategy });
+
+        // |---------------------------------- Services --------------------------------------------------|
+        container.register<IEmailService>("IEmailService", { useClass: EmailService });
+        container.register<IEmailExistenceService>("IEmailExistenceService", { useClass: EmailExistenceService });
+        container.register<IOtpService>("IOtpService", { useClass: OtpService });
+        container.register<IVerifyOTPUsecase>("IVerifyOTPUsecase", { useClass: VerifyOTPUsecase });
+
+        container.register<IJwtservice>("IJwtservice", { useClass: JwtService });
+        container.register<IBcrypt>("PasswordBcrypt", { useClass: PasswordBcrypt });
+        container.register<IBcrypt>("OtpBcrypt", { useClass: OtpBcrypt });
+
+        // |---------------------------------- User & Vendor Management ----------------------------------|
+        container.register<IGetAllClientUsecase>("IGetAllClientUsecase", { useClass: GetAllClientsUsecase });
+        container.register<IGetAllVendorsUsecase>("IGetAllVendorsUsecase", { useClass: GetAllVendorsUsecase });
+        container.register<IUpdateUserStatusUsecase>("IUpdateUserStatusUsecase", { useClass: UpdateUserStatusUsecase });
+
+        // |---------------------------------- Category Management --------------------------------------|
+        container.register<ICreateNewCategoryUseCase>("ICreateNewCategoryUseCase", { useClass: CreateNewCategoryUseCase });
+        container.register<IGetAllPaginatedCategoryUseCase>("IGetAllPaginatedCategoryUseCase", { useClass: GetAllPaginatedCategoryUseCase });
+        container.register<IGetAllVendorCategoriesUsecase>("IGetAllVendorCategoriesUsecase", { useClass: GetAllVendorCategoriesUsecase });
+        container.register<IUpdateCategoryUsecase>("IUpdateCategoryUsecase" , {useClass : UpdateCategoryUsecase})
+        container.register<IJoinCategoryRequestUsecase>("IJoinCategoryRequestUseCase" , {useClass : JoinCategoryRequestUseCase});
 
 
-    //  |----------------------------------Login Strategies----------------------------------------------------|
-        container.register<ILoginStrategy>("ClientLoginStrategy" , {useClass: ClientLoginStrategy})
-        container.register<ILoginStrategy>("VendorLoginStrategy" , {useClass: VendorLoginStrategy})
-        container.register<ILoginStrategy>("AdminLoginStrategy" , {useClass : AdminLoginStrategy})
-        container.register<ILoginStrategy>("ClientGoogleLoginStrategy" , {useClass : ClientGoogleLoginStrategy})
-        container.register<ILoginStrategy>("VendorGoogleLoginStrategy" , {useClass : VendorGoogleLoginStrategy})
-
-
-    //  |------------------------------------------Services----------------------------------------------------|
-        container.register<IEmailService>("IEmailService" , {useClass : EmailService})
-        container.register<IEmailExistenceService>("IEmailExistenceService" ,{useClass: EmailExistenceService})
-        container.register<IOtpService>("IOtpService" , {useClass : OtpService})
-        container.register<IVerifyOTPUsecase>("IVerifyOTPUsecase",{useClass : VerifyOTPUsecase})
-        container.register<IJwtservice>("IJwtservice" , {useClass : JwtService});
-        container.register<IBcrypt>("PasswordBcrypt" , {useClass : PasswordBcrypt})
-        container.register<IBcrypt>("OtpBcrypt" , {useClass : OtpBcrypt})
-
-        
-    //  |----------------------------------Client & Vendor-----------------------------------------------------------|
-        container.register<IGetAllClientUsecase>("IGetAllClientUsecase" , {useClass : GetAllClientsUsecase})
-        container.register<IGetAllVendorsUsecase>("IGetAllVendorsUsecase" , {useClass : GetAllVendorsUsecase})
-        container.register<IUpdateUserStatusUsecase>("IUpdateUserStatusUsecase" , {useClass : UpdateUserStatusUsecase})
+        // |---------------------------------- Notification Management --------------------------------------|
+        container.register<IGetAllVendorNotificationUsecase>("IGetAllVendorNotificationUsecase" , {useClass : GetAllVendorNotificationUsecase});
+        container.register<IGetAllClientNotificationUsecase>('IGetAllClientNotificationUsecase' ,{useClass : GetAllClientNotificationUsecase})
     }
 
 }

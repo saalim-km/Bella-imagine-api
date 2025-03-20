@@ -22,6 +22,7 @@ export class UpdateVendorRequestUsecase implements IUpdateVendorRequestUsecase {
         if(status === "accept") {
             console.log('accepted request');
             await this.vendorRepository.updateVendorProfile(receiverId,{isVerified : 'accept'});
+            await this.notificationRepository.save({message : 'Congratulations! Your application has been approved. You can now access your dashboard and start receiving bookings' , receiverId : receiverId})
         }else if(status === "reject") {
             console.log('rejected request');
             if(!rejectReason) {
@@ -30,9 +31,8 @@ export class UpdateVendorRequestUsecase implements IUpdateVendorRequestUsecase {
 
             await this.vendorRepository.updateVendorProfile(receiverId,{isVerified : 'reject'});
             const notification : INotificationEntity = {
-                senderId : senderId,
                 receiverId : receiverId,
-                message : rejectReason,
+                message : `Your application has been rejected. Reason: ${rejectReason}. For further details, please contact support`,
             }
             await this.notificationRepository.save(notification)
             console.log('after creating notification');

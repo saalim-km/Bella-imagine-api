@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { authorizeRole, decodeToken, verifyAuth } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
-import { getVendorDetialsController, logoutController, refreshTokenController, updateVendorController } from "../../di/resolver";
+import { getAllVendorCategoriesController, getAllVendorNotificationController, getVendorDetialsController, joinCategoryRequestController, logoutController, refreshTokenController, updateVendorController } from "../../di/resolver";
 
 export class VendorRoute extends BaseRoute {
     constructor() {
@@ -23,6 +23,20 @@ export class VendorRoute extends BaseRoute {
         })
         .put(verifyAuth,authorizeRole(["vendor"]),(req : Request , res : Response)=> {
             updateVendorController.handle(req,res)
+        })
+
+        this.router.route('/vendor/notification')
+        .get(verifyAuth,authorizeRole(["vendor"]),(req : Request , res : Response)=> {
+            getAllVendorNotificationController.handle(req,res)
+        })
+
+        this.router.route('/vendor/categories')
+        .get(verifyAuth,authorizeRole(["vendor"]),(req : Request , res : Response)=> {
+            getAllVendorCategoriesController.handle(req,res)
+        })
+
+        this.router.post("/vendor/categories/join",verifyAuth,authorizeRole(["vendor"]),(req : Request,res : Response)=> {
+            joinCategoryRequestController.handle(req,res)
         })
     }
 }

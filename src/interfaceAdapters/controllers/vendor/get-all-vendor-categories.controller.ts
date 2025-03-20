@@ -1,28 +1,28 @@
-import { Request, Response } from "express";
-import { IGetVendorDetailsController } from "../../../entities/controllerInterfaces/vendor/get-vendor-details-controller.interface";
-import { CustomRequest } from "../../middlewares/auth.middleware";
-import { IGetVendorDetailsUsecase } from "../../../entities/usecaseInterfaces/vendor/get-vendor-details-usecase.interaface";
 import { inject, injectable } from "tsyringe";
-import { ZodError } from "zod";
+import { IGetAllVendorCateoriesController } from "../../../entities/controllerInterfaces/vendor/get-all-vendor-categories-controller.interface";
+import { IGetAllVendorCategoriesUsecase } from "../../../entities/usecaseInterfaces/vendor/get-all-vendor-categories-usecase.interface";
+import { Request, Response } from "express";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
+import { ZodError } from "zod";
 import { CustomError } from "../../../entities/utils/custom-error";
 
 @injectable()
-export class GetVendorDetailsController implements IGetVendorDetailsController {
+export class GetAllVendorCategoriesController
+  implements IGetAllVendorCateoriesController
+{
   constructor(
-    @inject("IGetVendorDetailsUsecase")
-    private getVendorDetailsUsecase: IGetVendorDetailsUsecase
+    @inject("IGetAllVendorCategoriesUsecase")
+    private allVendorCategoriesUsecase: IGetAllVendorCategoriesUsecase
   ) {}
+
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      console.log(
-        "---------------------vendor details controller---------------------"
-      );
-      const user = (req as CustomRequest).user;
-      const vendor = await this.getVendorDetailsUsecase.execute(user._id);
-      console.log('-----------------------------after getting data from the usecase in controller------------------------------')
-      res.status(HTTP_STATUS.OK).json({success : true , vendor})
-
+        console.log('-----------------------------GetAllVendorCategoriesController-------------------------------');
+      const categories = await this.allVendorCategoriesUsecase.execute();
+      console.log(categories);
+      res
+        .status(HTTP_STATUS.OK)
+        .json({ success: true, categories: categories });
     } catch (error) {
       if (error instanceof ZodError) {
         const errors = error.errors.map((err) => ({
