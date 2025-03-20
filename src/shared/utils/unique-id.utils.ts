@@ -8,3 +8,12 @@ export const generateVendorId = (): string => {
 
     return `VND-${uniquePart}-${timestamp}-${randomStr}`;
 };
+
+
+export const generateCategoryId = (): string => {
+    const uniquePart = uuidv4().split("-")[0];
+    const timestamp = Date.now().toString(36);
+    const randomStr = randomBytes(3).toString("hex");
+
+    return `CAT-${uniquePart}-${timestamp}-${randomStr}`;
+};

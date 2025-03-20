@@ -11,6 +11,9 @@ export class NotificationRepository implements INotificationRepository {
     async find(): Promise<INotificationEntity[]> {
         return await NotificationModel.find()
     }
+    async findByReceiverId(receiverId: string): Promise<INotificationEntity[]> {
+        return await NotificationModel.find({receiverId : receiverId})
+    }
     async updateNotification(id: string, data: Partial<INotificationEntity>): Promise<void> {
         await NotificationModel.findByIdAndUpdate(id,data)
     }

@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { IForgotPassWordSendOtpUsecase } from "../../entities/usecaseInterfaces/auth/forgot-password-send-otp-usecase.interfac";
 import { IClientRepository } from "../../entities/repositoryInterfaces/client/client-repository.interface";
 import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
-import { HTTP_STATUS, TRole } from "../../shared/constants";
+import { ERROR_MESSAGES, HTTP_STATUS, TRole } from "../../shared/constants";
 import { IEmailService } from "../../entities/services/email-service.interface";
 import { IOtpService } from "../../entities/services/otp-service.interface";
 import { IBcrypt } from "../../frameworks/security/bcrypt.interface";
@@ -22,7 +22,7 @@ export class ForgotPasswordSendOtp implements IForgotPassWordSendOtpUsecase {
         console.log('---------------------------------ForgotPasswordSendOtp---------------------------');
         const otp = await this.otpService.generateOtp()
         const hashedOtp = await this.otpBcrypt.hash(otp);
-        console.log(`-----------otp : ${otp}-----------------`);
+        console.log(`--------------otp : ${otp}-----------------`);
         
         if(userType === "vendor") {
             console.log('usertype is vendor');
@@ -44,7 +44,9 @@ export class ForgotPasswordSendOtp implements IForgotPassWordSendOtpUsecase {
 
             await this.emailService.sendEmail(email,'Reset Password Otp',otp)
             this.otpService.storeOtp(email,hashedOtp);
+        }else{
+            throw new CustomError('Wrong user type',HTTP_STATUS.UNAUTHORIZED)
         }
-        console.log('none usertype');
+
     }
 }

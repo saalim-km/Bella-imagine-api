@@ -19,3 +19,9 @@ export interface UpdateBlockStatusRequest {
     userType : TRole,
     userId : string
 }
+
+
+export interface PaginatedRequestCategory {
+  search ?: string,
+  status ?: boolean,
+}

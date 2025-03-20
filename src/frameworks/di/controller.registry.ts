@@ -17,6 +17,15 @@ import { ForgotPasswordSendOtpController } from "../../interfaceAdapters/control
 import { ResetPasswordController } from "../../interfaceAdapters/controllers/auth/reset-password.controller";
 import { GetPendingVendorController } from "../../interfaceAdapters/controllers/admin/get-pending-vendor-request.controller";
 import { UpdateVendorRequestController } from "../../interfaceAdapters/controllers/admin/update-vendor-request.controller";
+import { CreateNewCategoryController } from "../../interfaceAdapters/controllers/admin/create-new-category.controller";
+import { GetAllPaginatedCategoryController } from "../../interfaceAdapters/controllers/admin/get-all-paginated-category.controller";
+import { GetAllVendorCategoriesController } from "../../interfaceAdapters/controllers/vendor/get-all-vendor-categories.controller";
+import { UpdateCategoryController } from "../../interfaceAdapters/controllers/admin/update-category.controller";
+import { JoinCategoryRequestController } from "../../interfaceAdapters/controllers/vendor/join-category-request.controller";
+import { IGetAllVendorNotificationController } from "../../entities/controllerInterfaces/vendor/get-all-notifications-controller.interface";
+import { GetAllVendorNotificationController } from "../../interfaceAdapters/controllers/vendor/get-all-vendor-notification.controller";
+import { IGetAllClientNotificationController } from "../../entities/controllerInterfaces/client/get-all-client-notification-controller.interface";
+import { GetAllClientNotificationController } from "../../interfaceAdapters/controllers/client/get-all-client-notification.controller";
 
 export class ControllerRegistry {
     static registerController() : void {
@@ -27,29 +36,42 @@ export class ControllerRegistry {
         container.register("SendEmailController", { useClass: SendEmailController });
         container.register("VerifyOTPController", { useClass: VerifyOTPController });
 
-        // |-------------------------- Authentication Controllers ------------------------|
+        // |-------------------------- Authentication ------------------------|
         container.register("LoginController", { useClass: LoginController });
         container.register("LogoutController", { useClass: LogoutController });
         container.register("RefreshTokenController", { useClass: RefreshTokenController });
         container.register("GoogleLoginController", { useClass: GoogleLoginController });
         container.register("ForgotPasswordSendOtpController" , {useClass : ForgotPasswordSendOtpController})
 
-        // |-------------------------- User Details Controllers --------------------------|
+        // |-------------------------- User Details --------------------------|
         container.register("GetClientDetailsController", { useClass: GetClientDetailsController });
         container.register("GetVendorDetailsController", { useClass: GetVendorDetailsController });
 
-         // |-------------------------- User Update Controllers --------------------------|
+         // |-------------------------- User Update --------------------------|
         container.register('UpdateClientController',{useClass : UpdateClientController})
         container.register("UpdateVendorController" , {useClass : UpdateVendorController})
 
-
+        // |-------------------------- client and Vendor Management --------------------------|
         container.register("GetAllClientsController" , {useClass : GetAllClientsController})
         container.register("GetAllVendorsController" , {useClass : GetAllVendorsController})
         container.register("UpdateUserStatusController" , {useClass : UpdateUserStatusController})
         container.register("ResetPasswordController" , {useClass : ResetPasswordController})
 
 
+        // |-------------------------- vendor Request --------------------------|
         container.register("GetPendingVendorController" , {useClass : GetPendingVendorController})
         container.register("UpdateVendorRequestController" , {useClass : UpdateVendorRequestController})
+
+
+        // |-------------------------- category management --------------------------|
+        container.register("CreateNewCategoryController", {useClass: CreateNewCategoryController})
+        container.register("GetAllPaginatedCategoryController" , {useClass : GetAllPaginatedCategoryController})
+        container.register("GetAllVendorCategoriesController" , {useClass : GetAllVendorCategoriesController})
+        container.register("UpdateCategoryController" , {useClass : UpdateCategoryController})
+        container.register("JoinCategoryRequestUseCase" , {useClass : JoinCategoryRequestController})
+
+        // |-------------------------- Notification management --------------------------|
+        container.register("IGetAllVendorNotificationController" , {useClass : GetAllVendorNotificationController})
+        container.register("IGetAllClientNotificationController" , {useClass : GetAllClientNotificationController})
     }
 }

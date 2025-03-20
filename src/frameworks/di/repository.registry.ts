@@ -9,6 +9,10 @@ import { IAdminRepository } from "../../entities/repositoryInterfaces/admin/admi
 import { AdminRepository } from "../../interfaceAdapters/repositories/admin/admin-repository";
 import { INotificationRepository } from "../../entities/repositoryInterfaces/common/notification-repository.interface";
 import { NotificationRepository } from "../../interfaceAdapters/repositories/common/notification.repository";
+import { ICategoryRepository } from "../../entities/repositoryInterfaces/common/category-repository.interface";
+import { CategoryRespository } from "../../interfaceAdapters/repositories/common/category.repository";
+import { ICategoryRequestRepository } from "../../entities/repositoryInterfaces/common/category-reqeust-repository.interface";
+import { CategoryRequestRepository } from "../../interfaceAdapters/repositories/common/category-request.repository";
 
 export class RepositoryRegistry {
   static registerRepositories(): void {
@@ -32,5 +36,13 @@ export class RepositoryRegistry {
     container.register<INotificationRepository>("INotificationRepository",{
         useClass : NotificationRepository
     });
+
+    container.register<ICategoryRepository>("ICategoryRepository" , {
+      useClass : CategoryRespository
+    })
+
+    container.register<ICategoryRequestRepository>("ICategoryRequestRepository",{
+      useClass : CategoryRequestRepository
+    })
   }
 }

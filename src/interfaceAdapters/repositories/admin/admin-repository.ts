@@ -29,7 +29,7 @@ export class AdminRepository implements IAdminRepository {
 
     async getCategories(): Promise<string[]> {
         const categories = await CategoryModel.find({});
-        return categories.map(category => category.name);
+        return categories.map(category => category.title);
     }
 
     async deleteCategory(categoryId: string): Promise<void> {
