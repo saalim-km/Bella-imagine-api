@@ -32,8 +32,8 @@ export class VendorRepository implements IVendorRepository {
         return await VendorModel.findById(id);
     }
 
-    async findByIdAndUpdateVendorCategories(id: string | ObjectId, categories: string[] | ObjectId[]): Promise<IVendorEntity | null> {
-        return await VendorModel.findByIdAndUpdate(id, { categories }, { new: true });
+    async findByIdAndUpdateVendorCategories(id: string | ObjectId, categories: ObjectId[]): Promise<IVendorEntity | null> {
+        return await VendorModel.findByIdAndUpdate(id, { categories : categories }, { new: true });
     }
 
     async findByIdAndResetCategory(id: string | ObjectId): Promise<void> {

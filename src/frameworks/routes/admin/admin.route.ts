@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { authorizeRole, decodeToken, verifyAuth } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
-import { createNewCategoryController, getAllClientController, getAllPaginatedCategoryController, getAllVendorController, getPendingVendorController, logoutController, refreshTokenController, updateCategoryController, updateUserStatusController, updateVendorRequestController } from "../../di/resolver";
+import { createNewCategoryController, getAllClientController, getAllPaginatedCategoryController, getAllVendorController, getCategoryRequestController, getPendingVendorController, logoutController, refreshTokenController, updateCategoryController, updateCategoryRequestStatusController, updateUserStatusController, updateVendorRequestController } from "../../di/resolver";
 
 export class AdminRoute extends BaseRoute {
     constructor(){
@@ -57,5 +57,13 @@ export class AdminRoute extends BaseRoute {
         .patch(verifyAuth,authorizeRole(["admin"]),(req:Request,res : Response)=> {
             updateCategoryController.handle(req,res)
         })
+
+        this.router.route('/admin/category-request')
+        .get(verifyAuth, authorizeRole(["admin"]), (req: Request, res: Response) => {
+            getCategoryRequestController.handle(req,res)
+        })
+        .patch(verifyAuth, authorizeRole(["admin"]), (req: Request, res: Response) => {
+            updateCategoryRequestStatusController.handle(req,res)
+        });
     }
 }

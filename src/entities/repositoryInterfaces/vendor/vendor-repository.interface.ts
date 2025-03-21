@@ -17,7 +17,7 @@ export interface IVendorRepository {
   // Managing categories
   findByIdAndUpdateVendorCategories(
     id: string | ObjectId,
-    categories: string[] | ObjectId[]
+    categories: ObjectId[]
   ): Promise<IVendorEntity | null>;
   findByIdAndResetCategory(
     id: string | ObjectId,

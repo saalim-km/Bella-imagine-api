@@ -58,6 +58,7 @@ export class VendorRegisterStrategy implements IRegisterStrategy<IVendorEntity> 
                 description: user.description || "",
                 notifications: [],
                 availableSlots: [],
+                verificationDocuments : [],
                 services: [],
             })
         }else {
@@ -81,6 +82,7 @@ export class VendorRegisterStrategy implements IRegisterStrategy<IVendorEntity> 
                 description: user.description || "",
                 notifications: [],
                 availableSlots: [],
+                verificationDocuments : [],
                 services: [],
             })
         }
