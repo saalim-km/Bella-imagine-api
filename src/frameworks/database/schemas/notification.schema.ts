@@ -15,5 +15,8 @@ export const notificationSchema = new mongoose.Schema(
             default : false
         }
     }
-    ,{timestamps : true}
+    ,{
+        timestamps : true,
+        capped : {size: 1048576, max: 6}
+    }
 )

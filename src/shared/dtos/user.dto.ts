@@ -19,9 +19,6 @@ export interface VendorDTO {
     description ?: string;
     categories ?: [];
     status ?: TStatus[];
-    availableSlots ?: [];
-    notifications ?: [];
-    services ?: [];
 }
 
 
@@ -51,4 +48,5 @@ export interface UpdateVendorDto {
     portfolioWebsite ?: string;
     profileDescription ?: string;
     profileImage?: string; 
+    verificationDocumentUrls ?: string[]
 }

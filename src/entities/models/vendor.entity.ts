@@ -9,9 +9,6 @@ export interface IVendorEntity extends IClientEntity {
     categories ?: ObjectId[];
     languages ?: string[];
     description ?: string;
-    notifications ?: string[];
-    availableSlots ?: TSlot[];
     verificationDocuments ?: string[];
-    services ?: TService[];
     isVerified ?: 'pending' | 'accept' | 'reject'
 }

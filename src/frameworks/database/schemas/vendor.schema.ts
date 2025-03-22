@@ -60,38 +60,9 @@ export const vendorSchema = new mongoose.Schema<IVendorEntity>(
     isActive: {
       type: Boolean,
     },
-    availableSlots: [
-      {
-        slotDate: {
-          type: String,
-        },
-        slotBooked: {
-          type: Boolean,
-        },
-      },
-    ],
     verificationDocuments: {
       type: [String],
     },
-    notifications: [
-      {
-        type: String,
-      },
-    ],
-    services: [
-      {
-        category: {
-          type: mongoose.Types.ObjectId,
-          ref: "Category",
-        },
-        duration: {
-          type: Number,
-        },
-        pricePerHour: {
-          type: Number,
-        },
-      },
-    ],
     isVerified: {
       type: String,
       enum: ["pending", "accept", "reject"],
