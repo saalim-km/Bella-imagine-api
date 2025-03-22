@@ -29,11 +29,11 @@ export class VendorRepository implements IVendorRepository {
     }
 
     async findById(id: string | ObjectId): Promise<IVendorEntity | null> {
-        return await VendorModel.findById(id);
+        return await VendorModel.findById(id).populate({ path: 'categories',select : 'title'}).exec()
     }
 
-    async findByIdAndUpdateVendorCategories(id: string | ObjectId, categories: string[] | ObjectId[]): Promise<IVendorEntity | null> {
-        return await VendorModel.findByIdAndUpdate(id, { categories }, { new: true });
+    async findByIdAndUpdateVendorCategories(id: string | ObjectId, categories: ObjectId[]): Promise<IVendorEntity | null> {
+        return await VendorModel.findByIdAndUpdate(id, { categories : categories }, { new: true });
     }
 
     async findByIdAndResetCategory(id: string | ObjectId): Promise<void> {

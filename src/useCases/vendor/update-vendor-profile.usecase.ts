@@ -39,7 +39,11 @@ export class UpdateVendorUsecase implements IUpdateVendorProfileUsecase {
         if (data?.portfolioWebsite !== undefined) {
             vendor.portfolioWebsite = data.portfolioWebsite;
         }
+        if(data?.verificationDocumentUrls && data.verificationDocumentUrls.length > 0){
+            vendor.verificationDocuments = data?.verificationDocumentUrls;
+        }
 
+        console.log('final vendor data before update: ',vendor);
         const result = await this.vendorRepository.updateVendorProfile(id, vendor);
         console.log('updated vendor profile', result);
     }

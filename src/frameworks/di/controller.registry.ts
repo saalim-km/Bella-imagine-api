@@ -22,10 +22,10 @@ import { GetAllPaginatedCategoryController } from "../../interfaceAdapters/contr
 import { GetAllVendorCategoriesController } from "../../interfaceAdapters/controllers/vendor/get-all-vendor-categories.controller";
 import { UpdateCategoryController } from "../../interfaceAdapters/controllers/admin/update-category.controller";
 import { JoinCategoryRequestController } from "../../interfaceAdapters/controllers/vendor/join-category-request.controller";
-import { IGetAllVendorNotificationController } from "../../entities/controllerInterfaces/vendor/get-all-notifications-controller.interface";
 import { GetAllVendorNotificationController } from "../../interfaceAdapters/controllers/vendor/get-all-vendor-notification.controller";
-import { IGetAllClientNotificationController } from "../../entities/controllerInterfaces/client/get-all-client-notification-controller.interface";
 import { GetAllClientNotificationController } from "../../interfaceAdapters/controllers/client/get-all-client-notification.controller";
+import { GetCategoryRequestController } from "../../interfaceAdapters/controllers/admin/get-category-request.controller";
+import { UpdateCategoryRequestStatusController } from "../../interfaceAdapters/controllers/admin/update-category-request-status.controller";
 
 export class ControllerRegistry {
     static registerController() : void {
@@ -69,6 +69,8 @@ export class ControllerRegistry {
         container.register("GetAllVendorCategoriesController" , {useClass : GetAllVendorCategoriesController})
         container.register("UpdateCategoryController" , {useClass : UpdateCategoryController})
         container.register("JoinCategoryRequestUseCase" , {useClass : JoinCategoryRequestController})
+        container.register("GetCategoryRequestController",{useClass : GetCategoryRequestController})
+        container.register("UpdateCategoryRequestStatusController",{useClass : UpdateCategoryRequestStatusController})
 
         // |-------------------------- Notification management --------------------------|
         container.register("IGetAllVendorNotificationController" , {useClass : GetAllVendorNotificationController})

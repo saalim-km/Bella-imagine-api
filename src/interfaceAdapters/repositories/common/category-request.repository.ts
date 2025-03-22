@@ -3,6 +3,7 @@ import { ICategoryRequestEntity } from "../../../entities/models/category-reques
 import { ICategoryRequestRepository } from "../../../entities/repositoryInterfaces/common/category-reqeust-repository.interface";
 import { CategoryRequestModel } from "../../../frameworks/database/models/catgory-request.model";
 import { ObjectId } from "mongoose";
+import { TCategoryRequestStatus } from "../../../shared/types/admin/admin.type";
 
 @injectable()
 export class CategoryRequestRepository implements ICategoryRequestRepository {
@@ -32,19 +33,19 @@ export class CategoryRequestRepository implements ICategoryRequestRepository {
     return await CategoryRequestModel.find()
       .populate({
         path: "vendorId",
-        select: "firstName lastName",
+        select: "name email",
       })
       .populate({
         path: "categoryId",
-        select: "title",
+        select: "title categoryId",
       })
       .sort({ createdAt: -1 })
       .lean();
   }
 
-  async findByIdAndUpdateStatus(id: any, status: string): Promise<void> {
+  async findByIdAndUpdateStatus(id: any, status: TCategoryRequestStatus): Promise<void> {
     await CategoryRequestModel.findByIdAndUpdate(id, {
-      $set: { status },
+      $set: { status : status },
     });
   }
 }

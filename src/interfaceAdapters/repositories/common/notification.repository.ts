@@ -12,7 +12,7 @@ export class NotificationRepository implements INotificationRepository {
         return await NotificationModel.find()
     }
     async findByReceiverId(receiverId: string): Promise<INotificationEntity[]> {
-        return await NotificationModel.find({receiverId : receiverId})
+        return await NotificationModel.find({receiverId : receiverId}).sort({createdAt : -1})
     }
     async updateNotification(id: string, data: Partial<INotificationEntity>): Promise<void> {
         await NotificationModel.findByIdAndUpdate(id,data)

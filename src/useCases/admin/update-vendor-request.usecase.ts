@@ -33,7 +33,7 @@ export class UpdateVendorRequestUsecase implements IUpdateVendorRequestUsecase {
             const notification : INotificationEntity = {
                 receiverId : receiverId,
                 message : `Your application has been rejected. Reason: ${rejectReason}. For further details, please contact support`,
-            }
+                }
             await this.notificationRepository.save(notification)
             console.log('after creating notification');
         }

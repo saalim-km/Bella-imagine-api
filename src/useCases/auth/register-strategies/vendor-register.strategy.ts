@@ -56,9 +56,7 @@ export class VendorRegisterStrategy implements IRegisterStrategy<IVendorEntity> 
                 categories: [],
                 languages: user.languages || [],
                 description: user.description || "",
-                notifications: [],
-                availableSlots: [],
-                services: [],
+                verificationDocuments : [],
             })
         }else {
             console.log('no googlId');
@@ -79,9 +77,7 @@ export class VendorRegisterStrategy implements IRegisterStrategy<IVendorEntity> 
                 categories: [],
                 languages: user.languages || [],
                 description: user.description || "",
-                notifications: [],
-                availableSlots: [],
-                services: [],
+                verificationDocuments : [],
             })
         }
 

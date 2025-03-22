@@ -1,5 +1,6 @@
 import { ObjectId } from "mongoose";
 import { ICategoryRequestEntity } from "../../models/category-request.entity";
+import { TCategoryRequestStatus } from "../../../shared/types/admin/admin.type";
 
 export interface ICategoryRequestRepository {
   save(
@@ -18,5 +19,5 @@ export interface ICategoryRequestRepository {
 
   find(): Promise<ICategoryRequestEntity[] | []>;
 
-  findByIdAndUpdateStatus(id: any, status: string): Promise<void>;
+  findByIdAndUpdateStatus(id: any, status: TCategoryRequestStatus): Promise<void>;
 }

@@ -69,6 +69,10 @@ import { IGetAllVendorNotificationUsecase } from "../../entities/usecaseInterfac
 import { GetAllVendorNotificationUsecase } from "../../useCases/vendor/get-all-vendor-notification.usecase";
 import { IGetAllClientNotificationUsecase } from "../../entities/usecaseInterfaces/client/get-all-notification-usecase.interface";
 import { GetAllClientNotificationUsecase } from "../../useCases/client/get-all-client-notification.usecase";
+import { IGetCategoryRequestUsecase } from "../../entities/usecaseInterfaces/admin/get-category-request-usecase.interface";
+import { GetCategoryRequestUsecase } from "../../useCases/admin/get-category-request.usecase";
+import { IUpdateCategoryRequestStatusUsecase } from "../../entities/usecaseInterfaces/admin/update-category-request-status-usecase.interface";
+import { UpdateCategoryRequestStatusUsecase } from "../../useCases/admin/update-category-request-status.usecase";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -124,9 +128,11 @@ export class UsecaseRegistry {
         container.register<IGetAllVendorCategoriesUsecase>("IGetAllVendorCategoriesUsecase", { useClass: GetAllVendorCategoriesUsecase });
         container.register<IUpdateCategoryUsecase>("IUpdateCategoryUsecase" , {useClass : UpdateCategoryUsecase})
         container.register<IJoinCategoryRequestUsecase>("IJoinCategoryRequestUseCase" , {useClass : JoinCategoryRequestUseCase});
+        container.register<IGetCategoryRequestUsecase>("IGetCategoryRequestUsecase" , {useClass : GetCategoryRequestUsecase})
+        container.register<IUpdateCategoryRequestStatusUsecase>("IUpdateCategoryRequestStatusUsecase",{useClass : UpdateCategoryRequestStatusUsecase})
 
 
-        // |---------------------------------- Notification Management --------------------------------------|
+        // |--------------------------------------------------------- Notification Management ---------------------------------------------------|
         container.register<IGetAllVendorNotificationUsecase>("IGetAllVendorNotificationUsecase" , {useClass : GetAllVendorNotificationUsecase});
         container.register<IGetAllClientNotificationUsecase>('IGetAllClientNotificationUsecase' ,{useClass : GetAllClientNotificationUsecase})
     }

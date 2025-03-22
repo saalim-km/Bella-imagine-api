@@ -7,7 +7,7 @@ export const CategoryRequestSchema = new Schema<ICategoryRequestModel>(
     categoryId: { type: Schema.Types.ObjectId, ref: "Category" },
     status: {
       type: String,
-      enum: ["pending", "accepted", "rejected"],
+      enum: ["pending", "approved", "rejected"],
       default: "pending",
     },
   },

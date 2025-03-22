@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import { TRole } from "../../constants";
 
 export interface PaginatedResponse<T> {
@@ -24,4 +25,14 @@ export interface UpdateBlockStatusRequest {
 export interface PaginatedRequestCategory {
   search ?: string,
   status ?: boolean,
+}
+
+
+export type TCategoryRequestStatus = "rejected" | "approved"
+
+
+export interface ICategoryRequest {
+  status : TCategoryRequestStatus,
+  vendorId : ObjectId,
+  categoryId : ObjectId
 }
