@@ -27,6 +27,7 @@ import { GetAllVendorNotificationController } from "../../interfaceAdapters/cont
 import { GetAllClientNotificationController } from "../../interfaceAdapters/controllers/client/get-all-client-notification.controller";
 import { GetCategoryRequestController } from "../../interfaceAdapters/controllers/admin/get-category-request.controller";
 import { UpdateCategoryRequestStatusController } from "../../interfaceAdapters/controllers/admin/update-category-request-status.controller";
+import { GetUserDetailsController } from "../../interfaceAdapters/controllers/admin/get-user-details.controller";
 
 DependencyInjection.registerAll();
 
@@ -74,3 +75,6 @@ export const updateCategoryRequestStatusController = container.resolve(UpdateCat
 // |====================================== Notification Management ====================================|
 export const getAllVendorNotificationController = container.resolve(GetAllVendorNotificationController)
 export const getAllClientNotificatioController = container.resolve(GetAllClientNotificationController)
+
+
+export const getUserDetailsController = container.resolve(GetUserDetailsController)

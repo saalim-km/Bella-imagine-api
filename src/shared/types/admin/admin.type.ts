@@ -36,3 +36,8 @@ export interface ICategoryRequest {
   vendorId : ObjectId,
   categoryId : ObjectId
 }
+
+export interface  IUserDetailsRequest {
+  id : string,
+  role : TRole
+}

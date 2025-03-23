@@ -73,6 +73,8 @@ import { IGetCategoryRequestUsecase } from "../../entities/usecaseInterfaces/adm
 import { GetCategoryRequestUsecase } from "../../useCases/admin/get-category-request.usecase";
 import { IUpdateCategoryRequestStatusUsecase } from "../../entities/usecaseInterfaces/admin/update-category-request-status-usecase.interface";
 import { UpdateCategoryRequestStatusUsecase } from "../../useCases/admin/update-category-request-status.usecase";
+import { IGetUserDetailsUsecase } from "../../entities/usecaseInterfaces/admin/get-user-details-usecase.interface";
+import { GetUserDetailsUsecase } from "../../useCases/admin/get-user-details.usecase";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -121,6 +123,7 @@ export class UsecaseRegistry {
         container.register<IGetAllClientUsecase>("IGetAllClientUsecase", { useClass: GetAllClientsUsecase });
         container.register<IGetAllVendorsUsecase>("IGetAllVendorsUsecase", { useClass: GetAllVendorsUsecase });
         container.register<IUpdateUserStatusUsecase>("IUpdateUserStatusUsecase", { useClass: UpdateUserStatusUsecase });
+        container.register<IGetUserDetailsUsecase>("IGetUserDetailsUsecase" , {useClass : GetUserDetailsUsecase})
 
         // |---------------------------------- Category Management --------------------------------------|
         container.register<ICreateNewCategoryUseCase>("ICreateNewCategoryUseCase", { useClass: CreateNewCategoryUseCase });
