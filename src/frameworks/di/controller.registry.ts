@@ -27,6 +27,7 @@ import { GetAllClientNotificationController } from "../../interfaceAdapters/cont
 import { GetCategoryRequestController } from "../../interfaceAdapters/controllers/admin/get-category-request.controller";
 import { UpdateCategoryRequestStatusController } from "../../interfaceAdapters/controllers/admin/update-category-request-status.controller";
 import { GetUserDetailsController } from "../../interfaceAdapters/controllers/admin/get-user-details.controller";
+import { CreateServiceController } from "../../interfaceAdapters/controllers/vendor/create-service.controller";
 
 export class ControllerRegistry {
     static registerController() : void {
@@ -74,8 +75,11 @@ export class ControllerRegistry {
         container.register("GetCategoryRequestController",{useClass : GetCategoryRequestController})
         container.register("UpdateCategoryRequestStatusController",{useClass : UpdateCategoryRequestStatusController})
 
-        // |-------------------------- Notification management --------------------------|
+        // |--------------------------------------- Notification management ------------------------------------|
         container.register("IGetAllVendorNotificationController" , {useClass : GetAllVendorNotificationController})
         container.register("IGetAllClientNotificationController" , {useClass : GetAllClientNotificationController})
-    }
+
+        // |--------------------------------------- Service management ------------------------------------|
+        container.register("CreateServiceController",{useClass : CreateServiceController})
+    }   
 }

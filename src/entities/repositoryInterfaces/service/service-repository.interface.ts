@@ -1,0 +1,29 @@
+import { IServiceFilter } from "../../../shared/types/vendor/service.type";
+import { IServiceEntity } from "../../models/service.entity";
+
+export interface IServiceRepository {
+    create (serviceData: Partial<IServiceEntity>): Promise<void>;
+
+    // findById?(id: string): Promise<IServiceEntity | null>;
+
+    // findAll?(filters?: IServiceFilter, page?: number, limit?: number): Promise<{
+    //   services: IServiceEntity[];
+    //   total: number;
+    //   page: number;
+    //   totalPages: number;
+    // }>;
+
+    // update?(id: string, updateData: Partial<IServiceEntity>): Promise<IServiceEntity | null>;
+
+    // delete?(id: string): Promise<boolean>;
+
+    // findByVendor?(vendorId: string): Promise<IServiceEntity[]>;
+
+    // searchByName?(name: string): Promise<IServiceEntity[]>;
+
+    // getAvailableServices?(date: string): Promise<IServiceEntity[]>;
+
+    // addAvailability?(serviceId: string, availability: IServiceEntity['availableDates'][0]): Promise<IServiceEntity | null>;
+
+    findByServiceName (name : string) : Promise<IServiceEntity | null>
+}

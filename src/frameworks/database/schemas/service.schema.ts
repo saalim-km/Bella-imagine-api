@@ -1,14 +1,13 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
+import { IServiceModel } from "../models/service.model";
 
 const customSchemaField = new mongoose.Schema({
-  fieldName: {
+  name: {
     type: String,
-    required: true,
   },
-  fieldType: {
+  type: {
     type: String,
     enum: ["string", "number", "boolean", "array", "date"],
-    required: true,
   },
   required: {
     type: Boolean,
@@ -20,9 +19,7 @@ const customSchemaField = new mongoose.Schema({
   },
 });
 
-
-
-export const serviceSchema = new mongoose.Schema({
+export const serviceSchema = new mongoose.Schema<IServiceModel>({
   vendor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Vendor",
@@ -33,88 +30,78 @@ export const serviceSchema = new mongoose.Schema({
     ref: "Category",
     required: true,
   },
-  serviceName: {
+  serviceTitle: {
     type: String,
     required: true,
   },
-  description: {
+  serviceDescription: {
     type: String,
   },
   styleSpecialty: {
     type: [String],
-    enum: [
-      "portrait",
-      "wedding",
-      "commercial",
-      "event",
-      "family",
-      "newborn",
-      "product",
-      "real estate",
-      "other",
-    ],
-    required: true,
   },
   sessionDurations: [
     {
-      durationInHours: { type: Number, required: true },
-      price: { type: Number, required: true },
+      durationInHours: {
+        type: Number,
+      },
+      price: {
+        type: Number,
+      },
     },
   ],
   features: [String],
   customFields: [customSchemaField],
-  locationOptions: {
-    studio: {
-      type: Boolean,
-      default: false,
-    },
-    onLocation: {
-      type: Boolean,
-      default: false,
+  location: {
+    options: {
+      studio: {
+        type: Boolean,
+      },
+      onLocation: {
+        type: Boolean,
+      },
     },
     travelFee: {
       type: Number,
-      default: 0,
+    },
+    city: {
+      type: String,
+    },
+    state: {
+      type: String,
+    },
+    country: {
+      type: String,
     },
   },
-  equipmentIncluded: [String],
-  portfolioSamples: [String],
-  depositRequired: {
-    amount: {
+  equipment: [String],
+  portfolioImages: [String],
+  cancellationPolicies: {
+    deadline: {
       type: Number,
-      default: 0,
+      default: 48,
     },
-    percentage: {
+    refundPercentage: {
       type: Number,
-      default: 0,
+      default: 50,
     },
-  },
-  cancellationPolicy: {
-    deadline: { type: Number, default: 48 },
-    refundPercentage: { type: Number, default: 50 },
   },
   availableDates: [
     {
-      date: { type: String, required: true },
-      availableHours: {
-        startTime: { type: String, required: true },
-        endTime: { type: String, required: true },
-      },
-      bufferTime: { type: Number, default: 15 },
+      date: { type: String },
+      timeSlots: [
+        {
+          startTime: { type: String  },
+          endTime: { type: String  },
+          capacity: { type: Number  },
+          isBooked: {type : Boolean , default : false}
+        },
+      ],
     },
   ],
-  recurringAvailability: [
-    {
-      dayOfWeek: { type: Number, min: 0, max: 6 },
-      startTime: String,
-      endTime: String,
-    },
-  ],
-  blackoutDates: [String],
-  maxBookingsPerDay: { type: Number, default: 3 },
-  rating: {
-    average: { type: Number, default: 0 },
-    count: { type: Number, default: 0 },
-  },
   tags: [String],
-});
+  isPublished: {
+    type: Boolean,
+    default: false,
+  }
+})

@@ -28,6 +28,7 @@ import { GetAllClientNotificationController } from "../../interfaceAdapters/cont
 import { GetCategoryRequestController } from "../../interfaceAdapters/controllers/admin/get-category-request.controller";
 import { UpdateCategoryRequestStatusController } from "../../interfaceAdapters/controllers/admin/update-category-request-status.controller";
 import { GetUserDetailsController } from "../../interfaceAdapters/controllers/admin/get-user-details.controller";
+import { CreateServiceController } from "../../interfaceAdapters/controllers/vendor/create-service.controller";
 
 DependencyInjection.registerAll();
 
@@ -60,7 +61,8 @@ export const getAllVendorController = container.resolve(GetAllVendorsController)
 export const getPendingVendorController = container.resolve(GetPendingVendorController);
 export const updateVendorRequestController = container.resolve(UpdateVendorRequestController)
 
-// |================================ User Status Management ==========================|
+// |================================ User(common) Management ==========================|
+export const getUserDetailsController = container.resolve(GetUserDetailsController)
 export const updateUserStatusController = container.resolve(UpdateUserStatusController);
 
 // |================================ Category Management ==========================|
@@ -77,4 +79,5 @@ export const getAllVendorNotificationController = container.resolve(GetAllVendor
 export const getAllClientNotificatioController = container.resolve(GetAllClientNotificationController)
 
 
-export const getUserDetailsController = container.resolve(GetUserDetailsController)
+// |====================================== Notification Management ====================================|
+export const createServiceController = container.resolve(CreateServiceController)

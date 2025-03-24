@@ -1,40 +1,25 @@
-export interface ISessionDuration {
-  durationInMinutes: number;
-  price: number;
-}
+import { ObjectId } from "mongoose";
+import { DateSlot, IDepositRequired , SessionDuration , RecurringAvailability , CustomField , Location} from "../../shared/types/vendor/service.type";
 
-export interface IAvailableDate {
-  date: string;
-  availableHours: {
-    startTime: string;
-    endTime: string;
-  };
-  bufferTime?: number;
-  bookedSlots: IBookedSlot[];
-}
-
-export interface IBookedSlot {
-  client: string;
-  startTime: string;
-  endTime: string;
-  status?: "pending" | "confirmed" | "cancelled";
-}
-
-export interface ILocation {
-  city?: string;
-  state?: string;
-  country?: string;
-}
-
-export interface IService {
-  photographer: string;
-  serviceName: string;
-  description?: string;
-  price: number;
-  currency?: string;
-  sessionDurations: ISessionDuration[];
-  availableDates: IAvailableDate[];
-  location?: ILocation;
-  paymentRequired?: boolean;
-  cancellationPolicy?: string;
+export interface IServiceEntity {
+  _id ?: string;
+  vendor: string | ObjectId
+  serviceTitle: string;
+  category: string | ObjectId;
+  yearsOfExperience: number;
+  styleSpecialty: string[];
+  tags: string[];
+  serviceDescription: string;
+  sessionDurations: SessionDuration[];
+  features: string[];
+  availableDates: DateSlot[];
+  location: Location;
+  equipment: string[];
+  cancellationPolicies: string[];
+  termsAndConditions: string[];
+  customFields: CustomField[];
+  isPublished?: boolean;
+  portfolioImages: string[];
+  createdAt ?: string;
+  updatedAt ?: string;
 }

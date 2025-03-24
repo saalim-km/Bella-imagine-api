@@ -75,6 +75,8 @@ import { IUpdateCategoryRequestStatusUsecase } from "../../entities/usecaseInter
 import { UpdateCategoryRequestStatusUsecase } from "../../useCases/admin/update-category-request-status.usecase";
 import { IGetUserDetailsUsecase } from "../../entities/usecaseInterfaces/admin/get-user-details-usecase.interface";
 import { GetUserDetailsUsecase } from "../../useCases/admin/get-user-details.usecase";
+import { ICreateServiceUsecase } from "../../entities/usecaseInterfaces/vendor/create-service-usecase.interface";
+import { CreateServiceUsecase } from "../../useCases/service/create-service.usecase";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -138,6 +140,9 @@ export class UsecaseRegistry {
         // |--------------------------------------------------------- Notification Management ---------------------------------------------------|
         container.register<IGetAllVendorNotificationUsecase>("IGetAllVendorNotificationUsecase" , {useClass : GetAllVendorNotificationUsecase});
         container.register<IGetAllClientNotificationUsecase>('IGetAllClientNotificationUsecase' ,{useClass : GetAllClientNotificationUsecase})
+
+        // |--------------------------------------------------------- Vendor Service Management ---------------------------------------------------|
+        container.register<ICreateServiceUsecase>("ICreateServiceUsecase" , {useClass : CreateServiceUsecase})
     }
 
 }

@@ -30,6 +30,7 @@ const extractToken = (
   
     if (privateRouteIndex !== -1 && pathSegments[privateRouteIndex + 1]) {
       const userType = pathSegments[privateRouteIndex + 1];
+      console.log('usertype is ',userType);
       return {
         access_token: req.cookies[`${userType}_access_token`] || null,
         refresh_token: req.cookies[`${userType}_refresh_token`] || null,
@@ -61,16 +62,6 @@ export const verifyAuth = async (
       }
   
       console.log('---------------after checking tokens-----------------');
-    //->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    // Currently not doint the blcaklisting of tokens , redis is not currently set.
-    //   if (await isBlacklisted(token.access_token)) {
-    //     console.log("token is black listed is worked");
-    //     res
-    //       .status(HTTP_STATUS.FORBIDDEN)
-    //       .json({ message: "Token is blacklisted" });
-    //     return;
-    //   }
-  
 
       const user = tokenService.verifyAccessToken(
         token.access_token
@@ -134,14 +125,6 @@ export const verifyAuth = async (
         return;
       }
 
-      // if (await isBlacklisted(token.access_token)) {
-      //   console.log("token is black listed is worked");
-      //   res
-      //     .status(HTTP_STATUS.FORBIDDEN)
-      //     .json({ message: "Token is blacklisted" });
-      //   return;
-      // }
-  
       const user = tokenService.decodeRefreshToken(token?.access_token);
       console.log("decoded", user);
       (req as CustomRequest).user = {
