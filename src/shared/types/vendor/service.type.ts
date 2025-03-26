@@ -47,13 +47,15 @@ export interface Location {
   country: string;
 }
 
-// Interface for query filters
+
 export interface IServiceFilter {
-  vendor?: Types.ObjectId | string;
-  category?: Types.ObjectId | string;
-  serviceName?: string;
+  serviceTitle?: string;
+  category?: string; 
+  location?: string;
   tags?: string[];
+  styleSpecialty?: string[];
   isPublished?: boolean;
-  minPrice?: number;
-  maxPrice?: number;
+  createdAt?: 1 | -1;
+  page ?: number;
+  limit ?: number
 }

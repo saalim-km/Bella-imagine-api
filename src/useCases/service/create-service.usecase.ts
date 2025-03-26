@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { ICreateServiceUsecase } from "../../entities/usecaseInterfaces/vendor/create-service-usecase.interface";
+import { ICreateServiceUsecase } from "../../entities/usecaseInterfaces/service/create-service-usecase.interface";
 import { IServiceRepository } from "../../entities/repositoryInterfaces/service/service-repository.interface";
 import { IServiceEntity } from "../../entities/models/service.entity";
 import { CustomError } from "../../entities/utils/custom-error";
@@ -21,9 +21,9 @@ export class CreateServiceUsecase implements ICreateServiceUsecase {
         }
 
         const existinService = await this.serviceRepository.findByServiceName(data.serviceTitle);
-
+        console.log('existence service : ',existinService);
         if(existinService) {
-            throw new CustomError('Service with same name already exists',HTTP_STATUS.CONFLICT)
+            throw new CustomError('Service already exists',HTTP_STATUS.CONFLICT)
         }
 
         data.vendor = vendorId;

@@ -1,27 +1,24 @@
 import { inject, injectable } from "tsyringe";
-import { ICreateServiceController } from "../../../entities/controllerInterfaces/vendor/create-service-controller.interface";
-import { ICreateServiceUsecase } from "../../../entities/usecaseInterfaces/service/create-service-usecase.interface";
-import { ZodError } from "zod";
+import { IUpdateServiceController } from "../../../entities/controllerInterfaces/vendor/update-service-controller.interface";
+import { IUpdateServiceUsecase } from "../../../entities/usecaseInterfaces/service/update-service-usecase.interface";
 import { Request, Response } from "express";
+import { ZodError } from "zod";
 import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../shared/constants";
 import { CustomError } from "../../../entities/utils/custom-error";
 import { IServiceEntity } from "../../../entities/models/service.entity";
-import { CustomRequest } from "../../middlewares/auth.middleware";
 
 @injectable()
-export class CreateServiceController implements ICreateServiceController {
+export class UpdateServiceController implements IUpdateServiceController {
   constructor(
-    @inject("ICreateServiceUsecase") private createServiceUsecase: ICreateServiceUsecase
+    @inject("IUpdateServiceUsecase")
+    private updateServiceUsecase: IUpdateServiceUsecase
   ) {}
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
-        console.log('in CreateServiceController');
         console.log(req.body);
-        const user = (req as CustomRequest).user
-        const data = req.body as IServiceEntity;
-        await this.createServiceUsecase.execute(data,user._id)
-        res.status(HTTP_STATUS.OK).json({success : true , message : data.isPublished ? "Service Created Successfully" : "Service Drafted Successfully"})
+        await this.updateServiceUsecase.execute(req.body as IServiceEntity)
+        res.status(HTTP_STATUS.OK).json({success : true , message : SUCCESS_MESSAGES.UPDATE_SUCCESS})
     } catch (error) {
       if (error instanceof ZodError) {
         const errors = error.errors.map((err) => ({

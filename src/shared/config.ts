@@ -37,5 +37,11 @@ export const config = {
 
   isProduction : {
     NODE_ENV : process.env.NODE_ENV || false
+  },
+
+  cloudinary : {
+    CLOUDINARY_CLOUD_NAME : process.env.CLOUDINARY_CLOUD_NAME,
+    CLOUDINARY_API_KEY : process.env.CLOUDINARY_API_KEY,
+    CLOUDINARY_API_SECRET : process.env.CLOUDINARY_API_SECRET
   }
 };

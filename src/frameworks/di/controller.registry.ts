@@ -28,6 +28,8 @@ import { GetCategoryRequestController } from "../../interfaceAdapters/controller
 import { UpdateCategoryRequestStatusController } from "../../interfaceAdapters/controllers/admin/update-category-request-status.controller";
 import { GetUserDetailsController } from "../../interfaceAdapters/controllers/admin/get-user-details.controller";
 import { CreateServiceController } from "../../interfaceAdapters/controllers/vendor/create-service.controller";
+import { GetAllPaginatedServicesController } from "../../interfaceAdapters/controllers/vendor/get-all-paginated-services.controller";
+import { UpdateServiceController } from "../../interfaceAdapters/controllers/vendor/update-service.controller";
 
 export class ControllerRegistry {
     static registerController() : void {
@@ -81,5 +83,7 @@ export class ControllerRegistry {
 
         // |--------------------------------------- Service management ------------------------------------|
         container.register("CreateServiceController",{useClass : CreateServiceController})
+        container.register("GetAllPaginatedServicesController",{useClass : GetAllPaginatedServicesController})
+        container.register("UpdateServiceController",{useClass : UpdateServiceController})
     }   
 }

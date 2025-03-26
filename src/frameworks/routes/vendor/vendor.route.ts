@@ -1,14 +1,13 @@
 import { Request, Response } from "express";
 import { authorizeRole, decodeToken, verifyAuth } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
-import { createServiceController, getAllVendorCategoriesController, getAllVendorNotificationController, getVendorDetialsController, joinCategoryRequestController, logoutController, refreshTokenController, updateVendorController } from "../../di/resolver";
+import { createServiceController, getAllPaginatedServiceController, getAllVendorCategoriesController, getAllVendorNotificationController, getVendorDetialsController, joinCategoryRequestController, logoutController, refreshTokenController, updateServiceController, updateVendorController } from "../../di/resolver";
 
 export class VendorRoute extends BaseRoute {
     constructor() {
         super()
     }
     protected initializeRoutes(): void {
-
         this.router.post('/vendor/logout',verifyAuth,(req : Request , res : Response)=> {
             logoutController.handle(req,res)
         })
@@ -42,6 +41,12 @@ export class VendorRoute extends BaseRoute {
         this.router.route('/vendor/service')
         .post(verifyAuth,authorizeRole(["vendor"]),(req : Request , res : Response)=> {
             createServiceController.handle(req,res)
+        })
+        .get(verifyAuth,authorizeRole(["vendor"]),(req : Request , res : Response)=> {
+            getAllPaginatedServiceController.handle(req,res)
+        })
+        .put(verifyAuth,authorizeRole(["vendor"]),(req : Request , res : Response)=> {
+            updateServiceController.handle(req,res)
         })
     }
 }

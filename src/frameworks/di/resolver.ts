@@ -29,6 +29,8 @@ import { GetCategoryRequestController } from "../../interfaceAdapters/controller
 import { UpdateCategoryRequestStatusController } from "../../interfaceAdapters/controllers/admin/update-category-request-status.controller";
 import { GetUserDetailsController } from "../../interfaceAdapters/controllers/admin/get-user-details.controller";
 import { CreateServiceController } from "../../interfaceAdapters/controllers/vendor/create-service.controller";
+import { GetAllPaginatedServicesController } from "../../interfaceAdapters/controllers/vendor/get-all-paginated-services.controller";
+import { UpdateServiceController } from "../../interfaceAdapters/controllers/vendor/update-service.controller";
 
 DependencyInjection.registerAll();
 
@@ -79,5 +81,7 @@ export const getAllVendorNotificationController = container.resolve(GetAllVendor
 export const getAllClientNotificatioController = container.resolve(GetAllClientNotificationController)
 
 
-// |====================================== Notification Management ====================================|
+// |====================================== Service Management ====================================|
 export const createServiceController = container.resolve(CreateServiceController)
+export const getAllPaginatedServiceController = container.resolve(GetAllPaginatedServicesController)
+export const updateServiceController = container.resolve(UpdateServiceController)

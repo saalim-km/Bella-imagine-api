@@ -1,3 +1,5 @@
+import { ObjectId } from "mongoose";
+import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 import { IServiceFilter } from "../../../shared/types/vendor/service.type";
 import { IServiceEntity } from "../../models/service.entity";
 
@@ -6,14 +8,9 @@ export interface IServiceRepository {
 
     // findById?(id: string): Promise<IServiceEntity | null>;
 
-    // findAll?(filters?: IServiceFilter, page?: number, limit?: number): Promise<{
-    //   services: IServiceEntity[];
-    //   total: number;
-    //   page: number;
-    //   totalPages: number;
-    // }>;
+    findAll (filter : IServiceFilter , skip :  number , limit : number , sort ?: any) : Promise<PaginatedResponse<IServiceEntity>>;
 
-    // update?(id: string, updateData: Partial<IServiceEntity>): Promise<IServiceEntity | null>;
+    update (id: string | ObjectId, updateData: Partial<IServiceEntity>): Promise<IServiceEntity | null>;
 
     // delete?(id: string): Promise<boolean>;
 

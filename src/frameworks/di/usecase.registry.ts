@@ -75,8 +75,12 @@ import { IUpdateCategoryRequestStatusUsecase } from "../../entities/usecaseInter
 import { UpdateCategoryRequestStatusUsecase } from "../../useCases/admin/update-category-request-status.usecase";
 import { IGetUserDetailsUsecase } from "../../entities/usecaseInterfaces/admin/get-user-details-usecase.interface";
 import { GetUserDetailsUsecase } from "../../useCases/admin/get-user-details.usecase";
-import { ICreateServiceUsecase } from "../../entities/usecaseInterfaces/vendor/create-service-usecase.interface";
+import { ICreateServiceUsecase } from "../../entities/usecaseInterfaces/service/create-service-usecase.interface";
 import { CreateServiceUsecase } from "../../useCases/service/create-service.usecase";
+import { IGetAllPaginatedServicesUsecase } from "../../entities/usecaseInterfaces/vendor/get-all-paginated-services-usecase.interface";
+import { GetAllPaginatedServicesUsecase } from "../../useCases/vendor/get-all-paginated-services.usecase";
+import { IUpdateServiceUsecase } from "../../entities/usecaseInterfaces/service/update-service-usecase.interface";
+import { UpdateServiceUsecase } from "../../useCases/service/update-service.usecase";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -143,6 +147,8 @@ export class UsecaseRegistry {
 
         // |--------------------------------------------------------- Vendor Service Management ---------------------------------------------------|
         container.register<ICreateServiceUsecase>("ICreateServiceUsecase" , {useClass : CreateServiceUsecase})
+        container.register<IGetAllPaginatedServicesUsecase>("IGetAllPaginatedServicesUsecase" , {useClass : GetAllPaginatedServicesUsecase})
+        container.register<IUpdateServiceUsecase>("IUpdateServiceUsecase" , {useClass : UpdateServiceUsecase})
     }
 
 }

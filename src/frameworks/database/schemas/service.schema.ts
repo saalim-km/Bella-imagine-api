@@ -30,6 +30,10 @@ export const serviceSchema = new mongoose.Schema<IServiceModel>({
     ref: "Category",
     required: true,
   },
+  yearsOfExperience : {
+    type : Number,
+    required : true
+  },
   serviceTitle: {
     type: String,
     required: true,
@@ -75,16 +79,11 @@ export const serviceSchema = new mongoose.Schema<IServiceModel>({
     },
   },
   equipment: [String],
-  portfolioImages: [String],
   cancellationPolicies: {
-    deadline: {
-      type: Number,
-      default: 48,
-    },
-    refundPercentage: {
-      type: Number,
-      default: 50,
-    },
+    type : [String],
+  },
+  termsAndConditions : {
+    type : [String]
   },
   availableDates: [
     {

@@ -2,7 +2,7 @@ import { ObjectId } from "mongoose";
 import { DateSlot, IDepositRequired , SessionDuration , RecurringAvailability , CustomField , Location} from "../../shared/types/vendor/service.type";
 
 export interface IServiceEntity {
-  _id ?: string;
+  _id ?: ObjectId | string
   vendor: string | ObjectId
   serviceTitle: string;
   category: string | ObjectId;
@@ -19,7 +19,6 @@ export interface IServiceEntity {
   termsAndConditions: string[];
   customFields: CustomField[];
   isPublished?: boolean;
-  portfolioImages: string[];
   createdAt ?: string;
   updatedAt ?: string;
 }
