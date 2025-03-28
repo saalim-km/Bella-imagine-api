@@ -6,6 +6,7 @@ import { CustomError } from "../../../entities/utils/custom-error";
 import { Request, Response } from "express";
 import { IGetAllPaginatedServicesUsecase } from "../../../entities/usecaseInterfaces/vendor/get-all-paginated-services-usecase.interface";
 import { IServiceFilter } from "../../../shared/types/vendor/service.type";
+import { CustomRequest } from "../../middlewares/auth.middleware";
 
 @injectable()
 export class GetAllPaginatedServicesController implements IGetAllPaginatedServicesController {
@@ -18,6 +19,7 @@ export class GetAllPaginatedServicesController implements IGetAllPaginatedServic
     try {
         console.log('in GetAllPaginatedServicesController');
         console.log(req.query);
+        const user = (req as CustomRequest).user;
       const { serviceTitle, category, location, page = 1, limit = 4 } = req.query;
 
       const filters: IServiceFilter = {
@@ -29,7 +31,7 @@ export class GetAllPaginatedServicesController implements IGetAllPaginatedServic
       const pageNum = parseInt(page as string, 10);
       const limitNum = parseInt(limit as string, 10);
 
-      const result = await this.getAllPaginatedServicesUsecase.execute(filters, limitNum, pageNum);
+      const result = await this.getAllPaginatedServicesUsecase.execute(filters, limitNum, pageNum,user._id);
 
       console.log(result);
       res.status(HTTP_STATUS.OK).json({

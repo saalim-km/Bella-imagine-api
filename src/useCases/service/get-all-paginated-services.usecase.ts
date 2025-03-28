@@ -14,24 +14,25 @@ export class GetAllPaginatedServicesUsecase implements IGetAllPaginatedServicesU
   async execute(
     filter: IServiceFilter,
     limit: number = 4,
-    page: number = 1
+    page: number = 1,
+    vendorId : string
   ): Promise<PaginatedResponse<IServiceEntity>> {
     const skip = (page - 1) * limit;
 
-    let search: any = {};
+    let search: any = {vendor : vendorId};
 
     if (filter) {
       if (filter.category) {
-        search.category = filter.category; // Assumes category is passed as an ObjectId string
+        search.category = filter.category; 
       }
 
       if (filter.isPublished !== undefined) {
         search.isPublished = filter.isPublished;
       }
 
-    if (filter.serviceTitle?.trim()) {
-      search.serviceTitle = { $regex: new RegExp(`^${filter.serviceTitle.trim()}$`, "i") };
-    }
+      if (filter.serviceTitle?.trim()) {
+        search.serviceTitle = {$regex: new RegExp(`^${filter.serviceTitle.trim()}.*$`, "i")}
+      }
 
       if (filter.tags?.length) {
         search.tags = { $in: filter.tags };
@@ -50,11 +51,12 @@ export class GetAllPaginatedServicesUsecase implements IGetAllPaginatedServicesU
       }
     }
 
+    console.log('final search : ',search);
     let sort: any = {};
     if (filter.createdAt !== undefined) {
       sort = { createdAt: filter.createdAt };
     }
 
-    return await this.serviceRepository.findAll(search, skip, limit, sort);
+    return await this.serviceRepository.findAllServiceByVendor(search, skip, limit, sort);
   }
 }

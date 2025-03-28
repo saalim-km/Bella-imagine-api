@@ -30,6 +30,8 @@ import { GetUserDetailsController } from "../../interfaceAdapters/controllers/ad
 import { CreateServiceController } from "../../interfaceAdapters/controllers/vendor/create-service.controller";
 import { GetAllPaginatedServicesController } from "../../interfaceAdapters/controllers/vendor/get-all-paginated-services.controller";
 import { UpdateServiceController } from "../../interfaceAdapters/controllers/vendor/update-service.controller";
+import { CreateWorkSampleController } from "../../interfaceAdapters/controllers/vendor/create-work-sample.controller";
+import { GetAllPaginatedWorkSampleController } from "../../interfaceAdapters/controllers/vendor/get-all-paginated-work-sample.controller";
 
 export class ControllerRegistry {
     static registerController() : void {
@@ -85,5 +87,9 @@ export class ControllerRegistry {
         container.register("CreateServiceController",{useClass : CreateServiceController})
         container.register("GetAllPaginatedServicesController",{useClass : GetAllPaginatedServicesController})
         container.register("UpdateServiceController",{useClass : UpdateServiceController})
+
+        // |--------------------------------------- work-sample management ------------------------------------|
+        container.register("CreateWorkSampleController",{useClass : CreateWorkSampleController})
+        container.register("GetAllPaginatedWorkSampleController",{useClass : GetAllPaginatedWorkSampleController})
     }   
 }

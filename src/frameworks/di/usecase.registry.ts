@@ -78,9 +78,13 @@ import { GetUserDetailsUsecase } from "../../useCases/admin/get-user-details.use
 import { ICreateServiceUsecase } from "../../entities/usecaseInterfaces/service/create-service-usecase.interface";
 import { CreateServiceUsecase } from "../../useCases/service/create-service.usecase";
 import { IGetAllPaginatedServicesUsecase } from "../../entities/usecaseInterfaces/vendor/get-all-paginated-services-usecase.interface";
-import { GetAllPaginatedServicesUsecase } from "../../useCases/vendor/get-all-paginated-services.usecase";
+import { GetAllPaginatedServicesUsecase } from "../../useCases/service/get-all-paginated-services.usecase";
 import { IUpdateServiceUsecase } from "../../entities/usecaseInterfaces/service/update-service-usecase.interface";
 import { UpdateServiceUsecase } from "../../useCases/service/update-service.usecase";
+import { ICreateWorkSampleUsecase } from "../../entities/usecaseInterfaces/vendor/create-work-sample-usecase.interface";
+import { CreateWorkSampleUsecase } from "../../useCases/work-sample/create-work-sample.usecase";
+import { IGetPaginatedWorkSampleUsecase } from "../../entities/usecaseInterfaces/vendor/get-paginated-work-sample-usecase.interface";
+import { GetAllPaginatedWorkSamplesUsecase } from "../../useCases/work-sample/get-paginated-work-sample.usecase";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -149,6 +153,10 @@ export class UsecaseRegistry {
         container.register<ICreateServiceUsecase>("ICreateServiceUsecase" , {useClass : CreateServiceUsecase})
         container.register<IGetAllPaginatedServicesUsecase>("IGetAllPaginatedServicesUsecase" , {useClass : GetAllPaginatedServicesUsecase})
         container.register<IUpdateServiceUsecase>("IUpdateServiceUsecase" , {useClass : UpdateServiceUsecase})
+
+        // |--------------------------------------------------------- Vendor work-sample Management ---------------------------------------------------|
+        container.register<ICreateWorkSampleUsecase>("ICreateWorkSampleUsecase",{useClass : CreateWorkSampleUsecase})
+        container.register<IGetPaginatedWorkSampleUsecase>("IGetPaginatedWorkSampleUsecase" , {useClass : GetAllPaginatedWorkSamplesUsecase})
     }
 
 }

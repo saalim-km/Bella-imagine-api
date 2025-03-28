@@ -31,6 +31,8 @@ import { GetUserDetailsController } from "../../interfaceAdapters/controllers/ad
 import { CreateServiceController } from "../../interfaceAdapters/controllers/vendor/create-service.controller";
 import { GetAllPaginatedServicesController } from "../../interfaceAdapters/controllers/vendor/get-all-paginated-services.controller";
 import { UpdateServiceController } from "../../interfaceAdapters/controllers/vendor/update-service.controller";
+import { CreateWorkSampleController } from "../../interfaceAdapters/controllers/vendor/create-work-sample.controller";
+import { GetAllPaginatedWorkSampleController } from "../../interfaceAdapters/controllers/vendor/get-all-paginated-work-sample.controller";
 
 DependencyInjection.registerAll();
 
@@ -85,3 +87,7 @@ export const getAllClientNotificatioController = container.resolve(GetAllClientN
 export const createServiceController = container.resolve(CreateServiceController)
 export const getAllPaginatedServiceController = container.resolve(GetAllPaginatedServicesController)
 export const updateServiceController = container.resolve(UpdateServiceController)
+
+// |====================================== work-sample Management ====================================|
+export const createWorkSampleController = container.resolve(CreateWorkSampleController)
+export const getAllPaginatedWorkSample = container.resolve(GetAllPaginatedWorkSampleController)

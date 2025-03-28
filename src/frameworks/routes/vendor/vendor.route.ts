@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { authorizeRole, decodeToken, verifyAuth } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
-import { createServiceController, getAllPaginatedServiceController, getAllVendorCategoriesController, getAllVendorNotificationController, getVendorDetialsController, joinCategoryRequestController, logoutController, refreshTokenController, updateServiceController, updateVendorController } from "../../di/resolver";
+import { createServiceController, createWorkSampleController, getAllPaginatedServiceController, getAllPaginatedWorkSample, getAllVendorCategoriesController, getAllVendorNotificationController, getVendorDetialsController, joinCategoryRequestController, logoutController, refreshTokenController, updateServiceController, updateVendorController } from "../../di/resolver";
 
 export class VendorRoute extends BaseRoute {
     constructor() {
@@ -47,6 +47,14 @@ export class VendorRoute extends BaseRoute {
         })
         .put(verifyAuth,authorizeRole(["vendor"]),(req : Request , res : Response)=> {
             updateServiceController.handle(req,res)
+        })
+
+        this.router.route("/vendor/work-sample")
+        .post(verifyAuth,authorizeRole(["vendor"]),(req : Request , res : Response)=> {
+            createWorkSampleController.handle(req,res)
+        })
+        .get(verifyAuth,authorizeRole(["vendor"]),(req : Request , res : Response)=> {
+            getAllPaginatedWorkSample.handle(req,res)
         })
     }
 }

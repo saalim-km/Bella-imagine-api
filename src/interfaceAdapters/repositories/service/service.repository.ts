@@ -16,7 +16,7 @@ export class ServiceRepository implements IServiceRepository {
         return await serviceModel.findOne({serviceTitle : { $regex: new RegExp(`^${name.trim()}$`, "i") }})
     }
 
-    async findAll(
+    async findAllServiceByVendor(
         filter: IServiceFilter,
         skip: number,
         limit: number,

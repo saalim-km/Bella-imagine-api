@@ -8,7 +8,7 @@ export interface IServiceRepository {
 
     // findById?(id: string): Promise<IServiceEntity | null>;
 
-    findAll (filter : IServiceFilter , skip :  number , limit : number , sort ?: any) : Promise<PaginatedResponse<IServiceEntity>>;
+    findAllServiceByVendor (filter : IServiceFilter , skip :  number , limit : number , sort ?: any) : Promise<PaginatedResponse<IServiceEntity>>;
 
     update (id: string | ObjectId, updateData: Partial<IServiceEntity>): Promise<IServiceEntity | null>;
 
