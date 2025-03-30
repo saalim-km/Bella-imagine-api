@@ -4,7 +4,7 @@ import { IServiceFilter } from "../../../shared/types/vendor/service.type";
 import { IServiceEntity } from "../../models/service.entity";
 
 export interface IServiceRepository {
-    create (serviceData: Partial<IServiceEntity>): Promise<void>;
+    create (serviceData: Partial<IServiceEntity>): Promise<IServiceEntity>;
 
     // findById?(id: string): Promise<IServiceEntity | null>;
 

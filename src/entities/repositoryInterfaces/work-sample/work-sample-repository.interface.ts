@@ -3,7 +3,7 @@ import { IWorkSampleFilter } from "../../../shared/types/vendor/work-sample.type
 import { IWorkSampleEntity } from "../../models/work-sample.entity";
 
 export interface IWorkSampleRepository {
-    create (data : Partial<IWorkSampleEntity>) : Promise<void>
+    create (data : Partial<IWorkSampleEntity>) : Promise<IWorkSampleEntity  >
 
     findAllWorkSampleByVendor (filter : IWorkSampleFilter , skip :  number , limit : number , sort ?: any) : Promise<PaginatedResponse<IWorkSampleEntity>>;
 }

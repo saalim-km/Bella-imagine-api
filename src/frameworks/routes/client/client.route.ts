@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { LogoutController } from "../../../interfaceAdapters/controllers/auth/logout.controller";
 import { authorizeRole, decodeToken, verifyAuth } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
-import { getAllClientNotificatioController, getClientDetailsController, logoutController, refreshTokenController, updateClientController } from "../../di/resolver";
+import { getAllClientCategoriesController, getAllClientNotificatioController, getClientDetailsController, getPaginatedVendorsController, logoutController, refreshTokenController, updateClientController } from "../../di/resolver";
 
 export class ClientRoute extends BaseRoute {
     constructor() {
@@ -29,6 +29,19 @@ export class ClientRoute extends BaseRoute {
         this.router.route('/client/notification')
         .get(verifyAuth,authorizeRole(["client"]),(req : Request , res : Response)=> {
             getAllClientNotificatioController.handle(req,res)
+        })
+
+        this.router.route('/client/vendors')
+        .get(verifyAuth,authorizeRole(['client']),(req : Request , res : Response)=> {
+            getPaginatedVendorsController.handle(req,res)
+        })
+
+        this.router.get('/client/categories',verifyAuth,authorizeRole(["client"]),(req : Request , res : Response)=> {
+            getAllClientCategoriesController.handle(req,res)
+        })
+
+        this.router.get('/client/photographer/:id',verifyAuth,authorizeRole(["client"]),(req : Request , res : Response)=> {
+            console.log('nigga')
         })
     }
 }

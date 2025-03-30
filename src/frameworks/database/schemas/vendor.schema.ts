@@ -32,6 +32,18 @@ export const vendorSchema = new mongoose.Schema<IVendorEntity>(
       type: [String],
       default: [],
     },
+    services : [
+      {
+        type : mongoose.Types.ObjectId,
+        ref : "Service"
+      }
+    ],
+    workSamples : [
+      {
+        type : mongoose.Types.ObjectId,
+        ref : "WorkSample"
+      }
+    ],
     role: {
       type: String,
       enum: ["client", "vendor", "admin"],

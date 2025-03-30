@@ -39,17 +39,14 @@ export class GetAllPaginatedWorkSampleController implements IGetAllPaginatedWork
         const pageNum = parseInt(page as string, 10);
         const limitNum = parseInt(limit as string, 10);
   
-        const result = await this.getAllPaginatedWorkSamplesUsecase.execute(
+        const data = await this.getAllPaginatedWorkSamplesUsecase.execute(
           filters, 
           limitNum, 
           pageNum, 
           user._id
         );
   
-        res.status(HTTP_STATUS.OK).json({
-          success: true,
-          data: result,
-        });
+        res.status(HTTP_STATUS.OK).json(data);
     } catch (error) {
         if (error instanceof ZodError) {
             const errors = error.errors.map((err) => ({

@@ -1,27 +1,24 @@
 import { inject, injectable } from "tsyringe";
-import { ICreateWorkSampleController } from "../../../entities/controllerInterfaces/vendor/create-work-sample-controller.usecase.interface";
-import { ICreateWorkSampleUsecase } from "../../../entities/usecaseInterfaces/vendor/create-work-sample-usecase.interface";
+import { IGetAllClientCategoriesController } from "../../../entities/controllerInterfaces/client/get-all-client-categories-controller.interface";
 import { Request, Response } from "express";
+import { IGetAllClientCategoriesUsecase } from "../../../entities/usecaseInterfaces/client/get-all-client-categories-usecase.interface";
 import { ZodError } from "zod";
-import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../shared/constants";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
 import { CustomError } from "../../../entities/utils/custom-error";
-import { CustomRequest } from "../../middlewares/auth.middleware";
-import { IWorkSampleEntity } from "../../../entities/models/work-sample.entity";
 
 @injectable()
-export class CreateWorkSampleController implements ICreateWorkSampleController {
+export class GetAllClientCategoriesController
+  implements IGetAllClientCategoriesController
+{
   constructor(
-    @inject("ICreateWorkSampleUsecase")
-    private createWorkSampleUsecase: ICreateWorkSampleUsecase
+    @inject("IGetAllClientCategoriesUsecase")
+    private getAllClientCategoriesUsecase: IGetAllClientCategoriesUsecase
   ) {}
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
-        const vendor = (req as CustomRequest).user;
-        const workSampleData = req.body as IWorkSampleEntity;
-        workSampleData.vendor = vendor._id;
-        await this.createWorkSampleUsecase.execute(workSampleData , vendor._id)
-        res.status(HTTP_STATUS.OK).json({succes : true , message : SUCCESS_MESSAGES.CREATED})
+      const categories = await this.getAllClientCategoriesUsecase.execute();
+      res.status(HTTP_STATUS.OK).json({success : true , data : categories})
     } catch (error) {
       if (error instanceof ZodError) {
         const errors = error.errors.map((err) => ({

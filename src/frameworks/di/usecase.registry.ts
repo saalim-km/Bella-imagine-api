@@ -85,6 +85,10 @@ import { ICreateWorkSampleUsecase } from "../../entities/usecaseInterfaces/vendo
 import { CreateWorkSampleUsecase } from "../../useCases/work-sample/create-work-sample.usecase";
 import { IGetPaginatedWorkSampleUsecase } from "../../entities/usecaseInterfaces/vendor/get-paginated-work-sample-usecase.interface";
 import { GetAllPaginatedWorkSamplesUsecase } from "../../useCases/work-sample/get-paginated-work-sample.usecase";
+import { IGetAllPaginatedVendorsUsecase } from "../../entities/usecaseInterfaces/client/get-all-paginated-vendors-usecase-interface";
+import { GetAllPaginatedVendorsUsecase } from "../../useCases/client/get-all-paginated-vendors.usecase";
+import { IGetAllClientCategoriesUsecase } from "../../entities/usecaseInterfaces/client/get-all-client-categories-usecase.interface";
+import { GetAllClientCategoriesUsecase } from "../../useCases/client/get-all-client-categories.usecase";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -157,6 +161,9 @@ export class UsecaseRegistry {
         // |--------------------------------------------------------- Vendor work-sample Management ---------------------------------------------------|
         container.register<ICreateWorkSampleUsecase>("ICreateWorkSampleUsecase",{useClass : CreateWorkSampleUsecase})
         container.register<IGetPaginatedWorkSampleUsecase>("IGetPaginatedWorkSampleUsecase" , {useClass : GetAllPaginatedWorkSamplesUsecase})
-    }
+        
 
+        container.register<IGetAllPaginatedVendorsUsecase>("IGetAllPaginatedVendorsUsecase" , {useClass : GetAllPaginatedVendorsUsecase})
+        container.register<IGetAllClientCategoriesUsecase>("IGetAllClientCategoriesUsecase" , {useClass : GetAllClientCategoriesUsecase})
+    }
 }

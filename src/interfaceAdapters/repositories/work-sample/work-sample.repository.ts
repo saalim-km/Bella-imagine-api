@@ -7,8 +7,8 @@ import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 
 @injectable()
 export class WorkSampleRepository implements IWorkSampleRepository {
-  async create(data: Partial<IWorkSampleEntity>): Promise<void> {
-    await workSampleModel.create(data);
+  async create(data: Partial<IWorkSampleEntity>): Promise<IWorkSampleEntity> {
+    return await workSampleModel.create(data);
   }
 
   async findAllWorkSampleByVendor(

@@ -24,9 +24,7 @@ const extractToken = (
     req: Request
   ): { access_token: string; refresh_token: string } | null => {
     const pathSegments = req.path.split("/");
-    console.log(pathSegments);
     const privateRouteIndex = pathSegments.indexOf("");
-    console.log(privateRouteIndex);
   
     if (privateRouteIndex !== -1 && pathSegments[privateRouteIndex + 1]) {
       const userType = pathSegments[privateRouteIndex + 1];
@@ -51,7 +49,6 @@ export const verifyAuth = async (
     try {
         console.log('-<<<<<<<<<<<<<<< in verifyauth middleware->>>>>>>>>>>>>>>');
       const token = extractToken(req);
-        console.log(token);
 
       if (!token) {
         console.log("no token");
@@ -61,14 +58,11 @@ export const verifyAuth = async (
         return;
       }
   
-      console.log('---------------after checking tokens-----------------');
 
       const user = tokenService.verifyAccessToken(
         token.access_token
       ) as CustomJwtPayload;
 
-      console.log(user);
-      console.log(`-------------------after verifying access token-------------------`);
       if (!user || !user._id) {
         res
           .status(HTTP_STATUS.UNAUTHORIZED)
@@ -76,14 +70,12 @@ export const verifyAuth = async (
         return;
       }
   
-      console.log('-----------------------after checking access token---------------------------');
       (req as CustomRequest).user = {
         ...user,
         access_token: token.access_token,
         refresh_token: token.refresh_token,
       };
 
-      console.log('calling next function');
       next();
     } catch (error: any) {
       if (error.name === "TokenExpiredError") {

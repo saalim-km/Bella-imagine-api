@@ -17,11 +17,19 @@ export class ClientLoginStrategy implements ILoginStrategy<IClientEntity> {
     async login(data: LoginUserDto): Promise<IClientEntity> {
         const client = await this.clientRepository.findByEmail(data.email);
 
-        if(!client || !data.password || !client.password) {
+        if(!client) {
             throw new CustomError(
-                ERROR_MESSAGES.EMAIL_NOT_FOUND,
+                ERROR_MESSAGES.USER_NOT_FOUND,
                 HTTP_STATUS.NOT_FOUND
             )
+        }
+
+        if(!data.password) {
+            throw new CustomError('Password is required to login',HTTP_STATUS.BAD_REQUEST);
+        }
+
+        if(!client.password) {
+            throw new CustomError('The email address you entered is already registered with Google. Please log in using Google, or use a different email to continue.',HTTP_STATUS.CONFLICT)
         }
 
         const isPassMatch = await this.passBcrypt.compare(data.password, client.password)

@@ -9,8 +9,8 @@ export interface IVendorRepository {
     filter: Record<string, any>,
     skip: number,
     limit: number,
-    sort ?: any
-  ): Promise<PaginatedResponse<IVendorEntity>>
+    sort?: any
+  ): Promise<PaginatedResponse<IVendorEntity>>;
   findByEmail(email: string): Promise<IVendorEntity | null>;
   findById(id: string | ObjectId): Promise<IVendorEntity | null>;
 

@@ -8,8 +8,8 @@ import { ObjectId } from "mongoose";
 
 @injectable()
 export class ServiceRepository implements IServiceRepository {
-    async create(serviceData: Partial<IServiceEntity>): Promise<void> {
-        await serviceModel.create(serviceData)
+    async create(serviceData: Partial<IServiceEntity>): Promise<IServiceEntity> {
+        return await serviceModel.create(serviceData)
     }
 
     async findByServiceName(name: string): Promise<IServiceEntity | null> {

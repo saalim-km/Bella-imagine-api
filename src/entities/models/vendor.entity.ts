@@ -9,4 +9,6 @@ export interface IVendorEntity extends IClientEntity {
     description ?: string;
     verificationDocuments ?: string[];
     isVerified ?: 'pending' | 'accept' | 'reject'
+    services : string[]
+    workSamples : string[]
 }
