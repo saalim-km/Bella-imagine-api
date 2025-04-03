@@ -16,7 +16,6 @@ export class UpdateServiceController implements IUpdateServiceController {
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
-        console.log(req.body);
         await this.updateServiceUsecase.execute(req.body as IServiceEntity)
         res.status(HTTP_STATUS.OK).json({success : true , message : SUCCESS_MESSAGES.UPDATE_SUCCESS})
     } catch (error) {

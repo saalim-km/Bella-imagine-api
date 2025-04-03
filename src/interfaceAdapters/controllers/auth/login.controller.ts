@@ -25,9 +25,6 @@ export class LoginController implements ILoginControllerInterface {
   async handle(req: Request, res: Response): Promise<void> {
     try {
 
-
-      console.log("from login controller : ");
-      console.log(req.body);
       const { role } = req.body as LoginUserDto;
       const schema = userLoginSchema[role];
 
@@ -43,7 +40,6 @@ export class LoginController implements ILoginControllerInterface {
 
       const user = await this.loginUseCase.execute(validated);
 
-      console.log(user);
 
       if(!user) {
         throw new CustomError("user not found please sign up" , HTTP_STATUS.NOT_FOUND)
@@ -110,8 +106,5 @@ export class LoginController implements ILoginControllerInterface {
         .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
         .json({ success: false, message: ERROR_MESSAGES.SERVER_ERROR });
     }
-
-
-
   }
 }

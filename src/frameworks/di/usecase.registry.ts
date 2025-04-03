@@ -91,6 +91,10 @@ import { IGetAllClientCategoriesUsecase } from "../../entities/usecaseInterfaces
 import { GetAllClientCategoriesUsecase } from "../../useCases/client/get-all-client-categories.usecase";
 import { IGetPhotographerDetailsUsecase } from "../../entities/usecaseInterfaces/client/get-photographer-details-usecase.interface";
 import { GetPhotographerDetailsUsecase } from "../../useCases/client/get-photographer-details.usecase";
+import { IDeleteWorkSampleUsecase } from "../../entities/usecaseInterfaces/vendor/delete-work-sample-usecase.interface";
+import { DeleteWorkSampleUsecase } from "../../useCases/work-sample/delete-work-sample.usecase";
+import { IUpdateWorkSampleUsecase } from "../../entities/usecaseInterfaces/vendor/update-work-sample-usecase.interface";
+import { UpdateWorkSampleUsecase } from "../../useCases/work-sample/update-work-sample.usecase";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -164,7 +168,8 @@ export class UsecaseRegistry {
         // |--------------------------------------------------------- Vendor work-sample Management ---------------------------------------------------|
         container.register<ICreateWorkSampleUsecase>("ICreateWorkSampleUsecase",{useClass : CreateWorkSampleUsecase})
         container.register<IGetPaginatedWorkSampleUsecase>("IGetPaginatedWorkSampleUsecase" , {useClass : GetAllPaginatedWorkSamplesUsecase})
-        
+        container.register<IDeleteWorkSampleUsecase>("IDeleteWorkSampleUsecase" , {useClass : DeleteWorkSampleUsecase})
+        container.register<IUpdateWorkSampleUsecase>("IUpdateWorkSampleUsecase" , {useClass : UpdateWorkSampleUsecase})
 
     }
 }

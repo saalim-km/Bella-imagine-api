@@ -1,24 +1,23 @@
 import { inject, injectable } from "tsyringe";
-import { IUpdateVendorController } from "../../../entities/controllerInterfaces/vendor/update-vendor-profile-controller.interface";
+import { IDeleteWorkSampleController } from "../../../entities/controllerInterfaces/vendor/delete-work-sample-controller.interface";
+import { IDeleteWorkSampleUsecase } from "../../../entities/usecaseInterfaces/vendor/delete-work-sample-usecase.interface";
 import { Request, Response } from "express";
-import { CustomRequest } from "../../middlewares/auth.middleware";
-import { IUpdateVendorProfileUsecase } from "../../../entities/usecaseInterfaces/vendor/update-vendor-profile-usecase.interface";
 import { ZodError } from "zod";
 import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../shared/constants";
 import { CustomError } from "../../../entities/utils/custom-error";
 
 @injectable()
-export class UpdateVendorController implements IUpdateVendorController {
+export class DeleteWorkSampleController implements IDeleteWorkSampleController {
   constructor(
-    @inject("IUpdateVendorProfileUsecase")
-    private updateVendorProfileUsecase: IUpdateVendorProfileUsecase
+    @inject("IDeleteWorkSampleUsecase")
+    private deleteWorkSampleUsecase: IDeleteWorkSampleUsecase
   ) {}
+
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      const user = (req as CustomRequest).user;
-      await this.updateVendorProfileUsecase.execute(user._id, req.body);
-
-      res.status(HTTP_STATUS.OK).json({success : true , message : SUCCESS_MESSAGES.UPDATE_SUCCESS})
+        const {id} = req.query
+        await this.deleteWorkSampleUsecase.execute(id as string)
+        res.status(HTTP_STATUS.OK).json({success : true , message : SUCCESS_MESSAGES.DELETE_SUCCESS})
     } catch (error) {
       if (error instanceof ZodError) {
         const errors = error.errors.map((err) => ({

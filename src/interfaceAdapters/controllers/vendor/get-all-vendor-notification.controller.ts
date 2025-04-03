@@ -18,7 +18,6 @@ export class GetAllVendorNotificationController
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      console.log("in GetAllVendorNotificationController");
       const receiverId = (req as CustomRequest).user._id;
       const notifications =
         await this.getAllVendorNotificationUsecase.execute(receiverId);

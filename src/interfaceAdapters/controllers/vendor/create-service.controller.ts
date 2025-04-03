@@ -16,8 +16,8 @@ export class CreateServiceController implements ICreateServiceController {
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
-        console.log('in CreateServiceController');
-        console.log(req.body);
+        // console.log('in CreateServiceController');
+        // console.log(req.body);
         const user = (req as CustomRequest).user
         const data = req.body as IServiceEntity;
         await this.createServiceUsecase.execute(data,user._id)

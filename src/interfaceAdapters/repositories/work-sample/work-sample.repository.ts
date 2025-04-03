@@ -34,4 +34,16 @@ export class WorkSampleRepository implements IWorkSampleRepository {
       total: total,
     };
   }
+
+  async deleteWorkSampleById(workSampleId: string): Promise<void> {
+    await workSampleModel.findByIdAndDelete(workSampleId);
+  }
+
+  async findWorkSampleById(workSampleId: string): Promise<IWorkSampleEntity | null> {
+    return await workSampleModel.findById(workSampleId)
+  }
+
+  async updateWorkSampleById(workSampleId: string, payload: Partial<IWorkSampleEntity>): Promise<void> {
+    await workSampleModel.findByIdAndUpdate(workSampleId,payload);
+  }
 }

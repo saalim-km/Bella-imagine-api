@@ -1,24 +1,28 @@
 import { inject, injectable } from "tsyringe";
-import { IUpdateVendorController } from "../../../entities/controllerInterfaces/vendor/update-vendor-profile-controller.interface";
+import { IUpdateWorkSampleController } from "../../../entities/controllerInterfaces/vendor/update-work-sample-controller.interface";
+import { IUpdateWorkSampleUsecase } from "../../../entities/usecaseInterfaces/vendor/update-work-sample-usecase.interface";
 import { Request, Response } from "express";
-import { CustomRequest } from "../../middlewares/auth.middleware";
-import { IUpdateVendorProfileUsecase } from "../../../entities/usecaseInterfaces/vendor/update-vendor-profile-usecase.interface";
 import { ZodError } from "zod";
 import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../shared/constants";
 import { CustomError } from "../../../entities/utils/custom-error";
+import { CustomRequest } from "../../middlewares/auth.middleware";
+import { IWorkSampleUpdateRequest } from "../../../shared/types/vendor/work-sample.types";
+import { IWorkSampleEntity } from "../../../entities/models/work-sample.entity";
 
 @injectable()
-export class UpdateVendorController implements IUpdateVendorController {
+export class UpdateWorkSampleController implements IUpdateWorkSampleController {
   constructor(
-    @inject("IUpdateVendorProfileUsecase")
-    private updateVendorProfileUsecase: IUpdateVendorProfileUsecase
+    @inject("IUpdateWorkSampleUsecase")
+    private updateWorkSampleUsecase: IUpdateWorkSampleUsecase
   ) {}
+
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      const user = (req as CustomRequest).user;
-      await this.updateVendorProfileUsecase.execute(user._id, req.body);
-
-      res.status(HTTP_STATUS.OK).json({success : true , message : SUCCESS_MESSAGES.UPDATE_SUCCESS})
+        console.log('ing updateworksmaple controller', req.body);
+        const {_id,...worksampleData} = req.body.data as Partial<IWorkSampleEntity>;
+        console.log(_id,worksampleData);
+        await this.updateWorkSampleUsecase.execute(_id as string,worksampleData)
+        res.status(HTTP_STATUS.OK).json({success : true , message : SUCCESS_MESSAGES.UPDATE_SUCCESS})
     } catch (error) {
       if (error instanceof ZodError) {
         const errors = error.errors.map((err) => ({

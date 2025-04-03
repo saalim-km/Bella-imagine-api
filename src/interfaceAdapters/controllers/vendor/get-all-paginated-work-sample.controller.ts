@@ -17,8 +17,8 @@ export class GetAllPaginatedWorkSampleController implements IGetAllPaginatedWork
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
-        console.log('in GetAllPaginatedWorkSampleController');
-        console.log(req.query);
+        // console.log('in GetAllPaginatedWorkSampleController');
+        // console.log(req.query);
         const user = (req as CustomRequest).user;
         const { 
           title, 

@@ -17,8 +17,8 @@ export class GetAllPaginatedServicesController implements IGetAllPaginatedServic
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
-        console.log('in GetAllPaginatedServicesController');
-        console.log(req.query);
+        // console.log('in GetAllPaginatedServicesController');
+        // console.log(req.query);
         const user = (req as CustomRequest).user;
       const { serviceTitle, category, location, page = 1, limit = 4 } = req.query;
 

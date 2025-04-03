@@ -28,7 +28,6 @@ const extractToken = (
   
     if (privateRouteIndex !== -1 && pathSegments[privateRouteIndex + 1]) {
       const userType = pathSegments[privateRouteIndex + 1];
-      console.log('usertype is ',userType);
       return {
         access_token: req.cookies[`${userType}_access_token`] || null,
         refresh_token: req.cookies[`${userType}_refresh_token`] || null,
@@ -47,11 +46,9 @@ export const verifyAuth = async (
     next: NextFunction
   ) => {
     try {
-        console.log('-<<<<<<<<<<<<<<< in verifyauth middleware->>>>>>>>>>>>>>>');
       const token = extractToken(req);
 
       if (!token) {
-        console.log("no token");
         res
           .status(HTTP_STATUS.UNAUTHORIZED)
           .json({ message: ERROR_MESSAGES.UNAUTHORIZED_ACCESS });
@@ -79,13 +76,11 @@ export const verifyAuth = async (
       next();
     } catch (error: any) {
       if (error.name === "TokenExpiredError") {
-        console.log("token is expired is worked");
         res
           .status(HTTP_STATUS.UNAUTHORIZED)
           .json({ message: ERROR_MESSAGES.TOKEN_EXPIRED });
         return;
       }
-      console.log("token is invalid is worked");
   
       res
         .status(HTTP_STATUS.UNAUTHORIZED)
@@ -110,7 +105,6 @@ export const verifyAuth = async (
       const token = extractToken(req);
 
       if (!token) {
-        console.log("no token");
         res
           .status(HTTP_STATUS.UNAUTHORIZED)
           .json({ message: ERROR_MESSAGES.UNAUTHORIZED_ACCESS });
@@ -118,7 +112,6 @@ export const verifyAuth = async (
       }
 
       const user = tokenService.decodeRefreshToken(token?.access_token);
-      console.log("decoded", user);
       (req as CustomRequest).user = {
         _id: user?._id,
         email: user?.email,
@@ -137,11 +130,8 @@ export const verifyAuth = async (
   
 export const authorizeRole = (allowedRoles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    console.log('in authrole middleware');
     const user = (req as CustomRequest).user;
-    console.log(user);
     if (!user || !allowedRoles.includes(user.role)) {
-      console.log("role not allowed");
       res.status(HTTP_STATUS.FORBIDDEN).json({
         message: ERROR_MESSAGES.NOT_ALLOWED,
         userRole: user ? user.role : "None",

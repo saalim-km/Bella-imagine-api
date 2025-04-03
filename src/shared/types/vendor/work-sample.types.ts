@@ -20,3 +20,16 @@ export interface IWorkSampleFilter {
     page ?: number;
     limit ?: number
 }
+
+export interface IWorkSampleUpdateRequest {
+    _id ?: string;
+    service: string;
+    vendor : string;
+    title: string;
+    description: string;
+    media: TMedia[];
+    tags?: string[];
+    likes?: string[];
+    comments?: TComment;
+    isPublished: boolean;
+}

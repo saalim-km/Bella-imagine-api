@@ -35,6 +35,8 @@ import { GetAllPaginatedWorkSampleController } from "../../interfaceAdapters/con
 import { GetAllPaginatedVendorsController } from "../../interfaceAdapters/controllers/client/get-all-paginated-vendors.controller";
 import { GetAllClientCategoriesController } from "../../interfaceAdapters/controllers/client/get-all-client-categories.controller";
 import { GetPhotographerDetailsController } from "../../interfaceAdapters/controllers/client/get-photographer-details.controller";
+import { DeleteWorkSampleController } from "../../interfaceAdapters/controllers/vendor/delete-work-sample.controller";
+import { UpdateWorkSampleController } from "../../interfaceAdapters/controllers/vendor/update-work-sample.controller";
 
 export class ControllerRegistry {
     static registerController() : void {
@@ -98,6 +100,7 @@ export class ControllerRegistry {
         // |--------------------------------------- work-sample management ------------------------------------|
         container.register("CreateWorkSampleController",{useClass : CreateWorkSampleController})
         container.register("GetAllPaginatedWorkSampleController",{useClass : GetAllPaginatedWorkSampleController})
-
+        container.register('DeleteWorkSampleController',{useClass : DeleteWorkSampleController})
+        container.register("UpdateWorkSampleController",{useClass : UpdateWorkSampleController})
     }   
 }

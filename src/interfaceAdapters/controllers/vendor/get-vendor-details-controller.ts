@@ -15,12 +15,8 @@ export class GetVendorDetailsController implements IGetVendorDetailsController {
   ) {}
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      console.log(
-        "---------------------vendor details controller---------------------"
-      );
       const user = (req as CustomRequest).user;
       const vendor = await this.getVendorDetailsUsecase.execute(user._id);
-      console.log('-----------------------------after getting data from the usecase in controller------------------------------')
       res.status(HTTP_STATUS.OK).json({success : true , vendor})
 
     } catch (error) {

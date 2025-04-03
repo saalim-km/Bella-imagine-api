@@ -20,17 +20,12 @@ export class GoogleLoginController implements IGoogleLoginController {
   ) {}
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      console.log("------------------------ google login controller---------------------------");
-      console.log(req.body);
-
       const { credential, role, client_id } = req.body;
-      console.log(role);
       const user = await this.googleLoginUsecase.execute(
         credential,
         client_id,
         role
       );
-      console.log(user);
 
 
       if (!user._id || !user.email || !user.role) {
@@ -43,8 +38,6 @@ export class GoogleLoginController implements IGoogleLoginController {
       const refreshTokenName = `${user.role}_refresh_token`;
 
       const tokens = await this.generateTokenusecase.execute({_id : userId , email : user.email , role : role});
-      console.log('token generated');
-      console.log(tokens);
 
       setAuthCookies(res,tokens.accessToken,tokens.refreshToken,accessTokenName,refreshTokenName)
 
