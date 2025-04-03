@@ -35,6 +35,7 @@ import { CreateWorkSampleController } from "../../interfaceAdapters/controllers/
 import { GetAllPaginatedWorkSampleController } from "../../interfaceAdapters/controllers/vendor/get-all-paginated-work-sample.controller";
 import { GetAllPaginatedVendorsController } from "../../interfaceAdapters/controllers/client/get-all-paginated-vendors.controller";
 import { GetAllClientCategoriesController } from "../../interfaceAdapters/controllers/client/get-all-client-categories.controller";
+import { GetPhotographerDetailsController } from "../../interfaceAdapters/controllers/client/get-photographer-details.controller";
 
 DependencyInjection.registerAll();
 
@@ -97,3 +98,4 @@ export const getAllPaginatedWorkSample = container.resolve(GetAllPaginatedWorkSa
 
 export const getPaginatedVendorsController = container.resolve(GetAllPaginatedVendorsController)
 export const getAllClientCategoriesController = container.resolve(GetAllClientCategoriesController)
+export const getPhotographerDetailsController = container.resolve(GetPhotographerDetailsController)

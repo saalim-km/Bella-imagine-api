@@ -89,6 +89,8 @@ import { IGetAllPaginatedVendorsUsecase } from "../../entities/usecaseInterfaces
 import { GetAllPaginatedVendorsUsecase } from "../../useCases/client/get-all-paginated-vendors.usecase";
 import { IGetAllClientCategoriesUsecase } from "../../entities/usecaseInterfaces/client/get-all-client-categories-usecase.interface";
 import { GetAllClientCategoriesUsecase } from "../../useCases/client/get-all-client-categories.usecase";
+import { IGetPhotographerDetailsUsecase } from "../../entities/usecaseInterfaces/client/get-photographer-details-usecase.interface";
+import { GetPhotographerDetailsUsecase } from "../../useCases/client/get-photographer-details.usecase";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -115,7 +117,6 @@ export class UsecaseRegistry {
         // * Register Strategies
         container.register<IRegisterStrategy>("ClientRegisterStrategy", { useClass: ClientRegisterStrategy });
         container.register<IRegisterStrategy>("VendorRegisterStrategy", { useClass: VendorRegisterStrategy });
-
         // * Login Strategies
         container.register<ILoginStrategy>("ClientLoginStrategy", { useClass: ClientLoginStrategy });
         container.register<ILoginStrategy>("VendorLoginStrategy", { useClass: VendorLoginStrategy });
@@ -128,7 +129,6 @@ export class UsecaseRegistry {
         container.register<IEmailExistenceService>("IEmailExistenceService", { useClass: EmailExistenceService });
         container.register<IOtpService>("IOtpService", { useClass: OtpService });
         container.register<IVerifyOTPUsecase>("IVerifyOTPUsecase", { useClass: VerifyOTPUsecase });
-
         container.register<IJwtservice>("IJwtservice", { useClass: JwtService });
         container.register<IBcrypt>("PasswordBcrypt", { useClass: PasswordBcrypt });
         container.register<IBcrypt>("OtpBcrypt", { useClass: OtpBcrypt });
@@ -137,7 +137,9 @@ export class UsecaseRegistry {
         container.register<IGetAllClientUsecase>("IGetAllClientUsecase", { useClass: GetAllClientsUsecase });
         container.register<IGetAllVendorsUsecase>("IGetAllVendorsUsecase", { useClass: GetAllVendorsUsecase });
         container.register<IUpdateUserStatusUsecase>("IUpdateUserStatusUsecase", { useClass: UpdateUserStatusUsecase });
-        container.register<IGetUserDetailsUsecase>("IGetUserDetailsUsecase" , {useClass : GetUserDetailsUsecase})
+        container.register<IGetUserDetailsUsecase>("IGetUserDetailsUsecase" , {useClass : GetUserDetailsUsecase});
+        container.register<IGetAllPaginatedVendorsUsecase>("IGetAllPaginatedVendorsUsecase" , {useClass : GetAllPaginatedVendorsUsecase})
+        container.register<IGetPhotographerDetailsUsecase>("IGetPhotographerDetailsUsecase" , {useClass : GetPhotographerDetailsUsecase})
 
         // |---------------------------------- Category Management --------------------------------------|
         container.register<ICreateNewCategoryUseCase>("ICreateNewCategoryUseCase", { useClass: CreateNewCategoryUseCase });
@@ -147,6 +149,7 @@ export class UsecaseRegistry {
         container.register<IJoinCategoryRequestUsecase>("IJoinCategoryRequestUseCase" , {useClass : JoinCategoryRequestUseCase});
         container.register<IGetCategoryRequestUsecase>("IGetCategoryRequestUsecase" , {useClass : GetCategoryRequestUsecase})
         container.register<IUpdateCategoryRequestStatusUsecase>("IUpdateCategoryRequestStatusUsecase",{useClass : UpdateCategoryRequestStatusUsecase})
+        container.register<IGetAllClientCategoriesUsecase>("IGetAllClientCategoriesUsecase" , {useClass : GetAllClientCategoriesUsecase})
 
 
         // |--------------------------------------------------------- Notification Management ---------------------------------------------------|
@@ -163,7 +166,5 @@ export class UsecaseRegistry {
         container.register<IGetPaginatedWorkSampleUsecase>("IGetPaginatedWorkSampleUsecase" , {useClass : GetAllPaginatedWorkSamplesUsecase})
         
 
-        container.register<IGetAllPaginatedVendorsUsecase>("IGetAllPaginatedVendorsUsecase" , {useClass : GetAllPaginatedVendorsUsecase})
-        container.register<IGetAllClientCategoriesUsecase>("IGetAllClientCategoriesUsecase" , {useClass : GetAllClientCategoriesUsecase})
     }
 }

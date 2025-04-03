@@ -29,13 +29,6 @@ export interface RecurringAvailability {
   endTime: string;
 }
 
-export interface CustomField {
-  name: string;
-  type: string;
-  required: boolean;
-  options: string[];
-}
-
 export interface Location {
   options: {
     studio: boolean;

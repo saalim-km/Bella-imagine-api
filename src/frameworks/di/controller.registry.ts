@@ -34,6 +34,7 @@ import { CreateWorkSampleController } from "../../interfaceAdapters/controllers/
 import { GetAllPaginatedWorkSampleController } from "../../interfaceAdapters/controllers/vendor/get-all-paginated-work-sample.controller";
 import { GetAllPaginatedVendorsController } from "../../interfaceAdapters/controllers/client/get-all-paginated-vendors.controller";
 import { GetAllClientCategoriesController } from "../../interfaceAdapters/controllers/client/get-all-client-categories.controller";
+import { GetPhotographerDetailsController } from "../../interfaceAdapters/controllers/client/get-photographer-details.controller";
 
 export class ControllerRegistry {
     static registerController() : void {
@@ -65,6 +66,8 @@ export class ControllerRegistry {
         container.register("GetAllVendorsController" , {useClass : GetAllVendorsController})
         container.register("UpdateUserStatusController" , {useClass : UpdateUserStatusController})
         container.register("ResetPasswordController" , {useClass : ResetPasswordController})
+        container.register("GetAllPaginatedVendorsController",{useClass : GetAllPaginatedVendorsController})
+        container.register("GetPhotographerDetailsController",{useClass : GetPhotographerDetailsController})
 
 
         // |-------------------------- vendor Request --------------------------|
@@ -80,6 +83,8 @@ export class ControllerRegistry {
         container.register("JoinCategoryRequestUseCase" , {useClass : JoinCategoryRequestController})
         container.register("GetCategoryRequestController",{useClass : GetCategoryRequestController})
         container.register("UpdateCategoryRequestStatusController",{useClass : UpdateCategoryRequestStatusController})
+        container.register("GetAllClientCategoriesController" , {useClass : GetAllClientCategoriesController})
+
 
         // |--------------------------------------- Notification management ------------------------------------|
         container.register("IGetAllVendorNotificationController" , {useClass : GetAllVendorNotificationController})
@@ -94,7 +99,5 @@ export class ControllerRegistry {
         container.register("CreateWorkSampleController",{useClass : CreateWorkSampleController})
         container.register("GetAllPaginatedWorkSampleController",{useClass : GetAllPaginatedWorkSampleController})
 
-        container.register("GetAllPaginatedVendorsController",{useClass : GetAllPaginatedVendorsController})
-        container.register("GetAllClientCategoriesController" , {useClass : GetAllClientCategoriesController})
     }   
 }

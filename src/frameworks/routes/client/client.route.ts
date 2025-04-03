@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { LogoutController } from "../../../interfaceAdapters/controllers/auth/logout.controller";
 import { authorizeRole, decodeToken, verifyAuth } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
-import { getAllClientCategoriesController, getAllClientNotificatioController, getClientDetailsController, getPaginatedVendorsController, logoutController, refreshTokenController, updateClientController } from "../../di/resolver";
+import { getAllClientCategoriesController, getAllClientNotificatioController, getClientDetailsController, getPaginatedVendorsController, getPhotographerDetailsController, logoutController, refreshTokenController, updateClientController } from "../../di/resolver";
 
 export class ClientRoute extends BaseRoute {
     constructor() {
@@ -32,7 +32,7 @@ export class ClientRoute extends BaseRoute {
         })
 
         this.router.route('/client/vendors')
-        .get(verifyAuth,authorizeRole(['client']),(req : Request , res : Response)=> {
+        .get((req : Request , res : Response)=> {
             getPaginatedVendorsController.handle(req,res)
         })
 
@@ -41,7 +41,7 @@ export class ClientRoute extends BaseRoute {
         })
 
         this.router.get('/client/photographer/:id',verifyAuth,authorizeRole(["client"]),(req : Request , res : Response)=> {
-            console.log('nigga')
+            getPhotographerDetailsController.handle(req,res)
         })
     }
 }

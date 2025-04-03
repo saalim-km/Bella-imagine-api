@@ -47,8 +47,17 @@ export class VendorRepository implements IVendorRepository {
 
   async findById(id: string | ObjectId): Promise<IVendorEntity | null> {
     return await VendorModel.findById(id)
-      .populate({ path: "categories", select: "title" })
-      .exec();
+    .populate([
+      {
+        path : "services",
+        populate : {
+            path : "category"
+        },
+      },
+      { path: "workSamples" },
+      { path: "categories" },
+    ])
+    .exec();
   }
 
   async findByIdAndUpdateVendorCategories(

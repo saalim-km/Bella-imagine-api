@@ -1,24 +1,6 @@
 import mongoose, { Document } from "mongoose";
 import { IServiceModel } from "../models/service.model";
 
-const customSchemaField = new mongoose.Schema({
-  name: {
-    type: String,
-  },
-  type: {
-    type: String,
-    enum: ["string", "number", "boolean", "array", "date"],
-  },
-  required: {
-    type: Boolean,
-    default: false,
-  },
-  options: {
-    type: [String],
-    default: [],
-  },
-});
-
 export const serviceSchema = new mongoose.Schema<IServiceModel>({
   vendor: {
     type: mongoose.Schema.Types.ObjectId,
@@ -55,7 +37,6 @@ export const serviceSchema = new mongoose.Schema<IServiceModel>({
     },
   ],
   features: [String],
-  customFields: [customSchemaField],
   location: {
     options: {
       studio: {
