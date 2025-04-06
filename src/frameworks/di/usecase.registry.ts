@@ -95,6 +95,8 @@ import { IDeleteWorkSampleUsecase } from "../../entities/usecaseInterfaces/vendo
 import { DeleteWorkSampleUsecase } from "../../useCases/work-sample/delete-work-sample.usecase";
 import { IUpdateWorkSampleUsecase } from "../../entities/usecaseInterfaces/vendor/update-work-sample-usecase.interface";
 import { UpdateWorkSampleUsecase } from "../../useCases/work-sample/update-work-sample.usecase";
+import { IGetServiceUsecase } from "../../entities/usecaseInterfaces/client/get-service-usecase.interaface";
+import { GetServiceUsecase } from "../../useCases/client/get-service.usecase";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -170,6 +172,11 @@ export class UsecaseRegistry {
         container.register<IGetPaginatedWorkSampleUsecase>("IGetPaginatedWorkSampleUsecase" , {useClass : GetAllPaginatedWorkSamplesUsecase})
         container.register<IDeleteWorkSampleUsecase>("IDeleteWorkSampleUsecase" , {useClass : DeleteWorkSampleUsecase})
         container.register<IUpdateWorkSampleUsecase>("IUpdateWorkSampleUsecase" , {useClass : UpdateWorkSampleUsecase})
+
+
+
+        // |--------------------------------------------------------- Booking Management ---------------------------------------------------|
+        container.register<IGetServiceUsecase>("IGetServiceUsecase" , {useClass : GetServiceUsecase})
 
     }
 }

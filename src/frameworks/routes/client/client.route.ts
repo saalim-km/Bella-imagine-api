@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { LogoutController } from "../../../interfaceAdapters/controllers/auth/logout.controller";
 import { authorizeRole, decodeToken, verifyAuth } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
-import { getAllClientCategoriesController, getAllClientNotificatioController, getClientDetailsController, getPaginatedVendorsController, getPhotographerDetailsController, logoutController, refreshTokenController, updateClientController } from "../../di/resolver";
+import { getAllClientCategoriesController, getAllClientNotificatioController, getClientDetailsController, getPaginatedVendorsController, getPhotographerDetailsController, getServiceController, logoutController, refreshTokenController, updateClientController } from "../../di/resolver";
 
 export class ClientRoute extends BaseRoute {
     constructor() {
@@ -43,5 +43,10 @@ export class ClientRoute extends BaseRoute {
         this.router.get('/client/photographer/:id',verifyAuth,authorizeRole(["client"]),(req : Request , res : Response)=> {
             getPhotographerDetailsController.handle(req,res)
         })
+
+        this.router.get('/client/service/:id',verifyAuth,authorizeRole(["client"]),(req : Request , res : Response)=> {
+            getServiceController.handle(req,res)
+        })
+
     }
 }

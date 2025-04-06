@@ -12,6 +12,10 @@ export class ServiceRepository implements IServiceRepository {
         return await serviceModel.create(serviceData)
     }
 
+    async findById(id: string): Promise<IServiceEntity | null> {
+      return await serviceModel.findById(id);  
+    }
+
     async findByServiceName(name: string): Promise<IServiceEntity | null> {
         return await serviceModel.findOne({serviceTitle : { $regex: new RegExp(`^${name.trim()}$`, "i") }})
     }

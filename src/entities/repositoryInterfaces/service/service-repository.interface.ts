@@ -6,7 +6,7 @@ import { IServiceEntity } from "../../models/service.entity";
 export interface IServiceRepository {
     create (serviceData: Partial<IServiceEntity>): Promise<IServiceEntity>;
 
-    // findById?(id: string): Promise<IServiceEntity | null>;
+    findById (id: string): Promise<IServiceEntity | null>;
 
     findAllServiceByVendor (filter : IServiceFilter , skip :  number , limit : number , sort ?: any) : Promise<PaginatedResponse<IServiceEntity>>;
 

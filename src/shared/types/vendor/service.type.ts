@@ -11,6 +11,7 @@ export interface TimeSlot {
   startTime: string;
   endTime: string;
   capacity: number;
+  isBooked: boolean
 }
 
 export interface DateSlot {

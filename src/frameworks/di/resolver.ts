@@ -38,6 +38,7 @@ import { GetAllClientCategoriesController } from "../../interfaceAdapters/contro
 import { GetPhotographerDetailsController } from "../../interfaceAdapters/controllers/client/get-photographer-details.controller";
 import { DeleteWorkSampleController } from "../../interfaceAdapters/controllers/vendor/delete-work-sample.controller";
 import { UpdateWorkSampleController } from "../../interfaceAdapters/controllers/vendor/update-work-sample.controller";
+import { GetServiceController } from "../../interfaceAdapters/controllers/client/get-service.controller";
 
 DependencyInjection.registerAll();
 
@@ -103,3 +104,4 @@ export const getAllClientCategoriesController = container.resolve(GetAllClientCa
 export const getPhotographerDetailsController = container.resolve(GetPhotographerDetailsController)
 export const deleteWorkSampleController = container.resolve(DeleteWorkSampleController)
 export const updateWorkSampleController = container.resolve(UpdateWorkSampleController);
+export const getServiceController = container.resolve(GetServiceController)

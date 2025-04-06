@@ -1,23 +1,22 @@
+import { inject, injectable } from "tsyringe";
+import { IGetServiceController } from "../../../entities/controllerInterfaces/client/get-service-controller.interface";
+import { IGetServiceUsecase } from "../../../entities/usecaseInterfaces/client/get-service-usecase.interaface";
 import { Request, Response } from "express";
-import { IGetAllPaginatedVendorsController } from "../../../entities/controllerInterfaces/client/get-all-paginated-vendors-interface.controller";
 import { ZodError } from "zod";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
 import { CustomError } from "../../../entities/utils/custom-error";
-import { inject, injectable } from "tsyringe";
-import { IGetAllPaginatedVendorsUsecase } from "../../../entities/usecaseInterfaces/client/get-all-paginated-vendors-usecase-interface";
-import { IVendorsFilter } from "../../../shared/types/client/vendors-list.type";
 
 @injectable()
-export class GetAllPaginatedVendorsController
-  implements IGetAllPaginatedVendorsController
-{
-    constructor(
-        @inject("IGetAllPaginatedVendorsUsecase") private getPaginatedVendorsUseacse : IGetAllPaginatedVendorsUsecase
-    ){}
+export class GetServiceController implements IGetServiceController {
+  constructor(
+    @inject("IGetServiceUsecase") private getServiceUsecase: IGetServiceUsecase
+  ) {}
   async handle(req: Request, res: Response): Promise<void> {
     try {
-        const data = await (await this.getPaginatedVendorsUseacse.execute(req.query as IVendorsFilter))
-        res.status(HTTP_STATUS.OK).json(data)
+        console.log('in getservicecontroller ');
+        const {id} = req.params;
+        const service = await this.getServiceUsecase.execute(id as string);
+        res.status(HTTP_STATUS.OK).json(service)
     } catch (error) {
       if (error instanceof ZodError) {
         const errors = error.errors.map((err) => ({

@@ -37,6 +37,7 @@ import { GetAllClientCategoriesController } from "../../interfaceAdapters/contro
 import { GetPhotographerDetailsController } from "../../interfaceAdapters/controllers/client/get-photographer-details.controller";
 import { DeleteWorkSampleController } from "../../interfaceAdapters/controllers/vendor/delete-work-sample.controller";
 import { UpdateWorkSampleController } from "../../interfaceAdapters/controllers/vendor/update-work-sample.controller";
+import { GetServiceController } from "../../interfaceAdapters/controllers/client/get-service.controller";
 
 export class ControllerRegistry {
     static registerController() : void {
@@ -102,5 +103,10 @@ export class ControllerRegistry {
         container.register("GetAllPaginatedWorkSampleController",{useClass : GetAllPaginatedWorkSampleController})
         container.register('DeleteWorkSampleController',{useClass : DeleteWorkSampleController})
         container.register("UpdateWorkSampleController",{useClass : UpdateWorkSampleController})
+
+
+        // -------------------------------------- Booking Management ----------------------------------------------|
+        container.register("GetServiceController",{useClass : GetServiceController})
+
     }   
 }

@@ -26,9 +26,7 @@ export class LoginUseCase implements ILogUseCaseIninterface {
       throw new CustomError("User role is missing", HTTP_STATUS.BAD_REQUEST);
     }
 
-    console.log("----------------------from login usecase-------------------------", user);
     const strategy = this.strategies[user.role];
-    console.log(strategy);
     
     return await strategy.login(user);
   }
