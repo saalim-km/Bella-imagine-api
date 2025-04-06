@@ -15,10 +15,6 @@ export class UpdateVendorController implements IUpdateVendorController {
   ) {}
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      console.log(
-        "-----------------------update vendor controller-------------------"
-      );
-      console.log(req.body);
       const user = (req as CustomRequest).user;
       await this.updateVendorProfileUsecase.execute(user._id, req.body);
 

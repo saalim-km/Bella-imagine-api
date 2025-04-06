@@ -13,6 +13,10 @@ import { ICategoryRepository } from "../../entities/repositoryInterfaces/common/
 import { CategoryRespository } from "../../interfaceAdapters/repositories/common/category.repository";
 import { ICategoryRequestRepository } from "../../entities/repositoryInterfaces/common/category-reqeust-repository.interface";
 import { CategoryRequestRepository } from "../../interfaceAdapters/repositories/common/category-request.repository";
+import { IServiceRepository } from "../../entities/repositoryInterfaces/service/service-repository.interface";
+import { ServiceRepository } from "../../interfaceAdapters/repositories/service/service.repository";
+import { IWorkSampleRepository } from "../../entities/repositoryInterfaces/work-sample/work-sample-repository.interface";
+import { WorkSampleRepository } from "../../interfaceAdapters/repositories/work-sample/work-sample.repository";
 
 export class RepositoryRegistry {
   static registerRepositories(): void {
@@ -43,6 +47,14 @@ export class RepositoryRegistry {
 
     container.register<ICategoryRequestRepository>("ICategoryRequestRepository",{
       useClass : CategoryRequestRepository
+    })
+
+    container.register<IServiceRepository>("IServiceRepository",{
+      useClass : ServiceRepository
+    })
+
+    container.register<IWorkSampleRepository>("IWorkSampleRepository", {
+      useClass : WorkSampleRepository
     })
   }
 }

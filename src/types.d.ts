@@ -8,6 +8,7 @@ declare global {
             JWT_REFRESH_SECRET_KEY: string;
             JWT_ACCESS_EXPIRES_IN: string;
             JWT_REFRESH_EXPIRES_IN: string;
+            Multer : File
         }
     }
 }

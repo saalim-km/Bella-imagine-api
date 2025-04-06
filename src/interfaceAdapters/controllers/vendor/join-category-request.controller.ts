@@ -22,7 +22,6 @@ export class JoinCategoryRequestController implements IJoinCategoryRequestContro
       const { category } = req.body;
       const vendorId = (req as CustomRequest).user._id;
       await this.joinCategoryRequestUseCase.execute(vendorId as any, category);
-      console.log(category,vendorId);
       res
         .status(HTTP_STATUS.OK)
         .json({ success: true, message: SUCCESS_MESSAGES.ACTION_SUCCESS });

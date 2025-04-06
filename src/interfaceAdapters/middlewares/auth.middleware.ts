@@ -24,9 +24,7 @@ const extractToken = (
     req: Request
   ): { access_token: string; refresh_token: string } | null => {
     const pathSegments = req.path.split("/");
-    console.log(pathSegments);
     const privateRouteIndex = pathSegments.indexOf("");
-    console.log(privateRouteIndex);
   
     if (privateRouteIndex !== -1 && pathSegments[privateRouteIndex + 1]) {
       const userType = pathSegments[privateRouteIndex + 1];
@@ -48,36 +46,20 @@ export const verifyAuth = async (
     next: NextFunction
   ) => {
     try {
-        console.log('-<<<<<<<<<<<<<<< in verifyauth middleware->>>>>>>>>>>>>>>');
       const token = extractToken(req);
-        console.log(token);
 
       if (!token) {
-        console.log("no token");
         res
           .status(HTTP_STATUS.UNAUTHORIZED)
           .json({ message: ERROR_MESSAGES.UNAUTHORIZED_ACCESS });
         return;
       }
   
-      console.log('---------------after checking tokens-----------------');
-    //->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    // Currently not doint the blcaklisting of tokens , redis is not currently set.
-    //   if (await isBlacklisted(token.access_token)) {
-    //     console.log("token is black listed is worked");
-    //     res
-    //       .status(HTTP_STATUS.FORBIDDEN)
-    //       .json({ message: "Token is blacklisted" });
-    //     return;
-    //   }
-  
 
       const user = tokenService.verifyAccessToken(
         token.access_token
       ) as CustomJwtPayload;
 
-      console.log(user);
-      console.log(`-------------------after verifying access token-------------------`);
       if (!user || !user._id) {
         res
           .status(HTTP_STATUS.UNAUTHORIZED)
@@ -85,24 +67,20 @@ export const verifyAuth = async (
         return;
       }
   
-      console.log('-----------------------after checking access token---------------------------');
       (req as CustomRequest).user = {
         ...user,
         access_token: token.access_token,
         refresh_token: token.refresh_token,
       };
 
-      console.log('calling next function');
       next();
     } catch (error: any) {
       if (error.name === "TokenExpiredError") {
-        console.log("token is expired is worked");
         res
           .status(HTTP_STATUS.UNAUTHORIZED)
           .json({ message: ERROR_MESSAGES.TOKEN_EXPIRED });
         return;
       }
-      console.log("token is invalid is worked");
   
       res
         .status(HTTP_STATUS.UNAUTHORIZED)
@@ -127,23 +105,13 @@ export const verifyAuth = async (
       const token = extractToken(req);
 
       if (!token) {
-        console.log("no token");
         res
           .status(HTTP_STATUS.UNAUTHORIZED)
           .json({ message: ERROR_MESSAGES.UNAUTHORIZED_ACCESS });
         return;
       }
 
-      // if (await isBlacklisted(token.access_token)) {
-      //   console.log("token is black listed is worked");
-      //   res
-      //     .status(HTTP_STATUS.FORBIDDEN)
-      //     .json({ message: "Token is blacklisted" });
-      //   return;
-      // }
-  
       const user = tokenService.decodeRefreshToken(token?.access_token);
-      console.log("decoded", user);
       (req as CustomRequest).user = {
         _id: user?._id,
         email: user?.email,
@@ -162,11 +130,8 @@ export const verifyAuth = async (
   
 export const authorizeRole = (allowedRoles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    console.log('in authrole middleware');
     const user = (req as CustomRequest).user;
-    console.log(user);
     if (!user || !allowedRoles.includes(user.role)) {
-      console.log("role not allowed");
       res.status(HTTP_STATUS.FORBIDDEN).json({
         message: ERROR_MESSAGES.NOT_ALLOWED,
         userRole: user ? user.role : "None",

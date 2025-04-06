@@ -73,6 +73,30 @@ import { IGetCategoryRequestUsecase } from "../../entities/usecaseInterfaces/adm
 import { GetCategoryRequestUsecase } from "../../useCases/admin/get-category-request.usecase";
 import { IUpdateCategoryRequestStatusUsecase } from "../../entities/usecaseInterfaces/admin/update-category-request-status-usecase.interface";
 import { UpdateCategoryRequestStatusUsecase } from "../../useCases/admin/update-category-request-status.usecase";
+import { IGetUserDetailsUsecase } from "../../entities/usecaseInterfaces/admin/get-user-details-usecase.interface";
+import { GetUserDetailsUsecase } from "../../useCases/admin/get-user-details.usecase";
+import { ICreateServiceUsecase } from "../../entities/usecaseInterfaces/service/create-service-usecase.interface";
+import { CreateServiceUsecase } from "../../useCases/service/create-service.usecase";
+import { IGetAllPaginatedServicesUsecase } from "../../entities/usecaseInterfaces/vendor/get-all-paginated-services-usecase.interface";
+import { GetAllPaginatedServicesUsecase } from "../../useCases/service/get-all-paginated-services.usecase";
+import { IUpdateServiceUsecase } from "../../entities/usecaseInterfaces/service/update-service-usecase.interface";
+import { UpdateServiceUsecase } from "../../useCases/service/update-service.usecase";
+import { ICreateWorkSampleUsecase } from "../../entities/usecaseInterfaces/vendor/create-work-sample-usecase.interface";
+import { CreateWorkSampleUsecase } from "../../useCases/work-sample/create-work-sample.usecase";
+import { IGetPaginatedWorkSampleUsecase } from "../../entities/usecaseInterfaces/vendor/get-paginated-work-sample-usecase.interface";
+import { GetAllPaginatedWorkSamplesUsecase } from "../../useCases/work-sample/get-paginated-work-sample.usecase";
+import { IGetAllPaginatedVendorsUsecase } from "../../entities/usecaseInterfaces/client/get-all-paginated-vendors-usecase-interface";
+import { GetAllPaginatedVendorsUsecase } from "../../useCases/client/get-all-paginated-vendors.usecase";
+import { IGetAllClientCategoriesUsecase } from "../../entities/usecaseInterfaces/client/get-all-client-categories-usecase.interface";
+import { GetAllClientCategoriesUsecase } from "../../useCases/client/get-all-client-categories.usecase";
+import { IGetPhotographerDetailsUsecase } from "../../entities/usecaseInterfaces/client/get-photographer-details-usecase.interface";
+import { GetPhotographerDetailsUsecase } from "../../useCases/client/get-photographer-details.usecase";
+import { IDeleteWorkSampleUsecase } from "../../entities/usecaseInterfaces/vendor/delete-work-sample-usecase.interface";
+import { DeleteWorkSampleUsecase } from "../../useCases/work-sample/delete-work-sample.usecase";
+import { IUpdateWorkSampleUsecase } from "../../entities/usecaseInterfaces/vendor/update-work-sample-usecase.interface";
+import { UpdateWorkSampleUsecase } from "../../useCases/work-sample/update-work-sample.usecase";
+import { IGetServiceUsecase } from "../../entities/usecaseInterfaces/client/get-service-usecase.interaface";
+import { GetServiceUsecase } from "../../useCases/client/get-service.usecase";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -99,7 +123,6 @@ export class UsecaseRegistry {
         // * Register Strategies
         container.register<IRegisterStrategy>("ClientRegisterStrategy", { useClass: ClientRegisterStrategy });
         container.register<IRegisterStrategy>("VendorRegisterStrategy", { useClass: VendorRegisterStrategy });
-
         // * Login Strategies
         container.register<ILoginStrategy>("ClientLoginStrategy", { useClass: ClientLoginStrategy });
         container.register<ILoginStrategy>("VendorLoginStrategy", { useClass: VendorLoginStrategy });
@@ -112,7 +135,6 @@ export class UsecaseRegistry {
         container.register<IEmailExistenceService>("IEmailExistenceService", { useClass: EmailExistenceService });
         container.register<IOtpService>("IOtpService", { useClass: OtpService });
         container.register<IVerifyOTPUsecase>("IVerifyOTPUsecase", { useClass: VerifyOTPUsecase });
-
         container.register<IJwtservice>("IJwtservice", { useClass: JwtService });
         container.register<IBcrypt>("PasswordBcrypt", { useClass: PasswordBcrypt });
         container.register<IBcrypt>("OtpBcrypt", { useClass: OtpBcrypt });
@@ -121,6 +143,9 @@ export class UsecaseRegistry {
         container.register<IGetAllClientUsecase>("IGetAllClientUsecase", { useClass: GetAllClientsUsecase });
         container.register<IGetAllVendorsUsecase>("IGetAllVendorsUsecase", { useClass: GetAllVendorsUsecase });
         container.register<IUpdateUserStatusUsecase>("IUpdateUserStatusUsecase", { useClass: UpdateUserStatusUsecase });
+        container.register<IGetUserDetailsUsecase>("IGetUserDetailsUsecase" , {useClass : GetUserDetailsUsecase});
+        container.register<IGetAllPaginatedVendorsUsecase>("IGetAllPaginatedVendorsUsecase" , {useClass : GetAllPaginatedVendorsUsecase})
+        container.register<IGetPhotographerDetailsUsecase>("IGetPhotographerDetailsUsecase" , {useClass : GetPhotographerDetailsUsecase})
 
         // |---------------------------------- Category Management --------------------------------------|
         container.register<ICreateNewCategoryUseCase>("ICreateNewCategoryUseCase", { useClass: CreateNewCategoryUseCase });
@@ -130,11 +155,28 @@ export class UsecaseRegistry {
         container.register<IJoinCategoryRequestUsecase>("IJoinCategoryRequestUseCase" , {useClass : JoinCategoryRequestUseCase});
         container.register<IGetCategoryRequestUsecase>("IGetCategoryRequestUsecase" , {useClass : GetCategoryRequestUsecase})
         container.register<IUpdateCategoryRequestStatusUsecase>("IUpdateCategoryRequestStatusUsecase",{useClass : UpdateCategoryRequestStatusUsecase})
+        container.register<IGetAllClientCategoriesUsecase>("IGetAllClientCategoriesUsecase" , {useClass : GetAllClientCategoriesUsecase})
 
 
         // |--------------------------------------------------------- Notification Management ---------------------------------------------------|
         container.register<IGetAllVendorNotificationUsecase>("IGetAllVendorNotificationUsecase" , {useClass : GetAllVendorNotificationUsecase});
         container.register<IGetAllClientNotificationUsecase>('IGetAllClientNotificationUsecase' ,{useClass : GetAllClientNotificationUsecase})
-    }
 
+        // |--------------------------------------------------------- Vendor Service Management ---------------------------------------------------|
+        container.register<ICreateServiceUsecase>("ICreateServiceUsecase" , {useClass : CreateServiceUsecase})
+        container.register<IGetAllPaginatedServicesUsecase>("IGetAllPaginatedServicesUsecase" , {useClass : GetAllPaginatedServicesUsecase})
+        container.register<IUpdateServiceUsecase>("IUpdateServiceUsecase" , {useClass : UpdateServiceUsecase})
+
+        // |--------------------------------------------------------- Vendor work-sample Management ---------------------------------------------------|
+        container.register<ICreateWorkSampleUsecase>("ICreateWorkSampleUsecase",{useClass : CreateWorkSampleUsecase})
+        container.register<IGetPaginatedWorkSampleUsecase>("IGetPaginatedWorkSampleUsecase" , {useClass : GetAllPaginatedWorkSamplesUsecase})
+        container.register<IDeleteWorkSampleUsecase>("IDeleteWorkSampleUsecase" , {useClass : DeleteWorkSampleUsecase})
+        container.register<IUpdateWorkSampleUsecase>("IUpdateWorkSampleUsecase" , {useClass : UpdateWorkSampleUsecase})
+
+
+
+        // |--------------------------------------------------------- Booking Management ---------------------------------------------------|
+        container.register<IGetServiceUsecase>("IGetServiceUsecase" , {useClass : GetServiceUsecase})
+
+    }
 }

@@ -17,9 +17,8 @@ export class GetAllVendorCategoriesController
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
-        console.log('-----------------------------GetAllVendorCategoriesController-------------------------------');
+        // console.log('-----------------------------GetAllVendorCategoriesController-------------------------------');
       const categories = await this.allVendorCategoriesUsecase.execute();
-      console.log(categories);
       res
         .status(HTTP_STATUS.OK)
         .json({ success: true, categories: categories });

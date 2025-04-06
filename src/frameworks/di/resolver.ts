@@ -27,6 +27,18 @@ import { GetAllVendorNotificationController } from "../../interfaceAdapters/cont
 import { GetAllClientNotificationController } from "../../interfaceAdapters/controllers/client/get-all-client-notification.controller";
 import { GetCategoryRequestController } from "../../interfaceAdapters/controllers/admin/get-category-request.controller";
 import { UpdateCategoryRequestStatusController } from "../../interfaceAdapters/controllers/admin/update-category-request-status.controller";
+import { GetUserDetailsController } from "../../interfaceAdapters/controllers/admin/get-user-details.controller";
+import { CreateServiceController } from "../../interfaceAdapters/controllers/vendor/create-service.controller";
+import { GetAllPaginatedServicesController } from "../../interfaceAdapters/controllers/vendor/get-all-paginated-services.controller";
+import { UpdateServiceController } from "../../interfaceAdapters/controllers/vendor/update-service.controller";
+import { CreateWorkSampleController } from "../../interfaceAdapters/controllers/vendor/create-work-sample.controller";
+import { GetAllPaginatedWorkSampleController } from "../../interfaceAdapters/controllers/vendor/get-all-paginated-work-sample.controller";
+import { GetAllPaginatedVendorsController } from "../../interfaceAdapters/controllers/client/get-all-paginated-vendors.controller";
+import { GetAllClientCategoriesController } from "../../interfaceAdapters/controllers/client/get-all-client-categories.controller";
+import { GetPhotographerDetailsController } from "../../interfaceAdapters/controllers/client/get-photographer-details.controller";
+import { DeleteWorkSampleController } from "../../interfaceAdapters/controllers/vendor/delete-work-sample.controller";
+import { UpdateWorkSampleController } from "../../interfaceAdapters/controllers/vendor/update-work-sample.controller";
+import { GetServiceController } from "../../interfaceAdapters/controllers/client/get-service.controller";
 
 DependencyInjection.registerAll();
 
@@ -59,7 +71,8 @@ export const getAllVendorController = container.resolve(GetAllVendorsController)
 export const getPendingVendorController = container.resolve(GetPendingVendorController);
 export const updateVendorRequestController = container.resolve(UpdateVendorRequestController)
 
-// |================================ User Status Management ==========================|
+// |================================ User(common) Management ==========================|
+export const getUserDetailsController = container.resolve(GetUserDetailsController)
 export const updateUserStatusController = container.resolve(UpdateUserStatusController);
 
 // |================================ Category Management ==========================|
@@ -74,3 +87,21 @@ export const updateCategoryRequestStatusController = container.resolve(UpdateCat
 // |====================================== Notification Management ====================================|
 export const getAllVendorNotificationController = container.resolve(GetAllVendorNotificationController)
 export const getAllClientNotificatioController = container.resolve(GetAllClientNotificationController)
+
+
+// |====================================== Service Management ====================================|
+export const createServiceController = container.resolve(CreateServiceController)
+export const getAllPaginatedServiceController = container.resolve(GetAllPaginatedServicesController)
+export const updateServiceController = container.resolve(UpdateServiceController)
+
+// |====================================== work-sample Management ====================================|
+export const createWorkSampleController = container.resolve(CreateWorkSampleController)
+export const getAllPaginatedWorkSample = container.resolve(GetAllPaginatedWorkSampleController)
+
+
+export const getPaginatedVendorsController = container.resolve(GetAllPaginatedVendorsController)
+export const getAllClientCategoriesController = container.resolve(GetAllClientCategoriesController)
+export const getPhotographerDetailsController = container.resolve(GetPhotographerDetailsController)
+export const deleteWorkSampleController = container.resolve(DeleteWorkSampleController)
+export const updateWorkSampleController = container.resolve(UpdateWorkSampleController);
+export const getServiceController = container.resolve(GetServiceController)

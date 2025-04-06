@@ -9,7 +9,6 @@ export class GetVendorDetailUsecase implements IGetVendorDetailsUsecase {
         @inject("IVendorRepository") private vendorRepository : IVendorRepository
     ) {}
     async execute(id: any): Promise<IVendorEntity | null> {
-        console.log('------------------------vendor details usecase----------------------');
         if(!id) {
             throw new Error('id is missing');
         }

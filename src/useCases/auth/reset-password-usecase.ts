@@ -18,7 +18,6 @@ export class ResetPasswordUsecase implements IResetPasswordUsecase {
         console.log('-------------------------ResetPasswordUsecase--------------------------');
         if(userType === 'vendor') {
             const hashedPassword = await this.passBcrypt.hash(newPassword);
-            console.log('hashed password : ',hashedPassword);
             const vendor = await this.vendorRepository.findByEmail(email);
             console.log(vendor);
             if(!vendor || !vendor._id) {

@@ -1,35 +1,55 @@
-import { Schema } from "mongoose";
+import mongoose from "mongoose";
+import { IServiceModel } from "../models/service.model";
 import { IWorkSampleModel } from "../models/work-sample.model";
 
-export const workSampleSchema = new Schema<IWorkSampleModel>(
-  {
-    vendorId: { type: Schema.Types.ObjectId, ref: "Vendor", required: true },
-    category: { type: Schema.Types.ObjectId, ref: "Category", required: false }, 
-    serviceId: { type: Schema.Types.ObjectId, ref: "Service", required: false }, 
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    media: [
-      {
-        type: String,
-        required: true,
-        validate: [(media: string[]) => media.length > 0, "At least one media file is required"],
-      },
-    ], 
-    tags: [{ type: String }],
-
-    likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    likeCount: { type: Number, default: 0 }, 
-
-    comments: [
-      {
-        client: { type: Schema.Types.ObjectId, ref: "Client", required: true },
-        text: { type: String, required: true }, 
-        createdAt: { type: Date, default: Date.now },
-      },
-    ],
-
-    sharedBy: [{ type: Schema.Types.ObjectId, ref: "Client" }],
-    shareCount: { type: Number, default: 0 },
+export const workSampleSchema = new mongoose.Schema<IWorkSampleModel>({
+  service: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Service",
+    required: true,
   },
-  { timestamps: true }
-);
+  vendor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Vendor",
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+  },
+  media: [
+    {
+      url: { type: String, required: true },
+      type: { type: String, enum: ["image", "video"], required: true },
+    },
+  ],
+  tags: [
+    {
+      type: String,
+      lowercase: true,
+      trim: true,
+    },
+  ],
+  likes: [
+    {
+      user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    },
+  ],
+  comments: [
+    {
+      user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      text: { type: String, required: true },
+      createdAt: { type: Date, default: Date.now },
+    },
+  ],
+  isPublished: {
+    type: Boolean,
+    default: false,
+  },
+},
+{
+  timestamps : true
+});

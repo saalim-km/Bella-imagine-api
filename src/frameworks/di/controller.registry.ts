@@ -26,6 +26,18 @@ import { GetAllVendorNotificationController } from "../../interfaceAdapters/cont
 import { GetAllClientNotificationController } from "../../interfaceAdapters/controllers/client/get-all-client-notification.controller";
 import { GetCategoryRequestController } from "../../interfaceAdapters/controllers/admin/get-category-request.controller";
 import { UpdateCategoryRequestStatusController } from "../../interfaceAdapters/controllers/admin/update-category-request-status.controller";
+import { GetUserDetailsController } from "../../interfaceAdapters/controllers/admin/get-user-details.controller";
+import { CreateServiceController } from "../../interfaceAdapters/controllers/vendor/create-service.controller";
+import { GetAllPaginatedServicesController } from "../../interfaceAdapters/controllers/vendor/get-all-paginated-services.controller";
+import { UpdateServiceController } from "../../interfaceAdapters/controllers/vendor/update-service.controller";
+import { CreateWorkSampleController } from "../../interfaceAdapters/controllers/vendor/create-work-sample.controller";
+import { GetAllPaginatedWorkSampleController } from "../../interfaceAdapters/controllers/vendor/get-all-paginated-work-sample.controller";
+import { GetAllPaginatedVendorsController } from "../../interfaceAdapters/controllers/client/get-all-paginated-vendors.controller";
+import { GetAllClientCategoriesController } from "../../interfaceAdapters/controllers/client/get-all-client-categories.controller";
+import { GetPhotographerDetailsController } from "../../interfaceAdapters/controllers/client/get-photographer-details.controller";
+import { DeleteWorkSampleController } from "../../interfaceAdapters/controllers/vendor/delete-work-sample.controller";
+import { UpdateWorkSampleController } from "../../interfaceAdapters/controllers/vendor/update-work-sample.controller";
+import { GetServiceController } from "../../interfaceAdapters/controllers/client/get-service.controller";
 
 export class ControllerRegistry {
     static registerController() : void {
@@ -46,6 +58,7 @@ export class ControllerRegistry {
         // |-------------------------- User Details --------------------------|
         container.register("GetClientDetailsController", { useClass: GetClientDetailsController });
         container.register("GetVendorDetailsController", { useClass: GetVendorDetailsController });
+        container.register("GetUserDetailsController",{useClass : GetUserDetailsController})
 
          // |-------------------------- User Update --------------------------|
         container.register('UpdateClientController',{useClass : UpdateClientController})
@@ -56,6 +69,8 @@ export class ControllerRegistry {
         container.register("GetAllVendorsController" , {useClass : GetAllVendorsController})
         container.register("UpdateUserStatusController" , {useClass : UpdateUserStatusController})
         container.register("ResetPasswordController" , {useClass : ResetPasswordController})
+        container.register("GetAllPaginatedVendorsController",{useClass : GetAllPaginatedVendorsController})
+        container.register("GetPhotographerDetailsController",{useClass : GetPhotographerDetailsController})
 
 
         // |-------------------------- vendor Request --------------------------|
@@ -71,9 +86,27 @@ export class ControllerRegistry {
         container.register("JoinCategoryRequestUseCase" , {useClass : JoinCategoryRequestController})
         container.register("GetCategoryRequestController",{useClass : GetCategoryRequestController})
         container.register("UpdateCategoryRequestStatusController",{useClass : UpdateCategoryRequestStatusController})
+        container.register("GetAllClientCategoriesController" , {useClass : GetAllClientCategoriesController})
 
-        // |-------------------------- Notification management --------------------------|
+
+        // |--------------------------------------- Notification management ------------------------------------|
         container.register("IGetAllVendorNotificationController" , {useClass : GetAllVendorNotificationController})
         container.register("IGetAllClientNotificationController" , {useClass : GetAllClientNotificationController})
-    }
+
+        // |--------------------------------------- Service management ------------------------------------|
+        container.register("CreateServiceController",{useClass : CreateServiceController})
+        container.register("GetAllPaginatedServicesController",{useClass : GetAllPaginatedServicesController})
+        container.register("UpdateServiceController",{useClass : UpdateServiceController})
+
+        // |--------------------------------------- work-sample management ------------------------------------|
+        container.register("CreateWorkSampleController",{useClass : CreateWorkSampleController})
+        container.register("GetAllPaginatedWorkSampleController",{useClass : GetAllPaginatedWorkSampleController})
+        container.register('DeleteWorkSampleController',{useClass : DeleteWorkSampleController})
+        container.register("UpdateWorkSampleController",{useClass : UpdateWorkSampleController})
+
+
+        // -------------------------------------- Booking Management ----------------------------------------------|
+        container.register("GetServiceController",{useClass : GetServiceController})
+
+    }   
 }

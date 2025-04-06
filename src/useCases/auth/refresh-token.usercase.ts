@@ -15,7 +15,6 @@ export class RefreshTokenUsecase implements IRefreshTokenUsecase {
     execute(decoded : any ): string {
         const {_id , email , role , refreshToken} = decoded;
 
-        console.log('-----------------in refresh token usecase-----------------');
         const payload = this.jwtService.verifyRefreshToken(refreshToken);
 
 

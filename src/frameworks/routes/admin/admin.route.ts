@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { authorizeRole, decodeToken, verifyAuth } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
-import { createNewCategoryController, getAllClientController, getAllPaginatedCategoryController, getAllVendorController, getCategoryRequestController, getPendingVendorController, logoutController, refreshTokenController, updateCategoryController, updateCategoryRequestStatusController, updateUserStatusController, updateVendorRequestController } from "../../di/resolver";
+import { createNewCategoryController, getAllClientController, getAllPaginatedCategoryController, getAllVendorController, getCategoryRequestController, getPendingVendorController, getUserDetailsController, logoutController, refreshTokenController, updateCategoryController, updateCategoryRequestStatusController, updateUserStatusController, updateVendorRequestController } from "../../di/resolver";
 
 export class AdminRoute extends BaseRoute {
     constructor(){
@@ -26,6 +26,11 @@ export class AdminRoute extends BaseRoute {
         .get(verifyAuth,authorizeRole(["admin"]) , (req : Request , res : Response)=> {
             getAllVendorController.handle(req,res)
         })
+
+        this.router.get('/admin/user/details',verifyAuth,authorizeRole(["admin"]),(req : Request, res: Response)=> {
+            getUserDetailsController.handle(req,res)
+        })
+
 
         this.router.patch('/admin/user-status',verifyAuth,authorizeRole(["admin"]),(req : Request , res : Response)=> {
             updateUserStatusController.handle(req,res)
