@@ -6,12 +6,16 @@ import { CustomError } from "../../../entities/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
 import { IClientEntity } from "../../../entities/models/client.entity";
 import { IBcrypt } from "../../../frameworks/security/bcrypt.interface";
+import { IWalletRepository } from "../../../entities/repositoryInterfaces/wallet-repository.interface";
 
 @injectable()
 export class ClientRegisterStrategy implements IRegisterStrategy<IClientEntity> {
     constructor(
     @inject("IClientRepository") private clientRepository : IClientRepository,
-    @inject("PasswordBcrypt") private passwordBcrypt : IBcrypt) {}
+    @inject("PasswordBcrypt") private passwordBcrypt : IBcrypt,
+    @inject("IWalletRepository") private walletRepository : IWalletRepository
+    ) {}
+
 
     async register(user : IClientEntity): Promise<IClientEntity> {
         console.log('in client register repository');
@@ -68,7 +72,8 @@ export class ClientRegisterStrategy implements IRegisterStrategy<IClientEntity> 
                     updatedAt: new Date(),
                 });
             }
-            console.log(`data from client repository after completing saving to database  ${data}`);
+
+            await this.walletRepository.create(data._id,'Client','client');
             return data;
         }else {
             throw new CustomError(

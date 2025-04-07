@@ -97,6 +97,14 @@ import { IUpdateWorkSampleUsecase } from "../../entities/usecaseInterfaces/vendo
 import { UpdateWorkSampleUsecase } from "../../useCases/work-sample/update-work-sample.usecase";
 import { IGetServiceUsecase } from "../../entities/usecaseInterfaces/client/get-service-usecase.interaface";
 import { GetServiceUsecase } from "../../useCases/client/get-service.usecase";
+import { IPaymentService } from "../../entities/services/stripe-service.interface";
+import { StripeService } from "../../interfaceAdapters/services/stripe.service";
+import { ICreatePaymentIntentUseCase } from "../../entities/usecaseInterfaces/payment/create-payment-intent-usecase.interface";
+import { CreatePaymentIntentUseCase } from "../../useCases/payment/create-payment-intent.usecase";
+import { ICreateNewBookingUseCase } from "../../entities/usecaseInterfaces/booking/create-new-booking-usecase.interface";
+import { CreateNewBookingUseCase } from "../../useCases/booking/create-new-booking.usecase";
+import { IConfirmPaymentUseCase } from "../../entities/usecaseInterfaces/payment/confirm-payment.usecase";
+import { ConfirmPaymentUseCase } from "../../useCases/payment/confirm-payment.usecase";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -138,6 +146,7 @@ export class UsecaseRegistry {
         container.register<IJwtservice>("IJwtservice", { useClass: JwtService });
         container.register<IBcrypt>("PasswordBcrypt", { useClass: PasswordBcrypt });
         container.register<IBcrypt>("OtpBcrypt", { useClass: OtpBcrypt });
+        container.register<IPaymentService>("IPaymentService",{useClass : StripeService})
 
         // |---------------------------------- User & Vendor Management ----------------------------------|
         container.register<IGetAllClientUsecase>("IGetAllClientUsecase", { useClass: GetAllClientsUsecase });
@@ -177,6 +186,10 @@ export class UsecaseRegistry {
 
         // |--------------------------------------------------------- Booking Management ---------------------------------------------------|
         container.register<IGetServiceUsecase>("IGetServiceUsecase" , {useClass : GetServiceUsecase})
+        container.register<ICreateNewBookingUseCase>('ICreateNewBookingUseCase' , {useClass : CreateNewBookingUseCase})
 
-    }
+        // |--------------------------------------------------------- Payment Management ---------------------------------------------------|
+        container.register<ICreatePaymentIntentUseCase>("ICreatePaymentIntentUseCase" , {useClass : CreatePaymentIntentUseCase})
+        container.register<IConfirmPaymentUseCase>('IConfirmPaymentUseCase',{useClass : ConfirmPaymentUseCase})
+    }   
 }

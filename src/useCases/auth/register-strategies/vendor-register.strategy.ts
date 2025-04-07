@@ -6,12 +6,14 @@ import { CustomError } from "../../../entities/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
 import { IBcrypt } from "../../../frameworks/security/bcrypt.interface";
 import { generateVendorId } from "../../../shared/utils/unique-id.utils";
+import { IWalletRepository } from "../../../entities/repositoryInterfaces/wallet-repository.interface";
 
 @injectable()
 export class VendorRegisterStrategy implements IRegisterStrategy<IVendorEntity> {
     constructor(
         @inject("IVendorRepository") private vendorRepository: IVendorRepository,
-        @inject("PasswordBcrypt") private passwordBcrypt: IBcrypt
+        @inject("PasswordBcrypt") private passwordBcrypt: IBcrypt,
+        @inject("IWalletRepository") private walletRepository : IWalletRepository
     ) {}
 
     async register(user: IVendorEntity): Promise<IVendorEntity> {
@@ -57,6 +59,8 @@ export class VendorRegisterStrategy implements IRegisterStrategy<IVendorEntity> 
                 languages: user.languages || [],
                 description: user.description || "",
                 verificationDocuments : [],
+                workSamples: [],
+                services : [],
             })
         }else {
             console.log('no googlId');
@@ -78,9 +82,12 @@ export class VendorRegisterStrategy implements IRegisterStrategy<IVendorEntity> 
                 languages: user.languages || [],
                 description: user.description || "",
                 verificationDocuments : [],
+                workSamples: [],
+                services : [],
             })
         }
 
+        this.walletRepository.create(data._id,'Vendor','vendor');
         return data;
     }
 }

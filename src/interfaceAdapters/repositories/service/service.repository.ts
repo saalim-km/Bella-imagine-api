@@ -48,4 +48,40 @@ export class ServiceRepository implements IServiceRepository {
     async update(id: string | ObjectId, updateData: Partial<IServiceEntity>): Promise<IServiceEntity | null> {
       return await serviceModel.findByIdAndUpdate(id,updateData);
     }
+
+
+    async saveCount(
+      serviceId: any,
+      dateString: string,
+      startTime: string,
+      endTime: string
+    ): Promise<void> {
+      const service = await serviceModel.findById(serviceId);
+  
+      if (!service) {
+        throw new Error("Service not found");
+      }
+  
+      const dateIndex = service.availableDates.findIndex(
+        (date) => date.date === dateString
+      );
+  
+      if (dateIndex === -1) {
+        throw new Error("Date not found in service availability");
+      }
+  
+      const timeSlotIndex = service.availableDates[dateIndex].timeSlots.findIndex(
+        (slot) => slot.startTime === startTime && slot.endTime === endTime
+      );
+  
+      if (timeSlotIndex === -1) {
+        throw new Error("Time slot not found for the given date");
+      }
+  
+      // Decrement the capacity  count
+      service.availableDates[dateIndex].timeSlots[timeSlotIndex].capacity += -1;
+  
+      // Save the updated service
+      await service.save();
+    }
 }

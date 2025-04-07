@@ -17,6 +17,14 @@ import { IServiceRepository } from "../../entities/repositoryInterfaces/service/
 import { ServiceRepository } from "../../interfaceAdapters/repositories/service/service.repository";
 import { IWorkSampleRepository } from "../../entities/repositoryInterfaces/work-sample/work-sample-repository.interface";
 import { WorkSampleRepository } from "../../interfaceAdapters/repositories/work-sample/work-sample.repository";
+import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface";
+import { IPaymentRepository } from "../../entities/repositoryInterfaces/payment/payment-repository.interface";
+import { IEscrowRepository } from "../../entities/repositoryInterfaces/escrow/escrow-repository.interface";
+import { EscrowRepository } from "../../interfaceAdapters/repositories/escrow/escrow.repository";
+import { BookingRepository } from "../../interfaceAdapters/repositories/booking/booking.repository";
+import { PaymentRepository } from "../../interfaceAdapters/repositories/payment/payment.repository";
+import { IWalletRepository } from "../../entities/repositoryInterfaces/wallet-repository.interface";
+import { WalletRepository } from "../../interfaceAdapters/repositories/wallet/wallet.repository";
 
 export class RepositoryRegistry {
   static registerRepositories(): void {
@@ -37,24 +45,43 @@ export class RepositoryRegistry {
       useClass: AdminRepository,
     });
 
-    container.register<INotificationRepository>("INotificationRepository",{
-        useClass : NotificationRepository
+    container.register<INotificationRepository>("INotificationRepository", {
+      useClass: NotificationRepository,
     });
 
-    container.register<ICategoryRepository>("ICategoryRepository" , {
-      useClass : CategoryRespository
-    })
+    container.register<ICategoryRepository>("ICategoryRepository", {
+      useClass: CategoryRespository,
+    });
 
-    container.register<ICategoryRequestRepository>("ICategoryRequestRepository",{
-      useClass : CategoryRequestRepository
-    })
+    container.register<ICategoryRequestRepository>(
+      "ICategoryRequestRepository",
+      {
+        useClass: CategoryRequestRepository,
+      }
+    );
 
-    container.register<IServiceRepository>("IServiceRepository",{
-      useClass : ServiceRepository
-    })
+    container.register<IServiceRepository>("IServiceRepository", {
+      useClass: ServiceRepository,
+    });
 
     container.register<IWorkSampleRepository>("IWorkSampleRepository", {
-      useClass : WorkSampleRepository
+      useClass: WorkSampleRepository,
+    });
+
+    container.register<IBookingRepository>("IBookingRepository", {
+      useClass: BookingRepository,
+    });
+
+    container.register<IPaymentRepository>("IPaymentRepository", {
+      useClass: PaymentRepository,
+    });
+
+    container.register<IEscrowRepository>("IEscrowRepository", {
+      useClass: EscrowRepository,
+    });
+
+    container.register<IWalletRepository>('IWalletRepository',{
+      useClass : WalletRepository
     })
   }
 }

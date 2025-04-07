@@ -18,8 +18,6 @@ export class GetPendingVendorController
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      console.log('----------------------GetPendingVendorController----------------------------');
-      console.log(req.query);
       const filter: PaginatedRequestUser = {
         search: req.query.search as string,
         page: req.query.page ? parseInt(req.query.page as string) : 1,

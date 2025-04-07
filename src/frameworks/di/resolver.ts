@@ -39,6 +39,8 @@ import { GetPhotographerDetailsController } from "../../interfaceAdapters/contro
 import { DeleteWorkSampleController } from "../../interfaceAdapters/controllers/vendor/delete-work-sample.controller";
 import { UpdateWorkSampleController } from "../../interfaceAdapters/controllers/vendor/update-work-sample.controller";
 import { GetServiceController } from "../../interfaceAdapters/controllers/client/get-service.controller";
+import { CreatePaymentIntentController } from "../../interfaceAdapters/controllers/payment/create-payment-intent-controller";
+import { ConfirmPaymentController } from "../../interfaceAdapters/controllers/payment/confirm-payment.controller";
 
 DependencyInjection.registerAll();
 
@@ -105,3 +107,5 @@ export const getPhotographerDetailsController = container.resolve(GetPhotographe
 export const deleteWorkSampleController = container.resolve(DeleteWorkSampleController)
 export const updateWorkSampleController = container.resolve(UpdateWorkSampleController);
 export const getServiceController = container.resolve(GetServiceController)
+export const createPaymentIntentController = container.resolve(CreatePaymentIntentController)
+export const updateConfirmPayment = container.resolve(ConfirmPaymentController)

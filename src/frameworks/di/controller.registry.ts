@@ -38,6 +38,8 @@ import { GetPhotographerDetailsController } from "../../interfaceAdapters/contro
 import { DeleteWorkSampleController } from "../../interfaceAdapters/controllers/vendor/delete-work-sample.controller";
 import { UpdateWorkSampleController } from "../../interfaceAdapters/controllers/vendor/update-work-sample.controller";
 import { GetServiceController } from "../../interfaceAdapters/controllers/client/get-service.controller";
+import { CreatePaymentIntentController } from "../../interfaceAdapters/controllers/payment/create-payment-intent-controller";
+import { ConfirmPaymentController } from "../../interfaceAdapters/controllers/payment/confirm-payment.controller";
 
 export class ControllerRegistry {
     static registerController() : void {
@@ -108,5 +110,8 @@ export class ControllerRegistry {
         // -------------------------------------- Booking Management ----------------------------------------------|
         container.register("GetServiceController",{useClass : GetServiceController})
 
+        //-------------------------------------- Payment Management ----------------------------------------------|
+        container.register("CreatePaymentIntentController",{useClass : CreatePaymentIntentController})
+        container.register('ConfirmPaymentController',{useClass : ConfirmPaymentController})
     }   
 }
