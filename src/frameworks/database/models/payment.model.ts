@@ -1,18 +1,7 @@
-import { model, Document } from "mongoose";
-import { PaymentSchema } from "../schemas/payment.schema";
+import { model } from "mongoose";
+import { IPaymentEntity } from "../../../entities/models/payment.entity";
+import { paymentSchema } from "../schemas/payment.schema";
 
-export interface IPaymentEntity extends Document {
-    vendorId: string;
-    amount: number;
-    currency: string;
-    status: "pending" | "completed" | "failed";
-    transactionId?: string;
-    method: "card" | "upi" | "netbanking" | "wallet";
-    paymentDate: Date;
-    createdAt: Date;
-    updatedAt: Date;
-}
+export interface IPaymentModel extends IPaymentEntity {}
 
-const PaymentModel = model<IPaymentEntity>("Payment", PaymentSchema);
-
-export { PaymentModel };
+export const PaymentModel = model<IPaymentModel>('Payment',paymentSchema)

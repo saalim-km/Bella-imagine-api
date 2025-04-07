@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { LogoutController } from "../../../interfaceAdapters/controllers/auth/logout.controller";
 import { authorizeRole, decodeToken, verifyAuth } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
-import { getAllClientCategoriesController, getAllClientNotificatioController, getClientDetailsController, getPaginatedVendorsController, getPhotographerDetailsController, getServiceController, logoutController, refreshTokenController, updateClientController } from "../../di/resolver";
+import { createPaymentIntentController, getAllClientCategoriesController, getAllClientNotificatioController, getClientDetailsController, getPaginatedVendorsController, getPhotographerDetailsController, getServiceController, logoutController, refreshTokenController, updateClientController, updateConfirmPayment } from "../../di/resolver";
 
 export class ClientRoute extends BaseRoute {
     constructor() {
@@ -48,5 +48,14 @@ export class ClientRoute extends BaseRoute {
             getServiceController.handle(req,res)
         })
 
+
+        
+        this.router.post('/client/create-payment-intent',verifyAuth,authorizeRole(["client"]),(req : Request , res : Response)=> {
+            createPaymentIntentController.handle(req,res)
+        })
+
+        this.router.post('/client/confirm-payment',(req : Request , res : Response)=> {
+            updateConfirmPayment.handle(req,res)
+        })
     }
 }

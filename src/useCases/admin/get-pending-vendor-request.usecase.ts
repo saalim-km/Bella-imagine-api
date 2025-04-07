@@ -12,13 +12,9 @@ export class GetPendingVendorRequestUsecase implements IGetPendingVendorRequestU
     ){}
 
     async execute(filters: any, page: number, limit: number): Promise<PaginatedResponse<IVendorEntity>> {
-        console.log('----------------------GetPendingVendorRequestUsecase--------------------');
-        console.log(filters,page , number);
-        console.log(filters);
-        console.log(page,limit);
-        const skip = (page - 1) * limit;
+      const skip = (page - 1) * limit;
     
-      let search: any = { role: "vendor" , isVerified : 'pending'};
+      let search: any = { role: "vendor"};
     
         
         if (typeof filters.search === 'string' && filters.search.trim() !== '') {

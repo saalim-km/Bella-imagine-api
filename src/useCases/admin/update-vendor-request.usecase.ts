@@ -3,6 +3,8 @@ import { IUpdateVendorRequestUsecase } from "../../entities/usecaseInterfaces/ad
 import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
 import { INotificationRepository } from "../../entities/repositoryInterfaces/common/notification-repository.interface";
 import { INotificationEntity } from "../../entities/models/notification.entity";
+import { CustomError } from "../../entities/utils/custom-error";
+import { HTTP_STATUS } from "../../shared/constants";
 
 @injectable()
 export class UpdateVendorRequestUsecase implements IUpdateVendorRequestUsecase {
@@ -29,7 +31,15 @@ export class UpdateVendorRequestUsecase implements IUpdateVendorRequestUsecase {
                 throw new Error('reject reason is required.')
             }
 
-            await this.vendorRepository.updateVendorProfile(receiverId,{isVerified : 'reject'});
+            const vendor = await this.vendorRepository.findById(receiverId);
+
+            if(!vendor) {
+                throw new CustomError('No Vendor Found',HTTP_STATUS.BAD_REQUEST);
+            }
+
+            vendor.isVerified = 'reject';
+            vendor.verificationDocuments = [];
+            await this.vendorRepository.updateVendorProfile(receiverId,vendor);
             const notification : INotificationEntity = {
                 receiverId : receiverId,
                 message : `Your application has been rejected. Reason: ${rejectReason}. For further details, please contact support`,

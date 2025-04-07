@@ -1,16 +1,51 @@
 import { Schema } from "mongoose";
+import { IPaymentModel } from "../models/payment.model";
 
-const PaymentSchema = new Schema(
-    {
-        vendorId: { type: Schema.Types.ObjectId, ref: "Vendor", required: true },
-        amount: { type: Number, required: true, min: 0 },
-        currency: { type: String, required: true, default: "INR" },
-        status: { type: String, enum: ["pending", "completed", "failed"], default: "pending" },
-        transactionId: { type: String, unique: true },
-        method: { type: String, enum: ["card", "upi", "netbanking", "wallet"], required: true },
-        paymentDate: { type: Date, default: Date.now },
+export const paymentSchema = new Schema<IPaymentModel>(
+  {
+    userId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      refPath: "createrType",
     },
-    { timestamps: true }
+    bookingId: { type: Schema.Types.ObjectId, default: null },
+    receiverId: {
+      type: Schema.Types.ObjectId,
+      default: null,
+      refPath: "receiverType",
+    },
+    createrType: {
+      type: String,
+      required: true,
+      enum: ["Client", "Vendor", "Admin"],
+    },
+    receiverType: {
+      type: String,
+      required: true,
+      enum: ["Client", "Vendor", "Admin"],
+    },
+    transactionId: { type: String, required: true, unique: true },
+    amount: { type: Number, min: 0, required: true },
+    currency: { type: String, required: true },
+    status: {
+      type: String,
+      enum: [
+        "pending",
+        "processing",
+        "succeeded",
+        "failed",
+        "refunded",
+        "partially_refunded",
+      ],
+      default: "pending",
+    },
+    paymentIntentId: { type: String },
+    purpose: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
 );
 
-export { PaymentSchema };
+paymentSchema.index({ bookingId: 1 });
