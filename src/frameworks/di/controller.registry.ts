@@ -40,6 +40,8 @@ import { UpdateWorkSampleController } from "../../interfaceAdapters/controllers/
 import { GetServiceController } from "../../interfaceAdapters/controllers/client/get-service.controller";
 import { CreatePaymentIntentController } from "../../interfaceAdapters/controllers/payment/create-payment-intent-controller";
 import { ConfirmPaymentController } from "../../interfaceAdapters/controllers/payment/confirm-payment.controller";
+import { GetAllBookingByClientController } from "../../interfaceAdapters/controllers/client/get-all-bookings-client.controller";
+import { GetAllBookingForVendorController } from "../../interfaceAdapters/controllers/vendor/get-all-booking-for-vendor.controller";
 
 export class ControllerRegistry {
     static registerController() : void {
@@ -109,6 +111,8 @@ export class ControllerRegistry {
 
         // -------------------------------------- Booking Management ----------------------------------------------|
         container.register("GetServiceController",{useClass : GetServiceController})
+        container.register('GetAllBookingByClientController',{useClass : GetAllBookingByClientController})
+        container.register('GetAllBookingForVendorController',{useClass : GetAllBookingForVendorController})
 
         //-------------------------------------- Payment Management ----------------------------------------------|
         container.register("CreatePaymentIntentController",{useClass : CreatePaymentIntentController})

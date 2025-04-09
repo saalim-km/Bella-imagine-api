@@ -41,6 +41,8 @@ import { UpdateWorkSampleController } from "../../interfaceAdapters/controllers/
 import { GetServiceController } from "../../interfaceAdapters/controllers/client/get-service.controller";
 import { CreatePaymentIntentController } from "../../interfaceAdapters/controllers/payment/create-payment-intent-controller";
 import { ConfirmPaymentController } from "../../interfaceAdapters/controllers/payment/confirm-payment.controller";
+import { GetAllBookingByClientController } from "../../interfaceAdapters/controllers/client/get-all-bookings-client.controller";
+import { GetAllBookingForVendorController } from "../../interfaceAdapters/controllers/vendor/get-all-booking-for-vendor.controller";
 
 DependencyInjection.registerAll();
 
@@ -109,3 +111,5 @@ export const updateWorkSampleController = container.resolve(UpdateWorkSampleCont
 export const getServiceController = container.resolve(GetServiceController)
 export const createPaymentIntentController = container.resolve(CreatePaymentIntentController)
 export const updateConfirmPayment = container.resolve(ConfirmPaymentController)
+export const getAllBookingsByClientController = container.resolve(GetAllBookingByClientController)
+export const getAllBookingForVendorController = container.resolve(GetAllBookingForVendorController)

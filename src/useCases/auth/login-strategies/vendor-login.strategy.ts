@@ -24,6 +24,10 @@ export class VendorLoginStrategy implements ILoginStrategy {
             )
         }
 
+        if(vendor.isblocked) {
+            throw new CustomError(ERROR_MESSAGES.BLOCKED,HTTP_STATUS.FORBIDDEN)
+        }
+        
         if(!data.password || !vendor.password) {
             throw new Error('password is missing in vendor login strategy')
         }

@@ -28,11 +28,9 @@ export const bookingSchema = new Schema<IBookingModel>({
     type: String,
     enum: [
       "pending",
-      "processing",
-      "succeeded",
+      "completed",
       "failed",
       "refunded",
-      "partially_refunded",
     ],
     default: "pending",
   },

@@ -2,6 +2,7 @@ import { IBookingModel } from "../../../frameworks/database/models/booking.model
 import {
   BookingListFromRepo,
   IBookingEntity,
+  TPaymentStatus,
 } from "../../models/booking.entity";
 
 export interface IBookingRepository {
@@ -18,9 +19,11 @@ export interface IBookingRepository {
 
   findByIdAndUpdatePaymentId(id: any, paymentId: any): Promise<void>;
 
-  findByIdAndUpdatePaymentStatus(id: any, status: string): Promise<void>;
+  findByIdAndUpdatePaymentStatus(id: any, status: TPaymentStatus): Promise<void>;
 
   findByIdAndUpdateBookingStatus(id: any, status: string): Promise<void>;
+
+  findByPaymentIdAndUpdateBookingStatus(paymentId: any, status: string): Promise<void>;
 
   findByClientIdAndVendorId(
     clientId: any,
@@ -40,7 +43,6 @@ export interface IBookingRepository {
     limit: number
   ): Promise<BookingListFromRepo>;
 
-  // latest for chat
   findByClientId(clientId: any): Promise<IBookingEntity[]>;
 
   findByVendorId(vendorId: any): Promise<IBookingEntity[]>;

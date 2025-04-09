@@ -25,6 +25,7 @@ export class CreatePaymentIntentController
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
+      console.log('in CreatePaymentIntentController');
       console.log(req.body);
       const userId = (req as CustomRequest).user._id;
       const {
@@ -60,7 +61,6 @@ export class CreatePaymentIntentController
       }
 
       if (purpose === "vendor-booking") {
-        // for booking a vendor
         const newBooking = await this.createNewBookingUseCase.execute(
           userId,
           bookingData.vendorId,
@@ -103,41 +103,6 @@ export class CreatePaymentIntentController
         res.json({
           success: true,
           message: "Booking completed and payment successfull.",
-          clientSecret,
-        });
-      } else if (purpose === "role-upgrade") {
-        // for role promo to mc
-        console.log("in side role promo");
-
-        const { clientSecret } = await this.createPaymentIntentUseCase.execute(
-          amountInCents,
-          currency,
-          purpose,
-          userId,
-          "67c672337b3e284a71d98fd5" as any,
-          "Client",
-          "Admin"
-        );
-
-        res.json({
-          success: true,
-          message: "Booking completed and payment successfull.",
-          clientSecret,
-        });
-      } else if (purpose === "ticket-purchase") {
-        const { clientSecret } = await this.createPaymentIntentUseCase.execute(
-          amountInCents,
-          currency,
-          purpose,
-          userId,
-          "67c672337b3e284a71d98fd5" as any,
-          "Client",
-          "Admin"
-        );
-
-        res.json({
-          success: true,
-          message: "Ticket Booking completed and payment successfull.",
           clientSecret,
         });
       }

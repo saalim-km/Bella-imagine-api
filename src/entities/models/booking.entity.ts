@@ -1,5 +1,8 @@
 import { ObjectId } from "mongoose";
 
+export type TPaymentStatus = "pending" | "completed" | "failed" | "refunded";
+export type TBookingStatus = "pending" | "confirmed" | "cancelled" | "completed";
+
 export interface IBookingEntity {
   _id?: string | ObjectId;
   userId?: string | ObjectId;
@@ -24,8 +27,8 @@ export interface IBookingEntity {
   };
 
   totalPrice: number;
-  paymentStatus: "pending" | "completed" | "failed" | "refunded";
-  status: "pending" | "confirmed" | "cancelled" | "completed";
+  paymentStatus: TPaymentStatus
+  status: TBookingStatus
 
   createdAt: Date;
 }

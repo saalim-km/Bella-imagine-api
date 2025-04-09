@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { authorizeRole, decodeToken, verifyAuth } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
-import { createServiceController, createWorkSampleController, deleteWorkSampleController, getAllPaginatedServiceController, getAllPaginatedWorkSample, getAllVendorCategoriesController, getAllVendorNotificationController, getVendorDetialsController, joinCategoryRequestController, logoutController, refreshTokenController, updateServiceController, updateVendorController, updateWorkSampleController } from "../../di/resolver";
+import { createServiceController, createWorkSampleController, deleteWorkSampleController, getAllBookingForVendorController, getAllPaginatedServiceController, getAllPaginatedWorkSample, getAllVendorCategoriesController, getAllVendorNotificationController, getVendorDetialsController, joinCategoryRequestController, logoutController, refreshTokenController, updateServiceController, updateVendorController, updateWorkSampleController } from "../../di/resolver";
 
 export class VendorRoute extends BaseRoute {
     constructor() {
@@ -69,6 +69,11 @@ export class VendorRoute extends BaseRoute {
         })
         .put(verifyAuth,authorizeRole(["vendor"]),(req : Request , res : Response)=> {
             updateWorkSampleController.handle(req,res)
+        })
+
+        
+        this.router.get('/vendor/vendor-bookings',verifyAuth,authorizeRole(["vendor"]),(req : Request , res : Response)=> {
+            getAllBookingForVendorController.handle(req,res)
         })
     }
 }

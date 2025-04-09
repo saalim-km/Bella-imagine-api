@@ -105,6 +105,10 @@ import { ICreateNewBookingUseCase } from "../../entities/usecaseInterfaces/booki
 import { CreateNewBookingUseCase } from "../../useCases/booking/create-new-booking.usecase";
 import { IConfirmPaymentUseCase } from "../../entities/usecaseInterfaces/payment/confirm-payment.usecase";
 import { ConfirmPaymentUseCase } from "../../useCases/payment/confirm-payment.usecase";
+import { IGetAllBookingByClientUseCase } from "../../entities/usecaseInterfaces/booking/get-all-bookings-by-client-usecase.interface";
+import { GetAllBookingByClientUseCase } from "../../useCases/booking/get-all-bookings-by-client.usecase";
+import { IGetAllBookingForVendorUseCase } from "../../entities/usecaseInterfaces/vendor/get-all-booking-for-vendor-usecase.interface";
+import { GetAllBookingForVendorUseCase } from "../../useCases/booking/get-all-booking-for-vendor.usecase";
 
 export class UsecaseRegistry {
     static registerUsecase(): void {
@@ -187,6 +191,8 @@ export class UsecaseRegistry {
         // |--------------------------------------------------------- Booking Management ---------------------------------------------------|
         container.register<IGetServiceUsecase>("IGetServiceUsecase" , {useClass : GetServiceUsecase})
         container.register<ICreateNewBookingUseCase>('ICreateNewBookingUseCase' , {useClass : CreateNewBookingUseCase})
+        container.register<IGetAllBookingByClientUseCase>('IGetAllBookingByClientUseCase',{useClass : GetAllBookingByClientUseCase})
+        container.register<IGetAllBookingForVendorUseCase>('IGetAllBookingForVendorUseCase' , {useClass : GetAllBookingForVendorUseCase})
 
         // |--------------------------------------------------------- Payment Management ---------------------------------------------------|
         container.register<ICreatePaymentIntentUseCase>("ICreatePaymentIntentUseCase" , {useClass : CreatePaymentIntentUseCase})

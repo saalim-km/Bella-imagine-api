@@ -39,7 +39,7 @@ export const ERROR_MESSAGES = {
     EMAIL_NOT_FOUND: "Email Not Found",
     FORBIDDEN:
       "Access denied. You do not have permission to access this resource.",
-    BLOCKED: "Your account has been blocked.",
+    BLOCKED: "Access denied: Your account has been blocked.",
     NOT_ALLOWED: "You are not allowed",
     EMAIL_EXISTS: "Email Already Exists",
     REQUEST_NOT_FOUND: "Category Request Not Found",

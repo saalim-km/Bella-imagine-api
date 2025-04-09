@@ -24,6 +24,10 @@ export class ClientLoginStrategy implements ILoginStrategy<IClientEntity> {
             )
         }
 
+        if(client.isblocked) {
+            throw new CustomError('Access denied: Your account has been blocked',HTTP_STATUS.BAD_REQUEST)
+        }
+        
         if(!data.password) {
             throw new CustomError('Password is required to login',HTTP_STATUS.BAD_REQUEST);
         }
