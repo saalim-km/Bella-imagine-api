@@ -2,7 +2,7 @@ import { Request, RequestHandler, Response } from "express";
 import { LogoutController } from "../../../interfaceAdapters/controllers/auth/logout.controller";
 import { authorizeRole, decodeToken, verifyAuth } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
-import { createPaymentIntentController, getAllBookingsByClientController, getAllClientCategoriesController, getAllClientNotificatioController, getClientDetailsController, getPaginatedVendorsController, getPhotographerDetailsController, getServiceController, logoutController, refreshTokenController, updateClientController, updateConfirmPayment } from "../../di/resolver";
+import { createPaymentIntentController, getAllBookingsByClientController, getAllClientCategoriesController, getAllClientNotificatioController, getClientDetailsController, getPaginatedVendorsController, getPhotographerDetailsController, getServiceController, logoutController, refreshTokenController, updateBookingStatusController, updateClientController, updateConfirmPayment } from "../../di/resolver";
 import { checkStatus } from "../../../interfaceAdapters/middlewares/block-status.middleware";
 
 export class ClientRoute extends BaseRoute {
@@ -62,6 +62,10 @@ export class ClientRoute extends BaseRoute {
 
         this.router.get('/client/client-bookings',verifyAuth,authorizeRole(["client"]),(req : Request , res : Response)=> {
             getAllBookingsByClientController.handle(req,res)
+        })
+
+        this.router.patch('/client/booking/status',verifyAuth,authorizeRole(["client"]),(req : Request , res : Response)=> {
+            updateBookingStatusController.handle(req,res)
         })
     }
 }

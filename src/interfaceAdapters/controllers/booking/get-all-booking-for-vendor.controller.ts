@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { IGetAllBookingForVendorController } from "../../../entities/controllerInterfaces/vendor/get-all-booking-for-vendor-controller.interface";
-import { IGetAllBookingForVendorUseCase } from "../../../entities/usecaseInterfaces/vendor/get-all-booking-for-vendor-usecase.interface";
+import { IGetAllBookingForVendorController } from "../../../entities/controllerInterfaces/booking/get-all-booking-for-vendor-controller.interface";
+import { IGetAllBookingForVendorUseCase } from "../../../entities/usecaseInterfaces/booking/get-all-booking-for-vendor-usecase.interface";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
 import { CustomRequest } from "../../middlewares/auth.middleware";
 import { inject, injectable } from "tsyringe";
@@ -8,7 +8,7 @@ import { ZodError } from "zod";
 import { CustomError } from "../../../entities/utils/custom-error";
 
 @injectable()
-export class GetAllBookingForVendorController
+export class  GetAllBookingForVendorController
   implements IGetAllBookingForVendorController
 {
   constructor(
@@ -23,7 +23,7 @@ export class GetAllBookingForVendorController
         search = "",
         sortBy = "newest",
       } = req.query;
-      const clientId = (req as CustomRequest).user.id;
+      const clientId = (req as CustomRequest).user._id;
 
       const pageNumber = Number(page);
       const pageSize = Number(limit);

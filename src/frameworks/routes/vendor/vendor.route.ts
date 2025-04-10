@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { authorizeRole, decodeToken, verifyAuth } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
-import { createServiceController, createWorkSampleController, deleteWorkSampleController, getAllBookingForVendorController, getAllPaginatedServiceController, getAllPaginatedWorkSample, getAllVendorCategoriesController, getAllVendorNotificationController, getVendorDetialsController, joinCategoryRequestController, logoutController, refreshTokenController, updateServiceController, updateVendorController, updateWorkSampleController } from "../../di/resolver";
+import { createServiceController, createWorkSampleController, deleteWorkSampleController, getAllBookingForVendorController, getAllPaginatedServiceController, getAllPaginatedWorkSample, getAllVendorCategoriesController, getAllVendorNotificationController, getVendorDetialsController, joinCategoryRequestController, logoutController, refreshTokenController, updateBookingStatusController, updateServiceController, updateVendorController, updateWorkSampleController } from "../../di/resolver";
 
 export class VendorRoute extends BaseRoute {
     constructor() {
@@ -72,8 +72,13 @@ export class VendorRoute extends BaseRoute {
         })
 
         
+
         this.router.get('/vendor/vendor-bookings',verifyAuth,authorizeRole(["vendor"]),(req : Request , res : Response)=> {
             getAllBookingForVendorController.handle(req,res)
+        })
+
+        this.router.patch('/vendor/booking/status',verifyAuth,authorizeRole(["vendor"]),(req : Request , res : Response)=> {
+            updateBookingStatusController.handle(req,res)
         })
     }
 }

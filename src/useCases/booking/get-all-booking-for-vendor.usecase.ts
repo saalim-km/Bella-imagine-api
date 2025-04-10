@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { BookingListFromRepo } from "../../entities/models/booking.entity";
 import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface";
-import { IGetAllBookingForVendorUseCase } from "../../entities/usecaseInterfaces/vendor/get-all-booking-for-vendor-usecase.interface";
+import { IGetAllBookingForVendorUseCase } from "../../entities/usecaseInterfaces/booking/get-all-booking-for-vendor-usecase.interface";
 
 @injectable()
 export class GetAllBookingForVendorUseCase

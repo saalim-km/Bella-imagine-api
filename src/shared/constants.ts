@@ -37,6 +37,7 @@ export const ERROR_MESSAGES = {
     ID_REQUIRED: "ID required",
     TOKEN_EXPIRED: "Token Expired",
     EMAIL_NOT_FOUND: "Email Not Found",
+    BOOKING_NOT_FOUND: "Booking Not Found",
     FORBIDDEN:
       "Access denied. You do not have permission to access this resource.",
     BLOCKED: "Access denied: Your account has been blocked.",

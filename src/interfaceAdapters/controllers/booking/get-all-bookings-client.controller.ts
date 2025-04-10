@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
 import { CustomRequest } from "../../middlewares/auth.middleware";
 import { inject, injectable } from "tsyringe";
-import { IGetAllBookingsClientController } from "../../../entities/controllerInterfaces/client/get-all-bookings-client";
+import { IGetAllBookingsClientController } from "../../../entities/controllerInterfaces/booking/get-all-bookings-by-client.controller";
 import { ZodError } from "zod";
 import { CustomError } from "../../../entities/utils/custom-error";
 import { IGetAllBookingByClientUseCase } from "../../../entities/usecaseInterfaces/booking/get-all-bookings-by-client-usecase.interface";
