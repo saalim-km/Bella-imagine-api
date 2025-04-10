@@ -43,6 +43,8 @@ import { ConfirmPaymentController } from "../../interfaceAdapters/controllers/pa
 import { GetAllBookingByClientController } from "../../interfaceAdapters/controllers/booking/get-all-bookings-client.controller";
 import { GetAllBookingForVendorController } from "../../interfaceAdapters/controllers/booking/get-all-booking-for-vendor.controller";
 import { UpdateBookingStatusController } from "../../interfaceAdapters/controllers/booking/update-booking-status.controller";
+import { GetWalletDetailsOfUserController } from "../../interfaceAdapters/controllers/wallet/get-wallet-details.controller";
+import { GetAllTransactionsByUserIdController } from "../../interfaceAdapters/controllers/payment/get-all-transaction-by-userId.controller";
 
 export class ControllerRegistry {
   static registerController(): void {
@@ -199,3 +201,11 @@ export class ControllerRegistry {
     });
   }
 }
+
+//-------------------------------------- Wallet Management ----------------------------------------------|
+container.register('GetWalletDetailsOfUserController', {
+  useClass : GetWalletDetailsOfUserController
+})
+container.register('GetAllTransactionsByUserIdController', {
+  useClass : GetAllTransactionsByUserIdController
+})

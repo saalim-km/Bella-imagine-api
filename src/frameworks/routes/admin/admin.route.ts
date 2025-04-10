@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { authorizeRole, decodeToken, verifyAuth } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
-import { createNewCategoryController, getAllClientController, getAllPaginatedCategoryController, getAllVendorController, getCategoryRequestController, getPendingVendorController, getUserDetailsController, logoutController, refreshTokenController, updateCategoryController, updateCategoryRequestStatusController, updateUserStatusController, updateVendorRequestController } from "../../di/resolver";
+import { createNewCategoryController, getAllClientController, getAllPaginatedCategoryController, getAllTransactionByUserIdController, getAllVendorController, getCategoryRequestController, getPendingVendorController, getUserDetailsController, getWalletDetailsOfUserController, logoutController, refreshTokenController, updateCategoryController, updateCategoryRequestStatusController, updateUserStatusController, updateVendorRequestController } from "../../di/resolver";
 
 export class AdminRoute extends BaseRoute {
     constructor(){
@@ -70,5 +70,13 @@ export class AdminRoute extends BaseRoute {
         .patch(verifyAuth, authorizeRole(["admin"]), (req: Request, res: Response) => {
             updateCategoryRequestStatusController.handle(req,res)
         });
+
+        this.router.get('/admin/wallet',verifyAuth,authorizeRole(["admin"]),(req: Request, res: Response)=> {
+            getWalletDetailsOfUserController.handle(req,res)
+        })
+
+        this.router.get('/admin/transactions',verifyAuth,authorizeRole(["admin"]),(req: Request, res: Response)=> {
+            getAllTransactionByUserIdController.handle(req,res)
+        })
     }
 }

@@ -113,6 +113,10 @@ import { IUpdateBookingStatusUseCase } from "../../entities/usecaseInterfaces/bo
 import { UpdateBookingStatusUseCase } from "../../useCases/booking/update-booking-status.usecase";
 import { ICancelBookingUseCase } from "../../entities/usecaseInterfaces/booking/cancel-booking-usecase.interface";
 import { CancelBookingUseCase } from "../../useCases/booking/cancel-booking.usecase";
+import { IGetWalletDetailsOfUserUseCase } from "../../entities/usecaseInterfaces/wallet/get-wallet-details-of-user-usecase.interface";
+import { GetWalletDetailsOfUserUseCase } from "../../useCases/wallet/get-wallet-details-of-user.useacse";
+import { IGetAllTransactionsByUserIdUseCase } from "../../entities/usecaseInterfaces/payment/get-all-transactions-by-userId-controlle.interface";
+import { GetAllTransactionsByUserIdUseCase } from "../../useCases/payment/get-all-payment-by-userId.usecase";
 
 export class UsecaseRegistry {
   static registerUsecase(): void {
@@ -334,3 +338,11 @@ export class UsecaseRegistry {
     });
   }
 }
+
+// |--------------------------------------------------------- Wallet Management ---------------------------------------------------|
+container.register<IGetWalletDetailsOfUserUseCase>('IGetWalletDetailsOfUserUseCase',{
+  useClass : GetWalletDetailsOfUserUseCase
+})
+container.register<IGetAllTransactionsByUserIdUseCase>('IGetAllTransactionsByUserIdUseCase',{
+  useClass : GetAllTransactionsByUserIdUseCase
+})

@@ -44,6 +44,8 @@ import { ConfirmPaymentController } from "../../interfaceAdapters/controllers/pa
 import { GetAllBookingByClientController } from "../../interfaceAdapters/controllers/booking/get-all-bookings-client.controller";
 import { GetAllBookingForVendorController } from "../../interfaceAdapters/controllers/booking/get-all-booking-for-vendor.controller";
 import { UpdateBookingStatusController } from "../../interfaceAdapters/controllers/booking/update-booking-status.controller";
+import { GetWalletDetailsOfUserController } from "../../interfaceAdapters/controllers/wallet/get-wallet-details.controller";
+import { GetAllTransactionsByUserIdController } from "../../interfaceAdapters/controllers/payment/get-all-transaction-by-userId.controller";
 
 DependencyInjection.registerAll();
 
@@ -178,4 +180,10 @@ export const getAllBookingForVendorController = container.resolve(
 );
 export const updateBookingStatusController = container.resolve(
     UpdateBookingStatusController
+)
+export const getWalletDetailsOfUserController = container.resolve(
+  GetWalletDetailsOfUserController
+)
+export const getAllTransactionByUserIdController = container.resolve(
+  GetAllTransactionsByUserIdController
 )
