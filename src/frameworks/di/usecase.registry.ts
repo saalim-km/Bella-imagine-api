@@ -45,7 +45,7 @@ import { IGetAllClientUsecase } from "../../entities/usecaseInterfaces/admin/get
 import { GetAllClientsUsecase } from "../../useCases/admin/get-all-clients.uscase";
 import { IGetAllVendorsUsecase } from "../../entities/usecaseInterfaces/admin/get-all-vendors-usecase.interafce";
 import { GetAllVendorsUsecase } from "../../useCases/admin/get-all-vendors.uscase";
-import { IUpdateUserStatusUsecase } from "../../entities/usecaseInterfaces/admin/update-user-usecase.interface";
+import { IUpdateUserStatusUsecase } from "../../entities/usecaseInterfaces/admin/users/update-user-usecase.interface";
 import { UpdateUserStatusUsecase } from "../../useCases/admin/update-user-status.usecase";
 import { IForgotPassWordSendOtpUsecase } from "../../entities/usecaseInterfaces/auth/forgot-password-send-otp-usecase.interfac";
 import { ForgotPasswordSendOtp } from "../../useCases/auth/forgot-password-send-otp.usecase";
@@ -53,9 +53,9 @@ import { IResetPasswordUsecase } from "../../entities/usecaseInterfaces/auth/res
 import { ResetPasswordUsecase } from "../../useCases/auth/reset-password-usecase";
 import { IGetPendingVendorRequestUsecase } from "../../entities/usecaseInterfaces/admin/get-pending-vendor-request-usecase.interface";
 import { GetPendingVendorRequestUsecase } from "../../useCases/admin/get-pending-vendor-request.usecase";
-import { IUpdateVendorRequestUsecase } from "../../entities/usecaseInterfaces/admin/update-vendor-request-usecase.interface";
+import { IUpdateVendorRequestUsecase } from "../../entities/usecaseInterfaces/admin/vendor_request/update-vendor-request-usecase.interface";
 import { UpdateVendorRequestUsecase } from "../../useCases/admin/update-vendor-request.usecase";
-import { ICreateNewCategoryUseCase } from "../../entities/usecaseInterfaces/admin/create-new-category-usecase.interface";
+import { ICreateNewCategoryUseCase } from "../../entities/usecaseInterfaces/admin/category/create-new-category-usecase.interface";
 import { CreateNewCategoryUseCase } from "../../useCases/admin/create-new-category.usecase";
 import { IGetAllPaginatedCategoryUseCase } from "../../entities/usecaseInterfaces/admin/get-all-paginated-category-usecase.interface";
 import { GetAllPaginatedCategoryUseCase } from "../../useCases/admin/get-all-paginated-category.usecase";

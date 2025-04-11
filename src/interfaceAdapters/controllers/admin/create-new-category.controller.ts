@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ICreateNewCategoryController } from "../../../entities/controllerInterfaces/admin/create-new-category-controller.interafce";
-import { ICreateNewCategoryUseCase } from "../../../entities/usecaseInterfaces/admin/create-new-category-usecase.interface";
+import { ICreateNewCategoryUseCase } from "../../../entities/usecaseInterfaces/admin/category/create-new-category-usecase.interface";
 import { ZodError } from "zod";
 import {
   ERROR_MESSAGES,

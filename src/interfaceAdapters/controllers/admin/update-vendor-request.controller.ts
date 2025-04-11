@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IUpdateVendorRequestController } from "../../../entities/controllerInterfaces/admin/update-vendor-reqeust-controller.interface";
-import { IUpdateVendorRequestUsecase } from "../../../entities/usecaseInterfaces/admin/update-vendor-request-usecase.interface";
+import { IUpdateVendorRequestUsecase } from "../../../entities/usecaseInterfaces/admin/vendor_request/update-vendor-request-usecase.interface";
 import { Request, Response } from "express";
 import { CustomRequest } from "../../middlewares/auth.middleware";
 import { ZodError } from "zod";
