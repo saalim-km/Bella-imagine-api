@@ -1,0 +1,1 @@
+export type TContest = 'weekly' | 'monthly' | 'yearly';

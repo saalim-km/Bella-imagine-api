@@ -87,7 +87,7 @@ export const verifyAuth = async (
         .json({ message: ERROR_MESSAGES.INVALID_TOKEN });
       return;
     }
-  };
+};
 
 
 

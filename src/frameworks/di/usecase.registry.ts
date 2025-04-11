@@ -45,7 +45,7 @@ import { IGetAllClientUsecase } from "../../entities/usecaseInterfaces/admin/get
 import { GetAllClientsUsecase } from "../../useCases/admin/get-all-clients.uscase";
 import { IGetAllVendorsUsecase } from "../../entities/usecaseInterfaces/admin/get-all-vendors-usecase.interafce";
 import { GetAllVendorsUsecase } from "../../useCases/admin/get-all-vendors.uscase";
-import { IUpdateUserStatusUsecase } from "../../entities/usecaseInterfaces/admin/update-user-usecase.interface";
+import { IUpdateUserStatusUsecase } from "../../entities/usecaseInterfaces/admin/users/update-user-usecase.interface";
 import { UpdateUserStatusUsecase } from "../../useCases/admin/update-user-status.usecase";
 import { IForgotPassWordSendOtpUsecase } from "../../entities/usecaseInterfaces/auth/forgot-password-send-otp-usecase.interfac";
 import { ForgotPasswordSendOtp } from "../../useCases/auth/forgot-password-send-otp.usecase";
@@ -53,9 +53,9 @@ import { IResetPasswordUsecase } from "../../entities/usecaseInterfaces/auth/res
 import { ResetPasswordUsecase } from "../../useCases/auth/reset-password-usecase";
 import { IGetPendingVendorRequestUsecase } from "../../entities/usecaseInterfaces/admin/get-pending-vendor-request-usecase.interface";
 import { GetPendingVendorRequestUsecase } from "../../useCases/admin/get-pending-vendor-request.usecase";
-import { IUpdateVendorRequestUsecase } from "../../entities/usecaseInterfaces/admin/update-vendor-request-usecase.interface";
+import { IUpdateVendorRequestUsecase } from "../../entities/usecaseInterfaces/admin/vendor_request/update-vendor-request-usecase.interface";
 import { UpdateVendorRequestUsecase } from "../../useCases/admin/update-vendor-request.usecase";
-import { ICreateNewCategoryUseCase } from "../../entities/usecaseInterfaces/admin/create-new-category-usecase.interface";
+import { ICreateNewCategoryUseCase } from "../../entities/usecaseInterfaces/admin/category/create-new-category-usecase.interface";
 import { CreateNewCategoryUseCase } from "../../useCases/admin/create-new-category.usecase";
 import { IGetAllPaginatedCategoryUseCase } from "../../entities/usecaseInterfaces/admin/get-all-paginated-category-usecase.interface";
 import { GetAllPaginatedCategoryUseCase } from "../../useCases/admin/get-all-paginated-category.usecase";
@@ -105,91 +105,244 @@ import { ICreateNewBookingUseCase } from "../../entities/usecaseInterfaces/booki
 import { CreateNewBookingUseCase } from "../../useCases/booking/create-new-booking.usecase";
 import { IConfirmPaymentUseCase } from "../../entities/usecaseInterfaces/payment/confirm-payment.usecase";
 import { ConfirmPaymentUseCase } from "../../useCases/payment/confirm-payment.usecase";
+import { IGetAllBookingByClientUseCase } from "../../entities/usecaseInterfaces/booking/get-all-bookings-by-client-usecase.interface";
+import { GetAllBookingByClientUseCase } from "../../useCases/booking/get-all-bookings-by-client.usecase";
+import { IGetAllBookingForVendorUseCase } from "../../entities/usecaseInterfaces/booking/get-all-booking-for-vendor-usecase.interface";
+import { GetAllBookingForVendorUseCase } from "../../useCases/booking/get-all-booking-for-vendor.usecase";
+import { IUpdateBookingStatusUseCase } from "../../entities/usecaseInterfaces/booking/update-booking-status-usecse.interface";
+import { UpdateBookingStatusUseCase } from "../../useCases/booking/update-booking-status.usecase";
+import { ICancelBookingUseCase } from "../../entities/usecaseInterfaces/booking/cancel-booking-usecase.interface";
+import { CancelBookingUseCase } from "../../useCases/booking/cancel-booking.usecase";
+import { IGetWalletDetailsOfUserUseCase } from "../../entities/usecaseInterfaces/wallet/get-wallet-details-of-user-usecase.interface";
+import { GetWalletDetailsOfUserUseCase } from "../../useCases/wallet/get-wallet-details-of-user.useacse";
+import { IGetAllTransactionsByUserIdUseCase } from "../../entities/usecaseInterfaces/payment/get-all-transactions-by-userId-controlle.interface";
+import { GetAllTransactionsByUserIdUseCase } from "../../useCases/payment/get-all-payment-by-userId.usecase";
 
 export class UsecaseRegistry {
-    static registerUsecase(): void {
-        // |---------------------------------- Use Cases --------------------------------------------------|
-        container.register<IRegisterUsecase>("IRegisterUsecase", { useClass: RegisterUsecase });
-        container.register<ISendEmailUseCase>("ISendEmailUseCase", { useClass: SendEmailUseCase });
-        container.register<IGenerateTokenUsecase>("IGenerateTokenUsecase", { useClass: GenerateTokenUsecase });
-        container.register<ILogUseCaseIninterface>("ILogUseCaseIninterface", { useClass: LoginUseCase });
-        container.register<IRefreshTokenUsecase>("IRefreshTokenUsecase", { useClass: RefreshTokenUsecase });
-        container.register<IGoogleUseCase>("IGoogleUseCase", { useClass: GoogleLoginUsecase });
+  static registerUsecase(): void {
+    // |---------------------------------- Use Cases --------------------------------------------------|
+    container.register<IRegisterUsecase>("IRegisterUsecase", {
+      useClass: RegisterUsecase,
+    });
+    container.register<ISendEmailUseCase>("ISendEmailUseCase", {
+      useClass: SendEmailUseCase,
+    });
+    container.register<IGenerateTokenUsecase>("IGenerateTokenUsecase", {
+      useClass: GenerateTokenUsecase,
+    });
+    container.register<ILogUseCaseIninterface>("ILogUseCaseIninterface", {
+      useClass: LoginUseCase,
+    });
+    container.register<IRefreshTokenUsecase>("IRefreshTokenUsecase", {
+      useClass: RefreshTokenUsecase,
+    });
+    container.register<IGoogleUseCase>("IGoogleUseCase", {
+      useClass: GoogleLoginUsecase,
+    });
 
-        container.register<IGetClientDetailsUsecase>("IGetClientDetailsUsecase", { useClass: GetClientDetailsUsecase });
-        container.register<IGetVendorDetailsUsecase>("IGetVendorDetailsUsecase", { useClass: GetVendorDetailUsecase });
-        container.register<IUpdateClientUsecase>("IUpdateClientUsecase", { useClass: UpdateClientUsecase });
-        container.register<IUpdateVendorProfileUsecase>("IUpdateVendorProfileUsecase", { useClass: UpdateVendorUsecase });
+    container.register<IGetClientDetailsUsecase>("IGetClientDetailsUsecase", {
+      useClass: GetClientDetailsUsecase,
+    });
+    container.register<IGetVendorDetailsUsecase>("IGetVendorDetailsUsecase", {
+      useClass: GetVendorDetailUsecase,
+    });
+    container.register<IUpdateClientUsecase>("IUpdateClientUsecase", {
+      useClass: UpdateClientUsecase,
+    });
+    container.register<IUpdateVendorProfileUsecase>(
+      "IUpdateVendorProfileUsecase",
+      { useClass: UpdateVendorUsecase }
+    );
 
-        container.register<IForgotPassWordSendOtpUsecase>("IForgotPassWordSendOtpUsecase", { useClass: ForgotPasswordSendOtp });
-        container.register<IResetPasswordUsecase>("IResetPasswordUsecase", { useClass: ResetPasswordUsecase });
+    container.register<IForgotPassWordSendOtpUsecase>(
+      "IForgotPassWordSendOtpUsecase",
+      { useClass: ForgotPasswordSendOtp }
+    );
+    container.register<IResetPasswordUsecase>("IResetPasswordUsecase", {
+      useClass: ResetPasswordUsecase,
+    });
 
-        container.register<IGetPendingVendorRequestUsecase>("IGetPendingVendorRequestUsecase", { useClass: GetPendingVendorRequestUsecase });
-        container.register<IUpdateVendorRequestUsecase>("IUpdateVendorRequestUsecase", { useClass: UpdateVendorRequestUsecase });
+    container.register<IGetPendingVendorRequestUsecase>(
+      "IGetPendingVendorRequestUsecase",
+      { useClass: GetPendingVendorRequestUsecase }
+    );
+    container.register<IUpdateVendorRequestUsecase>(
+      "IUpdateVendorRequestUsecase",
+      { useClass: UpdateVendorRequestUsecase }
+    );
 
-        // |---------------------------------- Authentication Strategies ----------------------------------|
-        // * Register Strategies
-        container.register<IRegisterStrategy>("ClientRegisterStrategy", { useClass: ClientRegisterStrategy });
-        container.register<IRegisterStrategy>("VendorRegisterStrategy", { useClass: VendorRegisterStrategy });
-        // * Login Strategies
-        container.register<ILoginStrategy>("ClientLoginStrategy", { useClass: ClientLoginStrategy });
-        container.register<ILoginStrategy>("VendorLoginStrategy", { useClass: VendorLoginStrategy });
-        container.register<ILoginStrategy>("AdminLoginStrategy", { useClass: AdminLoginStrategy });
-        container.register<ILoginStrategy>("ClientGoogleLoginStrategy", { useClass: ClientGoogleLoginStrategy });
-        container.register<ILoginStrategy>("VendorGoogleLoginStrategy", { useClass: VendorGoogleLoginStrategy });
+    // |---------------------------------- Authentication Strategies ----------------------------------|
+    // * Register Strategies
+    container.register<IRegisterStrategy>("ClientRegisterStrategy", {
+      useClass: ClientRegisterStrategy,
+    });
+    container.register<IRegisterStrategy>("VendorRegisterStrategy", {
+      useClass: VendorRegisterStrategy,
+    });
+    // * Login Strategies
+    container.register<ILoginStrategy>("ClientLoginStrategy", {
+      useClass: ClientLoginStrategy,
+    });
+    container.register<ILoginStrategy>("VendorLoginStrategy", {
+      useClass: VendorLoginStrategy,
+    });
+    container.register<ILoginStrategy>("AdminLoginStrategy", {
+      useClass: AdminLoginStrategy,
+    });
+    container.register<ILoginStrategy>("ClientGoogleLoginStrategy", {
+      useClass: ClientGoogleLoginStrategy,
+    });
+    container.register<ILoginStrategy>("VendorGoogleLoginStrategy", {
+      useClass: VendorGoogleLoginStrategy,
+    });
 
-        // |---------------------------------- Services --------------------------------------------------|
-        container.register<IEmailService>("IEmailService", { useClass: EmailService });
-        container.register<IEmailExistenceService>("IEmailExistenceService", { useClass: EmailExistenceService });
-        container.register<IOtpService>("IOtpService", { useClass: OtpService });
-        container.register<IVerifyOTPUsecase>("IVerifyOTPUsecase", { useClass: VerifyOTPUsecase });
-        container.register<IJwtservice>("IJwtservice", { useClass: JwtService });
-        container.register<IBcrypt>("PasswordBcrypt", { useClass: PasswordBcrypt });
-        container.register<IBcrypt>("OtpBcrypt", { useClass: OtpBcrypt });
-        container.register<IPaymentService>("IPaymentService",{useClass : StripeService})
+    // |---------------------------------- Services --------------------------------------------------|
+    container.register<IEmailService>("IEmailService", {
+      useClass: EmailService,
+    });
+    container.register<IEmailExistenceService>("IEmailExistenceService", {
+      useClass: EmailExistenceService,
+    });
+    container.register<IOtpService>("IOtpService", { useClass: OtpService });
+    container.register<IVerifyOTPUsecase>("IVerifyOTPUsecase", {
+      useClass: VerifyOTPUsecase,
+    });
+    container.register<IJwtservice>("IJwtservice", { useClass: JwtService });
+    container.register<IBcrypt>("PasswordBcrypt", { useClass: PasswordBcrypt });
+    container.register<IBcrypt>("OtpBcrypt", { useClass: OtpBcrypt });
+    container.register<IPaymentService>("IPaymentService", {
+      useClass: StripeService,
+    });
 
-        // |---------------------------------- User & Vendor Management ----------------------------------|
-        container.register<IGetAllClientUsecase>("IGetAllClientUsecase", { useClass: GetAllClientsUsecase });
-        container.register<IGetAllVendorsUsecase>("IGetAllVendorsUsecase", { useClass: GetAllVendorsUsecase });
-        container.register<IUpdateUserStatusUsecase>("IUpdateUserStatusUsecase", { useClass: UpdateUserStatusUsecase });
-        container.register<IGetUserDetailsUsecase>("IGetUserDetailsUsecase" , {useClass : GetUserDetailsUsecase});
-        container.register<IGetAllPaginatedVendorsUsecase>("IGetAllPaginatedVendorsUsecase" , {useClass : GetAllPaginatedVendorsUsecase})
-        container.register<IGetPhotographerDetailsUsecase>("IGetPhotographerDetailsUsecase" , {useClass : GetPhotographerDetailsUsecase})
+    // |---------------------------------- User & Vendor Management ----------------------------------|
+    container.register<IGetAllClientUsecase>("IGetAllClientUsecase", {
+      useClass: GetAllClientsUsecase,
+    });
+    container.register<IGetAllVendorsUsecase>("IGetAllVendorsUsecase", {
+      useClass: GetAllVendorsUsecase,
+    });
+    container.register<IUpdateUserStatusUsecase>("IUpdateUserStatusUsecase", {
+      useClass: UpdateUserStatusUsecase,
+    });
+    container.register<IGetUserDetailsUsecase>("IGetUserDetailsUsecase", {
+      useClass: GetUserDetailsUsecase,
+    });
+    container.register<IGetAllPaginatedVendorsUsecase>(
+      "IGetAllPaginatedVendorsUsecase",
+      { useClass: GetAllPaginatedVendorsUsecase }
+    );
+    container.register<IGetPhotographerDetailsUsecase>(
+      "IGetPhotographerDetailsUsecase",
+      { useClass: GetPhotographerDetailsUsecase }
+    );
 
-        // |---------------------------------- Category Management --------------------------------------|
-        container.register<ICreateNewCategoryUseCase>("ICreateNewCategoryUseCase", { useClass: CreateNewCategoryUseCase });
-        container.register<IGetAllPaginatedCategoryUseCase>("IGetAllPaginatedCategoryUseCase", { useClass: GetAllPaginatedCategoryUseCase });
-        container.register<IGetAllVendorCategoriesUsecase>("IGetAllVendorCategoriesUsecase", { useClass: GetAllVendorCategoriesUsecase });
-        container.register<IUpdateCategoryUsecase>("IUpdateCategoryUsecase" , {useClass : UpdateCategoryUsecase})
-        container.register<IJoinCategoryRequestUsecase>("IJoinCategoryRequestUseCase" , {useClass : JoinCategoryRequestUseCase});
-        container.register<IGetCategoryRequestUsecase>("IGetCategoryRequestUsecase" , {useClass : GetCategoryRequestUsecase})
-        container.register<IUpdateCategoryRequestStatusUsecase>("IUpdateCategoryRequestStatusUsecase",{useClass : UpdateCategoryRequestStatusUsecase})
-        container.register<IGetAllClientCategoriesUsecase>("IGetAllClientCategoriesUsecase" , {useClass : GetAllClientCategoriesUsecase})
+    // |---------------------------------- Category Management --------------------------------------|
+    container.register<ICreateNewCategoryUseCase>("ICreateNewCategoryUseCase", {
+      useClass: CreateNewCategoryUseCase,
+    });
+    container.register<IGetAllPaginatedCategoryUseCase>(
+      "IGetAllPaginatedCategoryUseCase",
+      { useClass: GetAllPaginatedCategoryUseCase }
+    );
+    container.register<IGetAllVendorCategoriesUsecase>(
+      "IGetAllVendorCategoriesUsecase",
+      { useClass: GetAllVendorCategoriesUsecase }
+    );
+    container.register<IUpdateCategoryUsecase>("IUpdateCategoryUsecase", {
+      useClass: UpdateCategoryUsecase,
+    });
+    container.register<IJoinCategoryRequestUsecase>(
+      "IJoinCategoryRequestUseCase",
+      { useClass: JoinCategoryRequestUseCase }
+    );
+    container.register<IGetCategoryRequestUsecase>(
+      "IGetCategoryRequestUsecase",
+      { useClass: GetCategoryRequestUsecase }
+    );
+    container.register<IUpdateCategoryRequestStatusUsecase>(
+      "IUpdateCategoryRequestStatusUsecase",
+      { useClass: UpdateCategoryRequestStatusUsecase }
+    );
+    container.register<IGetAllClientCategoriesUsecase>(
+      "IGetAllClientCategoriesUsecase",
+      { useClass: GetAllClientCategoriesUsecase }
+    );
 
+    // |--------------------------------------------------------- Notification Management ---------------------------------------------------|
+    container.register<IGetAllVendorNotificationUsecase>(
+      "IGetAllVendorNotificationUsecase",
+      { useClass: GetAllVendorNotificationUsecase }
+    );
+    container.register<IGetAllClientNotificationUsecase>(
+      "IGetAllClientNotificationUsecase",
+      { useClass: GetAllClientNotificationUsecase }
+    );
 
-        // |--------------------------------------------------------- Notification Management ---------------------------------------------------|
-        container.register<IGetAllVendorNotificationUsecase>("IGetAllVendorNotificationUsecase" , {useClass : GetAllVendorNotificationUsecase});
-        container.register<IGetAllClientNotificationUsecase>('IGetAllClientNotificationUsecase' ,{useClass : GetAllClientNotificationUsecase})
+    // |--------------------------------------------------------- Vendor Service Management ---------------------------------------------------|
+    container.register<ICreateServiceUsecase>("ICreateServiceUsecase", {
+      useClass: CreateServiceUsecase,
+    });
+    container.register<IGetAllPaginatedServicesUsecase>(
+      "IGetAllPaginatedServicesUsecase",
+      { useClass: GetAllPaginatedServicesUsecase }
+    );
+    container.register<IUpdateServiceUsecase>("IUpdateServiceUsecase", {
+      useClass: UpdateServiceUsecase,
+    });
 
-        // |--------------------------------------------------------- Vendor Service Management ---------------------------------------------------|
-        container.register<ICreateServiceUsecase>("ICreateServiceUsecase" , {useClass : CreateServiceUsecase})
-        container.register<IGetAllPaginatedServicesUsecase>("IGetAllPaginatedServicesUsecase" , {useClass : GetAllPaginatedServicesUsecase})
-        container.register<IUpdateServiceUsecase>("IUpdateServiceUsecase" , {useClass : UpdateServiceUsecase})
+    // |--------------------------------------------------------- Vendor work-sample Management ---------------------------------------------------|
+    container.register<ICreateWorkSampleUsecase>("ICreateWorkSampleUsecase", {
+      useClass: CreateWorkSampleUsecase,
+    });
+    container.register<IGetPaginatedWorkSampleUsecase>(
+      "IGetPaginatedWorkSampleUsecase",
+      { useClass: GetAllPaginatedWorkSamplesUsecase }
+    );
+    container.register<IDeleteWorkSampleUsecase>("IDeleteWorkSampleUsecase", {
+      useClass: DeleteWorkSampleUsecase,
+    });
+    container.register<IUpdateWorkSampleUsecase>("IUpdateWorkSampleUsecase", {
+      useClass: UpdateWorkSampleUsecase,
+    });
 
-        // |--------------------------------------------------------- Vendor work-sample Management ---------------------------------------------------|
-        container.register<ICreateWorkSampleUsecase>("ICreateWorkSampleUsecase",{useClass : CreateWorkSampleUsecase})
-        container.register<IGetPaginatedWorkSampleUsecase>("IGetPaginatedWorkSampleUsecase" , {useClass : GetAllPaginatedWorkSamplesUsecase})
-        container.register<IDeleteWorkSampleUsecase>("IDeleteWorkSampleUsecase" , {useClass : DeleteWorkSampleUsecase})
-        container.register<IUpdateWorkSampleUsecase>("IUpdateWorkSampleUsecase" , {useClass : UpdateWorkSampleUsecase})
+    // |--------------------------------------------------------- Booking Management ---------------------------------------------------|
+    container.register<IGetServiceUsecase>("IGetServiceUsecase", {
+      useClass: GetServiceUsecase,
+    });
+    container.register<ICreateNewBookingUseCase>("ICreateNewBookingUseCase", {
+      useClass: CreateNewBookingUseCase,
+    });
+    container.register<IGetAllBookingByClientUseCase>(
+      "IGetAllBookingByClientUseCase",
+      { useClass: GetAllBookingByClientUseCase }
+    );
+    container.register<IGetAllBookingForVendorUseCase>(
+      "IGetAllBookingForVendorUseCase",
+      { useClass: GetAllBookingForVendorUseCase }
+    );
+    container.register<IUpdateBookingStatusUseCase>(
+      "IUpdateBookingStatusUseCase",
+      { useClass: UpdateBookingStatusUseCase }
+    );
+    container.register<ICancelBookingUseCase>("ICancelBookingUseCase", {
+      useClass: CancelBookingUseCase,
+    });
 
-
-
-        // |--------------------------------------------------------- Booking Management ---------------------------------------------------|
-        container.register<IGetServiceUsecase>("IGetServiceUsecase" , {useClass : GetServiceUsecase})
-        container.register<ICreateNewBookingUseCase>('ICreateNewBookingUseCase' , {useClass : CreateNewBookingUseCase})
-
-        // |--------------------------------------------------------- Payment Management ---------------------------------------------------|
-        container.register<ICreatePaymentIntentUseCase>("ICreatePaymentIntentUseCase" , {useClass : CreatePaymentIntentUseCase})
-        container.register<IConfirmPaymentUseCase>('IConfirmPaymentUseCase',{useClass : ConfirmPaymentUseCase})
-    }   
+    // |--------------------------------------------------------- Payment Management ---------------------------------------------------|
+    container.register<ICreatePaymentIntentUseCase>(
+      "ICreatePaymentIntentUseCase",
+      { useClass: CreatePaymentIntentUseCase }
+    );
+    container.register<IConfirmPaymentUseCase>("IConfirmPaymentUseCase", {
+      useClass: ConfirmPaymentUseCase,
+    });
+  }
 }
+
+// |--------------------------------------------------------- Wallet Management ---------------------------------------------------|
+container.register<IGetWalletDetailsOfUserUseCase>('IGetWalletDetailsOfUserUseCase',{
+  useClass : GetWalletDetailsOfUserUseCase
+})
+container.register<IGetAllTransactionsByUserIdUseCase>('IGetAllTransactionsByUserIdUseCase',{
+  useClass : GetAllTransactionsByUserIdUseCase
+})

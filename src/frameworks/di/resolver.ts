@@ -41,6 +41,11 @@ import { UpdateWorkSampleController } from "../../interfaceAdapters/controllers/
 import { GetServiceController } from "../../interfaceAdapters/controllers/client/get-service.controller";
 import { CreatePaymentIntentController } from "../../interfaceAdapters/controllers/payment/create-payment-intent-controller";
 import { ConfirmPaymentController } from "../../interfaceAdapters/controllers/payment/confirm-payment.controller";
+import { GetAllBookingByClientController } from "../../interfaceAdapters/controllers/booking/get-all-bookings-client.controller";
+import { GetAllBookingForVendorController } from "../../interfaceAdapters/controllers/booking/get-all-booking-for-vendor.controller";
+import { UpdateBookingStatusController } from "../../interfaceAdapters/controllers/booking/update-booking-status.controller";
+import { GetWalletDetailsOfUserController } from "../../interfaceAdapters/controllers/wallet/get-wallet-details.controller";
+import { GetAllTransactionsByUserIdController } from "../../interfaceAdapters/controllers/payment/get-all-transaction-by-userId.controller";
 
 DependencyInjection.registerAll();
 
@@ -58,54 +63,127 @@ export const refreshTokenController = container.resolve(RefreshTokenController);
 export const googleLoginController = container.resolve(GoogleLoginController);
 
 // |========================= Password Recovery =========================================|
-export const forgotPasswordController = container.resolve(ForgotPasswordSendOtpController);
-export const resetPasswordController = container.resolve(ResetPasswordController)
+export const forgotPasswordController = container.resolve(
+  ForgotPasswordSendOtpController
+);
+export const resetPasswordController = container.resolve(
+  ResetPasswordController
+);
 
 // |========================= Client Management ======================================|
-export const getClientDetailsController = container.resolve(GetClientDetailsController);
+export const getClientDetailsController = container.resolve(
+  GetClientDetailsController
+);
 export const updateClientController = container.resolve(UpdateClientController);
-export const getAllClientController = container.resolve(GetAllClientsController);
+export const getAllClientController = container.resolve(
+  GetAllClientsController
+);
 
 // |=============================== Vendor Management ===============================|
-export const getVendorDetialsController = container.resolve(GetVendorDetailsController);
+export const getVendorDetialsController = container.resolve(
+  GetVendorDetailsController
+);
 export const updateVendorController = container.resolve(UpdateVendorController);
-export const getAllVendorController = container.resolve(GetAllVendorsController);
-export const getPendingVendorController = container.resolve(GetPendingVendorController);
-export const updateVendorRequestController = container.resolve(UpdateVendorRequestController)
+export const getAllVendorController = container.resolve(
+  GetAllVendorsController
+);
+export const getPendingVendorController = container.resolve(
+  GetPendingVendorController
+);
+export const updateVendorRequestController = container.resolve(
+  UpdateVendorRequestController
+);
 
 // |================================ User(common) Management ==========================|
-export const getUserDetailsController = container.resolve(GetUserDetailsController)
-export const updateUserStatusController = container.resolve(UpdateUserStatusController);
+export const getUserDetailsController = container.resolve(
+  GetUserDetailsController
+);
+export const updateUserStatusController = container.resolve(
+  UpdateUserStatusController
+);
 
 // |================================ Category Management ==========================|
-export const createNewCategoryController = container.resolve(CreateNewCategoryController)
-export const getAllPaginatedCategoryController = container.resolve(GetAllPaginatedCategoryController)
-export const getAllVendorCategoriesController = container.resolve(GetAllVendorCategoriesController)
-export const updateCategoryController = container.resolve(UpdateCategoryController)
-export const joinCategoryRequestController = container.resolve(JoinCategoryRequestController)
-export const getCategoryRequestController = container.resolve(GetCategoryRequestController)
-export const updateCategoryRequestStatusController = container.resolve(UpdateCategoryRequestStatusController)
+export const createNewCategoryController = container.resolve(
+  CreateNewCategoryController
+);
+export const getAllPaginatedCategoryController = container.resolve(
+  GetAllPaginatedCategoryController
+);
+export const getAllVendorCategoriesController = container.resolve(
+  GetAllVendorCategoriesController
+);
+export const updateCategoryController = container.resolve(
+  UpdateCategoryController
+);
+export const joinCategoryRequestController = container.resolve(
+  JoinCategoryRequestController
+);
+export const getCategoryRequestController = container.resolve(
+  GetCategoryRequestController
+);
+export const updateCategoryRequestStatusController = container.resolve(
+  UpdateCategoryRequestStatusController
+);
 
 // |====================================== Notification Management ====================================|
-export const getAllVendorNotificationController = container.resolve(GetAllVendorNotificationController)
-export const getAllClientNotificatioController = container.resolve(GetAllClientNotificationController)
-
+export const getAllVendorNotificationController = container.resolve(
+  GetAllVendorNotificationController
+);
+export const getAllClientNotificatioController = container.resolve(
+  GetAllClientNotificationController
+);
 
 // |====================================== Service Management ====================================|
-export const createServiceController = container.resolve(CreateServiceController)
-export const getAllPaginatedServiceController = container.resolve(GetAllPaginatedServicesController)
-export const updateServiceController = container.resolve(UpdateServiceController)
+export const createServiceController = container.resolve(
+  CreateServiceController
+);
+export const getAllPaginatedServiceController = container.resolve(
+  GetAllPaginatedServicesController
+);
+export const updateServiceController = container.resolve(
+  UpdateServiceController
+);
 
 // |====================================== work-sample Management ====================================|
-export const createWorkSampleController = container.resolve(CreateWorkSampleController)
-export const getAllPaginatedWorkSample = container.resolve(GetAllPaginatedWorkSampleController)
+export const createWorkSampleController = container.resolve(
+  CreateWorkSampleController
+);
+export const getAllPaginatedWorkSample = container.resolve(
+  GetAllPaginatedWorkSampleController
+);
 
-
-export const getPaginatedVendorsController = container.resolve(GetAllPaginatedVendorsController)
-export const getAllClientCategoriesController = container.resolve(GetAllClientCategoriesController)
-export const getPhotographerDetailsController = container.resolve(GetPhotographerDetailsController)
-export const deleteWorkSampleController = container.resolve(DeleteWorkSampleController)
-export const updateWorkSampleController = container.resolve(UpdateWorkSampleController);
-export const getServiceController = container.resolve(GetServiceController)
-export const createPaymentIntentController = container.resolve(CreatePaymentIntentController)
-export const updateConfirmPayment = container.resolve(ConfirmPaymentController)
+export const getPaginatedVendorsController = container.resolve(
+  GetAllPaginatedVendorsController
+);
+export const getAllClientCategoriesController = container.resolve(
+  GetAllClientCategoriesController
+);
+export const getPhotographerDetailsController = container.resolve(
+  GetPhotographerDetailsController
+);
+export const deleteWorkSampleController = container.resolve(
+  DeleteWorkSampleController
+);
+export const updateWorkSampleController = container.resolve(
+  UpdateWorkSampleController
+);
+export const getServiceController = container.resolve(GetServiceController);
+export const createPaymentIntentController = container.resolve(
+  CreatePaymentIntentController
+);
+export const updateConfirmPayment = container.resolve(ConfirmPaymentController);
+export const getAllBookingsByClientController = container.resolve(
+  GetAllBookingByClientController
+);
+export const getAllBookingForVendorController = container.resolve(
+  GetAllBookingForVendorController
+);
+export const updateBookingStatusController = container.resolve(
+    UpdateBookingStatusController
+)
+export const getWalletDetailsOfUserController = container.resolve(
+  GetWalletDetailsOfUserController
+)
+export const getAllTransactionByUserIdController = container.resolve(
+  GetAllTransactionsByUserIdController
+)

@@ -18,8 +18,8 @@ export class BookingRepository implements IBookingRepository {
   ): Promise<BookingListFromRepo> {
     const [bookings, total] = await Promise.all([
       bookingModel.find(filter)
-        .populate({ path: "vendorId", select: "firstName lastName" })
-        .populate({ path: "userId", select: "firstName lastName" })
+        .populate({ path: "vendorId", select: "name" })
+        .populate({ path: "userId", select: "name" })
         .sort(sort)
         .skip(skip)
         .limit(limit),
@@ -44,6 +44,11 @@ export class BookingRepository implements IBookingRepository {
     await bookingModel.findByIdAndUpdate(id, { $set: { paymentId } });
   }
 
+  async findByPaymentIdAndUpdateBookingStatus(paymentId: any, status: string): Promise<void> {
+    console.log('in findByIdAndUpdatePaymentStatus repository :',paymentId,status);
+    await bookingModel.findOneAndUpdate({paymentId : paymentId},{$set : {paymentStatus : status}})
+  }
+
   async findByIdAndUpdatePaymentStatus(id: any, status: string): Promise<void> {
     await bookingModel.findByIdAndUpdate(id, {
       $set: { paymentStatus: status },
@@ -51,6 +56,7 @@ export class BookingRepository implements IBookingRepository {
   }
 
   async findByIdAndUpdateBookingStatus(id: any, status: string): Promise<void> {
+    console.log('in update booking status : ',id , status);
     await bookingModel.findByIdAndUpdate(id, { $set: { status } });
   }
 
@@ -94,8 +100,8 @@ export class BookingRepository implements IBookingRepository {
     console.log('inside booking repositoy find', filter, sort, skip, limit)
     const [bookings, total] = await Promise.all([
       bookingModel.find(filter)
-        .populate({ path: "vendorId", select: "firstName lastName" })
-        .populate({ path: "userId", select: "firstName lastName" })
+        .populate({ path: "vendorId", select: "name" })
+        .populate({ path: "userId", select: "name" })
         .sort(sort)
         .skip(skip)
         .limit(limit),
@@ -113,14 +119,14 @@ export class BookingRepository implements IBookingRepository {
     return await bookingModel.find({ userId: clientId })
       .populate(
         "vendorId",
-        "firstName lastName email profileImage onlineStatus"
+        "name email profileImage onlineStatus"
       )
       .exec();
   }
 
   async findByVendorId(vendorId: any): Promise<IBookingEntity[]> {
     return await bookingModel.find({ vendorId })
-      .populate("userId", "firstName lastName email profileImage onlineStatus")
+      .populate("userId", "name email profileImage onlineStatus")
       .exec();
   }
 }

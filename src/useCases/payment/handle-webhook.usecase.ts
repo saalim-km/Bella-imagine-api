@@ -18,7 +18,7 @@ export class WebHookUseCase implements IWebHookUseCase {
     this.stripe = new Stripe(config.stripe.STRIPE_SECRET_KEY, {
       apiVersion: "2025-03-31.basil",
     });
-    this.endpointSecret = config.stripe.sws;
+    this.endpointSecret = config.stripe.STRIPE_SECRET_KEY;
   }
 
   async execute(sig: string, body: any): Promise<void> {

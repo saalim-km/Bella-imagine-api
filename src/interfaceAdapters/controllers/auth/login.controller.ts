@@ -80,8 +80,6 @@ export class LoginController implements ILoginControllerInterface {
 
 
     } catch (error) {
-
-
       if (error instanceof ZodError) {
         const errors = error.errors.map((err) => ({
           message: err.message,

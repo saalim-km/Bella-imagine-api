@@ -40,78 +40,172 @@ import { UpdateWorkSampleController } from "../../interfaceAdapters/controllers/
 import { GetServiceController } from "../../interfaceAdapters/controllers/client/get-service.controller";
 import { CreatePaymentIntentController } from "../../interfaceAdapters/controllers/payment/create-payment-intent-controller";
 import { ConfirmPaymentController } from "../../interfaceAdapters/controllers/payment/confirm-payment.controller";
+import { GetAllBookingByClientController } from "../../interfaceAdapters/controllers/booking/get-all-bookings-client.controller";
+import { GetAllBookingForVendorController } from "../../interfaceAdapters/controllers/booking/get-all-booking-for-vendor.controller";
+import { UpdateBookingStatusController } from "../../interfaceAdapters/controllers/booking/update-booking-status.controller";
+import { GetWalletDetailsOfUserController } from "../../interfaceAdapters/controllers/wallet/get-wallet-details.controller";
+import { GetAllTransactionsByUserIdController } from "../../interfaceAdapters/controllers/payment/get-all-transaction-by-userId.controller";
 
 export class ControllerRegistry {
-    static registerController() : void {
-        // |-------------------------- Controller Registrations --------------------------|
-        container.register("RegisterController", { useClass: RegisterController });
+  static registerController(): void {
+    // |-------------------------- Controller Registrations --------------------------|
+    container.register("RegisterController", { useClass: RegisterController });
 
-        // |-------------------------- Email & OTP Verification --------------------------|
-        container.register("SendEmailController", { useClass: SendEmailController });
-        container.register("VerifyOTPController", { useClass: VerifyOTPController });
+    // |-------------------------- Email & OTP Verification --------------------------|
+    container.register("SendEmailController", {
+      useClass: SendEmailController,
+    });
+    container.register("VerifyOTPController", {
+      useClass: VerifyOTPController,
+    });
 
-        // |-------------------------- Authentication ------------------------|
-        container.register("LoginController", { useClass: LoginController });
-        container.register("LogoutController", { useClass: LogoutController });
-        container.register("RefreshTokenController", { useClass: RefreshTokenController });
-        container.register("GoogleLoginController", { useClass: GoogleLoginController });
-        container.register("ForgotPasswordSendOtpController" , {useClass : ForgotPasswordSendOtpController})
+    // |-------------------------- Authentication ------------------------|
+    container.register("LoginController", { useClass: LoginController });
+    container.register("LogoutController", { useClass: LogoutController });
+    container.register("RefreshTokenController", {
+      useClass: RefreshTokenController,
+    });
+    container.register("GoogleLoginController", {
+      useClass: GoogleLoginController,
+    });
+    container.register("ForgotPasswordSendOtpController", {
+      useClass: ForgotPasswordSendOtpController,
+    });
 
-        // |-------------------------- User Details --------------------------|
-        container.register("GetClientDetailsController", { useClass: GetClientDetailsController });
-        container.register("GetVendorDetailsController", { useClass: GetVendorDetailsController });
-        container.register("GetUserDetailsController",{useClass : GetUserDetailsController})
+    // |-------------------------- User Details --------------------------|
+    container.register("GetClientDetailsController", {
+      useClass: GetClientDetailsController,
+    });
+    container.register("GetVendorDetailsController", {
+      useClass: GetVendorDetailsController,
+    });
+    container.register("GetUserDetailsController", {
+      useClass: GetUserDetailsController,
+    });
 
-         // |-------------------------- User Update --------------------------|
-        container.register('UpdateClientController',{useClass : UpdateClientController})
-        container.register("UpdateVendorController" , {useClass : UpdateVendorController})
+    // |-------------------------- User Update --------------------------|
+    container.register("UpdateClientController", {
+      useClass: UpdateClientController,
+    });
+    container.register("UpdateVendorController", {
+      useClass: UpdateVendorController,
+    });
 
-        // |-------------------------- client and Vendor Management --------------------------|
-        container.register("GetAllClientsController" , {useClass : GetAllClientsController})
-        container.register("GetAllVendorsController" , {useClass : GetAllVendorsController})
-        container.register("UpdateUserStatusController" , {useClass : UpdateUserStatusController})
-        container.register("ResetPasswordController" , {useClass : ResetPasswordController})
-        container.register("GetAllPaginatedVendorsController",{useClass : GetAllPaginatedVendorsController})
-        container.register("GetPhotographerDetailsController",{useClass : GetPhotographerDetailsController})
+    // |-------------------------- client and Vendor Management --------------------------|
+    container.register("GetAllClientsController", {
+      useClass: GetAllClientsController,
+    });
+    container.register("GetAllVendorsController", {
+      useClass: GetAllVendorsController,
+    });
+    container.register("UpdateUserStatusController", {
+      useClass: UpdateUserStatusController,
+    });
+    container.register("ResetPasswordController", {
+      useClass: ResetPasswordController,
+    });
+    container.register("GetAllPaginatedVendorsController", {
+      useClass: GetAllPaginatedVendorsController,
+    });
+    container.register("GetPhotographerDetailsController", {
+      useClass: GetPhotographerDetailsController,
+    });
 
+    // |-------------------------- vendor Request --------------------------|
+    container.register("GetPendingVendorController", {
+      useClass: GetPendingVendorController,
+    });
+    container.register("UpdateVendorRequestController", {
+      useClass: UpdateVendorRequestController,
+    });
 
-        // |-------------------------- vendor Request --------------------------|
-        container.register("GetPendingVendorController" , {useClass : GetPendingVendorController})
-        container.register("UpdateVendorRequestController" , {useClass : UpdateVendorRequestController})
+    // |-------------------------- category management --------------------------|
+    container.register("CreateNewCategoryController", {
+      useClass: CreateNewCategoryController,
+    });
+    container.register("GetAllPaginatedCategoryController", {
+      useClass: GetAllPaginatedCategoryController,
+    });
+    container.register("GetAllVendorCategoriesController", {
+      useClass: GetAllVendorCategoriesController,
+    });
+    container.register("UpdateCategoryController", {
+      useClass: UpdateCategoryController,
+    });
+    container.register("JoinCategoryRequestUseCase", {
+      useClass: JoinCategoryRequestController,
+    });
+    container.register("GetCategoryRequestController", {
+      useClass: GetCategoryRequestController,
+    });
+    container.register("UpdateCategoryRequestStatusController", {
+      useClass: UpdateCategoryRequestStatusController,
+    });
+    container.register("GetAllClientCategoriesController", {
+      useClass: GetAllClientCategoriesController,
+    });
 
+    // |--------------------------------------- Notification management ------------------------------------|
+    container.register("IGetAllVendorNotificationController", {
+      useClass: GetAllVendorNotificationController,
+    });
+    container.register("IGetAllClientNotificationController", {
+      useClass: GetAllClientNotificationController,
+    });
 
-        // |-------------------------- category management --------------------------|
-        container.register("CreateNewCategoryController", {useClass: CreateNewCategoryController})
-        container.register("GetAllPaginatedCategoryController" , {useClass : GetAllPaginatedCategoryController})
-        container.register("GetAllVendorCategoriesController" , {useClass : GetAllVendorCategoriesController})
-        container.register("UpdateCategoryController" , {useClass : UpdateCategoryController})
-        container.register("JoinCategoryRequestUseCase" , {useClass : JoinCategoryRequestController})
-        container.register("GetCategoryRequestController",{useClass : GetCategoryRequestController})
-        container.register("UpdateCategoryRequestStatusController",{useClass : UpdateCategoryRequestStatusController})
-        container.register("GetAllClientCategoriesController" , {useClass : GetAllClientCategoriesController})
+    // |--------------------------------------- Service management ------------------------------------|
+    container.register("CreateServiceController", {
+      useClass: CreateServiceController,
+    });
+    container.register("GetAllPaginatedServicesController", {
+      useClass: GetAllPaginatedServicesController,
+    });
+    container.register("UpdateServiceController", {
+      useClass: UpdateServiceController,
+    });
 
+    // |--------------------------------------- work-sample management ------------------------------------|
+    container.register("CreateWorkSampleController", {
+      useClass: CreateWorkSampleController,
+    });
+    container.register("GetAllPaginatedWorkSampleController", {
+      useClass: GetAllPaginatedWorkSampleController,
+    });
+    container.register("DeleteWorkSampleController", {
+      useClass: DeleteWorkSampleController,
+    });
+    container.register("UpdateWorkSampleController", {
+      useClass: UpdateWorkSampleController,
+    });
 
-        // |--------------------------------------- Notification management ------------------------------------|
-        container.register("IGetAllVendorNotificationController" , {useClass : GetAllVendorNotificationController})
-        container.register("IGetAllClientNotificationController" , {useClass : GetAllClientNotificationController})
+    // -------------------------------------- Booking Management ----------------------------------------------|
+    container.register("GetServiceController", {
+      useClass: GetServiceController,
+    });
+    container.register("GetAllBookingByClientController", {
+      useClass: GetAllBookingByClientController,
+    });
+    container.register("GetAllBookingForVendorController", {
+      useClass: GetAllBookingForVendorController,
+    });
+    container.register("UpdateBookingStatusController", {
+      useClass: UpdateBookingStatusController,
+    });
 
-        // |--------------------------------------- Service management ------------------------------------|
-        container.register("CreateServiceController",{useClass : CreateServiceController})
-        container.register("GetAllPaginatedServicesController",{useClass : GetAllPaginatedServicesController})
-        container.register("UpdateServiceController",{useClass : UpdateServiceController})
-
-        // |--------------------------------------- work-sample management ------------------------------------|
-        container.register("CreateWorkSampleController",{useClass : CreateWorkSampleController})
-        container.register("GetAllPaginatedWorkSampleController",{useClass : GetAllPaginatedWorkSampleController})
-        container.register('DeleteWorkSampleController',{useClass : DeleteWorkSampleController})
-        container.register("UpdateWorkSampleController",{useClass : UpdateWorkSampleController})
-
-
-        // -------------------------------------- Booking Management ----------------------------------------------|
-        container.register("GetServiceController",{useClass : GetServiceController})
-
-        //-------------------------------------- Payment Management ----------------------------------------------|
-        container.register("CreatePaymentIntentController",{useClass : CreatePaymentIntentController})
-        container.register('ConfirmPaymentController',{useClass : ConfirmPaymentController})
-    }   
+    //-------------------------------------- Payment Management ----------------------------------------------|
+    container.register("CreatePaymentIntentController", {
+      useClass: CreatePaymentIntentController,
+    });
+    container.register("ConfirmPaymentController", {
+      useClass: ConfirmPaymentController,
+    });
+  }
 }
+
+//-------------------------------------- Wallet Management ----------------------------------------------|
+container.register('GetWalletDetailsOfUserController', {
+  useClass : GetWalletDetailsOfUserController
+})
+container.register('GetAllTransactionsByUserIdController', {
+  useClass : GetAllTransactionsByUserIdController
+})
