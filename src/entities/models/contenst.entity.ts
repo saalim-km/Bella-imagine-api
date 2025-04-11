@@ -9,7 +9,8 @@ export interface IContest {
     categoryId: ObjectId | string;
     startDate : Date;
     endDate : Date;
-    participants: string[];
+    vendorParticipants: string[];
+    clientParticipants: string[];
     featured?: boolean;
     createdAt?: Date;
     updatedAt?: Date;
