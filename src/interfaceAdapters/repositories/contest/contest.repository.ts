@@ -20,4 +20,8 @@ export class ContestRepository implements IContestRepository {
     async findByIdAndUpdateContest(contestId: string, data: Partial<IContest>): Promise<void> {
         await ContestModel.findByIdAndUpdate(contestId,data);
     }
+
+    async findByIdDeleteContest(contestId: string): Promise<void> {
+        await ContestModel.findByIdAndDelete(contestId)
+    }
 }

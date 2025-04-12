@@ -8,6 +8,7 @@ import { BaseRoute } from "../base.route";
 import {
   createContestController,
   createNewCategoryController,
+  deleteContestController,
   getAllClientController,
   getAllPaginatedCategoryController,
   getAllTransactionByUserIdController,
@@ -185,6 +186,9 @@ export class AdminRoute extends BaseRoute {
     })
     .put((req: Request, res: Response)=> {
       updateContestController.handle(req,res)
+    })
+    .delete((req: Request, res: Response)=> {
+      deleteContestController.handle(req,res)
     })
   }
 }

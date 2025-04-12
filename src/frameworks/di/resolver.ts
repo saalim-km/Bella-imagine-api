@@ -48,6 +48,7 @@ import { GetWalletDetailsOfUserController } from "../../interfaceAdapters/contro
 import { GetAllTransactionsByUserIdController } from "../../interfaceAdapters/controllers/payment/get-all-transaction-by-userId.controller";
 import { CreateContestController } from "../../interfaceAdapters/controllers/admin/contest/create-contest.controller";
 import { UpdateContestController } from "../../interfaceAdapters/controllers/admin/contest/update-contest.controller";
+import { DeleteContestController } from "../../interfaceAdapters/controllers/admin/contest/delete-contest.controller";
 
 DependencyInjection.registerAll();
 
@@ -194,4 +195,7 @@ export const createContestController = container.resolve(
 )
 export const updateContestController = container.resolve(
   UpdateContestController
+)
+export const deleteContestController = container.resolve(
+  DeleteContestController
 )
