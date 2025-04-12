@@ -25,9 +25,18 @@ export class CreateContestUsecase implements ICreateContestUsecase {
         if(!data.title || !data.contestType || !data.description || !data.startDate || !data.endDate || !data.categoryId) {
             throw new CustomError(ERROR_MESSAGES.MISSING_REQUIRED_FIELDS, HTTP_STATUS.BAD_REQUEST)
         }
-        
         if(!isCategoryExist) {
             throw new CustomError(ERROR_MESSAGES.CATEGORY_NOT_FOUND,HTTP_STATUS.BAD_REQUEST)
+        }
+
+        const now = new Date();
+
+        if(data.startDate < now) {
+            throw new CustomError('StartDate must be in the future and cannot be a past date', HTTP_STATUS.BAD_REQUEST)
+        }
+
+        if(data.endDate < data.startDate) {
+            throw new CustomError('EndDate must be greater than StartDate', HTTP_STATUS.BAD_REQUEST)
         }
 
         await this.contestRepository.create(data)
