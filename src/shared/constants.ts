@@ -30,6 +30,7 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+    CONTEST_NOT_FOUND : 'Contest not found',
     ALREADY_EXISTS : 'Already exists',
     MISSING_REQUIRED_FIELDS : 'Required fields are missing',
     NO_CHARGE_FOUND: "No charge found for this payment",

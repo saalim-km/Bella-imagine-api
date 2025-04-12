@@ -39,6 +39,10 @@ export class CreateContestUsecase implements ICreateContestUsecase {
             throw new CustomError('EndDate must be greater than StartDate', HTTP_STATUS.BAD_REQUEST)
         }
 
+        if(data.startDate > data.endDate) {
+            throw new CustomError('StartDate cannot be greater than EndDate', HTTP_STATUS.BAD_REQUEST);
+        }
+
         await this.contestRepository.create(data)
     }
 }

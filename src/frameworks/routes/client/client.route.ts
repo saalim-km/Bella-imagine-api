@@ -96,8 +96,6 @@ export class ClientRoute extends BaseRoute {
     // Retrieve all categories available to the client
     this.router.get(
       "/client/categories",
-      verifyAuth,
-      authorizeRole(["client"]),
       (req: Request, res: Response) => {
         getAllClientCategoriesController.handle(req, res);
       }

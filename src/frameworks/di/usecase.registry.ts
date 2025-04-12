@@ -119,6 +119,8 @@ import { GetAllTransactionsByUserIdUseCase } from "../../useCases/payment/get-al
 import { ICreateContestUsecase } from "../../entities/usecaseInterfaces/admin/contest/create-contest-usecase.interface";
 import { CreateContestUsecase } from "../../useCases/admin/contest/create-contest.usecase";
 import { IUpdateCategoryUsecase } from "../../entities/usecaseInterfaces/admin/category/update-category-usecase.interface";
+import { IUpdateContestUsecase } from "../../entities/usecaseInterfaces/admin/contest/update-contest-usecase.interface";
+import { UpdateContestUsecase } from "../../useCases/admin/contest/update-contest.usecase";
 
 export class UsecaseRegistry {
   static registerUsecase(): void {
@@ -357,5 +359,9 @@ export class UsecaseRegistry {
     container.register<ICreateContestUsecase>("ICreateContestUsecase", {
       useClass: CreateContestUsecase,
     });
+    
+    container.register<IUpdateContestUsecase>('IUpdateContestUsecase',{
+      useClass : UpdateContestUsecase
+    })
   }
 }

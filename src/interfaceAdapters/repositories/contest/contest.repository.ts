@@ -12,4 +12,12 @@ export class ContestRepository implements IContestRepository {
             title: { $regex: new RegExp(`^${title.trim()}$`, "i") },
         })
     }
+
+    async findById(contestId: string): Promise<IContest | null> {
+        return await ContestModel.findById(contestId)
+    }
+
+    async findByIdAndUpdateContest(contestId: string, data: Partial<IContest>): Promise<void> {
+        await ContestModel.findByIdAndUpdate(contestId,data);
+    }
 }

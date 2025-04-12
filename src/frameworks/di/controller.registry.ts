@@ -46,6 +46,7 @@ import { UpdateBookingStatusController } from "../../interfaceAdapters/controlle
 import { GetWalletDetailsOfUserController } from "../../interfaceAdapters/controllers/wallet/get-wallet-details.controller";
 import { GetAllTransactionsByUserIdController } from "../../interfaceAdapters/controllers/payment/get-all-transaction-by-userId.controller";
 import { CreateContestController } from "../../interfaceAdapters/controllers/admin/contest/create-contest.controller";
+import { UpdateContestController } from "../../interfaceAdapters/controllers/admin/contest/update-contest.controller";
 
 export class ControllerRegistry {
   static registerController(): void {
@@ -210,6 +211,7 @@ export class ControllerRegistry {
     });
 
     //-------------------------------------- Wallet Management ----------------------------------------------|
-    container.register('',{useClass : CreateContestController})
+    container.register('CreateContestController',{useClass : CreateContestController})
+    container.register('UpdateContestController',{useClass : UpdateContestController})
   }
 }

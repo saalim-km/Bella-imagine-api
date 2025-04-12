@@ -20,6 +20,7 @@ import {
   refreshTokenController,
   updateCategoryController,
   updateCategoryRequestStatusController,
+  updateContestController,
   updateUserStatusController,
   updateVendorRequestController,
 } from "../../di/resolver";
@@ -178,11 +179,12 @@ export class AdminRoute extends BaseRoute {
 
     // Contest Management Routes
     // Create Contest
-    this.router.post(
-      "/admin/contest",
-      (req: Request, res: Response) => {
-        createContestController.handle(req,res)
-      }
-    );
+    this.router.route("/admin/contest")
+    .post((req: Request, res: Response) => {
+      createContestController.handle(req, res);
+    })
+    .put((req: Request, res: Response)=> {
+      updateContestController.handle(req,res)
+    })
   }
 }

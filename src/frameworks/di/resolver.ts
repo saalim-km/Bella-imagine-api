@@ -47,6 +47,7 @@ import { UpdateBookingStatusController } from "../../interfaceAdapters/controlle
 import { GetWalletDetailsOfUserController } from "../../interfaceAdapters/controllers/wallet/get-wallet-details.controller";
 import { GetAllTransactionsByUserIdController } from "../../interfaceAdapters/controllers/payment/get-all-transaction-by-userId.controller";
 import { CreateContestController } from "../../interfaceAdapters/controllers/admin/contest/create-contest.controller";
+import { UpdateContestController } from "../../interfaceAdapters/controllers/admin/contest/update-contest.controller";
 
 DependencyInjection.registerAll();
 
@@ -190,4 +191,7 @@ export const getAllTransactionByUserIdController = container.resolve(
 )
 export const createContestController = container.resolve(
   CreateContestController
+)
+export const updateContestController = container.resolve(
+  UpdateContestController
 )
