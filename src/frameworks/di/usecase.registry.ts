@@ -41,40 +41,39 @@ import { IUpdateClientUsecase } from "../../entities/usecaseInterfaces/client/up
 import { UpdateClientUsecase } from "../../useCases/client/update-client-profile.usecase";
 import { IUpdateVendorProfileUsecase } from "../../entities/usecaseInterfaces/vendor/update-vendor-profile-usecase.interface";
 import { UpdateVendorUsecase } from "../../useCases/vendor/update-vendor-profile.usecase";
-import { IGetAllClientUsecase } from "../../entities/usecaseInterfaces/admin/get-all-clients-usecase.interafce";
-import { GetAllClientsUsecase } from "../../useCases/admin/get-all-clients.uscase";
-import { IGetAllVendorsUsecase } from "../../entities/usecaseInterfaces/admin/get-all-vendors-usecase.interafce";
-import { GetAllVendorsUsecase } from "../../useCases/admin/get-all-vendors.uscase";
+import { IGetAllClientUsecase } from "../../entities/usecaseInterfaces/admin/users/get-all-clients-usecase.interafce";
+import { GetAllClientsUsecase } from "../../useCases/admin/users/get-all-clients.uscase";
+import { IGetAllVendorsUsecase } from "../../entities/usecaseInterfaces/admin/users/get-all-vendors-usecase.interafce";
+import { GetAllVendorsUsecase } from "../../useCases/admin/users/get-all-vendors.uscase";
 import { IUpdateUserStatusUsecase } from "../../entities/usecaseInterfaces/admin/users/update-user-usecase.interface";
-import { UpdateUserStatusUsecase } from "../../useCases/admin/update-user-status.usecase";
+import { UpdateUserStatusUsecase } from "../../useCases/admin/users/update-user-status.usecase";
 import { IForgotPassWordSendOtpUsecase } from "../../entities/usecaseInterfaces/auth/forgot-password-send-otp-usecase.interfac";
 import { ForgotPasswordSendOtp } from "../../useCases/auth/forgot-password-send-otp.usecase";
 import { IResetPasswordUsecase } from "../../entities/usecaseInterfaces/auth/reset-password-usecase.interface";
 import { ResetPasswordUsecase } from "../../useCases/auth/reset-password-usecase";
-import { IGetPendingVendorRequestUsecase } from "../../entities/usecaseInterfaces/admin/get-pending-vendor-request-usecase.interface";
-import { GetPendingVendorRequestUsecase } from "../../useCases/admin/get-pending-vendor-request.usecase";
+import { IGetPendingVendorRequestUsecase } from "../../entities/usecaseInterfaces/admin/vendor_request/get-pending-vendor-request-usecase.interface";
+import { GetPendingVendorRequestUsecase } from "../../useCases/admin/vendor_request/get-pending-vendor-request.usecase";
 import { IUpdateVendorRequestUsecase } from "../../entities/usecaseInterfaces/admin/vendor_request/update-vendor-request-usecase.interface";
-import { UpdateVendorRequestUsecase } from "../../useCases/admin/update-vendor-request.usecase";
+import { UpdateVendorRequestUsecase } from "../../useCases/admin/vendor_request/update-vendor-request.usecase";
 import { ICreateNewCategoryUseCase } from "../../entities/usecaseInterfaces/admin/category/create-new-category-usecase.interface";
-import { CreateNewCategoryUseCase } from "../../useCases/admin/create-new-category.usecase";
-import { IGetAllPaginatedCategoryUseCase } from "../../entities/usecaseInterfaces/admin/get-all-paginated-category-usecase.interface";
-import { GetAllPaginatedCategoryUseCase } from "../../useCases/admin/get-all-paginated-category.usecase";
+import { CreateNewCategoryUseCase } from "../../useCases/admin/category/create-new-category.usecase";
+import { IGetAllPaginatedCategoryUseCase } from "../../entities/usecaseInterfaces/admin/category/get-all-paginated-category-usecase.interface";
+import { GetAllPaginatedCategoryUseCase } from "../../useCases/admin/category/get-all-paginated-category.usecase";
 import { IGetAllVendorCategoriesUsecase } from "../../entities/usecaseInterfaces/vendor/get-all-vendor-categories-usecase.interface";
 import { GetAllVendorCategoriesUsecase } from "../../useCases/vendor/get-all-vendor-categories.usecase";
-import { IUpdateCategoryUsecase } from "../../entities/usecaseInterfaces/admin/update-category-usecase.interface";
-import { UpdateCategoryUsecase } from "../../useCases/admin/update-category.usecase";
+import { UpdateCategoryUsecase } from "../../useCases/admin/category/update-category.usecase";
 import { IJoinCategoryRequestUsecase } from "../../entities/usecaseInterfaces/vendor/join-category-reqeust-usecase.interface";
 import { JoinCategoryRequestUseCase } from "../../useCases/vendor/join-category-request.usecase";
 import { IGetAllVendorNotificationUsecase } from "../../entities/usecaseInterfaces/vendor/get-all-vendor-notification-usecase.interface";
 import { GetAllVendorNotificationUsecase } from "../../useCases/vendor/get-all-vendor-notification.usecase";
 import { IGetAllClientNotificationUsecase } from "../../entities/usecaseInterfaces/client/get-all-notification-usecase.interface";
 import { GetAllClientNotificationUsecase } from "../../useCases/client/get-all-client-notification.usecase";
-import { IGetCategoryRequestUsecase } from "../../entities/usecaseInterfaces/admin/get-category-request-usecase.interface";
-import { GetCategoryRequestUsecase } from "../../useCases/admin/get-category-request.usecase";
-import { IUpdateCategoryRequestStatusUsecase } from "../../entities/usecaseInterfaces/admin/update-category-request-status-usecase.interface";
-import { UpdateCategoryRequestStatusUsecase } from "../../useCases/admin/update-category-request-status.usecase";
-import { IGetUserDetailsUsecase } from "../../entities/usecaseInterfaces/admin/get-user-details-usecase.interface";
-import { GetUserDetailsUsecase } from "../../useCases/admin/get-user-details.usecase";
+import { IGetCategoryRequestUsecase } from "../../entities/usecaseInterfaces/admin/category/get-category-request-usecase.interface";
+import { GetCategoryRequestUsecase } from "../../useCases/admin/category/get-category-request.usecase";
+import { IUpdateCategoryRequestStatusUsecase } from "../../entities/usecaseInterfaces/admin/category/update-category-request-status-usecase.interface";
+import { UpdateCategoryRequestStatusUsecase } from "../../useCases/admin/category/update-category-request-status.usecase";
+import { IGetUserDetailsUsecase } from "../../entities/usecaseInterfaces/admin/users/get-user-details-usecase.interface";
+import { GetUserDetailsUsecase } from "../../useCases/admin/users/get-user-details.usecase";
 import { ICreateServiceUsecase } from "../../entities/usecaseInterfaces/service/create-service-usecase.interface";
 import { CreateServiceUsecase } from "../../useCases/service/create-service.usecase";
 import { IGetAllPaginatedServicesUsecase } from "../../entities/usecaseInterfaces/vendor/get-all-paginated-services-usecase.interface";
@@ -117,6 +116,9 @@ import { IGetWalletDetailsOfUserUseCase } from "../../entities/usecaseInterfaces
 import { GetWalletDetailsOfUserUseCase } from "../../useCases/wallet/get-wallet-details-of-user.useacse";
 import { IGetAllTransactionsByUserIdUseCase } from "../../entities/usecaseInterfaces/payment/get-all-transactions-by-userId-controlle.interface";
 import { GetAllTransactionsByUserIdUseCase } from "../../useCases/payment/get-all-payment-by-userId.usecase";
+import { ICreateContestUsecase } from "../../entities/usecaseInterfaces/admin/contest/create-contest-usecase.interface";
+import { CreateContestUsecase } from "../../useCases/admin/contest/create-contest.usecase";
+import { IUpdateCategoryUsecase } from "../../entities/usecaseInterfaces/admin/category/update-category-usecase.interface";
 
 export class UsecaseRegistry {
   static registerUsecase(): void {
@@ -336,13 +338,24 @@ export class UsecaseRegistry {
     container.register<IConfirmPaymentUseCase>("IConfirmPaymentUseCase", {
       useClass: ConfirmPaymentUseCase,
     });
+
+    // |--------------------------------------------------------- Wallet Management ---------------------------------------------------|
+    container.register<IGetWalletDetailsOfUserUseCase>(
+      "IGetWalletDetailsOfUserUseCase",
+      {
+        useClass: GetWalletDetailsOfUserUseCase,
+      }
+    );
+    container.register<IGetAllTransactionsByUserIdUseCase>(
+      "IGetAllTransactionsByUserIdUseCase",
+      {
+        useClass: GetAllTransactionsByUserIdUseCase,
+      }
+    );
+
+    // |--------------------------------------------------------- Contest Management ---------------------------------------------------|
+    container.register<ICreateContestUsecase>("ICreateContestUsecase", {
+      useClass: CreateContestUsecase,
+    });
   }
 }
-
-// |--------------------------------------------------------- Wallet Management ---------------------------------------------------|
-container.register<IGetWalletDetailsOfUserUseCase>('IGetWalletDetailsOfUserUseCase',{
-  useClass : GetWalletDetailsOfUserUseCase
-})
-container.register<IGetAllTransactionsByUserIdUseCase>('IGetAllTransactionsByUserIdUseCase',{
-  useClass : GetAllTransactionsByUserIdUseCase
-})

@@ -1,8 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { IUpdateCategoryUsecase } from "../../entities/usecaseInterfaces/admin/update-category-usecase.interface";
-import { ICategoryRepository } from "../../entities/repositoryInterfaces/common/category-repository.interface";
-import { ICategoryEntity } from "../../entities/models/category.entity";
-
+import { IUpdateCategoryUsecase } from "../../../entities/usecaseInterfaces/admin/category/update-category-usecase.interface";
+import { ICategoryRepository } from "../../../entities/repositoryInterfaces/common/category-repository.interface";
+import { ICategoryEntity } from "../../../entities/models/category.entity";
 @injectable()
 export class UpdateCategoryUsecase implements IUpdateCategoryUsecase {
     constructor(

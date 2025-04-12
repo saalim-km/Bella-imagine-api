@@ -10,23 +10,23 @@ import { GetClientDetailsController } from "../../interfaceAdapters/controllers/
 import { GetVendorDetailsController } from "../../interfaceAdapters/controllers/vendor/get-vendor-details-controller";
 import { UpdateClientController } from "../../interfaceAdapters/controllers/client/update-client-profile.controller";
 import { UpdateVendorController } from "../../interfaceAdapters/controllers/vendor/updat-vendor-profile.controller";
-import { GetAllClientsController } from "../../interfaceAdapters/controllers/admin/get-all-clients.controller";
-import { GetAllVendorsController } from "../../interfaceAdapters/controllers/admin/get-all-vendor.controller";
-import { UpdateUserStatusController } from "../../interfaceAdapters/controllers/admin/update-user-status.controller";
+import { GetAllClientsController } from "../../interfaceAdapters/controllers/admin/users/get-all-clients.controller";
+import { GetAllVendorsController } from "../../interfaceAdapters/controllers/admin/users/get-all-vendor.controller";
+import { UpdateUserStatusController } from "../../interfaceAdapters/controllers/admin/users/update-user-status.controller";
 import { ForgotPasswordSendOtpController } from "../../interfaceAdapters/controllers/auth/forgot-password-send-otp.controller";
 import { ResetPasswordController } from "../../interfaceAdapters/controllers/auth/reset-password.controller";
-import { GetPendingVendorController } from "../../interfaceAdapters/controllers/admin/get-pending-vendor-request.controller";
-import { UpdateVendorRequestController } from "../../interfaceAdapters/controllers/admin/update-vendor-request.controller";
-import { CreateNewCategoryController } from "../../interfaceAdapters/controllers/admin/create-new-category.controller";
-import { GetAllPaginatedCategoryController } from "../../interfaceAdapters/controllers/admin/get-all-paginated-category.controller";
+import { GetPendingVendorController } from "../../interfaceAdapters/controllers/admin/vendor_request/get-pending-vendor-request.controller";
+import { UpdateVendorRequestController } from "../../interfaceAdapters/controllers/admin/vendor_request/update-vendor-request.controller";
+import { CreateNewCategoryController } from "../../interfaceAdapters/controllers/admin/category/create-new-category.controller";
+import { GetAllPaginatedCategoryController } from "../../interfaceAdapters/controllers/admin/category/get-all-paginated-category.controller";
 import { GetAllVendorCategoriesController } from "../../interfaceAdapters/controllers/vendor/get-all-vendor-categories.controller";
-import { UpdateCategoryController } from "../../interfaceAdapters/controllers/admin/update-category.controller";
+import { UpdateCategoryController } from "../../interfaceAdapters/controllers/admin/category/update-category.controller";
 import { JoinCategoryRequestController } from "../../interfaceAdapters/controllers/vendor/join-category-request.controller";
 import { GetAllVendorNotificationController } from "../../interfaceAdapters/controllers/vendor/get-all-vendor-notification.controller";
 import { GetAllClientNotificationController } from "../../interfaceAdapters/controllers/client/get-all-client-notification.controller";
-import { GetCategoryRequestController } from "../../interfaceAdapters/controllers/admin/get-category-request.controller";
-import { UpdateCategoryRequestStatusController } from "../../interfaceAdapters/controllers/admin/update-category-request-status.controller";
-import { GetUserDetailsController } from "../../interfaceAdapters/controllers/admin/get-user-details.controller";
+import { GetCategoryRequestController } from "../../interfaceAdapters/controllers/admin/category/get-category-request.controller";
+import { UpdateCategoryRequestStatusController } from "../../interfaceAdapters/controllers/admin/category/update-category-request-status.controller";
+import { GetUserDetailsController } from "../../interfaceAdapters/controllers/admin/users/get-user-details.controller";
 import { CreateServiceController } from "../../interfaceAdapters/controllers/vendor/create-service.controller";
 import { GetAllPaginatedServicesController } from "../../interfaceAdapters/controllers/vendor/get-all-paginated-services.controller";
 import { UpdateServiceController } from "../../interfaceAdapters/controllers/vendor/update-service.controller";
@@ -45,6 +45,7 @@ import { GetAllBookingForVendorController } from "../../interfaceAdapters/contro
 import { UpdateBookingStatusController } from "../../interfaceAdapters/controllers/booking/update-booking-status.controller";
 import { GetWalletDetailsOfUserController } from "../../interfaceAdapters/controllers/wallet/get-wallet-details.controller";
 import { GetAllTransactionsByUserIdController } from "../../interfaceAdapters/controllers/payment/get-all-transaction-by-userId.controller";
+import { CreateContestController } from "../../interfaceAdapters/controllers/admin/contest/create-contest.controller";
 
 export class ControllerRegistry {
   static registerController(): void {
@@ -199,13 +200,16 @@ export class ControllerRegistry {
     container.register("ConfirmPaymentController", {
       useClass: ConfirmPaymentController,
     });
+
+    //-------------------------------------- Wallet Management ----------------------------------------------|
+    container.register("GetWalletDetailsOfUserController", {
+      useClass: GetWalletDetailsOfUserController,
+    });
+    container.register("GetAllTransactionsByUserIdController", {
+      useClass: GetAllTransactionsByUserIdController,
+    });
+
+    //-------------------------------------- Wallet Management ----------------------------------------------|
+    container.register('',{useClass : CreateContestController})
   }
 }
-
-//-------------------------------------- Wallet Management ----------------------------------------------|
-container.register('GetWalletDetailsOfUserController', {
-  useClass : GetWalletDetailsOfUserController
-})
-container.register('GetAllTransactionsByUserIdController', {
-  useClass : GetAllTransactionsByUserIdController
-})

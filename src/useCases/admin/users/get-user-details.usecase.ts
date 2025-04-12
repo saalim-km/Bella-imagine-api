@@ -1,11 +1,12 @@
 import { inject, injectable } from "tsyringe";
-import { IGetUserDetailsUsecase } from "../../entities/usecaseInterfaces/admin/get-user-details-usecase.interface";
-import { IClientRepository } from "../../entities/repositoryInterfaces/client/client-repository.interface";
-import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
 import { ObjectId } from "mongoose";
-import { IClientEntity } from "../../entities/models/client.entity";
-import { IVendorEntity } from "../../entities/models/vendor.entity";
-import { TRole } from "../../shared/constants";
+import { IGetUserDetailsUsecase } from "../../../entities/usecaseInterfaces/admin/users/get-user-details-usecase.interface";
+import { IClientRepository } from "../../../entities/repositoryInterfaces/client/client-repository.interface";
+import { IVendorRepository } from "../../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
+import { TRole } from "../../../shared/constants";
+import { IClientEntity } from "../../../entities/models/client.entity";
+import { IVendorEntity } from "../../../entities/models/vendor.entity";
+
 
 @injectable()
 export class GetUserDetailsUsecase implements IGetUserDetailsUsecase {

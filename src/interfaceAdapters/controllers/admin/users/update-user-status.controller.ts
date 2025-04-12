@@ -1,11 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { IUpdateUserStatusController } from "../../../entities/controllerInterfaces/admin/update-user-status-controller.interface";
-import { IUpdateUserStatusUsecase } from "../../../entities/usecaseInterfaces/admin/users/update-user-usecase.interface";
-import { UpdateBlockStatusRequest } from "../../../shared/types/admin/admin.type";
+import { IUpdateUserStatusController } from "../../../../entities/controllerInterfaces/admin/users/update-user-status-controller.interface";
+import { IUpdateUserStatusUsecase } from "../../../../entities/usecaseInterfaces/admin/users/update-user-usecase.interface";
 import { ZodError } from "zod";
-import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../shared/constants";
+import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../../shared/constants";
 import { Request, Response } from "express";
-import { CustomError } from "../../../entities/utils/custom-error";
+import { CustomError } from "../../../../entities/utils/custom-error";
 
 @injectable()
 export class UpdateUserStatusController implements IUpdateUserStatusController {

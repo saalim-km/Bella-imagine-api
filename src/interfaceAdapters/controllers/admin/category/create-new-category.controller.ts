@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { ICreateNewCategoryController } from "../../../entities/controllerInterfaces/admin/create-new-category-controller.interafce";
-import { ICreateNewCategoryUseCase } from "../../../entities/usecaseInterfaces/admin/category/create-new-category-usecase.interface";
+import { ICreateNewCategoryController } from "../../../../entities/controllerInterfaces/admin/category/create-new-category-controller.interafce";
+import { ICreateNewCategoryUseCase } from "../../../../entities/usecaseInterfaces/admin/category/create-new-category-usecase.interface";
 import { ZodError } from "zod";
 import {
   ERROR_MESSAGES,
   HTTP_STATUS,
   SUCCESS_MESSAGES,
-} from "../../../shared/constants";
-import { CustomError } from "../../../entities/utils/custom-error";
+} from "../../../../shared/constants";
+import { CustomError } from "../../../../entities/utils/custom-error";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

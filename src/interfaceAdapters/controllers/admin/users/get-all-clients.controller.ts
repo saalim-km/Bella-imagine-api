@@ -1,16 +1,16 @@
 import { inject, injectable } from "tsyringe";
-import { IGetAllClientController } from "../../../entities/controllerInterfaces/admin/get-all-clients-controller.interface";
+import { IGetAllClientController } from "../../../../entities/controllerInterfaces/admin/users/get-all-clients-controller.interface";
 import { Request, Response } from "express";
-import { IGetAllClientUsecase } from "../../../entities/usecaseInterfaces/admin/get-all-clients-usecase.interafce";
-import { IClientEntity } from "../../../entities/models/client.entity";
+import { IGetAllClientUsecase } from "../../../../entities/usecaseInterfaces/admin/users/get-all-clients-usecase.interafce";
+import { IClientEntity } from "../../../../entities/models/client.entity";
 import {
   ERROR_MESSAGES,
   HTTP_STATUS,
   SUCCESS_MESSAGES,
-} from "../../../shared/constants";
+} from "../../../../shared/constants";
 import { ZodError } from "zod";
-import { CustomError } from "../../../entities/utils/custom-error";
-import { PaginatedRequestUser } from "../../../shared/types/admin/admin.type";
+import { CustomError } from "../../../../entities/utils/custom-error";
+import { PaginatedRequestUser } from "../../../../shared/types/admin/admin.type";
 
 export interface IPaginationQuery {
   search?: Partial<IClientEntity>;

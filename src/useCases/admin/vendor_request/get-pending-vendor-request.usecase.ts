@@ -1,9 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IGetPendingVendorRequestUsecase } from "../../entities/usecaseInterfaces/admin/get-pending-vendor-request-usecase.interface";
-import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
-import { PaginatedResponse } from "../../shared/types/admin/admin.type";
-import { IVendorEntity } from "../../entities/models/vendor.entity";
-import { number } from "zod";
+import { IGetPendingVendorRequestUsecase } from "../../../entities/usecaseInterfaces/admin/vendor_request/get-pending-vendor-request-usecase.interface";
+import { IVendorRepository } from "../../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
+import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
+import { IVendorEntity } from "../../../entities/models/vendor.entity";
 
 @injectable()
 export class GetPendingVendorRequestUsecase implements IGetPendingVendorRequestUsecase {

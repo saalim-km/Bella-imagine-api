@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
-import { IUpdateCategoryRequestStatusController } from "../../../entities/controllerInterfaces/admin/update-category-request-status-controller.interface";
+import { IUpdateCategoryRequestStatusController } from "../../../../entities/controllerInterfaces/admin/category/update-category-request-status-controller.interface";
 import { Request, Response } from "express";
 import { ZodError } from "zod";
-import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../shared/constants";
-import { CustomError } from "../../../entities/utils/custom-error";
-import { IUpdateCategoryRequestStatusUsecase } from "../../../entities/usecaseInterfaces/admin/update-category-request-status-usecase.interface";
-import { ICategoryRequest } from "../../../shared/types/admin/admin.type";
+import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../../shared/constants";
+import { CustomError } from "../../../../entities/utils/custom-error";
+import { ICategoryRequest } from "../../../../shared/types/admin/admin.type";
+import { IUpdateCategoryRequestStatusUsecase } from "../../../../entities/usecaseInterfaces/admin/category/update-category-request-status-usecase.interface";
 
 @injectable()
 export class UpdateCategoryRequestStatusController

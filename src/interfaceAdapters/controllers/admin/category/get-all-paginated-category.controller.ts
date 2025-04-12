@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { IGetAllPaginatedCategoryController } from "../../../entities/controllerInterfaces/admin/get-all-paginated-category-controller.interfaec";
-import { IGetAllPaginatedCategoryUseCase } from "../../../entities/usecaseInterfaces/admin/get-all-paginated-category-usecase.interface"
+import { IGetAllPaginatedCategoryController } from "../../../../entities/controllerInterfaces/admin/category/get-all-paginated-category-controller.interfaec";
 import { ZodError } from "zod";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
-import { CustomError } from "../../../entities/utils/custom-error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../../../shared/constants";
+import { CustomError } from "../../../../entities/utils/custom-error";
 import { inject, injectable } from "tsyringe";
+import { IGetAllPaginatedCategoryUseCase } from "../../../../entities/usecaseInterfaces/admin/category/get-all-paginated-category-usecase.interface";
 
 @injectable()
 export class GetAllPaginatedCategoryController

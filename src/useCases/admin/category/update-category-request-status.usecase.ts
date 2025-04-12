@@ -1,12 +1,12 @@
 import { inject, injectable } from "tsyringe";
-import { IUpdateCategoryRequestStatusUsecase } from "../../entities/usecaseInterfaces/admin/update-category-request-status-usecase.interface";
+import { IUpdateCategoryRequestStatusUsecase } from "../../../entities/usecaseInterfaces/admin/category/update-category-request-status-usecase.interface";
+import { ICategoryRequestRepository } from "../../../entities/repositoryInterfaces/common/category-reqeust-repository.interface";
+import { INotificationRepository } from "../../../entities/repositoryInterfaces/common/notification-repository.interface";
+import { IVendorRepository } from "../../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
 import { ObjectId } from "mongoose";
-import { ICategoryRequestRepository } from "../../entities/repositoryInterfaces/common/category-reqeust-repository.interface";
-import { CustomError } from "../../entities/utils/custom-error";
-import { HTTP_STATUS } from "../../shared/constants";
-import { TCategoryRequestStatus } from "../../shared/types/admin/admin.type";
-import { INotificationRepository } from "../../entities/repositoryInterfaces/common/notification-repository.interface";
-import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
+import { TCategoryRequestStatus } from "../../../shared/types/admin/admin.type";
+import { CustomError } from "../../../entities/utils/custom-error";
+import { HTTP_STATUS } from "../../../shared/constants";
 
 @injectable()
 export class UpdateCategoryRequestStatusUsecase

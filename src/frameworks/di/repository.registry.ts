@@ -25,6 +25,8 @@ import { BookingRepository } from "../../interfaceAdapters/repositories/booking/
 import { PaymentRepository } from "../../interfaceAdapters/repositories/payment/payment.repository";
 import { IWalletRepository } from "../../entities/repositoryInterfaces/wallet-repository.interface";
 import { WalletRepository } from "../../interfaceAdapters/repositories/wallet/wallet.repository";
+import { IContestRepository } from "../../entities/repositoryInterfaces/contest/contest-repository.interface";
+import { ContestRepository } from "../../interfaceAdapters/repositories/contest/contest.repository";
 
 export class RepositoryRegistry {
   static registerRepositories(): void {
@@ -82,6 +84,10 @@ export class RepositoryRegistry {
 
     container.register<IWalletRepository>('IWalletRepository',{
       useClass : WalletRepository
+    })
+
+    container.register<IContestRepository>('IContestRepository',{
+      useClass : ContestRepository
     })
   }
 }

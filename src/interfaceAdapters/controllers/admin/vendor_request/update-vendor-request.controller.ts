@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
-import { IUpdateVendorRequestController } from "../../../entities/controllerInterfaces/admin/update-vendor-reqeust-controller.interface";
-import { IUpdateVendorRequestUsecase } from "../../../entities/usecaseInterfaces/admin/vendor_request/update-vendor-request-usecase.interface";
+import { IUpdateVendorRequestController } from "../../../../entities/controllerInterfaces/admin/vendor_request/update-vendor-reqeust-controller.interface";
+import { IUpdateVendorRequestUsecase } from "../../../../entities/usecaseInterfaces/admin/vendor_request/update-vendor-request-usecase.interface";
 import { Request, Response } from "express";
-import { CustomRequest } from "../../middlewares/auth.middleware";
+import { CustomRequest } from "../../../middlewares/auth.middleware";
 import { ZodError } from "zod";
-import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../shared/constants";
-import { CustomError } from "../../../entities/utils/custom-error";
+import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../../shared/constants";
+import { CustomError } from "../../../../entities/utils/custom-error";
 
 @injectable()
 export class UpdateVendorRequestController

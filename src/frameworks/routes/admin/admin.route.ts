@@ -6,6 +6,7 @@ import {
 } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
 import {
+  createContestController,
   createNewCategoryController,
   getAllClientController,
   getAllPaginatedCategoryController,
@@ -178,10 +179,10 @@ export class AdminRoute extends BaseRoute {
     // Contest Management Routes
     // Create Contest
     this.router.post(
-      "/admin/create-contest",
-      verifyAuth,
-      authorizeRole(["admin"]),
-      (req: Request, res: Response) => {}
+      "/admin/contest",
+      (req: Request, res: Response) => {
+        createContestController.handle(req,res)
+      }
     );
   }
 }

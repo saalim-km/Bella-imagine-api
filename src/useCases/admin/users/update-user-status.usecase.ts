@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IUpdateUserStatusUsecase } from "../../entities/usecaseInterfaces/admin/update-user-usecase.interface";
-import { TRole } from "../../shared/constants";
-import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
-import { IClientRepository } from "../../entities/repositoryInterfaces/client/client-repository.interface";
+import { TRole } from "../../../shared/constants";
+import { IUpdateUserStatusUsecase } from "../../../entities/usecaseInterfaces/admin/users/update-user-usecase.interface";
+import { IVendorRepository } from "../../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
+import { IClientRepository } from "../../../entities/repositoryInterfaces/client/client-repository.interface";
 
 @injectable()
 export class UpdateUserStatusUsecase implements IUpdateUserStatusUsecase {
