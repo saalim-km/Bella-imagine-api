@@ -11,6 +11,7 @@ import {
   getAllClientCategoriesController,
   getAllClientNotificatioController,
   getClientDetailsController,
+  getPaginatedContestController,
   getPaginatedVendorsController,
   getPhotographerDetailsController,
   getServiceController,
@@ -169,5 +170,11 @@ export class ClientRoute extends BaseRoute {
         getWalletDetailsOfUserController.handle(req, res);
       }
     );
+
+    // Contest Management Routes
+    // Get All Contests
+    this.router.get('/client/contest',verifyAuth,authorizeRole(["client"]),(req: Request, res: Response)=> {
+      getPaginatedContestController.handle(req,res)
+    })
   }
 }

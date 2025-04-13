@@ -182,16 +182,16 @@ export class AdminRoute extends BaseRoute {
     // Contest Management Routes
     // Create Contest
     this.router.route("/admin/contest")
-    .post((req: Request, res: Response) => {
+    .post(verifyAuth,authorizeRole(["admin"]),(req: Request, res: Response) => {
       createContestController.handle(req, res);
     })
-    .put((req: Request, res: Response)=> {
+    .put(verifyAuth,authorizeRole(["admin"]),(req: Request, res: Response)=> {
       updateContestController.handle(req,res)
     })
-    .delete((req: Request, res: Response)=> {
+    .delete(verifyAuth,authorizeRole(["admin"]),(req: Request, res: Response)=> {
       deleteContestController.handle(req,res)
     })
-    .get((req: Request, res: Response)=> {
+    .get(verifyAuth,authorizeRole(["admin"]),(req: Request, res: Response)=> {
       getPaginatedContestController.handle(req,res)
     })
   }
