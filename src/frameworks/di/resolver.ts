@@ -49,6 +49,7 @@ import { GetAllTransactionsByUserIdController } from "../../interfaceAdapters/co
 import { CreateContestController } from "../../interfaceAdapters/controllers/admin/contest/create-contest.controller";
 import { UpdateContestController } from "../../interfaceAdapters/controllers/admin/contest/update-contest.controller";
 import { DeleteContestController } from "../../interfaceAdapters/controllers/admin/contest/delete-contest.controller";
+import { GetPaginatedContestController } from "../../interfaceAdapters/controllers/admin/contest/get-paginated-contest-controller";
 
 DependencyInjection.registerAll();
 
@@ -198,4 +199,7 @@ export const updateContestController = container.resolve(
 )
 export const deleteContestController = container.resolve(
   DeleteContestController
+)
+export const getPaginatedContestController = container.resolve(
+  GetPaginatedContestController
 )

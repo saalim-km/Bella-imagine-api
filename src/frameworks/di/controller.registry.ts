@@ -48,6 +48,7 @@ import { GetAllTransactionsByUserIdController } from "../../interfaceAdapters/co
 import { CreateContestController } from "../../interfaceAdapters/controllers/admin/contest/create-contest.controller";
 import { UpdateContestController } from "../../interfaceAdapters/controllers/admin/contest/update-contest.controller";
 import { DeleteContestController } from "../../interfaceAdapters/controllers/admin/contest/delete-contest.controller";
+import { GetPaginatedContestController } from "../../interfaceAdapters/controllers/admin/contest/get-paginated-contest-controller";
 
 export class ControllerRegistry {
   static registerController(): void {
@@ -212,8 +213,17 @@ export class ControllerRegistry {
     });
 
     //-------------------------------------- Contest Management ----------------------------------------------|
-    container.register('CreateContestController',{useClass : CreateContestController})
-    container.register('UpdateContestController',{useClass : UpdateContestController})
-    container.register('DeleteContestController',{useClass : DeleteContestController})
+    container.register("CreateContestController", {
+      useClass: CreateContestController,
+    });
+    container.register("UpdateContestController", {
+      useClass: UpdateContestController,
+    });
+    container.register("DeleteContestController", {
+      useClass: DeleteContestController,
+    });
+    container.register("GetPaginatedContestController", {
+      useClass: GetPaginatedContestController,
+    });
   }
 }

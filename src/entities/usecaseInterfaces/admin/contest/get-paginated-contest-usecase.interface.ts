@@ -3,5 +3,5 @@ import { PaginatedRequestContest } from "../../../../shared/types/contest/contes
 import { IContest } from "../../../models/contenst.entity";
 
 export interface IGetPaginatedContestUsecase {
-    execute(page : number , limit : number , filters ?: PaginatedRequestContest) : Promise<PaginatedResponse<IContest>>
+    execute(filters ?: PaginatedRequestContest) : Promise<PaginatedResponse<IContest>>
 }   

@@ -14,6 +14,7 @@ import {
   getAllTransactionByUserIdController,
   getAllVendorController,
   getCategoryRequestController,
+  getPaginatedContestController,
   getPendingVendorController,
   getUserDetailsController,
   getWalletDetailsOfUserController,
@@ -191,7 +192,7 @@ export class AdminRoute extends BaseRoute {
       deleteContestController.handle(req,res)
     })
     .get((req: Request, res: Response)=> {
-      
+      getPaginatedContestController.handle(req,res)
     })
   }
 }
