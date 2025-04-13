@@ -8,3 +8,8 @@ export interface UpdateContestDto {
     contestId : string;
     data : Partial<IContest>
 }
+
+export interface PaginatedRequestContest {
+    status ?: TContestStatus
+    search ?: string
+}

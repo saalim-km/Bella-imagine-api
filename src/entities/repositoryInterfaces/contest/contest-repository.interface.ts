@@ -1,3 +1,4 @@
+import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 import { IContest } from "../../models/contenst.entity";
 
 export interface IContestRepository {
@@ -10,4 +11,6 @@ export interface IContestRepository {
     findByIdAndUpdateContest(contestId : string , data : Partial<IContest>) : Promise<void>
 
     findByIdDeleteContest(contestId : string) : Promise<void>
+
+    getAllContest(filters : Record<string , any>, skip: number , limit : number) : Promise<PaginatedResponse<IContest>>
 }

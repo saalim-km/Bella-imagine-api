@@ -123,6 +123,8 @@ import { IUpdateContestUsecase } from "../../entities/usecaseInterfaces/admin/co
 import { UpdateContestUsecase } from "../../useCases/admin/contest/update-contest.usecase";
 import { IDeleteContestUsecase } from "../../entities/usecaseInterfaces/admin/contest/delete-contest-usecase.interface";
 import { DeleteContestUsecase } from "../../useCases/admin/contest/delete-contest-usecase";
+import { IGetPaginatedContestUsecase } from "../../entities/usecaseInterfaces/admin/contest/get-paginated-contest-usecase.interface";
+import { GetPaginatedContestUsecase } from "../../useCases/admin/contest/get-paginated-contest.usecase";
 
 export class UsecaseRegistry {
   static registerUsecase(): void {
@@ -368,6 +370,10 @@ export class UsecaseRegistry {
 
     container.register<IDeleteContestUsecase>('IDeleteContestUsecase',{
       useClass : DeleteContestUsecase
+    })
+
+    container.register<IGetPaginatedContestUsecase>('IGetPaginatedContestUsecase',{
+      useClass : GetPaginatedContestUsecase
     })
   }
 }

@@ -190,5 +190,8 @@ export class AdminRoute extends BaseRoute {
     .delete((req: Request, res: Response)=> {
       deleteContestController.handle(req,res)
     })
+    .get((req: Request, res: Response)=> {
+      
+    })
   }
 }
