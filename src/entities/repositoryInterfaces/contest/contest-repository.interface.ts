@@ -1,5 +1,6 @@
 import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 import { IContest } from "../../models/contenst.entity";
+import { IContestUploadEntity } from "../../models/contest-upload.entity";
 
 export interface IContestRepository {
     create(data : Partial<IContest>): Promise<void>

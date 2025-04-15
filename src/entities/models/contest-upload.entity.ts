@@ -9,10 +9,11 @@ export interface IContestUploadEntity {
   _id?: string | ObjectId;
   title: string;
   caption: string;
+  image : string;
   categoryId: string | ObjectId;
   contestId: string | ObjectId;
   likeCount: number;
   comment: TComment[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

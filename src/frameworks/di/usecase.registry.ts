@@ -117,14 +117,14 @@ import { GetWalletDetailsOfUserUseCase } from "../../useCases/wallet/get-wallet-
 import { IGetAllTransactionsByUserIdUseCase } from "../../entities/usecaseInterfaces/payment/get-all-transactions-by-userId-controlle.interface";
 import { GetAllTransactionsByUserIdUseCase } from "../../useCases/payment/get-all-payment-by-userId.usecase";
 import { ICreateContestUsecase } from "../../entities/usecaseInterfaces/admin/contest_management/create-contest-usecase.interface";
-import { CreateContestUsecase } from "../../useCases/admin/contest/create-contest.usecase";
+import { CreateContestUsecase } from "../../useCases/admin/contest_management/create-contest.usecase";
 import { IUpdateCategoryUsecase } from "../../entities/usecaseInterfaces/admin/category/update-category-usecase.interface";
 import { IUpdateContestUsecase } from "../../entities/usecaseInterfaces/admin/contest_management/update-contest-usecase.interface";
-import { UpdateContestUsecase } from "../../useCases/admin/contest/update-contest.usecase";
+import { UpdateContestUsecase } from "../../useCases/admin/contest_management/update-contest.usecase";
 import { IDeleteContestUsecase } from "../../entities/usecaseInterfaces/admin/contest_management/delete-contest-usecase.interface";
-import { DeleteContestUsecase } from "../../useCases/admin/contest/delete-contest-usecase";
+import { DeleteContestUsecase } from "../../useCases/admin/contest_management/delete-contest-usecase";
 import { IGetPaginatedContestUsecase } from "../../entities/usecaseInterfaces/admin/contest_management/get-paginated-contest-usecase.interface";
-import { GetPaginatedContestUsecase } from "../../useCases/admin/contest/get-paginated-contest.usecase";
+import { GetPaginatedContestUsecase } from "../../useCases/admin/contest_management/get-paginated-contest.usecase";
 
 export class UsecaseRegistry {
   static registerUsecase(): void {
