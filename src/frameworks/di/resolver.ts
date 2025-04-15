@@ -46,10 +46,11 @@ import { GetAllBookingForVendorController } from "../../interfaceAdapters/contro
 import { UpdateBookingStatusController } from "../../interfaceAdapters/controllers/booking/update-booking-status.controller";
 import { GetWalletDetailsOfUserController } from "../../interfaceAdapters/controllers/wallet/get-wallet-details.controller";
 import { GetAllTransactionsByUserIdController } from "../../interfaceAdapters/controllers/payment/get-all-transaction-by-userId.controller";
-import { CreateContestController } from "../../interfaceAdapters/controllers/admin/contest/create-contest.controller";
-import { UpdateContestController } from "../../interfaceAdapters/controllers/admin/contest/update-contest.controller";
-import { DeleteContestController } from "../../interfaceAdapters/controllers/admin/contest/delete-contest.controller";
-import { GetPaginatedContestController } from "../../interfaceAdapters/controllers/admin/contest/get-paginated-contest-controller";
+import { CreateContestController } from "../../interfaceAdapters/controllers/admin/contest_management/create-contest.controller";
+import { UpdateContestController } from "../../interfaceAdapters/controllers/admin/contest_management/update-contest.controller";
+import { DeleteContestController } from "../../interfaceAdapters/controllers/admin/contest_management/delete-contest.controller";
+import { GetPaginatedContestController } from "../../interfaceAdapters/controllers/admin/contest_management/get-paginated-contest-controller";
+import { ParticipateContestController } from "../../interfaceAdapters/controllers/contest/participate-contest.controller";
 
 DependencyInjection.registerAll();
 
@@ -202,4 +203,7 @@ export const deleteContestController = container.resolve(
 )
 export const getPaginatedContestController = container.resolve(
   GetPaginatedContestController
+)
+export const participateContestController = container.resolve(
+  ParticipateContestController
 )

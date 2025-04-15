@@ -17,6 +17,7 @@ import {
   getServiceController,
   getWalletDetailsOfUserController,
   logoutController,
+  participateContestController,
   refreshTokenController,
   updateBookingStatusController,
   updateClientController,
@@ -173,8 +174,12 @@ export class ClientRoute extends BaseRoute {
 
     // Contest Management Routes
     // Get All Contests
-    this.router.get('/client/contest',verifyAuth,authorizeRole(["client"]),(req: Request, res: Response)=> {
+    this.router.route('/client/contest')
+    .get(verifyAuth,authorizeRole(["client"]),(req: Request, res: Response)=> {
       getPaginatedContestController.handle(req,res)
+    })
+    .post(verifyAuth,authorizeRole(["client"]),(req: Request, res: Response)=> {
+      participateContestController.handle(req,res)
     })
   }
 }

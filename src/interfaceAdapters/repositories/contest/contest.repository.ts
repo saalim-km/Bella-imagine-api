@@ -1,9 +1,11 @@
+import { injectable } from "tsyringe";
 import { IContest } from "../../../entities/models/contenst.entity";
 import { IContestUploadEntity } from "../../../entities/models/contest-upload.entity";
 import { IContestRepository } from "../../../entities/repositoryInterfaces/contest/contest-repository.interface";
 import { ContestModel } from "../../../frameworks/database/models/contest.model";
 import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 
+@injectable()
 export class ContestRepository implements IContestRepository {
     async create(data: Partial<IContest>): Promise<void> {
         await ContestModel.create(data)
