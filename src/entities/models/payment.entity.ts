@@ -9,7 +9,6 @@ export type PaymentStatus =
   | "partially_refunded";
 
 export type Purpose = "vendor-booking";
-
 export interface IPaymentEntity {
   _id?: string | ObjectId;
   userId: string | ObjectId;

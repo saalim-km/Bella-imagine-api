@@ -5,7 +5,7 @@ import { ZodError } from "zod";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../../shared/constants";
 import { CustomError } from "../../../../entities/utils/custom-error";
 import { PaginatedRequestContest, TContestStatus } from "../../../../shared/types/contest/contest.types";
-import { IGetPaginatedContestUsecase } from "../../../../entities/usecaseInterfaces/admin/contest/get-paginated-contest-usecase.interface";
+import { IGetPaginatedContestUsecase } from "../../../../entities/usecaseInterfaces/admin/contest_management/get-paginated-contest-usecase.interface";
 
 @injectable()
 export class GetPaginatedContestController

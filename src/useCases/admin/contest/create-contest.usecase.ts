@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { ICreateContestUsecase } from "../../../entities/usecaseInterfaces/admin/contest/create-contest-usecase.interface";
+import { ICreateContestUsecase } from "../../../entities/usecaseInterfaces/admin/contest_management/create-contest-usecase.interface";
 import { IContest } from "../../../entities/models/contenst.entity";
 import { IContestRepository } from "../../../entities/repositoryInterfaces/contest/contest-repository.interface";
 import { ICategoryRepository } from "../../../entities/repositoryInterfaces/common/category-repository.interface";

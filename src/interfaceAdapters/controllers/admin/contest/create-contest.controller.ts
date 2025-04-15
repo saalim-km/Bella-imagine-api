@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { ZodError } from "zod";
 import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../../shared/constants";
 import { CustomError } from "../../../../entities/utils/custom-error";
-import { ICreateContestUsecase } from "../../../../entities/usecaseInterfaces/admin/contest/create-contest-usecase.interface";
+import { ICreateContestUsecase } from "../../../../entities/usecaseInterfaces/admin/contest_management/create-contest-usecase.interface";
 
 @injectable()
 export class CreateContestController implements ICreateContestController {

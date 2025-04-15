@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IGetPaginatedContestUsecase } from "../../../entities/usecaseInterfaces/admin/contest/get-paginated-contest-usecase.interface";
+import { IGetPaginatedContestUsecase } from "../../../entities/usecaseInterfaces/admin/contest_management/get-paginated-contest-usecase.interface";
 import { IContestRepository } from "../../../entities/repositoryInterfaces/contest/contest-repository.interface";
 import { IContest } from "../../../entities/models/contenst.entity";
 import { PaginatedResponse } from "../../../shared/types/admin/admin.type";

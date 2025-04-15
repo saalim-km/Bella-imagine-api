@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IUpdateContestController } from "../../../../entities/controllerInterfaces/admin/contest/update-contest-controller.interface";
-import { IUpdateContestUsecase } from "../../../../entities/usecaseInterfaces/admin/contest/update-contest-usecase.interface";
+import { IUpdateContestUsecase } from "../../../../entities/usecaseInterfaces/admin/contest_management/update-contest-usecase.interface";
 import { Request, Response } from "express";
 import { ZodError } from "zod";
 import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../../shared/constants";
