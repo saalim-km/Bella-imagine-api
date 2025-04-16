@@ -56,7 +56,7 @@ export class BookingRepository implements IBookingRepository {
   }
 
   async findByIdAndUpdateBookingStatus(id: any, status: string): Promise<void> {
-    console.log('in update booking status : ',id , status);
+    console.log('in update booking status repository : ',id , status);
     await bookingModel.findByIdAndUpdate(id, { $set: { status } });
   }
 
@@ -68,16 +68,18 @@ export class BookingRepository implements IBookingRepository {
   }
 
   async updateClientApproved(id: any): Promise<IBookingEntity | null> {
+    console.log('in client approval repostory : ',id);
     return await bookingModel.findOneAndUpdate(
-      { userId: id },
+      { _id: id },
       { $set: { isClientApproved: true } },
       { new: true }
     );
   }
 
   async updateVendorApproved(id: any): Promise<IBookingEntity | null> {
+    console.log('in vendor approval repostory : ',id);
     return await bookingModel.findOneAndUpdate(
-      { vendorId: id },
+      { _id : id },
       { $set: { isVendorApproved: true } },
       { new: true }
     );
