@@ -10,6 +10,7 @@ export interface IContestUploadEntity {
   title: string;
   caption: string;
   image : string;
+  userId ?: string;
   categoryId: string | ObjectId;
   contestId: string | ObjectId;
   likeCount: number;

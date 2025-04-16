@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 import { IContest } from "../../models/contenst.entity";
 import { IContestUploadEntity } from "../../models/contest-upload.entity";
@@ -7,7 +8,7 @@ export interface IContestRepository {
 
     findByTitle(title : string): Promise<IContest | null>
 
-    findById(contestId : string) : Promise<IContest | null>
+    findById(contestId : string | ObjectId) : Promise<IContest | null>
 
     findByIdAndUpdateContest(contestId : string , data : Partial<IContest>) : Promise<void>
 

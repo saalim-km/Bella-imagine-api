@@ -3,8 +3,9 @@ import { IParticipateContestController } from "../../../entities/controllerInter
 import { IParticipateContestUsecase } from "../../../entities/usecaseInterfaces/contest/participate-contest-usecase.interface";
 import { Request, Response } from "express";
 import { ZodError } from "zod";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
+import { ERROR_MESSAGES, HTTP_STATUS, TRole } from "../../../shared/constants";
 import { CustomError } from "../../../entities/utils/custom-error";
+import { CustomRequest } from "../../middlewares/auth.middleware";
 
 @injectable()
 export class ParticipateContestController
@@ -17,7 +18,8 @@ export class ParticipateContestController
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      await this.participateContestUseCase.execute(req.body)
+      const user = (req as CustomRequest).user;
+      await this.participateContestUseCase.execute(req.body,user.role as TRole)
 
       res.status(HTTP_STATUS.OK).json({
         success: true,
