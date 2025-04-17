@@ -36,12 +36,13 @@ export class UpdateBookingStatusUseCase implements IUpdateBookingStatusUseCase {
 
       try {
         let updatedBooking = null;
-
+ 
         // Client approval path
         console.log('out client approval', userId === booking.userId!.toString())
         if (userId === booking.userId!.toString() && !booking.isClientApproved) {
           console.log('in client approval', userId)
-          updatedBooking = await this.bookingRepository.updateClientApproved(userId);
+          updatedBooking = await this.bookingRepository.updateClientApproved(bookingId);
+          console.log('after updating the clientApproval : ',updatedBooking);
           if (updatedBooking?.isVendorApproved) {
             await this.processWalletUpdates(bookingId, updatedBooking, payment._id!.toString());
           }
@@ -49,7 +50,8 @@ export class UpdateBookingStatusUseCase implements IUpdateBookingStatusUseCase {
         // Vendor approval path
         else if (userId === booking.vendorId!.toString() && !booking.isVendorApproved) {
           console.log('in vendor approval', userId === booking.vendorId!.toString())
-          updatedBooking = await this.bookingRepository.updateVendorApproved(userId);
+          updatedBooking = await this.bookingRepository.updateVendorApproved(bookingId);
+          console.log('after updating the vendorApproval : ',updatedBooking);
           if (updatedBooking?.isClientApproved) {
             await this.processWalletUpdates(bookingId, updatedBooking, payment._id!.toString());
           }

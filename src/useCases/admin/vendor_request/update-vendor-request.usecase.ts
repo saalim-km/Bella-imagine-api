@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { IUpdateVendorRequestUsecase } from "../../entities/usecaseInterfaces/admin/update-vendor-request-usecase.interface";
-import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
-import { INotificationRepository } from "../../entities/repositoryInterfaces/common/notification-repository.interface";
-import { INotificationEntity } from "../../entities/models/notification.entity";
-import { CustomError } from "../../entities/utils/custom-error";
-import { HTTP_STATUS } from "../../shared/constants";
+import { IUpdateVendorRequestUsecase } from "../../../entities/usecaseInterfaces/admin/vendor_request/update-vendor-request-usecase.interface";
+import { IVendorRepository } from "../../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
+import { INotificationRepository } from "../../../entities/repositoryInterfaces/common/notification-repository.interface";
+import { INotificationEntity } from "../../../entities/models/notification.entity";
+import { CustomError } from "../../../entities/utils/custom-error";
+import { HTTP_STATUS } from "../../../shared/constants";
 
 @injectable()
 export class UpdateVendorRequestUsecase implements IUpdateVendorRequestUsecase {

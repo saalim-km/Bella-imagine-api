@@ -1,22 +1,23 @@
 import { inject, injectable } from "tsyringe";
+import { IGetUserDetailsController } from "../../../../entities/controllerInterfaces/admin/users/get-user-details-controller.interface";
 import { Request, Response } from "express";
+import { ERROR_MESSAGES, HTTP_STATUS, TRole } from "../../../../shared/constants";
 import { ZodError } from "zod";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
-import { CustomError } from "../../../entities/utils/custom-error";
-import { IGetCategoryRequestUsecase } from "../../../entities/usecaseInterfaces/admin/get-category-request-usecase.interface";
+import { CustomError } from "../../../../entities/utils/custom-error";
+import { IUserDetailsRequest } from "../../../../shared/types/admin/admin.type";
+import { IGetUserDetailsUsecase } from "../../../../entities/usecaseInterfaces/admin/users/get-user-details-usecase.interface";
 
 @injectable()
-export class GetCategoryRequestController {
+export class GetUserDetailsController implements IGetUserDetailsController {
   constructor(
-    @inject("IGetCategoryRequestUsecase")
-    private getCategoryRequestUsecase: IGetCategoryRequestUsecase
+    @inject("IGetUserDetailsUsecase") private getUserDetailsUsecase: IGetUserDetailsUsecase
   ) {}
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      const categoryRequest = await this.getCategoryRequestUsecase.execute();
-      console.log(categoryRequest);
-      res.status(HTTP_STATUS.OK).json({ success: true, categoryRequest });
+      const {id,role} = req.query as unknown as IUserDetailsRequest;
+      const user = await this.getUserDetailsUsecase.execute(id, role);
+      res.status(HTTP_STATUS.OK).json({success : true , user})
     } catch (error) {
       if (error instanceof ZodError) {
         const errors = error.errors.map((err) => ({

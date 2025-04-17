@@ -1,23 +1,29 @@
 import { inject, injectable } from "tsyringe";
-import { IGetUserDetailsController } from "../../../entities/controllerInterfaces/admin/get-user-details-controller.interface";
-import { IGetUserDetailsUsecase } from "../../../entities/usecaseInterfaces/admin/get-user-details-usecase.interface";
+import { IUpdateCategoryController } from "../../../../entities/controllerInterfaces/admin/category/update-category-controller.interface";
 import { Request, Response } from "express";
-import { ERROR_MESSAGES, HTTP_STATUS, TRole } from "../../../shared/constants";
+import {
+  ERROR_MESSAGES,
+  HTTP_STATUS,
+  SUCCESS_MESSAGES,
+} from "../../../../shared/constants";
 import { ZodError } from "zod";
-import { CustomError } from "../../../entities/utils/custom-error";
-import { IUserDetailsRequest } from "../../../shared/types/admin/admin.type";
+import { CustomError } from "../../../../entities/utils/custom-error";
+import { IUpdateCategoryUsecase } from "../../../../entities/usecaseInterfaces/admin/category/update-category-usecase.interface";
 
 @injectable()
-export class GetUserDetailsController implements IGetUserDetailsController {
+export class UpdateCategoryController implements IUpdateCategoryController {
   constructor(
-    @inject("IGetUserDetailsUsecase") private getUserDetailsUsecase: IGetUserDetailsUsecase
+    @inject("IUpdateCategoryUsecase")
+    private updateCategoryUsecase: IUpdateCategoryUsecase
   ) {}
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      const {id,role} = req.query as unknown as IUserDetailsRequest;
-      const user = await this.getUserDetailsUsecase.execute(id, role);
-      res.status(HTTP_STATUS.OK).json({success : true , user})
+      const { id, data } = req.body;
+      await this.updateCategoryUsecase.execute(id, data);
+      res
+        .status(HTTP_STATUS.OK)
+        .json({ success: true, message: SUCCESS_MESSAGES.UPDATE_SUCCESS });
     } catch (error) {
       if (error instanceof ZodError) {
         const errors = error.errors.map((err) => ({

@@ -1,11 +1,12 @@
 import { ObjectId } from "mongoose";
-import { TContest } from "../../shared/types/contest/contest.types";
+import { TContest, TContestStatus } from "../../shared/types/contest/contest.types";
 
 export interface IContest {
     _id?: string;
     title : string;
     description: string;
     contestType: TContest;
+    status : TContestStatus;
     categoryId: ObjectId | string;
     startDate : Date;
     endDate : Date;

@@ -1,30 +1,22 @@
 import { inject, injectable } from "tsyringe";
-import { IUpdateCategoryController } from "../../../entities/controllerInterfaces/admin/update-category-controller.interface";
-import { IUpdateCategoryUsecase } from "../../../entities/usecaseInterfaces/admin/update-category-usecase.interface";
 import { Request, Response } from "express";
-import { ICategoryEntity } from "../../../entities/models/category.entity";
-import {
-  ERROR_MESSAGES,
-  HTTP_STATUS,
-  SUCCESS_MESSAGES,
-} from "../../../shared/constants";
 import { ZodError } from "zod";
-import { CustomError } from "../../../entities/utils/custom-error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../../../shared/constants";
+import { CustomError } from "../../../../entities/utils/custom-error";
+import { IGetCategoryRequestUsecase } from "../../../../entities/usecaseInterfaces/admin/category/get-category-request-usecase.interface";
 
 @injectable()
-export class UpdateCategoryController implements IUpdateCategoryController {
+export class GetCategoryRequestController {
   constructor(
-    @inject("IUpdateCategoryUsecase")
-    private updateCategoryUsecase: IUpdateCategoryUsecase
+    @inject("IGetCategoryRequestUsecase")
+    private getCategoryRequestUsecase: IGetCategoryRequestUsecase
   ) {}
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      const { id, data } = req.body;
-      await this.updateCategoryUsecase.execute(id, data);
-      res
-        .status(HTTP_STATUS.OK)
-        .json({ success: true, message: SUCCESS_MESSAGES.UPDATE_SUCCESS });
+      const categoryRequest = await this.getCategoryRequestUsecase.execute();
+      console.log(categoryRequest);
+      res.status(HTTP_STATUS.OK).json({ success: true, categoryRequest });
     } catch (error) {
       if (error instanceof ZodError) {
         const errors = error.errors.map((err) => ({

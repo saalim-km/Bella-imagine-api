@@ -30,6 +30,11 @@ export const contestSchema = new mongoose.Schema<IContestModel>({
         default : [],
         ref : 'client'
     },
+    status : {
+        type : String,
+        enum : ['active', 'upcoming', 'ended'],
+        default : 'upcoming'
+    },
     startDate: {
         type: Date,
         required: true

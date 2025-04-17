@@ -11,11 +11,13 @@ import {
   getAllClientCategoriesController,
   getAllClientNotificatioController,
   getClientDetailsController,
+  getPaginatedContestController,
   getPaginatedVendorsController,
   getPhotographerDetailsController,
   getServiceController,
   getWalletDetailsOfUserController,
   logoutController,
+  participateContestController,
   refreshTokenController,
   updateBookingStatusController,
   updateClientController,
@@ -96,8 +98,6 @@ export class ClientRoute extends BaseRoute {
     // Retrieve all categories available to the client
     this.router.get(
       "/client/categories",
-      verifyAuth,
-      authorizeRole(["client"]),
       (req: Request, res: Response) => {
         getAllClientCategoriesController.handle(req, res);
       }
@@ -171,5 +171,15 @@ export class ClientRoute extends BaseRoute {
         getWalletDetailsOfUserController.handle(req, res);
       }
     );
+
+    // Contest Management Routes
+    // Get All Contests
+    this.router.route('/client/contest')
+    .get(verifyAuth,authorizeRole(["client"]),(req: Request, res: Response)=> {
+      getPaginatedContestController.handle(req,res)
+    })
+    .post(verifyAuth,authorizeRole(["client"]),(req: Request, res: Response)=> {
+      participateContestController.handle(req,res)
+    })
   }
 }

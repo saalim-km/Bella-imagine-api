@@ -1,9 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { PaginatedCategories } from "../../entities/models/paginated-category.entity";
-import { ICategoryRepository } from "../../entities/repositoryInterfaces/common/category-repository.interface";
-import { IGetAllPaginatedCategoryUseCase } from "../../entities/usecaseInterfaces/admin/get-all-paginated-category-usecase.interface";
-import { PaginatedRequestCategory } from "../../shared/types/admin/admin.type";
-import { query } from "express";
+import { IGetAllPaginatedCategoryUseCase } from "../../../entities/usecaseInterfaces/admin/category/get-all-paginated-category-usecase.interface";
+import { ICategoryRepository } from "../../../entities/repositoryInterfaces/common/category-repository.interface";
+import { PaginatedCategories } from "../../../entities/models/paginated-category.entity";
 
 @injectable()
 export class GetAllPaginatedCategoryUseCase

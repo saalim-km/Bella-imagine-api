@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { ICategoryRepository } from "../../entities/repositoryInterfaces/common/category-repository.interface";
-import { ICreateNewCategoryUseCase } from "../../entities/usecaseInterfaces/admin/create-new-category-usecase.interface";
-import { CustomError } from "../../entities/utils/custom-error";
-import { HTTP_STATUS } from "../../shared/constants";
-import { generateRandomUUID } from "../../frameworks/security/randomid.bcrypt";
-import { generateCategoryId } from "../../shared/utils/unique-id.utils";
+import { ICategoryRepository } from "../../../entities/repositoryInterfaces/common/category-repository.interface";
+import { ICreateNewCategoryUseCase } from "../../../entities/usecaseInterfaces/admin/category/create-new-category-usecase.interface";
+import { CustomError } from "../../../entities/utils/custom-error";
+import { HTTP_STATUS } from "../../../shared/constants";
+import { generateRandomUUID } from "../../../frameworks/security/randomid.bcrypt";
+import { generateCategoryId } from "../../../shared/utils/unique-id.utils";
 
 @injectable()
 export class CreateNewCategoryUseCase implements ICreateNewCategoryUseCase {

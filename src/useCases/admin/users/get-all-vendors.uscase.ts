@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IGetAllVendorsUsecase } from "../../entities/usecaseInterfaces/admin/get-all-vendors-usecase.interafce";
-import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
-import { IVendorEntity } from "../../entities/models/vendor.entity";
-import { PaginatedResponse } from "../../shared/types/admin/admin.type";
+import { IGetAllVendorsUsecase } from "../../../entities/usecaseInterfaces/admin/users/get-all-vendors-usecase.interafce";
+import { IVendorRepository } from "../../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
+import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
+import { IVendorEntity } from "../../../entities/models/vendor.entity";
 
 @injectable()
 export class GetAllVendorsUsecase implements IGetAllVendorsUsecase {
