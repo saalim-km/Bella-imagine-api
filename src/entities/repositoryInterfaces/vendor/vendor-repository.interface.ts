@@ -1,6 +1,7 @@
 import { ObjectId } from "mongoose";
 import { IVendorEntity } from "../../models/vendor.entity";
 import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
+import { IUserEntityForChat } from "../../models/iuser.entity";
 
 export interface IVendorRepository {
   //Core methods
@@ -66,4 +67,10 @@ export interface IVendorRepository {
     categoryId: string | ObjectId,
     update: { duration?: number; pricePerHour?: number }
   ): Promise<void>;
+
+  updateOnlineStatus(
+    id: string,
+    isOnline: boolean,
+    lastSeen?: Date
+  ): Promise<IUserEntityForChat  | null>;
 }

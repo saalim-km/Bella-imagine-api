@@ -6,13 +6,15 @@ import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/ve
 import { ICreateNewBookingUseCase } from "../../entities/usecaseInterfaces/booking/create-new-booking-usecase.interface";
 import { CustomError } from "../../entities/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
+import { IConversationRepository } from "../../entities/repositoryInterfaces/chat/conversation-repository";
 
 @injectable()
 export class CreateNewBookingUseCase implements ICreateNewBookingUseCase {
   constructor(
     @inject("IBookingRepository") private bookingRepository: IBookingRepository,
     @inject("IServiceRepository") private serviceRepository: IServiceRepository,
-    @inject("IVendorRepository") private vendorRepository: IVendorRepository
+    @inject("IVendorRepository") private vendorRepository: IVendorRepository,
+    @inject('IConversationRepository') private conversationRepository: IConversationRepository
   ) {}
 
   async execute(
@@ -35,10 +37,6 @@ export class CreateNewBookingUseCase implements ICreateNewBookingUseCase {
       throw new CustomError(ERROR_MESSAGES.WRONG_ID, HTTP_STATUS.BAD_REQUEST);
     }
 
-    // const bookingDateString =
-    //   typeof data.bookingDate === "string"
-    //     ? data.bookingDate
-    //     : data.bookingDate.toISOString().split("T")[0];
 
     const availableDateEntry = service.availableDates.find(
       (availableDate) => availableDate.date === data.bookingDate
@@ -85,7 +83,7 @@ export class CreateNewBookingUseCase implements ICreateNewBookingUseCase {
       termsAndConditions: service.termsAndConditions,
     };
 
-    return await this.bookingRepository.save({
+    const newBooking = await this.bookingRepository.save({
       userId,
       serviceDetails,
       bookingDate: data.bookingDate,
@@ -93,5 +91,18 @@ export class CreateNewBookingUseCase implements ICreateNewBookingUseCase {
       vendorId,
       totalPrice: data.totalPrice,
     });
+
+    if(!newBooking || !newBooking._id) {
+      throw new CustomError('error creating booking please try again later',HTTP_STATUS.BAD_REQUEST)
+    }
+
+    // creating conversation based on booking
+    this.conversationRepository.create({
+      bookingId: newBooking?._id,
+      clientId: userId,
+      vendorId: vendorId,
+    });
+
+    return newBooking;
   }
 }

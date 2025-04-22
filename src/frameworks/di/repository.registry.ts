@@ -29,6 +29,10 @@ import { IContestRepository } from "../../entities/repositoryInterfaces/contest/
 import { ContestRepository } from "../../interfaceAdapters/repositories/contest/contest.repository";
 import { IParticipateContestRepository } from "../../entities/repositoryInterfaces/contest/participate-contest.repository";
 import { ParticipateContestRepository } from "../../interfaceAdapters/repositories/contest/participate-contest.repository";
+import { IConversationRepository } from "../../entities/repositoryInterfaces/chat/conversation-repository";
+import { ConversationRepository } from "../../interfaceAdapters/repositories/chat/conversation.repository";
+import { IMessageRepository } from "../../entities/repositoryInterfaces/chat/message-repository.interface";
+import { MessageRepository } from "../../interfaceAdapters/repositories/chat/message.repository";
 
 export class RepositoryRegistry {
   static registerRepositories(): void {
@@ -94,6 +98,14 @@ export class RepositoryRegistry {
 
     container.register<IParticipateContestRepository>("IParticipateContestRepository" , {
       useClass : ParticipateContestRepository
+    })
+
+    container.register<IConversationRepository>('IConversationRepository', {
+      useClass : ConversationRepository
+    })
+
+    container.register<IMessageRepository>('IMessageRepository', {
+      useClass : MessageRepository
     })
   }
 }

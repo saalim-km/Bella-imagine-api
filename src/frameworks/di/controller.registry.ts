@@ -50,6 +50,8 @@ import { UpdateContestController } from "../../interfaceAdapters/controllers/adm
 import { DeleteContestController } from "../../interfaceAdapters/controllers/admin/contest_management/delete-contest.controller";
 import { GetPaginatedContestController } from "../../interfaceAdapters/controllers/admin/contest_management/get-paginated-contest-controller";
 import { ParticipateContestController } from "../../interfaceAdapters/controllers/contest/participate-contest.controller";
+import { ConversationController } from "../../interfaceAdapters/controllers/chat/conversation.controller";
+import { MessageController } from "../../interfaceAdapters/controllers/chat/message.controller";
 
 export class ControllerRegistry {
   static registerController(): void {
@@ -228,6 +230,14 @@ export class ControllerRegistry {
     });
     container.register('ParticipateContestController',{
       useClass : ParticipateContestController
+    })
+
+    //-------------------------------------- Chat Management ----------------------------------------------|
+    container.register('ConversationController',{
+      useClass : ConversationController
+    })
+    container.register('MessageController',{
+      useClass : MessageController
     })
   }
 }

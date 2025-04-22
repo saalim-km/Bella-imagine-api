@@ -127,6 +127,10 @@ import { IGetPaginatedContestUsecase } from "../../entities/usecaseInterfaces/ad
 import { GetPaginatedContestUsecase } from "../../useCases/admin/contest_management/get-paginated-contest.usecase";
 import { IParticipateContestUsecase } from "../../entities/usecaseInterfaces/contest/participate-contest-usecase.interface";
 import { ParticipateContestUsecase } from "../../useCases/contest/participate-contest.usecase";
+import { IConversationUsecase } from "../../entities/usecaseInterfaces/chat/conversation-usecase.interface";
+import { ConversationUsecase } from "../../useCases/chat/conversation.usecase";
+import { IMessageUsecase } from "../../entities/usecaseInterfaces/chat/message-usecase.interface";
+import { MessageUsecase } from "../../useCases/chat/message.usecase";
 
 export class UsecaseRegistry {
   static registerUsecase(): void {
@@ -380,6 +384,15 @@ export class UsecaseRegistry {
 
     container.register<IParticipateContestUsecase>('IParticipateContestUsecase',{
       useClass : ParticipateContestUsecase
+    })
+
+    // |--------------------------------------------------------- Chat Management ---------------------------------------------------|
+    container.register<IConversationUsecase>('IConversationUsecase',{
+      useClass: ConversationUsecase
+    })
+
+    container.register<IMessageUsecase>('IMessageUsecase',{
+      useClass : MessageUsecase
     })
   }
 }

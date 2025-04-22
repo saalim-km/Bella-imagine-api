@@ -51,6 +51,9 @@ import { UpdateContestController } from "../../interfaceAdapters/controllers/adm
 import { DeleteContestController } from "../../interfaceAdapters/controllers/admin/contest_management/delete-contest.controller";
 import { GetPaginatedContestController } from "../../interfaceAdapters/controllers/admin/contest_management/get-paginated-contest-controller";
 import { ParticipateContestController } from "../../interfaceAdapters/controllers/contest/participate-contest.controller";
+import { ConversationController } from "../../interfaceAdapters/controllers/chat/conversation.controller";
+import { MessageController } from "../../interfaceAdapters/controllers/chat/message.controller";
+import { SocketController } from "../../interfaceAdapters/controllers/socket/socket.controller";
 
 DependencyInjection.registerAll();
 
@@ -206,4 +209,13 @@ export const getPaginatedContestController = container.resolve(
 )
 export const participateContestController = container.resolve(
   ParticipateContestController
+)
+export const conversationController = container.resolve(
+  ConversationController
+)
+export const messageController = container.resolve(
+  MessageController
+)
+export const socketController = container.resolve(
+  SocketController
 )

@@ -38,4 +38,8 @@ export class ClientRepository implements IClientRepository {
     async updateClientProfileById(id: string | ObjectId, data: Partial<IClientEntity>): Promise<any> {
         return await ClientModel.findByIdAndUpdate(id, data, { new: true });
     }
+
+    async updateOnlineStatus(id: string, isOnline: boolean, lastSeen?: Date): Promise<any> {
+        return await ClientModel.findByIdAndUpdate(id, { isOnline, lastSeen }, { new: true });
+    }
 }

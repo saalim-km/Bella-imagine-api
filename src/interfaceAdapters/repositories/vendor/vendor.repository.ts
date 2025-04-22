@@ -168,4 +168,16 @@ export class VendorRepository implements IVendorRepository {
       { $set: { "services.$": { ...update } } }
     );
   }
+
+  async updateOnlineStatus(
+    id: string,
+    isOnline: boolean,
+    lastSeen?: Date
+  ): Promise<any> {
+    return await VendorModel.findByIdAndUpdate(
+      id,
+      { isOnline, lastSeen },
+      { new: true }
+    );
+  }
 }
