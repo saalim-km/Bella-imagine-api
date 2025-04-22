@@ -46,6 +46,14 @@ export const clientSchema = new mongoose.Schema<IClientModel>(
         ref: "Vendor",
       },
     ],
+    isOnline : {
+      type : Boolean,
+      default : false
+    },
+    lastSeen : {
+      type : Date,
+      default : Date.now()
+    },
     savedPhotos: [
       {
         type: mongoose.Types.ObjectId,
