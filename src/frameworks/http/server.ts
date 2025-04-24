@@ -8,13 +8,19 @@ import { AuthRoute } from "../routes/auth/auth.route";
 import { errorHandler } from "../../interfaceAdapters/middlewares/error.middleware";
 import { PrivateRoute } from "../routes/common/private.route";
 import { logger } from "../../shared/utils/logger.utils";
+import http from "http";
+import { ChatRoute } from "../routes/chat/chat.route";
+import { chatController } from "../di/resolver";
 
 export class Server {
     private _app : Application;
+    private _server : http.Server
     constructor() {
         this._app = express()
-        
+        this._server = http.createServer(this._app)
+
         this.configureMiddleware();
+        this.configureSocket()
         this.configureRoutes()
         this.configureErrorHandler();
     }
@@ -41,9 +47,15 @@ export class Server {
         
     }
 
+    private configureSocket() : void {
+        chatController.initialize(this._server)
+
+    }
+
     private configureRoutes() : void {
         this._app.use("/api/v_1/auth" , new AuthRoute().router)
         this._app.use("/api/v_1/_pvt" , new PrivateRoute().router)
+        this._app.use('/api/v_1/_chat', new ChatRoute().router)
     }
 
     private configureErrorHandler() : void {
@@ -52,5 +64,9 @@ export class Server {
 
     public getApp() {
         return this._app;
+    }
+
+    public getServer() {
+        return this._server;
     }
 }

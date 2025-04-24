@@ -46,6 +46,12 @@ export const clientSchema = new mongoose.Schema<IClientModel>(
         ref: "Vendor",
       },
     ],
+    onlineStatus: {
+      type: String,
+      enum: ["online", "offline"],
+      default: "offline",
+    },
+    lastStatusUpdated: { type: Date, default: Date.now },
     savedPhotos: [
       {
         type: mongoose.Types.ObjectId,

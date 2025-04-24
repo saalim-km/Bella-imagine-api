@@ -12,7 +12,7 @@ export class CreateNewBookingUseCase implements ICreateNewBookingUseCase {
   constructor(
     @inject("IBookingRepository") private bookingRepository: IBookingRepository,
     @inject("IServiceRepository") private serviceRepository: IServiceRepository,
-    @inject("IVendorRepository") private vendorRepository: IVendorRepository
+    @inject("IVendorRepository") private vendorRepository: IVendorRepository,
   ) {}
 
   async execute(
@@ -35,10 +35,6 @@ export class CreateNewBookingUseCase implements ICreateNewBookingUseCase {
       throw new CustomError(ERROR_MESSAGES.WRONG_ID, HTTP_STATUS.BAD_REQUEST);
     }
 
-    // const bookingDateString =
-    //   typeof data.bookingDate === "string"
-    //     ? data.bookingDate
-    //     : data.bookingDate.toISOString().split("T")[0];
 
     const availableDateEntry = service.availableDates.find(
       (availableDate) => availableDate.date === data.bookingDate
@@ -85,7 +81,7 @@ export class CreateNewBookingUseCase implements ICreateNewBookingUseCase {
       termsAndConditions: service.termsAndConditions,
     };
 
-    return await this.bookingRepository.save({
+    const newBooking = await this.bookingRepository.save({
       userId,
       serviceDetails,
       bookingDate: data.bookingDate,
@@ -93,5 +89,11 @@ export class CreateNewBookingUseCase implements ICreateNewBookingUseCase {
       vendorId,
       totalPrice: data.totalPrice,
     });
+
+    if(!newBooking || !newBooking._id) {
+      throw new CustomError('error creating booking please try again later',HTTP_STATUS.BAD_REQUEST)
+    }
+
+    return newBooking;
   }
 }

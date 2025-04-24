@@ -15,6 +15,7 @@ import {
   getPaginatedVendorsController,
   getPhotographerDetailsController,
   getServiceController,
+  getVendorDetailsForChatController,
   getWalletDetailsOfUserController,
   logoutController,
   participateContestController,
@@ -180,6 +181,11 @@ export class ClientRoute extends BaseRoute {
     })
     .post(verifyAuth,authorizeRole(["client"]),(req: Request, res: Response)=> {
       participateContestController.handle(req,res)
+    })
+
+    // Chat Management Route
+    this.router.get('/client/vendors/:vendorId',(req,res)=> {
+      getVendorDetailsForChatController.handle(req,res)
     })
   }
 }

@@ -1,7 +1,7 @@
 import { injectable } from "tsyringe";
 import { IVendorRepository } from "../../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
 import { IVendorEntity } from "../../../entities/models/vendor.entity";
-import { VendorModel } from "../../../frameworks/database/models/vendor.model";
+import { IVendorModel, VendorModel } from "../../../frameworks/database/models/vendor.model";
 import { ObjectId } from "mongoose";
 import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 
@@ -168,4 +168,38 @@ export class VendorRepository implements IVendorRepository {
       { $set: { "services.$": { ...update } } }
     );
   }
+
+  async updateOnlineStatus(
+    id: string,
+    isOnline: boolean,
+    lastSeen?: Date
+  ): Promise<any> {
+    return await VendorModel.findByIdAndUpdate(
+      id,
+      { isOnline, lastSeen },
+      { new: true }
+    );
+  }
+
+    // -------------------------------------------------------------------------
+    async findByIdForChat(id: any): Promise<IVendorEntity | null> {
+      return VendorModel.findById(id).exec();
+    }
+  
+    async findByIdAndUpdateOnlineStatus(
+      vendorId: string,
+      status: "online" | "offline"
+    ): Promise<IVendorModel | null> {
+      return await VendorModel.findByIdAndUpdate(
+        vendorId,
+        { onlineStatus: status, lastStatusUpdated: new Date() },
+        { new: true }
+      ).exec();
+    }
+  
+    async findByIds(vendorIds: string[]): Promise<IVendorModel[]> {
+      return await VendorModel.find({
+        _id: { $in: vendorIds },
+      }).exec();
+    }
 }

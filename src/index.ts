@@ -9,7 +9,7 @@ const connectMongo = new MongoConnect();
 connectMongo.connect();
 
 server.
-getApp()
+getServer()
 .listen(config.server.PORT, ()=> {
     console.log(`Server started running on port : ${config.server.PORT} ✅`);
     startAllCron();
