@@ -1,23 +1,18 @@
 import { Request, Response } from "express";
-import { conversationController, messageController } from "../../di/resolver";
+import { chatController, createChatRoomController } from "../../di/resolver";
 import { BaseRoute } from "../base.route";
 
 export class ChatRoute extends BaseRoute {
-    constructor() {
-        super()
-    }
+  constructor() {
+    super();
+  }
 
-    protected initializeRoutes(): void {
-        this.router.post('/conversation', (req : Request ,res : Response)=> {
-            conversationController.createConversationController(req,res)
-        })
-
-        this.router.get('/conversation/user/:userId', (req : Request ,res : Response)=> {
-            conversationController.getUserConversationsController(req,res)
-        })
-
-        this.router.get('/message/:conversationId',(req : Request ,res : Response)=> {
-            messageController.getMessagesController(req,res)
-        })
-    }
+  protected initializeRoutes(): void {
+    this.router.get("/:userId/:userType", (req: Request, res: Response) => {
+      chatController.handle(req, res);
+    });
+    this.router.post("/create", (req: Request, res: Response) => {
+      createChatRoomController.handle(req, res);
+    });
+  }
 }

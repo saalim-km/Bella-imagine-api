@@ -9,8 +9,8 @@ import { errorHandler } from "../../interfaceAdapters/middlewares/error.middlewa
 import { PrivateRoute } from "../routes/common/private.route";
 import { logger } from "../../shared/utils/logger.utils";
 import http from "http";
-import { socketController } from "../di/resolver";
 import { ChatRoute } from "../routes/chat/chat.route";
+import { chatController } from "../di/resolver";
 
 export class Server {
     private _app : Application;
@@ -48,7 +48,7 @@ export class Server {
     }
 
     private configureSocket() : void {
-        socketController.initializeSocket(this._server)
+        chatController.initialize(this._server)
 
     }
 

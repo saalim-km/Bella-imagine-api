@@ -1,10 +1,12 @@
-import mongoose, { Document, ObjectId } from "mongoose";
+import { model, ObjectId } from "mongoose";
 import { IMessageEntity } from "../../../entities/models/message.entity";
-import { MessageSchema } from "../schemas/message.schema";
+import { messageSchema } from "../schemas/message.schema";
 
-export interface IMessageModel extends Omit<IMessageEntity , "_id"> , Document {
-    _id: ObjectId
+export interface IMessageModel
+  extends Omit<IMessageEntity, "_id" | "chatRoomId">,
+    Document {
+  _id: ObjectId;
+  chatRoomId: ObjectId;
 }
 
-
-export const MessageModel = mongoose.model<IMessageModel>('Message',MessageSchema)
+export const MessageModel = model<IMessageModel>("Message", messageSchema); 

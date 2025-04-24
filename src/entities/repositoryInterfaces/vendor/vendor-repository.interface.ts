@@ -2,6 +2,7 @@ import { ObjectId } from "mongoose";
 import { IVendorEntity } from "../../models/vendor.entity";
 import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 import { IUserEntityForChat } from "../../models/iuser.entity";
+import { IVendorModel } from "../../../frameworks/database/models/vendor.model";
 
 export interface IVendorRepository {
   //Core methods
@@ -72,5 +73,15 @@ export interface IVendorRepository {
     id: string,
     isOnline: boolean,
     lastSeen?: Date
-  ): Promise<IUserEntityForChat  | null>;
+  ): Promise<IUserEntityForChat | null>;
+
+  // ---------------------------------FOR CHAT---------------------------------
+  findByIdForChat(id: any): Promise<IVendorEntity | null>;
+
+  findByIdAndUpdateOnlineStatus(
+    vendorId: string,
+    status: "online" | "offline"
+  ): Promise<IVendorModel | null>;
+
+  findByIds(vendorIds: string[]): Promise<IVendorModel[]>;
 }

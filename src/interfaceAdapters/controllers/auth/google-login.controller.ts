@@ -20,7 +20,8 @@ export class GoogleLoginController implements IGoogleLoginController {
   ) {}
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      const { credential, role, client_id } = req.body;
+      console.log('in google login controller');
+      const { credential, role, client_id } = req.body; 
       const user = await this.googleLoginUsecase.execute(
         credential,
         client_id,
@@ -41,6 +42,7 @@ export class GoogleLoginController implements IGoogleLoginController {
 
       setAuthCookies(res,tokens.accessToken,tokens.refreshToken,accessTokenName,refreshTokenName)
 
+      console.log(userId,user);
       res.status(HTTP_STATUS.OK).json({
         success: true,
         message: 'User successfully authenticated',

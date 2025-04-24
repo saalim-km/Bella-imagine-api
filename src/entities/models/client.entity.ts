@@ -13,8 +13,8 @@ export interface IClientEntity {
     role : TRole;
     savedPhotographers ?: ObjectId[];
     savedPhotos ?: ObjectId[];
-    isOnline ?: boolean;
-    lastSeen ?: string;
+    onlineStatus : "offline" | "online";
+    lastStatusUpdated : Date
     isActive ?: boolean;
     isblocked ?: boolean;
     createdAt ?: Date;

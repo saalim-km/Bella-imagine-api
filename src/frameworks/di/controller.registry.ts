@@ -50,8 +50,9 @@ import { UpdateContestController } from "../../interfaceAdapters/controllers/adm
 import { DeleteContestController } from "../../interfaceAdapters/controllers/admin/contest_management/delete-contest.controller";
 import { GetPaginatedContestController } from "../../interfaceAdapters/controllers/admin/contest_management/get-paginated-contest-controller";
 import { ParticipateContestController } from "../../interfaceAdapters/controllers/contest/participate-contest.controller";
-import { ConversationController } from "../../interfaceAdapters/controllers/chat/conversation.controller";
-import { MessageController } from "../../interfaceAdapters/controllers/chat/message.controller";
+import { ChatController } from "../../interfaceAdapters/controllers/chat/chat.controller";
+import { CreateChatRoomController } from "../../interfaceAdapters/controllers/chat/create-chat-room.controller";
+import { GetVendorDetailsForChatController } from "../../interfaceAdapters/controllers/chat/get-vendor-details.controller";
 
 export class ControllerRegistry {
   static registerController(): void {
@@ -233,11 +234,14 @@ export class ControllerRegistry {
     })
 
     //-------------------------------------- Chat Management ----------------------------------------------|
-    container.register('ConversationController',{
-      useClass : ConversationController
+    container.register('ChatController',{
+      useClass : ChatController
     })
-    container.register('MessageController',{
-      useClass : MessageController
+    container.register('CreateChatRoomController',{
+      useClass : CreateChatRoomController
+    })
+    container.register('GetVendorDetailsForChatController',{
+      useClass : GetVendorDetailsForChatController
     })
   }
 }
