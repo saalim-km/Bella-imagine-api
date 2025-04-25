@@ -1,12 +1,21 @@
-import { IMessageEntity } from "../../models/message.entity";
+import { TRole } from "../../../shared/constants";
+import {
+  IMessageEntity,
+  LocationType,
+  MessageType,
+} from "../../models/message.entity";
 
-export interface ISendMessageUseCase {
-  execute(
-    clientId: string,
-    vendorId: string,
-    senderId: string,
-    senderType: "Client" | "Vendor",
-    content: string,
-    chatRoomId?: string,
-  ): Promise<IMessageEntity>;
+export interface SendMessageDTO {
+  conversationId: string;
+  senderId: string;
+  text: string;
+  type: MessageType;
+  file?: string;
+  location?: LocationType;
+  userType : TRole
+}
+
+
+export interface ISendMessageUsecase {
+  execute(dto : SendMessageDTO):  Promise<void>
 }

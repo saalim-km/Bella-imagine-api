@@ -1,9 +1,13 @@
+import { IConversationEntity } from "../../models/conversation.entity";
 import { IMessageEntity } from "../../models/message.entity";
 
-export interface IMessageRepository {
-  create(message: IMessageEntity): Promise<IMessageEntity>;
 
-  findByChatRoomId(chatRoomId: any): Promise<IMessageEntity[]>;
-
-  markAsRead(chatRoomId: string, userId: string, userType: "Client" | "Vendor"): Promise<void>;
+export default interface IMessageRepository {
+  saveMessage(message: IMessageEntity): Promise<void>;
+  getMessagesByConversationId(conversationId: string): Promise<IMessageEntity[]>;
+  updateMessage(messageId : string , message: IMessageEntity): Promise<void>;
+  deleteMessage(messageId: string): Promise<void>;
+  addReaction(messageId: string, reaction: IMessageEntity): Promise<void>;
+  removeReaction(messageId: string, reaction: string): Promise<void>;
+  markAsReadMessage(messageId : string) : Promise<void>
 }
