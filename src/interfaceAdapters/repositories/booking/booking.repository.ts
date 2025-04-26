@@ -166,7 +166,6 @@ export class BookingRepository implements IBookingRepository {
           isOnline : '$user.isOnline',
           lastSeen : '$user.lastSeen',
           name : '$user.name',
-          email : '$user.email',
           avatar : '$user.profileImage'
         }
       }

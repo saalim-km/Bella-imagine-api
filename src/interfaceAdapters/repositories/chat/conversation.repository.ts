@@ -16,16 +16,16 @@ export class ConversationRepository implements IConversationRepository {
     }
 
     async getConversationsByUserId(userId: string , userType : TRole): Promise<IConversationEntity[]> {
-        console.log('in repsoitory ✅✅✅');
+        console.log('in gete conversation repsoitory ✅✅✅');
         console.log(`userid : ${userId} , usertype : ${userType}`);
         if(userType === 'client'){
             return await ConversationModel.find({
-                client : userId
-            }).lean()
+                "client._id" : userId
+            })
         }else {
             return await ConversationModel.find({
-                vendor : userId
-            }).lean()
+                "vendor._id" : userId
+            })
         }
     }
 
