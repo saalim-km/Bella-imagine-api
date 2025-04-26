@@ -6,6 +6,7 @@ import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/ve
 import { ICreateNewBookingUseCase } from "../../entities/usecaseInterfaces/booking/create-new-booking-usecase.interface";
 import { CustomError } from "../../entities/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
+import { ICreateConversationUseCase } from "../../entities/usecaseInterfaces/chat/create-conversation-usecase.interface";
 
 @injectable()
 export class CreateNewBookingUseCase implements ICreateNewBookingUseCase {
@@ -13,6 +14,7 @@ export class CreateNewBookingUseCase implements ICreateNewBookingUseCase {
     @inject("IBookingRepository") private bookingRepository: IBookingRepository,
     @inject("IServiceRepository") private serviceRepository: IServiceRepository,
     @inject("IVendorRepository") private vendorRepository: IVendorRepository,
+    @inject('ICreateConversationUseCase') private createConversationUsecase : ICreateConversationUseCase
   ) {}
 
   async execute(
@@ -94,6 +96,8 @@ export class CreateNewBookingUseCase implements ICreateNewBookingUseCase {
       throw new CustomError('error creating booking please try again later',HTTP_STATUS.BAD_REQUEST)
     }
 
+    // creating chat conversation straight out a booking creation
+    await this.createConversationUsecase.execute(userId,vendorId,newBooking._id as string);
     return newBooking;
   }
 }

@@ -3,7 +3,7 @@ import { IConversationEntity } from "../../models/conversation.entity";
 
 
 export default interface IConversationRepository {
-  getConversationsByUserId(userId: string): Promise<IConversationEntity[]>;
+  getConversationsByUserId(userId: string , userType : TRole): Promise<IConversationEntity[]>;
   createConversation(conversation: IConversationEntity): Promise<IConversationEntity>;
   getConversationByBooking(bookingId: string): Promise<IConversationEntity | null>;
   updateConversation(conversationId : string , conversation: IConversationEntity): Promise<void>;

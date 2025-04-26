@@ -72,7 +72,7 @@ export class ClientRepository implements IClientRepository {
   }
 
 
-  async findByIdAndUpdateOnlineStatus(clientId: string, status: "offline" | "online"): Promise<IClientEntity | null> {
-    return await ClientModel.findByIdAndUpdate(clientId , {$set : {onlineStatus : status}})
+  async findByIdAndUpdateOnlineStatus(clientId: string, status: true | false): Promise<IClientEntity | null> {
+    return await ClientModel.findByIdAndUpdate(clientId , {$set : {isOnline : status}})
   }
 }

@@ -53,6 +53,7 @@ import { ParticipateContestController } from "../../interfaceAdapters/controller
 import { CreateConversationController } from "../../interfaceAdapters/controllers/chat/create-conversation.controller";
 import { GetUserChatsController } from "../../interfaceAdapters/controllers/chat/get-user-chats.controller";
 import { ChatController } from "../../interfaceAdapters/controllers/chat/chat.controller";
+import { GetContactsController } from "../../interfaceAdapters/controllers/chat/get-contacts.controller";
 
 export class ControllerRegistry {
   static registerController(): void {
@@ -244,6 +245,10 @@ export class ControllerRegistry {
 
     container.register('ChatController',{
       useClass : ChatController
+    })
+
+    container.register('GetContactsController',{
+      useClass : GetContactsController
     })
   }
 }

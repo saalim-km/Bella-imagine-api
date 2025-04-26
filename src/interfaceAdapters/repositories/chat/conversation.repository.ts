@@ -15,10 +15,18 @@ export class ConversationRepository implements IConversationRepository {
         return await ConversationModel.findOne({bookingId : bookingId})
     }
 
-    async getConversationsByUserId(userId: string): Promise<IConversationEntity[]> {
-        return await ConversationModel.find({
-            "participants._id" : userId
-        }).lean()
+    async getConversationsByUserId(userId: string , userType : TRole): Promise<IConversationEntity[]> {
+        console.log('in repsoitory ✅✅✅');
+        console.log(`userid : ${userId} , usertype : ${userType}`);
+        if(userType === 'client'){
+            return await ConversationModel.find({
+                client : userId
+            }).lean()
+        }else {
+            return await ConversationModel.find({
+                vendor : userId
+            }).lean()
+        }
     }
 
     async updateConversation(conversationId : string , conversation: IConversationEntity): Promise<void> {

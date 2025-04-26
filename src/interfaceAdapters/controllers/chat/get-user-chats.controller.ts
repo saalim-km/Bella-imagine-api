@@ -12,8 +12,9 @@ export class GetUserChatsController implements IGetUserConversationsController {
 
     async handle(req: Request, res: Response): Promise<void> {
         try {
+            console.log(req.params);
             const {userId , userType} = req.params;
-            const conversations = await this.getUserConversationUsecase.execute(userId,userType as TRole)
+            const conversations = await this.getUserConversationUsecase.execute(userId as string,userType as TRole)
             res.status(HTTP_STATUS.OK).json(conversations)
         } catch (error) {
             console.log('an error occured while fetching user chats : ',error);

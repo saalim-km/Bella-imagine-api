@@ -54,6 +54,7 @@ import { ParticipateContestController } from "../../interfaceAdapters/controller
 import { ChatController } from "../../interfaceAdapters/controllers/chat/chat.controller";
 import { CreateConversationController } from "../../interfaceAdapters/controllers/chat/create-conversation.controller";
 import { GetUserChatsController } from "../../interfaceAdapters/controllers/chat/get-user-chats.controller";
+import { GetContactsController } from "../../interfaceAdapters/controllers/chat/get-contacts.controller";
 
 DependencyInjection.registerAll();
 
@@ -222,4 +223,7 @@ export const createConversationController = container.resolve(
 )
 export const getUserChatsController = container.resolve(
   GetUserChatsController
+)
+export const getUserContactsController = container.resolve(
+  GetContactsController
 )

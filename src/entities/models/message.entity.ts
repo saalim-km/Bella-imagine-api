@@ -1,4 +1,5 @@
 import { ObjectId } from "mongoose";
+import { TRole } from "../../shared/constants";
 
 export interface Reaction {
   emoji: string;
@@ -6,7 +7,7 @@ export interface Reaction {
   username: string;
 }
 
-export type MessageType = 'text' | 'image' | 'video' | 'file' | 'location';
+export type MessageType = 'text' | 'media' | 'location';
 export type LocationType = {
   latitude: number;
   longitude: number;
@@ -20,13 +21,11 @@ export interface  IMessageEntity {
   timestamp: Date;
   type: MessageType;
   mediaUrl?: string;
-  mediaType?: string;
-  fileName?: string;
-  fileSize?: number;
   location?: LocationType
   reactions?: Reaction[];
   isDeleted: boolean;
   isRead ?: boolean;
+  userType?: TRole;
   createdAt ?:  Date
   updatedAt ?:  Date
   __v ?:  number

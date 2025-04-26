@@ -188,11 +188,11 @@ export class VendorRepository implements IVendorRepository {
   
     async findByIdAndUpdateOnlineStatus(
       vendorId: string,
-      status: "online" | "offline"
+      status: true | false
     ): Promise<IVendorModel | null> {
       return await VendorModel.findByIdAndUpdate(
         vendorId,
-        { onlineStatus: status, lastStatusUpdated: new Date() },
+        { isOnline: status, lastStatusUpdated: new Date() },
         { new: true }
       ).exec();
     }

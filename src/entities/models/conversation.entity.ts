@@ -4,7 +4,8 @@ import { IUserEntityForChat } from "./iuser.entity";
 
 export interface IConversationEntity {
   _id?: string | ObjectId
-  participants: Partial<IUserEntityForChat>[];
+  client : Partial<IUserEntityForChat>
+  vendor : Partial<IUserEntityForChat>
   lastMessage?: IMessageEntity;
   bookingId : string | ObjectId;
   clientUnreadCount?: number;

@@ -137,6 +137,10 @@ import { ISendMessageUsecase } from "../../entities/usecaseInterfaces/chat/send-
 import { SendMessageUsecase } from "../../useCases/chat/send-message.usecase";
 import { IMarkMessageAsReadUsecase } from "../../entities/usecaseInterfaces/chat/mark-message-as-read-usecase.interface";
 import { MarkMessageAsReadUsecase } from "../../useCases/chat/mark-message-as-read.usecase";
+import { IGetUserContactsUsecase } from "../../entities/usecaseInterfaces/chat/get-user-contacts-usecase.interface";
+import { GetUserContactsUsecase } from "../../useCases/chat/get-user-contacts.usecase";
+import { IUpdateUserOnlineStatusUsecase } from "../../entities/usecaseInterfaces/chat/update-user-online-status-usecase.interface";
+import { UpdateUserOnlineStatusUsecase } from "../../useCases/chat/update-user-online-status.usecase";
 
 
 export class UsecaseRegistry {
@@ -412,6 +416,14 @@ export class UsecaseRegistry {
 
     container.register<IMarkMessageAsReadUsecase>('IMarkMessageAsReadUsecase',{
       useClass : MarkMessageAsReadUsecase
+    })
+
+    container.register<IGetUserContactsUsecase>('IGetUserContactsUsecase',{
+      useClass : GetUserContactsUsecase
+    })
+
+    container.register<IUpdateUserOnlineStatusUsecase>('IUpdateUserOnlineStatusUsecase',{
+      useClass : UpdateUserOnlineStatusUsecase
     })
   }
 }

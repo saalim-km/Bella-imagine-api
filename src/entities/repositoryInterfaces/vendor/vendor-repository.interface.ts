@@ -80,7 +80,7 @@ export interface IVendorRepository {
 
   findByIdAndUpdateOnlineStatus(
     vendorId: string,
-    status: "online" | "offline"
+    status: true | false
   ): Promise<IVendorModel | null>;
 
   findByIds(vendorIds: string[]): Promise<IVendorModel[]>;
