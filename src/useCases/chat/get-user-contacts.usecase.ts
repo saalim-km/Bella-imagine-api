@@ -16,7 +16,6 @@ export class GetUserContactsUsecase implements IGetUserContactsUsecase {
             throw new CustomError('userId and UserType not found',HTTP_STATUS.BAD_REQUEST);
         }
 
-        
         return await this.bookingRepository.findContactsForChat(userId,userType);
     }
 }

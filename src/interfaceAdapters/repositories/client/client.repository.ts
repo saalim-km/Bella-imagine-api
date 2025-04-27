@@ -71,8 +71,18 @@ export class ClientRepository implements IClientRepository {
     }).exec();
   }
 
+  async findByIdAndUpdateOnlineStatus(
+    clientId: string,
+    status: true | false
+  ): Promise<IClientEntity | null> {
+    return await ClientModel.findByIdAndUpdate(clientId, {
+      $set: { isOnline: status },
+    });
+  }
 
-  async findByIdAndUpdateOnlineStatus(clientId: string, status: true | false): Promise<IClientEntity | null> {
-    return await ClientModel.findByIdAndUpdate(clientId , {$set : {isOnline : status}})
+  async updateLastSeen(clientId: string, lastSeen: string): Promise<void> {
+    await ClientModel.findByIdAndUpdate(clientId, {
+      $set: { lastSeen: lastSeen },
+    });
   }
 }

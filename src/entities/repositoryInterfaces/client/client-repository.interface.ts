@@ -19,4 +19,5 @@ export interface IClientRepository {
     updateOnlineStatus(id: string, isOnline: boolean, lastSeen?: Date): Promise<IUserEntityForChat | null>;
     findByIds(vendorIds: string[]): Promise<IClientModel[]>;
     findByIdAndUpdateOnlineStatus(clientId : string , status : true | false) : Promise<IClientEntity | null>
+    updateLastSeen(clientId : string , lastSeen : string) : Promise<void>
 }

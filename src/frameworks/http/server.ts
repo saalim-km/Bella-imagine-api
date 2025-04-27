@@ -36,7 +36,7 @@ export class Server {
         );
 
         this._app.use(cookieparser());
-        this._app.use(logger)
+        // this._app.use(logger)
         this._app.use(express.json())
         this._app.use(
             rateLimit({

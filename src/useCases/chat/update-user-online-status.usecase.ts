@@ -13,6 +13,8 @@ export class UpdateUserOnlineStatusUsecase implements IUpdateUserOnlineStatusUse
     ){}
 
     async execute(userId: string, userType: TRole , status : true | false): Promise<void> {
+        console.log('--------------------in update user online status -----------------');
+        console.log(userId,userType,status);
         if(!userId || !userType) {
             throw new CustomError('Not such details for updating online status',HTTP_STATUS.BAD_REQUEST)
         }

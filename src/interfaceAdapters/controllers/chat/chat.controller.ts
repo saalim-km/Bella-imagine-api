@@ -10,6 +10,7 @@ import { ISendMessageUsecase } from "../../../entities/usecaseInterfaces/chat/se
 import { IGetMessageUsecase } from "../../../entities/usecaseInterfaces/chat/get-messages-usecase.interface";
 import { IMessageEntity } from "../../../entities/models/message.entity";
 import { IUpdateUserOnlineStatusUsecase } from "../../../entities/usecaseInterfaces/chat/update-user-online-status-usecase.interface";
+import { IUpdateLastSeenUsecase } from "../../../entities/usecaseInterfaces/chat/update-last-seen-usecase.interface";
 
 @injectable()
 export class ChatController implements IChatController {
@@ -20,7 +21,8 @@ export class ChatController implements IChatController {
         @inject('IGetConversationsUsecase') private getConversationUsecase : IGetConversationsUsecase,
         @inject('ISendMessageUsecase') private sendMessageUsecase : ISendMessageUsecase,
         @inject('IGetMessageUsecase') private getMessagesUsecase : IGetMessageUsecase,
-        @inject("IUpdateUserOnlineStatusUsecase") private updateUserOnlineStatus : IUpdateUserOnlineStatusUsecase
+        @inject("IUpdateUserOnlineStatusUsecase") private updateUserOnlineStatus : IUpdateUserOnlineStatusUsecase,
+        @inject('IUpdateLastSeenUsecase') private updateLastSeenUsecase : IUpdateLastSeenUsecase
     ){}
 
     initialize(server: Server): void {
@@ -44,11 +46,10 @@ export class ChatController implements IChatController {
     initializeSocketEvents(): void {
         if(!this.io) throw new Error("socket not initialized");
 
-        const connectedUser = new Map<string , string[]>()
         console.log('socketio events initialized ❤️');
 
 
-        this.io?.on("connection",async(socket)=> {
+        this.io.on("connection",async(socket)=> {
             const {userId , userType} = socket.data;
             console.log(`User Connected ✅ userId => ${userId} role => ${userType}`);
 
@@ -61,8 +62,13 @@ export class ChatController implements IChatController {
 
 
             socket.on("disconnect",async()=> {
-                console.log('user disconnected ❌',socket.id);
+                console.log('user disconnected ❌ triggered',socket.id);
+                const lastSeen = new Date().toString();
+                
                 await this.updateUserOnlineStatus.execute(userId,userType,false);
+                socket.broadcast.emit('user_status',{userId,userType,status : false})
+                await this.updateLastSeenUsecase.execute(userId,lastSeen,userType)
+                socket.broadcast.emit('update_lastseen',{userId , lastSeen})
             })
 
             socket.on("send_message",async (dto : IMessageEntity)=> {
@@ -85,9 +91,12 @@ export class ChatController implements IChatController {
                 }   
             })
 
-            socket.on('get_conversations',async()=> {
+            socket.on('get_conversations',async({userId , userType})=> {
                 try {
-                    
+                    console.log('get_conversations triggered');
+                    console.log(userId , userType);
+                    const conversations = await this.getConversationUsecase.execute(userId,userType);
+                    socket.emit('conversations',conversations)
                 } catch (error) {
                     console.log(error);
                 }

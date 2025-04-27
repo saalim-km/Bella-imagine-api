@@ -141,6 +141,8 @@ import { IGetUserContactsUsecase } from "../../entities/usecaseInterfaces/chat/g
 import { GetUserContactsUsecase } from "../../useCases/chat/get-user-contacts.usecase";
 import { IUpdateUserOnlineStatusUsecase } from "../../entities/usecaseInterfaces/chat/update-user-online-status-usecase.interface";
 import { UpdateUserOnlineStatusUsecase } from "../../useCases/chat/update-user-online-status.usecase";
+import { IUpdateLastSeenUsecase } from "../../entities/usecaseInterfaces/chat/update-last-seen-usecase.interface";
+import { UpdateLastSeenUsecase } from "../../useCases/chat/update-last-seen.usecase";
 
 
 export class UsecaseRegistry {
@@ -424,6 +426,10 @@ export class UsecaseRegistry {
 
     container.register<IUpdateUserOnlineStatusUsecase>('IUpdateUserOnlineStatusUsecase',{
       useClass : UpdateUserOnlineStatusUsecase
+    })
+
+    container.register<IUpdateLastSeenUsecase>('IUpdateLastSeenUsecase',{
+      useClass : UpdateLastSeenUsecase
     })
   }
 }

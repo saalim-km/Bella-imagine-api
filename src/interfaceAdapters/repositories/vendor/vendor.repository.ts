@@ -1,7 +1,10 @@
 import { injectable } from "tsyringe";
 import { IVendorRepository } from "../../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
 import { IVendorEntity } from "../../../entities/models/vendor.entity";
-import { IVendorModel, VendorModel } from "../../../frameworks/database/models/vendor.model";
+import {
+  IVendorModel,
+  VendorModel,
+} from "../../../frameworks/database/models/vendor.model";
 import { ObjectId } from "mongoose";
 import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 
@@ -17,9 +20,9 @@ export class VendorRepository implements IVendorRepository {
       VendorModel.find(filter)
         .populate([
           {
-            path : "services",
-            populate : {
-                path : "category"
+            path: "services",
+            populate: {
+              path: "category",
             },
           },
           { path: "workSamples" },
@@ -47,17 +50,17 @@ export class VendorRepository implements IVendorRepository {
 
   async findById(id: string | ObjectId): Promise<IVendorEntity | null> {
     return await VendorModel.findById(id)
-    .populate([
-      {
-        path : "services",
-        populate : {
-            path : "category"
+      .populate([
+        {
+          path: "services",
+          populate: {
+            path: "category",
+          },
         },
-      },
-      { path: "workSamples" },
-      { path: "categories" },
-    ])
-    .exec();
+        { path: "workSamples" },
+        { path: "categories" },
+      ])
+      .exec();
   }
 
   async findByIdAndUpdateVendorCategories(
@@ -181,25 +184,31 @@ export class VendorRepository implements IVendorRepository {
     );
   }
 
-    // -------------------------------------------------------------------------
-    async findByIdForChat(id: any): Promise<IVendorEntity | null> {
-      return VendorModel.findById(id).exec();
-    }
-  
-    async findByIdAndUpdateOnlineStatus(
-      vendorId: string,
-      status: true | false
-    ): Promise<IVendorModel | null> {
-      return await VendorModel.findByIdAndUpdate(
-        vendorId,
-        { isOnline: status, lastStatusUpdated: new Date() },
-        { new: true }
-      ).exec();
-    }
-  
-    async findByIds(vendorIds: string[]): Promise<IVendorModel[]> {
-      return await VendorModel.find({
-        _id: { $in: vendorIds },
-      }).exec();
-    }
+  // -------------------------------------------------------------------------
+  async findByIdForChat(id: any): Promise<IVendorEntity | null> {
+    return VendorModel.findById(id).exec();
+  }
+
+  async findByIdAndUpdateOnlineStatus(
+    vendorId: string,
+    status: true | false
+  ): Promise<IVendorModel | null> {
+    return await VendorModel.findByIdAndUpdate(
+      vendorId,
+      { isOnline: status, lastStatusUpdated: new Date() },
+      { new: true }
+    ).exec();
+  }
+
+  async findByIds(vendorIds: string[]): Promise<IVendorModel[]> {
+    return await VendorModel.find({
+      _id: { $in: vendorIds },
+    }).exec();
+  }
+
+  async updateLastSeen(vendorId: string, lastSeen: string): Promise<void> {
+    await VendorModel.findByIdAndUpdate(vendorId, {
+      $set: { lastSeen: lastSeen },
+    });
+  }
 }

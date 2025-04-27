@@ -53,8 +53,6 @@ export class CreateConversationUseCase implements ICreateConversationUseCase {
                 lastSeen : new Date().toISOString()
             }
             
-            console.log(clientParticipant);
-            console.log(vendorParticipant);
             const newConvo: IConversationEntity  = {
                 bookingId : booking._id!,
                 client : clientParticipant,

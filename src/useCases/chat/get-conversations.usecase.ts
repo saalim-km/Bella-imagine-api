@@ -13,9 +13,7 @@ export class GetConversationUsecase implements IGetConversationsUsecase {
     ){}
 
     async execute(userId: string , userType: TRole): Promise<IConversationEntity[]> {
-        console.log();
         const conversations =  await this.conversationRepository.getConversationsByUserId(userId,userType)
-        console.log('got the conversations',conversations);
         return conversations;
     }
 }

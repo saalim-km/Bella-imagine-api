@@ -84,4 +84,6 @@ export interface IVendorRepository {
   ): Promise<IVendorModel | null>;
 
   findByIds(vendorIds: string[]): Promise<IVendorModel[]>;
+
+  updateLastSeen(vendorId : string , lastSeen : string) : Promise<void>
 }
