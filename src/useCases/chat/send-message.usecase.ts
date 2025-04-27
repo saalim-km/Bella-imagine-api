@@ -24,6 +24,7 @@ export class SendMessageUsecase implements ISendMessageUsecase {
             senderId : dto.senderId,
             text : dto.text || '',
             type : dto.type,
+            mediaUrl : dto.mediaUrl || "",
             timestamp : new Date(),
             isDeleted : false
         }

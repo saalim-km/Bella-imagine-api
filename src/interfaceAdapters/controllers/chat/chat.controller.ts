@@ -9,9 +9,6 @@ import { IGetConversationsUsecase } from "../../../entities/usecaseInterfaces/ch
 import { ISendMessageUsecase } from "../../../entities/usecaseInterfaces/chat/send-message-usecase.interface";
 import { IGetMessageUsecase } from "../../../entities/usecaseInterfaces/chat/get-messages-usecase.interface";
 import { IMessageEntity } from "../../../entities/models/message.entity";
-import { IClientRepository } from "../../../entities/repositoryInterfaces/client/client-repository.interface";
-import { IVendorRepository } from "../../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
-import { TRole } from "../../../shared/constants";
 import { IUpdateUserOnlineStatusUsecase } from "../../../entities/usecaseInterfaces/chat/update-user-online-status-usecase.interface";
 
 @injectable()
@@ -55,17 +52,45 @@ export class ChatController implements IChatController {
             const {userId , userType} = socket.data;
             console.log(`User Connected ✅ userId => ${userId} role => ${userType}`);
 
-            socket.join(userId)
-            await this.updateUserOnlineStatus.execute(userId,userType,true)
+            socket.on('join',async ({userId , userType})=> {
+                console.log('join event triggered 😘',userId);
+                socket.join(userId)
+                await this.updateUserOnlineStatus.execute(userId,userType,true)
+                socket.broadcast.emit('user_status',{userId , userType , status : true  })
+            })
+
 
             socket.on("disconnect",async()=> {
                 console.log('user disconnected ❌',socket.id);
                 await this.updateUserOnlineStatus.execute(userId,userType,false);
             })
 
-            socket.on("get_contacts",async(callback)=> {
-                const contacts = await this.getUserContactsUsecae.execute(userId,userType)
-                callback(contacts)
+            socket.on("send_message",async (dto : IMessageEntity)=> {
+                try {
+                    const newMessage = await this.sendMessageUsecase.execute(dto);
+                    console.log('new message from client : ',newMessage);
+                } catch (error) {
+                    console.log(error);
+                }
+            })
+
+            socket.on('get_contacts',async ({userId , userType})=> {
+                try {
+                    console.log('getcontacts triggered 😘😘😘');
+                    const contacts = await this.getUserContactsUsecae.execute(userId,userType)
+                    console.log('got contacts',contacts);
+                    socket.emit('contacts',contacts)
+                } catch (error) {
+                    console.log(error);
+                }   
+            })
+
+            socket.on('get_conversations',async()=> {
+                try {
+                    
+                } catch (error) {
+                    console.log(error);
+                }
             })
         })
     }
