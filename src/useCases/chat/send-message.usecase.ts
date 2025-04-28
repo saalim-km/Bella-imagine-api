@@ -13,7 +13,7 @@ export class SendMessageUsecase implements ISendMessageUsecase {
         @inject('IConversationRepository') private conversationRepository : IConversationRepository
     ){}
 
-    async execute(dto: Partial<IMessageEntity>): Promise<void> {
+    async execute(dto: Partial<IMessageEntity>): Promise<IMessageEntity> {
         console.log('in create message usecase----');
         if(!dto || !dto.conversationId || !dto.senderId || !dto.type) {
             throw new CustomError('no such data for creating message',HTTP_STATUS.BAD_REQUEST)
@@ -37,10 +37,13 @@ export class SendMessageUsecase implements ISendMessageUsecase {
         }
 
         conversation.lastMessage = message;
-        await Promise.all([
+        const [newMessage , conversations ] = await Promise.all([
             this.messageRepository.saveMessage(message),
             this.conversationRepository.updateConversation(dto.conversationId as string,conversation),
             this.conversationRepository.incrementUnreadCount(dto.conversationId as string , dto.userType as TRole)
         ])
+        
+        console.log('got the new messae from repo : ',newMessage);
+        return newMessage
     }
 }

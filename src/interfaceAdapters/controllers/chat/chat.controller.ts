@@ -71,10 +71,14 @@ export class ChatController implements IChatController {
                 socket.broadcast.emit('update_lastseen',{userId , lastSeen})
             })
 
-            socket.on("send_message",async (dto : IMessageEntity)=> {
-                try {
-                    const newMessage = await this.sendMessageUsecase.execute(dto);
+            socket.on("send_message",async ({message , recipentId} : {message : IMessageEntity , recipentId : string})=> {
+                try {   
+                    console.log('send_message trigger ✅💀',);
+                    console.log(message,recipentId);
+                    const newMessage = await this.sendMessageUsecase.execute(message);
                     console.log('new message from client : ',newMessage);
+                    this.io?.to(recipentId.toString()).emit("new_message",newMessage)
+                    this.io?.to(message.senderId.toString()).emit("new_message",newMessage)
                 } catch (error) {
                     console.log(error);
                 }
@@ -97,6 +101,17 @@ export class ChatController implements IChatController {
                     console.log(userId , userType);
                     const conversations = await this.getConversationUsecase.execute(userId,userType);
                     socket.emit('conversations',conversations)
+                } catch (error) {
+                    console.log(error);
+                }
+            })
+
+            socket.on('get_messages',async ({conversationId})=> {
+                try {
+                    console.log(conversationId);
+                    const messages = await this.getMessagesUsecase.execute(conversationId)
+                    console.log('user messages : ',messages);
+                    socket.emit('messages',messages)
                 } catch (error) {
                     console.log(error);
                 }

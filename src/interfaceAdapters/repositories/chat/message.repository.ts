@@ -6,8 +6,8 @@ import { IConversationEntity } from "../../../entities/models/conversation.entit
 
 @injectable()
 export class MessageRepository implements IMessageRepository {
-  async saveMessage(message: IMessageEntity): Promise<void> {
-    await MessageModel.create(message)
+  async saveMessage(message: IMessageEntity): Promise<IMessageEntity> {
+    return await MessageModel.create(message)
   }
 
   async getMessagesByConversationId(conversationId: string): Promise<IMessageEntity[]> {

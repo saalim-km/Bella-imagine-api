@@ -17,5 +17,5 @@ import {
 
 
 export interface ISendMessageUsecase {
-  execute(dto : Partial<IMessageEntity>):  Promise<void>
+  execute(dto : Partial<IMessageEntity>):  Promise<IMessageEntity>
 }
