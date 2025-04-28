@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { chatController, createChatRoomController } from "../../di/resolver";
+import { chatController, createContestController, createConversationController, getUserChatsController, getUserContactsController } from "../../di/resolver";
 import { BaseRoute } from "../base.route";
 
 export class ChatRoute extends BaseRoute {
@@ -9,10 +9,11 @@ export class ChatRoute extends BaseRoute {
 
   protected initializeRoutes(): void {
     this.router.get("/:userId/:userType", (req: Request, res: Response) => {
-      chatController.handle(req, res);
+      getUserContactsController.handle(req,res)
     });
-    this.router.post("/create", (req: Request, res: Response) => {
-      createChatRoomController.handle(req, res);
-    });
+
+    this.router.get("/conversations/:userId/:userType",(req : Request , res : Response)=> {
+      getUserChatsController.handle(req,res)
+    })
   }
 }

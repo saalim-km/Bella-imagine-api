@@ -75,12 +75,11 @@ export const vendorSchema = new mongoose.Schema<IVendorEntity>(
     verificationDocuments: {
       type: [String],
     },
-    onlineStatus: {
-      type: String,
-      enum: ["online", "offline"],
-      default: "offline",
+    isOnline: {
+      type: Boolean,
+      default : false
     },
-    lastStatusUpdated: { type: Date, default: Date.now },
+    lastSeen: { type: Date, default: Date.now },
     isVerified: {
       type: String,
       enum: ["pending", "accept", "reject"],

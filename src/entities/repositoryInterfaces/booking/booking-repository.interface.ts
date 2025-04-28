@@ -1,9 +1,12 @@
 import { IBookingModel } from "../../../frameworks/database/models/booking.model";
+import { TRole } from "../../../shared/constants";
 import {
   BookingListFromRepo,
   IBookingEntity,
   TPaymentStatus,
 } from "../../models/booking.entity";
+import { IClientEntity } from "../../models/client.entity";
+import { IVendorEntity } from "../../models/vendor.entity";
 
 export interface IBookingRepository {
   findByUserId(
@@ -46,4 +49,6 @@ export interface IBookingRepository {
   findByClientId(clientId: any): Promise<IBookingEntity[]>;
 
   findByVendorId(vendorId: any): Promise<IBookingEntity[]>;
+
+  findContactsForChat(userId : string , userType : TRole) : Promise<IVendorEntity[] | IClientEntity[] | null>
 }

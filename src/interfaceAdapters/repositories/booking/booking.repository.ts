@@ -7,6 +7,10 @@ import { IBookingRepository } from "../../../entities/repositoryInterfaces/booki
 import {
   bookingModel,
 } from "../../../frameworks/database/models/booking.model";
+import { IClientEntity } from "../../../entities/models/client.entity";
+import { IVendorEntity } from "../../../entities/models/vendor.entity";
+import { TRole } from "../../../shared/constants";
+import { Types } from "mongoose";
 
 @injectable()
 export class BookingRepository implements IBookingRepository {
@@ -130,5 +134,44 @@ export class BookingRepository implements IBookingRepository {
     return await bookingModel.find({ vendorId })
       .populate("userId", "name email profileImage onlineStatus")
       .exec();
+  }
+
+  async findContactsForChat(userId: string, userType: TRole): Promise<IVendorEntity[] | IClientEntity[] | null> {
+    const isClient = userType == 'client';
+
+    const result : IVendorEntity[] | IClientEntity[] = await bookingModel.aggregate([
+      {
+        $match : {
+          [isClient ? 'userId' : 'vendorId'] : new Types.ObjectId(userId),
+        },
+      },
+      {
+        $group : {
+          _id : `$${isClient ? 'vendorId' : 'userId'}`,
+        },
+      },
+      {
+        $lookup : {
+          from : isClient ? 'vendors' : 'clients',
+          localField: '_id',
+          foreignField : '_id',
+          as : 'user',
+        },
+      },
+      {$unwind : '$user'},
+      {
+        $project : {
+          _id : '$user._id',
+          role : '$user.role',
+          isOnline : '$user.isOnline',
+          lastSeen : '$user.lastSeen',
+          name : '$user.name',
+          avatar : '$user.profileImage'
+        }
+      }
+    ])
+
+    console.log(' got the result from reppository : ',result);
+    return result;
   }
 }

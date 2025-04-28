@@ -127,18 +127,23 @@ import { IGetPaginatedContestUsecase } from "../../entities/usecaseInterfaces/ad
 import { GetPaginatedContestUsecase } from "../../useCases/admin/contest_management/get-paginated-contest.usecase";
 import { IParticipateContestUsecase } from "../../entities/usecaseInterfaces/contest/participate-contest-usecase.interface";
 import { ParticipateContestUsecase } from "../../useCases/contest/participate-contest.usecase";
-import { ICreateChatRoomUseCase } from "../../entities/usecaseInterfaces/chat/create-chat-room-usecase.interface";
-import { CreateChatRoomUseCase } from "../../useCases/chat/create-chat-room.usecase";
-import { IGetChatHistoryUseCase } from "../../entities/usecaseInterfaces/chat/get-chat-history-usecase.interface";
-import { GetChatHistoryUseCase } from "../../useCases/chat/get-chat-history.usecase";
-import { IGetUserChatsUseCase } from "../../entities/usecaseInterfaces/chat/get-user-chats-usecase.interface";
-import { GetUserChatsUseCase } from "../../useCases/chat/get-user-chats.usecase";
-import { GetVendorDetailsForChatUseCase } from "../../useCases/chat/get-vendor-details.usecase";
-import { IMarkMessagesAsReadUseCase } from "../../entities/usecaseInterfaces/chat/mark-messages-as-read-usecase.inteface";
-import { MarkMessagesAsReadUseCase } from "../../useCases/chat/mark-messages-as-read.usecase";
-import { ISendMessageUseCase } from "../../entities/usecaseInterfaces/chat/send-message-usecase.interface";
-import { SendMessageUseCase } from "../../useCases/chat/send-message.usecase";
-import { IGetVendorDetailsForChatUseCase } from "../../entities/usecaseInterfaces/chat/get-vendor-details.usecase";
+import { ICreateConversationUseCase } from "../../entities/usecaseInterfaces/chat/create-conversation-usecase.interface";
+import { CreateConversationUseCase } from "../../useCases/chat/create-conversation.usecase";
+import { IGetConversationsUsecase } from "../../entities/usecaseInterfaces/chat/get-conversations-usecase.interface";
+import { GetConversationUsecase } from "../../useCases/chat/get-conversations.usecase";
+import { IGetMessageUsecase } from "../../entities/usecaseInterfaces/chat/get-messages-usecase.interface";
+import GetMessagesUseCase from "../../useCases/chat/get-messages.usecase";
+import { ISendMessageUsecase } from "../../entities/usecaseInterfaces/chat/send-message-usecase.interface";
+import { SendMessageUsecase } from "../../useCases/chat/send-message.usecase";
+import { IMarkMessageAsReadUsecase } from "../../entities/usecaseInterfaces/chat/mark-message-as-read-usecase.interface";
+import { MarkMessageAsReadUsecase } from "../../useCases/chat/mark-message-as-read.usecase";
+import { IGetUserContactsUsecase } from "../../entities/usecaseInterfaces/chat/get-user-contacts-usecase.interface";
+import { GetUserContactsUsecase } from "../../useCases/chat/get-user-contacts.usecase";
+import { IUpdateUserOnlineStatusUsecase } from "../../entities/usecaseInterfaces/chat/update-user-online-status-usecase.interface";
+import { UpdateUserOnlineStatusUsecase } from "../../useCases/chat/update-user-online-status.usecase";
+import { IUpdateLastSeenUsecase } from "../../entities/usecaseInterfaces/chat/update-last-seen-usecase.interface";
+import { UpdateLastSeenUsecase } from "../../useCases/chat/update-last-seen.usecase";
+
 
 export class UsecaseRegistry {
   static registerUsecase(): void {
@@ -395,28 +400,36 @@ export class UsecaseRegistry {
     })
 
     // |--------------------------------------------------------- Chat Management ---------------------------------------------------|
-    container.register<ICreateChatRoomUseCase>("ICreateChatRoomUseCase",{
-      useClass : CreateChatRoomUseCase
+    container.register<ICreateConversationUseCase>('ICreateConversationUseCase',{
+      useClass : CreateConversationUseCase
     })
 
-    container.register<IGetChatHistoryUseCase>("IGetChatHistoryUseCase",{
-      useClass : GetChatHistoryUseCase
+    container.register<IGetConversationsUsecase>('IGetConversationsUsecase',{
+      useClass : GetConversationUsecase
     })
 
-    container.register<IGetUserChatsUseCase>('IGetUserChatsUseCase',{
-      useClass : GetUserChatsUseCase
+    container.register<IGetMessageUsecase>('IGetMessageUsecase',{
+      useClass : GetMessagesUseCase
     })
 
-    container.register<IGetVendorDetailsForChatUseCase>('IGetVendorDetailsForChatUseCase',{
-      useClass : GetVendorDetailsForChatUseCase
+    container.register<ISendMessageUsecase>("ISendMessageUsecase",{
+      useClass : SendMessageUsecase
     })
 
-    container.register<IMarkMessagesAsReadUseCase>('IMarkMessagesAsReadUseCase',{
-      useClass : MarkMessagesAsReadUseCase
+    container.register<IMarkMessageAsReadUsecase>('IMarkMessageAsReadUsecase',{
+      useClass : MarkMessageAsReadUsecase
     })
 
-    container.register<ISendMessageUseCase>('ISendMessageUseCase',{
-      useClass : SendMessageUseCase
+    container.register<IGetUserContactsUsecase>('IGetUserContactsUsecase',{
+      useClass : GetUserContactsUsecase
+    })
+
+    container.register<IUpdateUserOnlineStatusUsecase>('IUpdateUserOnlineStatusUsecase',{
+      useClass : UpdateUserOnlineStatusUsecase
+    })
+
+    container.register<IUpdateLastSeenUsecase>('IUpdateLastSeenUsecase',{
+      useClass : UpdateLastSeenUsecase
     })
   }
 }

@@ -1,21 +1,14 @@
 // src/entities/user.entity.ts (Unified for client and vendor)
 import { ObjectId } from "mongoose";
 import { TRole } from "../../shared/constants";
+import { IVendorEntity } from "./vendor.entity";
 
 export interface IUserEntityForChat {
-  _id: string | ObjectId;
+  _id: string;
   name: string;
   email: string;
-  profileImage?: string;
-  password?: string;
-  phoneNumber?: string;
-  location?: string;
-  googleId?: string;
   role: TRole;
+  avatar: string;
   isOnline: boolean;
-  lastSeen: Date;
-  isActive: boolean;
-  isblocked: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  lastSeen?: string;
 }

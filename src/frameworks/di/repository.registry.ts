@@ -20,7 +20,6 @@ import { WorkSampleRepository } from "../../interfaceAdapters/repositories/work-
 import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface";
 import { IPaymentRepository } from "../../entities/repositoryInterfaces/payment/payment-repository.interface";
 import { IEscrowRepository } from "../../entities/repositoryInterfaces/escrow/escrow-repository.interface";
-import { EscrowRepository } from "../../interfaceAdapters/repositories/escrow/escrow.repository";
 import { BookingRepository } from "../../interfaceAdapters/repositories/booking/booking.repository";
 import { PaymentRepository } from "../../interfaceAdapters/repositories/payment/payment.repository";
 import { IWalletRepository } from "../../entities/repositoryInterfaces/wallet-repository.interface";
@@ -29,10 +28,10 @@ import { IContestRepository } from "../../entities/repositoryInterfaces/contest/
 import { ContestRepository } from "../../interfaceAdapters/repositories/contest/contest.repository";
 import { IParticipateContestRepository } from "../../entities/repositoryInterfaces/contest/participate-contest.repository";
 import { ParticipateContestRepository } from "../../interfaceAdapters/repositories/contest/participate-contest.repository";
-import { IChatRoomRepository } from "../../entities/repositoryInterfaces/chat/chat-room-repository.interface";
-import { ChatRoomRepository } from "../../interfaceAdapters/repositories/chat/chat-room.repository";
-import { IMessageRepository } from "../../entities/repositoryInterfaces/chat/message-repository.interface";
 import { MessageRepository } from "../../interfaceAdapters/repositories/chat/message.repository";
+import IConversationRepository from "../../entities/repositoryInterfaces/chat/conversation-repository.interface";
+import { ConversationRepository } from "../../interfaceAdapters/repositories/chat/conversation.repository";
+import IMessageRepository from "../../entities/repositoryInterfaces/chat/message-repository.interface";
 export class RepositoryRegistry {
   static registerRepositories(): void {
     // |-------------------------- Repository Registrations ----------------------------------|
@@ -83,10 +82,6 @@ export class RepositoryRegistry {
       useClass: PaymentRepository,
     });
 
-    container.register<IEscrowRepository>("IEscrowRepository", {
-      useClass: EscrowRepository,
-    });
-
     container.register<IWalletRepository>('IWalletRepository',{
       useClass : WalletRepository
     })
@@ -99,11 +94,11 @@ export class RepositoryRegistry {
       useClass : ParticipateContestRepository
     })
 
-    container.register<IChatRoomRepository>("IChatRoomRepository",{
-      useClass : ChatRoomRepository
+    container.register<IConversationRepository>('IConversationRepository',{
+      useClass : ConversationRepository
     })
 
-    container.register<IMessageRepository>("IMessageRepository",{
+    container.register<IMessageRepository>('IMessageRepository',{
       useClass : MessageRepository
     })
   }

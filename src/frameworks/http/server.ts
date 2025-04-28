@@ -7,7 +7,6 @@ import rateLimit from "express-rate-limit";
 import { AuthRoute } from "../routes/auth/auth.route";
 import { errorHandler } from "../../interfaceAdapters/middlewares/error.middleware";
 import { PrivateRoute } from "../routes/common/private.route";
-import { logger } from "../../shared/utils/logger.utils";
 import http from "http";
 import { ChatRoute } from "../routes/chat/chat.route";
 import { chatController } from "../di/resolver";
@@ -36,7 +35,7 @@ export class Server {
         );
 
         this._app.use(cookieparser());
-        this._app.use(logger)
+        // this._app.use(logger)
         this._app.use(express.json())
         this._app.use(
             rateLimit({

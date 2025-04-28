@@ -1,72 +1,49 @@
-// usecases/chat/send-message.usecase.ts
-import { injectable, inject } from "tsyringe";
+import { inject, injectable } from "tsyringe";
+import { ISendMessageUsecase } from "../../entities/usecaseInterfaces/chat/send-message-usecase.interface";
+import IMessageRepository from "../../entities/repositoryInterfaces/chat/message-repository.interface";
 import { IMessageEntity } from "../../entities/models/message.entity";
-import { IMessageRepository } from "../../entities/repositoryInterfaces/chat/message-repository.interface";
-import { IChatRoomRepository } from "../../entities/repositoryInterfaces/chat/chat-room-repository.interface";
+import IConversationRepository from "../../entities/repositoryInterfaces/chat/conversation-repository.interface";
 import { CustomError } from "../../entities/utils/custom-error";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
-import { ISendMessageUseCase } from "../../entities/usecaseInterfaces/chat/send-message-usecase.interface";
+import { HTTP_STATUS, TRole } from "../../shared/constants";
 
 @injectable()
-export class SendMessageUseCase implements ISendMessageUseCase {
-  constructor(
-    @inject("IMessageRepository") private messageRepository: IMessageRepository,
-    @inject("IChatRoomRepository") private chatRoomRepository: IChatRoomRepository
-  ) {}
+export class SendMessageUsecase implements ISendMessageUsecase {
+    constructor(
+        @inject('IMessageRepository') private messageRepository : IMessageRepository,
+        @inject('IConversationRepository') private conversationRepository : IConversationRepository
+    ){}
 
-  async execute(
-    clientId: string,
-    vendorId: string,
-    senderId: string,
-    senderType: "Client" | "Vendor",
-    content: string,
-    chatRoomId?: string,
-    bookingId?: string
-  ): Promise<IMessageEntity> {
-    let chatRoom;
-  
-    if (chatRoomId) {
-      chatRoom = await this.chatRoomRepository.findById(chatRoomId);
-      if (!chatRoom) throw new CustomError('chat not found', HTTP_STATUS.NOT_FOUND);
-    } else {
-      if (!bookingId) throw new CustomError(ERROR_MESSAGES.BOOKING_NOT_FOUND, HTTP_STATUS.NOT_FOUND);
-      chatRoom = await this.chatRoomRepository.findOrCreate(
-        clientId,
-        vendorId,
-        bookingId,
-        {
-          content,
-          senderId,
-          senderType,
-          createdAt: new Date(),
+    async execute(dto: Partial<IMessageEntity>): Promise<IMessageEntity> {
+        console.log('in create message usecase----');
+        if(!dto || !dto.conversationId || !dto.senderId || !dto.type) {
+            throw new CustomError('no such data for creating message',HTTP_STATUS.BAD_REQUEST)
         }
-      );
+        console.log(dto);
+        const message : IMessageEntity = {
+            conversationId : dto.conversationId,
+            senderId : dto.senderId,
+            text : dto.text || '',
+            type : dto.type,
+            mediaUrl : dto.mediaUrl || "",
+            timestamp : new Date(),
+            isDeleted : false
+        }
+
+
+        const conversation = await this.conversationRepository.getConversationById(dto.conversationId as string)
+
+        if(!conversation) {
+            throw new CustomError('no conversation found',HTTP_STATUS.NOT_FOUND)
+        }
+
+        conversation.lastMessage = message;
+        const [newMessage , conversations ] = await Promise.all([
+            this.messageRepository.saveMessage(message),
+            this.conversationRepository.updateConversation(dto.conversationId as string,conversation),
+            this.conversationRepository.incrementUnreadCount(dto.conversationId as string , dto.userType as TRole)
+        ])
+        
+        console.log('got the new messae from repo : ',newMessage);
+        return newMessage
     }
-  
-    const message: IMessageEntity = {
-      chatRoomId: chatRoom._id!.toString(),
-      content,
-      senderId,
-      senderType,
-      read: false,
-      createdAt: new Date(),
-    };
-    const createdMessage = await this.messageRepository.create(message);
-  
-    await this.chatRoomRepository.updateLastMessage(
-      chatRoom._id!.toString(),
-      content,
-      senderId,
-      senderType,
-      createdMessage.createdAt!
-    );
-  
-    if (senderType === "Client") {
-      await this.chatRoomRepository.incrementUnreadCount(chatRoom._id!.toString(), "vendor");
-    } else {
-      await this.chatRoomRepository.incrementUnreadCount(chatRoom._id!.toString(), "client");
-    }
-  
-    return createdMessage;
-  }
 }

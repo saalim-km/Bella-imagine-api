@@ -52,8 +52,9 @@ import { DeleteContestController } from "../../interfaceAdapters/controllers/adm
 import { GetPaginatedContestController } from "../../interfaceAdapters/controllers/admin/contest_management/get-paginated-contest-controller";
 import { ParticipateContestController } from "../../interfaceAdapters/controllers/contest/participate-contest.controller";
 import { ChatController } from "../../interfaceAdapters/controllers/chat/chat.controller";
-import { CreateChatRoomController } from "../../interfaceAdapters/controllers/chat/create-chat-room.controller";
-import { GetVendorDetailsForChatController } from "../../interfaceAdapters/controllers/chat/get-vendor-details.controller";
+import { CreateConversationController } from "../../interfaceAdapters/controllers/chat/create-conversation.controller";
+import { GetUserChatsController } from "../../interfaceAdapters/controllers/chat/get-user-chats.controller";
+import { GetContactsController } from "../../interfaceAdapters/controllers/chat/get-contacts.controller";
 
 DependencyInjection.registerAll();
 
@@ -195,6 +196,8 @@ export const getWalletDetailsOfUserController = container.resolve(
 export const getAllTransactionByUserIdController = container.resolve(
   GetAllTransactionsByUserIdController
 )
+
+// |====================================== Contest Management ====================================|
 export const createContestController = container.resolve(
   CreateContestController
 )
@@ -210,12 +213,17 @@ export const getPaginatedContestController = container.resolve(
 export const participateContestController = container.resolve(
   ParticipateContestController
 )
+
+// |====================================== Chat Management ====================================|
 export const chatController = container.resolve(
   ChatController
 )
-export const createChatRoomController = container.resolve(
-  CreateChatRoomController
+export const createConversationController = container.resolve(
+  CreateConversationController
 )
-export const getVendorDetailsForChatController = container.resolve(
-  GetVendorDetailsForChatController
+export const getUserChatsController = container.resolve(
+  GetUserChatsController
+)
+export const getUserContactsController = container.resolve(
+  GetContactsController
 )
