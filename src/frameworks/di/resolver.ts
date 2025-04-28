@@ -46,11 +46,6 @@ import { GetAllBookingForVendorController } from "../../interfaceAdapters/contro
 import { UpdateBookingStatusController } from "../../interfaceAdapters/controllers/booking/update-booking-status.controller";
 import { GetWalletDetailsOfUserController } from "../../interfaceAdapters/controllers/wallet/get-wallet-details.controller";
 import { GetAllTransactionsByUserIdController } from "../../interfaceAdapters/controllers/payment/get-all-transaction-by-userId.controller";
-import { CreateContestController } from "../../interfaceAdapters/controllers/admin/contest_management/create-contest.controller";
-import { UpdateContestController } from "../../interfaceAdapters/controllers/admin/contest_management/update-contest.controller";
-import { DeleteContestController } from "../../interfaceAdapters/controllers/admin/contest_management/delete-contest.controller";
-import { GetPaginatedContestController } from "../../interfaceAdapters/controllers/admin/contest_management/get-paginated-contest-controller";
-import { ParticipateContestController } from "../../interfaceAdapters/controllers/contest/participate-contest.controller";
 import { ChatController } from "../../interfaceAdapters/controllers/chat/chat.controller";
 import { CreateConversationController } from "../../interfaceAdapters/controllers/chat/create-conversation.controller";
 import { GetUserChatsController } from "../../interfaceAdapters/controllers/chat/get-user-chats.controller";
@@ -198,21 +193,7 @@ export const getAllTransactionByUserIdController = container.resolve(
 )
 
 // |====================================== Contest Management ====================================|
-export const createContestController = container.resolve(
-  CreateContestController
-)
-export const updateContestController = container.resolve(
-  UpdateContestController
-)
-export const deleteContestController = container.resolve(
-  DeleteContestController
-)
-export const getPaginatedContestController = container.resolve(
-  GetPaginatedContestController
-)
-export const participateContestController = container.resolve(
-  ParticipateContestController
-)
+
 
 // |====================================== Chat Management ====================================|
 export const chatController = container.resolve(

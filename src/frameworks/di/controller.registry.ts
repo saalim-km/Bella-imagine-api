@@ -49,7 +49,6 @@ import { CreateContestController } from "../../interfaceAdapters/controllers/adm
 import { UpdateContestController } from "../../interfaceAdapters/controllers/admin/contest_management/update-contest.controller";
 import { DeleteContestController } from "../../interfaceAdapters/controllers/admin/contest_management/delete-contest.controller";
 import { GetPaginatedContestController } from "../../interfaceAdapters/controllers/admin/contest_management/get-paginated-contest-controller";
-import { ParticipateContestController } from "../../interfaceAdapters/controllers/contest/participate-contest.controller";
 import { CreateConversationController } from "../../interfaceAdapters/controllers/chat/create-conversation.controller";
 import { GetUserChatsController } from "../../interfaceAdapters/controllers/chat/get-user-chats.controller";
 import { ChatController } from "../../interfaceAdapters/controllers/chat/chat.controller";
@@ -230,10 +229,6 @@ export class ControllerRegistry {
     container.register("GetPaginatedContestController", {
       useClass: GetPaginatedContestController,
     });
-    container.register('ParticipateContestController',{
-      useClass : ParticipateContestController
-    })
-
     //-------------------------------------- Chat Management ----------------------------------------------|
     container.register('CreateConversationController',{
       useClass : CreateConversationController

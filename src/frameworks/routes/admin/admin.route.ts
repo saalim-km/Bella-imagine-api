@@ -6,15 +6,12 @@ import {
 } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
 import {
-  createContestController,
   createNewCategoryController,
-  deleteContestController,
   getAllClientController,
   getAllPaginatedCategoryController,
   getAllTransactionByUserIdController,
   getAllVendorController,
   getCategoryRequestController,
-  getPaginatedContestController,
   getPendingVendorController,
   getUserDetailsController,
   getWalletDetailsOfUserController,
@@ -22,7 +19,6 @@ import {
   refreshTokenController,
   updateCategoryController,
   updateCategoryRequestStatusController,
-  updateContestController,
   updateUserStatusController,
   updateVendorRequestController,
 } from "../../di/resolver";
@@ -181,18 +177,5 @@ export class AdminRoute extends BaseRoute {
 
     // Contest Management Routes
     // Create Contest
-    this.router.route("/admin/contest")
-    .post(verifyAuth,authorizeRole(["admin"]),(req: Request, res: Response) => {
-      createContestController.handle(req, res);
-    })
-    .put(verifyAuth,authorizeRole(["admin"]),(req: Request, res: Response)=> {
-      updateContestController.handle(req,res)
-    })
-    .delete(verifyAuth,authorizeRole(["admin"]),(req: Request, res: Response)=> {
-      deleteContestController.handle(req,res)
-    })
-    .get(verifyAuth,authorizeRole(["admin"]),(req: Request, res: Response)=> {
-      getPaginatedContestController.handle(req,res)
-    })
   }
 }
