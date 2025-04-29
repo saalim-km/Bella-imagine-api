@@ -5,4 +5,5 @@ export interface ICommunityController {
   listCommunities(req: Request, res: Response): Promise<void>;
   deleteCommunity(req: Request, res: Response): Promise<void>;
   findCommunityBySlug(req: Request, res: Response): Promise<void>;
+  updateCommunity(req: Request, res: Response): Promise<void>;
 }

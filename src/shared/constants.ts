@@ -30,6 +30,9 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  NO_SUCH_DATA: "No such data found.",
+  INVALID_OTP: "Invalid OTP",
+  INVALID_PASSWORD: "XXXXXXX password",
   INVALID_ROLE: "Invalid Role",
   CONTEST_NOT_FOUND: "Contest not found",
   ALREADY_EXISTS: "Already exists",

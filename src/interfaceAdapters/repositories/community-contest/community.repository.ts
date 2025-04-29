@@ -40,4 +40,8 @@ export class ComminityRepository implements ICommunityRepository {
   async findBySlug(slug: string): Promise<ICommunityEntity | null> {
     return await CommunityModel.findOne({slug : slug})
   }
+
+  async updateCommunity(communityId: string, dto: Partial<ICommunityEntity>): Promise<void> {
+    await CommunityModel.findByIdAndUpdate(communityId, dto)
+  }
 }

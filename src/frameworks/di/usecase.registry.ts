@@ -150,6 +150,8 @@ import { IDeleteCommunityUsecase } from "../../entities/usecaseInterfaces/commun
 import { DeleteCommunityUsecase} from "../../useCases/community-contest/community/delete-community.usecase";
 import { IFindCommunityBySlugUsecase } from "../../entities/usecaseInterfaces/community-contest/community/find-by-slug-usecase.interface";
 import { FindCommunityBySlugUsecase } from "../../useCases/community-contest/community/find-by-slug.usecase";
+import { IUpdateCommunityUsecase } from "../../entities/usecaseInterfaces/community-contest/community/update-community-usecase.interface";
+import { UpdateCommunityUsecase } from "../../useCases/community-contest/community/update-community.usecase";
 
 
 export class UsecaseRegistry {
@@ -450,6 +452,10 @@ export class UsecaseRegistry {
 
     container.register<IFindCommunityBySlugUsecase>('IFindCommunityBySlugUsecase',{
       useClass : FindCommunityBySlugUsecase
+    })
+
+    container.register<IUpdateCommunityUsecase>('IUpdateCommunityUsecase',{
+      useClass : UpdateCommunityUsecase
     })
   }
 }

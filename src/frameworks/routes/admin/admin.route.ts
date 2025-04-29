@@ -199,7 +199,10 @@ export class AdminRoute extends BaseRoute {
         (req: Request, res: Response) => {
           communityController.deleteCommunity(req, res);
         }
-      );
+      )
+      .put(verifyAuth,authorizeRole(['admin']),(req: Request, res: Response)=> {
+        communityController.updateCommunity(req, res)
+      })
 
       this.router.get('/admin/community/:slug',verifyAuth,authorizeRole(['admin']),(req: Request, res: Response)=> {
         communityController.findCommunityBySlug(req,res)

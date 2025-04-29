@@ -6,4 +6,5 @@ export interface ICommunityRepository {
     findAll(page: number, limit: number): Promise<PaginatedResponse<ICommunityEntity>>
     delete(communityId: string): Promise<void>
     findBySlug(slug : string): Promise<ICommunityEntity | null>
+    updateCommunity(communityId: string, dto: Partial<ICommunityEntity>): Promise<void>
 }

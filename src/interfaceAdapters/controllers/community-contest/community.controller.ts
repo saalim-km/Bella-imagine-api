@@ -6,6 +6,8 @@ import { HTTP_STATUS, SUCCESS_MESSAGES } from "../../../shared/constants";
 import { IGetAllCommunityUsecase } from "../../../entities/usecaseInterfaces/community-contest/community/get-all-communities-usecase.interface";
 import { IDeleteCommunityUsecase } from "../../../entities/usecaseInterfaces/community-contest/community/delete-community-usecase.interface";
 import { IFindCommunityBySlugUsecase } from "../../../entities/usecaseInterfaces/community-contest/community/find-by-slug-usecase.interface";
+import { IUpdateCommunityUsecase } from "../../../entities/usecaseInterfaces/community-contest/community/update-community-usecase.interface";
+import { ICommunityEntity } from "../../../entities/models/community.entity";
 
 @injectable()
 export class CommunityController implements ICommunityController {
@@ -13,7 +15,8 @@ export class CommunityController implements ICommunityController {
         @inject('ICreateCommunityUsecase') private createCommunityUsecase : ICreateCommunityUsecase,
         @inject("IGetAllCommunityUsecase") private getAllCommunityUsecase : IGetAllCommunityUsecase,
         @inject('IDeleteCommunityUsecase') private deleteCommunityUsecase : IDeleteCommunityUsecase,
-        @inject("IFindCommunityBySlugUsecase") private findCommunityBySlugUsecase : IFindCommunityBySlugUsecase
+        @inject("IFindCommunityBySlugUsecase") private findCommunityBySlugUsecase : IFindCommunityBySlugUsecase,
+        @inject('IUpdateCommunityUsecase') private updateCommunityUsecase : IUpdateCommunityUsecase
     ){}
 
     async createCommunity(req: Request, res: Response): Promise<void> {
@@ -57,6 +60,16 @@ export class CommunityController implements ICommunityController {
             console.log('findCommunityBySlug : ',slug);
             const community = await this.findCommunityBySlugUsecase.execute(`r/${slug}`)
             res.status(HTTP_STATUS.OK).json(community);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async updateCommunity(req: Request, res: Response): Promise<void> {
+        try {
+            const {communityId , dto } : {communityId : string , dto : Partial<ICommunityEntity>} = req.body;
+            await this.updateCommunityUsecase.execute(communityId,dto)
+            res.status(HTTP_STATUS.OK).json({success : true , message : SUCCESS_MESSAGES.UPDATE_SUCCESS})
         } catch (error) {
             console.log(error);
         }
