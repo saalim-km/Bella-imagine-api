@@ -36,4 +36,8 @@ export class ComminityRepository implements ICommunityRepository {
   async delete(communityId: string): Promise<void> {
     await CommunityModel.findByIdAndDelete(communityId)
   }
+  
+  async findBySlug(slug: string): Promise<ICommunityEntity | null> {
+    return await CommunityModel.findOne({slug : slug})
+  }
 }
