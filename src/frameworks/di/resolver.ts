@@ -50,6 +50,7 @@ import { ChatController } from "../../interfaceAdapters/controllers/chat/chat.co
 import { CreateConversationController } from "../../interfaceAdapters/controllers/chat/create-conversation.controller";
 import { GetUserChatsController } from "../../interfaceAdapters/controllers/chat/get-user-chats.controller";
 import { GetContactsController } from "../../interfaceAdapters/controllers/chat/get-contacts.controller";
+import { CommunityController } from "../../interfaceAdapters/controllers/community-contest/community.controller";
 
 DependencyInjection.registerAll();
 
@@ -192,8 +193,6 @@ export const getAllTransactionByUserIdController = container.resolve(
   GetAllTransactionsByUserIdController
 )
 
-// |====================================== Contest Management ====================================|
-
 
 // |====================================== Chat Management ====================================|
 export const chatController = container.resolve(
@@ -207,4 +206,10 @@ export const getUserChatsController = container.resolve(
 )
 export const getUserContactsController = container.resolve(
   GetContactsController
+)
+
+
+// |====================================== Community Management ====================================|
+export const communityController = container.resolve(
+  CommunityController
 )

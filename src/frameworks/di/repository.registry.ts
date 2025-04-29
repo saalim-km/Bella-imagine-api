@@ -30,6 +30,8 @@ import { MessageRepository } from "../../interfaceAdapters/repositories/chat/mes
 import IConversationRepository from "../../entities/repositoryInterfaces/chat/conversation-repository.interface";
 import { ConversationRepository } from "../../interfaceAdapters/repositories/chat/conversation.repository";
 import IMessageRepository from "../../entities/repositoryInterfaces/chat/message-repository.interface";
+import { ICommunityRepository } from "../../entities/repositoryInterfaces/community-contest/community-repository.interface";
+import { ComminityRepository } from "../../interfaceAdapters/repositories/community-contest/community.repository";
 export class RepositoryRegistry {
   static registerRepositories(): void {
     // |-------------------------- Repository Registrations ----------------------------------|
@@ -90,6 +92,10 @@ export class RepositoryRegistry {
 
     container.register<IMessageRepository>('IMessageRepository',{
       useClass : MessageRepository
+    })
+
+    container.register<ICommunityRepository>('ICommunityRepository',{
+      useClass : ComminityRepository
     })
   }
 }

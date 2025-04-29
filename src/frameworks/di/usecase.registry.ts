@@ -142,6 +142,8 @@ import { IUpdateUserOnlineStatusUsecase } from "../../entities/usecaseInterfaces
 import { UpdateUserOnlineStatusUsecase } from "../../useCases/chat/update-user-online-status.usecase";
 import { IUpdateLastSeenUsecase } from "../../entities/usecaseInterfaces/chat/update-last-seen-usecase.interface";
 import { UpdateLastSeenUsecase } from "../../useCases/chat/update-last-seen.usecase";
+import { ICreateCommunityUsecase } from "../../entities/usecaseInterfaces/community-contest/community/create-community-usecase.interface";
+import { CreateCommunityUsecase } from "../../useCases/community-contest/community/create-community.usecase";
 
 
 export class UsecaseRegistry {
@@ -425,6 +427,11 @@ export class UsecaseRegistry {
 
     container.register<IUpdateLastSeenUsecase>('IUpdateLastSeenUsecase',{
       useClass : UpdateLastSeenUsecase
+    })
+
+    // |--------------------------------------------------------- Chat Management ---------------------------------------------------|
+    container.register<ICreateCommunityUsecase>('ICreateCommunityUsecase',{
+      useClass : CreateCommunityUsecase
     })
   }
 }

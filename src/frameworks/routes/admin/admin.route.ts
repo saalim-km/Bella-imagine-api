@@ -6,6 +6,7 @@ import {
 } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
 import {
+  communityController,
   createNewCategoryController,
   getAllClientController,
   getAllPaginatedCategoryController,
@@ -175,7 +176,10 @@ export class AdminRoute extends BaseRoute {
       }
     );
 
-    // Contest Management Routes
-    // Create Contest
+    // Contest-Commnity
+    this.router.route('/admin/community')
+    .post(verifyAuth,authorizeRole(['admin']),(req : Request, res : Response)=> {
+        communityController.createCommunity(req , res)
+    })
   }
 }
