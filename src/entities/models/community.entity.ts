@@ -2,6 +2,7 @@ import { ObjectId } from "mongoose";
 
 export interface ICommunityEntity {
   _id: string | ObjectId; 
+  slug?: string;
   name: string; 
   description: string; 
   rules: string[]; 

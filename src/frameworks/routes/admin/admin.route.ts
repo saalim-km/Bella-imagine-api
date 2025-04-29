@@ -177,9 +177,28 @@ export class AdminRoute extends BaseRoute {
     );
 
     // Contest-Commnity
-    this.router.route('/admin/community')
-    .post(verifyAuth,authorizeRole(['admin']),(req : Request, res : Response)=> {
-        communityController.createCommunity(req , res)
-    })
+    this.router
+      .route("/admin/community")
+      .post(
+        verifyAuth,
+        authorizeRole(["admin"]),
+        (req: Request, res: Response) => {
+          communityController.createCommunity(req, res);
+        }
+      )
+      .get(
+        verifyAuth,
+        authorizeRole(["admin"]),
+        (req: Request, res: Response) => {
+          communityController.listCommunities(req, res);
+        }
+      )
+      .delete(
+        verifyAuth,
+        authorizeRole(["admin"]),
+        (req: Request, res: Response) => {
+          communityController.deleteCommunity(req, res);
+        }
+      );
   }
 }

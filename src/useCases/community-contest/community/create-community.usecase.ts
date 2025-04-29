@@ -4,6 +4,7 @@ import { ICommunityRepository } from "../../../entities/repositoryInterfaces/com
 import { ICommunityEntity } from "../../../entities/models/community.entity";
 import { CustomError } from "../../../entities/utils/custom-error";
 import { HTTP_STATUS } from "../../../shared/constants";
+import { generateSlug } from "../../../shared/utils/generate-slug.utils";
 
 @injectable()
 export class CreateCommunityUsecase implements ICreateCommunityUsecase {
@@ -16,6 +17,11 @@ export class CreateCommunityUsecase implements ICreateCommunityUsecase {
             throw new CustomError("Didn't meet required fields to create a community",HTTP_STATUS.BAD_REQUEST)
         }
 
-        await this.communityRepository.create(dto);
+        const newCommunity: ICommunityEntity = {
+            ...dto,
+            slug: generateSlug(dto.name)
+        } as ICommunityEntity
+
+        await this.communityRepository.create(newCommunity);
     }
 }
