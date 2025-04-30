@@ -6,6 +6,7 @@ import {
 } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
 import {
+  communityController,
   createPaymentIntentController,
   getAllBookingsByClientController,
   getAllClientCategoriesController,
@@ -171,5 +172,8 @@ export class ClientRoute extends BaseRoute {
     );
 
     // Community Management
+    this.router.get('/client/community/:slug',verifyAuth,authorizeRole(['client']),(req: Request, res: Response)=> {
+      communityController.findCommunityBySlug(req,res)
+    })
   }
 }
