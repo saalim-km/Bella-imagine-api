@@ -2,7 +2,7 @@ import { ObjectId } from "mongoose";
 import { TRole } from "../../shared/constants";
 
 export interface IClientEntity {
-    _id ?: ObjectId;
+    _id ?: ObjectId | string;
     name : string;
     email : string;
     profileImage ?: string;

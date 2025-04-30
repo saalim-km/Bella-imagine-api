@@ -6,6 +6,6 @@ export interface IGoogleUseCase {
       credential: any,
       client_id: any,
       role: TRole
-    ): Promise<Partial<IUserEntity>>;
+    ): Promise<{email : string , role : TRole , _id : string , name : string , avatar : string}>;
   }
   

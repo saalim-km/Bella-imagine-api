@@ -30,7 +30,7 @@ export class GoogleLoginUsecase implements IGoogleUseCase {
         }
         this.client = new OAuth2Client();
     }
-    async execute(credential: any, client_id: any, role: TRole): Promise<Partial<IUserEntity>> {
+    async execute(credential: any, client_id: any, role: TRole): Promise<{email : string , role : TRole , _id : string , name : string , avatar : string}> {
         const registerStrategy = this.registerStrategies[role];
         const loginStrategy = this.loginStrategies[role];
 
@@ -78,7 +78,7 @@ export class GoogleLoginUsecase implements IGoogleUseCase {
 
         if (existingUser) {
             if (existingUser.googleId) {  
-                return { email, role, _id: existingUser._id, name: existingUser.name };
+                return { email, role, _id: existingUser._id as string, name: existingUser.name , avatar : existingUser.profileImage as string };
             } else {
                 throw new CustomError("Try logging in with password", HTTP_STATUS.CONFLICT);
             }
@@ -91,13 +91,15 @@ export class GoogleLoginUsecase implements IGoogleUseCase {
             role,
             googleId,
             profileImage,
+            isOnline: true,
+            lastSeen: new Date(),
         });
 
         if (!newUser) {
             throw new CustomError("User registration failed", HTTP_STATUS.INTERNAL_SERVER_ERROR);
         }
 
-        return { email, role, _id: newUser._id, name: newUser.name };
+        return { email, role, _id: newUser._id as string, name: newUser.name , avatar : newUser.profileImage as string };
     }
     
 }

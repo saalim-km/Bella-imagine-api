@@ -170,7 +170,6 @@ export class ClientRoute extends BaseRoute {
       }
     );
 
-    // Contest Management Routes
-    // Get All Contests
+    // Community Management
   }
 }

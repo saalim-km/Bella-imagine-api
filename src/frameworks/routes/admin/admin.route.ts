@@ -187,8 +187,6 @@ export class AdminRoute extends BaseRoute {
         }
       )
       .get(
-        verifyAuth,
-        authorizeRole(["admin"]),
         (req: Request, res: Response) => {
           communityController.listCommunities(req, res);
         }
@@ -200,12 +198,21 @@ export class AdminRoute extends BaseRoute {
           communityController.deleteCommunity(req, res);
         }
       )
-      .put(verifyAuth,authorizeRole(['admin']),(req: Request, res: Response)=> {
-        communityController.updateCommunity(req, res)
-      })
+      .put(
+        verifyAuth,
+        authorizeRole(["admin"]),
+        (req: Request, res: Response) => {
+          communityController.updateCommunity(req, res);
+        }
+      );
 
-      this.router.get('/admin/community/:slug',verifyAuth,authorizeRole(['admin']),(req: Request, res: Response)=> {
-        communityController.findCommunityBySlug(req,res)
-      })
+    this.router.get(
+      "/admin/community/:slug",
+      verifyAuth,
+      authorizeRole(["admin"]),
+      (req: Request, res: Response) => {
+        communityController.findCommunityBySlug(req, res);
+      }
+    );
   }
 }
