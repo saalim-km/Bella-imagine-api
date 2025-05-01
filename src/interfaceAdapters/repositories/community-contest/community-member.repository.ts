@@ -2,11 +2,18 @@ import { injectable } from "tsyringe";
 import { ICommunityMemberRepository } from "../../../entities/repositoryInterfaces/community-contest/community-member-repository.interface";
 import { ICommunityMemberEntity } from "../../../entities/models/community-members.entity";
 import { CommunityMemberModel } from "../../../frameworks/database/schemas/community-member.schema";
+import { CommunityModel } from "../../../frameworks/database/schemas/community.schema";
 
 @injectable()
 export class CommunityMemberRepository implements ICommunityMemberRepository {
     async create(dto: Partial<ICommunityMemberEntity>): Promise<void> {
-        await CommunityMemberModel.create(dto)
+        const newMember = await CommunityMemberModel.create(dto)
+        console.log('new');
+        await CommunityModel.findByIdAndUpdate(newMember.communityId , {
+            $inc : {
+                memberCount : 1
+            }
+        })
     }
 
     async isMember(communityId : string , userId : string): Promise<boolean> {
@@ -22,6 +29,11 @@ export class CommunityMemberRepository implements ICommunityMemberRepository {
         await CommunityMemberModel.deleteOne({
             communityId : communityId,
             userId : userId
+        })
+        await CommunityModel.findByIdAndUpdate(communityId , {
+            $inc : {
+                memberCount : -1
+            }
         })
     }
 }

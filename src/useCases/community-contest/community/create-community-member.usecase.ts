@@ -4,11 +4,12 @@ import { ICommunityMemberRepository } from "../../../entities/repositoryInterfac
 import { ICommunityMemberEntity } from "../../../entities/models/community-members.entity";
 import { CustomError } from "../../../entities/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
+import { ICommunityRepository } from "../../../entities/repositoryInterfaces/community-contest/community-repository.interface";
 
 @injectable()
 export class CreateCommunityMemberUsecase implements ICreateCommunityMemberUsecase {
     constructor(
-        @inject('ICommunityMemberRepository') private communityMemberRepository : ICommunityMemberRepository
+        @inject('ICommunityMemberRepository') private communityMemberRepository : ICommunityMemberRepository,
     ){}
 
     async execute(dto: Partial<ICommunityMemberEntity>): Promise<void> {

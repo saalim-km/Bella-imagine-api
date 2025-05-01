@@ -10,6 +10,7 @@ import { IUpdateCommunityUsecase } from "../../../entities/usecaseInterfaces/com
 import { ICommunityEntity } from "../../../entities/models/community.entity";
 import { ICreateCommunityMemberUsecase } from "../../../entities/usecaseInterfaces/community-contest/community/create-community-member-usecase.interface";
 import { CustomRequest } from "../../middlewares/auth.middleware";
+import { ILeaveCommunityUsecase } from "../../../entities/usecaseInterfaces/community-contest/community/leave-community-usecase.interface";
 
 @injectable()
 export class CommunityController implements ICommunityController {
@@ -19,7 +20,8 @@ export class CommunityController implements ICommunityController {
         @inject('IDeleteCommunityUsecase') private deleteCommunityUsecase : IDeleteCommunityUsecase,
         @inject("IFindCommunityBySlugUsecase") private findCommunityBySlugUsecase : IFindCommunityBySlugUsecase,
         @inject('IUpdateCommunityUsecase') private updateCommunityUsecase : IUpdateCommunityUsecase,
-        @inject('ICreateCommunityMemberUsecase') private createCommuintyMember : ICreateCommunityMemberUsecase
+        @inject('ICreateCommunityMemberUsecase') private createCommuintyMember : ICreateCommunityMemberUsecase,
+        @inject('ILeaveCommunityUsecase') private leaveCommunityUsecase : ILeaveCommunityUsecase
     ){}
 
     async createCommunity(req: Request, res: Response): Promise<void> {
@@ -83,9 +85,22 @@ export class CommunityController implements ICommunityController {
         try {
             console.log('createCommunityMember',req.body);
             await this.createCommuintyMember.execute(req.body)
-            res.status(HTTP_STATUS.CREATED).json({success: true, message : SUCCESS_MESSAGES.JOINED_SUCESS})
+            res.status(HTTP_STATUS.CREATED).json({success: true})
         } catch (error) {
             console.log(error);
         }
     }
+
+    async leaveCommunity(req: Request, res: Response): Promise<void> {
+        try {
+            console.log('leaveCommunity', req.body);
+            const {communityId} = req.body
+            const user = (req as CustomRequest).user
+            await this.leaveCommunityUsecase.execute(communityId,user._id)
+            res.status(HTTP_STATUS.CREATED).json({success: true})
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
 }
