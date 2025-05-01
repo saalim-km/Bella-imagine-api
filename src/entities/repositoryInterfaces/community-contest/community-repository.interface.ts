@@ -7,4 +7,5 @@ export interface ICommunityRepository {
     delete(communityId: string): Promise<void>
     findBySlug(slug : string): Promise<ICommunityEntity | null>
     updateCommunity(communityId: string, dto: Partial<ICommunityEntity>): Promise<void>
+    findById(communityId: string): Promise<ICommunityEntity | null>
 }

@@ -44,4 +44,8 @@ export class ComminityRepository implements ICommunityRepository {
   async updateCommunity(communityId: string, dto: Partial<ICommunityEntity>): Promise<void> {
     await CommunityModel.findByIdAndUpdate(communityId, dto)
   }
+
+  async findById(communityId: string): Promise<ICommunityEntity | null> {
+    return await CommunityModel.findById(communityId)
+  }
 }

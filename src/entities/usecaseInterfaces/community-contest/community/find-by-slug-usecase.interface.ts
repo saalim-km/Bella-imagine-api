@@ -1,5 +1,5 @@
 import { ICommunityEntity } from "../../../models/community.entity";
 
 export interface IFindCommunityBySlugUsecase {
-    execute(slug: string): Promise<ICommunityEntity | null>
+    execute(slug: string , userId ?: string ): Promise<{community : ICommunityEntity , isMember : boolean}>
 }

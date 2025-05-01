@@ -4,17 +4,32 @@ import { ICommunityRepository } from "../../../entities/repositoryInterfaces/com
 import { ICommunityEntity } from "../../../entities/models/community.entity";
 import { CustomError } from "../../../entities/utils/custom-error";
 import { HTTP_STATUS } from "../../../shared/constants";
+import { ICommunityMemberRepository } from "../../../entities/repositoryInterfaces/community-contest/community-member-repository.interface";
 
 @injectable()
 export class FindCommunityBySlugUsecase implements IFindCommunityBySlugUsecase {
     constructor(
-        @inject('ICommunityRepository') private communityRepository : ICommunityRepository
+        @inject('ICommunityRepository') private communityRepository : ICommunityRepository,
+        @inject('ICommunityMemberRepository') private communityMemberRepository : ICommunityMemberRepository
     ){}
 
-    async execute(slug: string): Promise<ICommunityEntity | null> {
+    async execute(slug: string  , userId ?: string): Promise<{community : ICommunityEntity , isMember : boolean}> {
         if(!slug) {
             throw new CustomError('Slug is required',HTTP_STATUS.BAD_REQUEST);
         }
-        return await this.communityRepository.findBySlug(slug);
+
+        const community = await this.communityRepository.findBySlug(slug);
+
+        console.log('got the userid and community id : ',userId,community?._id);
+        let isMember = false;
+        if(userId && community?._id) { 
+            console.log(userId,community);
+            isMember = await this.communityMemberRepository.isMember(community?._id as string,userId)
+        }
+        
+        return {
+            community : community as ICommunityEntity,
+            isMember : isMember as boolean
+        }
     }
 }

@@ -152,6 +152,10 @@ import { IFindCommunityBySlugUsecase } from "../../entities/usecaseInterfaces/co
 import { FindCommunityBySlugUsecase } from "../../useCases/community-contest/community/find-by-slug.usecase";
 import { IUpdateCommunityUsecase } from "../../entities/usecaseInterfaces/community-contest/community/update-community-usecase.interface";
 import { UpdateCommunityUsecase } from "../../useCases/community-contest/community/update-community.usecase";
+import { ICreateCommunityMemberUsecase } from "../../entities/usecaseInterfaces/community-contest/community/create-community-member-usecase.interface";
+import { CreateCommunityMemberUsecase } from "../../useCases/community-contest/community/create-community-member.usecase";
+import { ILeaveCommunityUsecase } from "../../entities/usecaseInterfaces/community-contest/community/leave-community-usecase.interface";
+import { LeaveCommunityUsecase } from "../../useCases/community-contest/community/leave-community.usecase";
 
 
 export class UsecaseRegistry {
@@ -437,7 +441,7 @@ export class UsecaseRegistry {
       useClass : UpdateLastSeenUsecase
     })
 
-    // |--------------------------------------------------------- Chat Management ---------------------------------------------------|
+    // |--------------------------------------------------------- Community Management ---------------------------------------------------|
     container.register<ICreateCommunityUsecase>('ICreateCommunityUsecase',{
       useClass : CreateCommunityUsecase
     })
@@ -456,6 +460,14 @@ export class UsecaseRegistry {
 
     container.register<IUpdateCommunityUsecase>('IUpdateCommunityUsecase',{
       useClass : UpdateCommunityUsecase
+    })
+
+    container.register<ICreateCommunityMemberUsecase>('ICreateCommunityMemberUsecase',{
+      useClass : CreateCommunityMemberUsecase
+    })
+
+    container.register<ILeaveCommunityUsecase>('ILeaveCommunityUsecase',{
+      useClass : LeaveCommunityUsecase
     })
   }
 }

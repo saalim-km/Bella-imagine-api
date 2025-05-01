@@ -8,6 +8,8 @@ import { IDeleteCommunityUsecase } from "../../../entities/usecaseInterfaces/com
 import { IFindCommunityBySlugUsecase } from "../../../entities/usecaseInterfaces/community-contest/community/find-by-slug-usecase.interface";
 import { IUpdateCommunityUsecase } from "../../../entities/usecaseInterfaces/community-contest/community/update-community-usecase.interface";
 import { ICommunityEntity } from "../../../entities/models/community.entity";
+import { ICreateCommunityMemberUsecase } from "../../../entities/usecaseInterfaces/community-contest/community/create-community-member-usecase.interface";
+import { CustomRequest } from "../../middlewares/auth.middleware";
 
 @injectable()
 export class CommunityController implements ICommunityController {
@@ -16,7 +18,8 @@ export class CommunityController implements ICommunityController {
         @inject("IGetAllCommunityUsecase") private getAllCommunityUsecase : IGetAllCommunityUsecase,
         @inject('IDeleteCommunityUsecase') private deleteCommunityUsecase : IDeleteCommunityUsecase,
         @inject("IFindCommunityBySlugUsecase") private findCommunityBySlugUsecase : IFindCommunityBySlugUsecase,
-        @inject('IUpdateCommunityUsecase') private updateCommunityUsecase : IUpdateCommunityUsecase
+        @inject('IUpdateCommunityUsecase') private updateCommunityUsecase : IUpdateCommunityUsecase,
+        @inject('ICreateCommunityMemberUsecase') private createCommuintyMember : ICreateCommunityMemberUsecase
     ){}
 
     async createCommunity(req: Request, res: Response): Promise<void> {
@@ -55,14 +58,15 @@ export class CommunityController implements ICommunityController {
 
     async findCommunityBySlug(req: Request, res: Response): Promise<void> {
         try {
-            console.log(req.params);
             const {slug} = req.params;
-            console.log('findCommunityBySlug : ',slug);
-            const community = await this.findCommunityBySlugUsecase.execute(`r/${slug}`)
+            const {_id} = (req as CustomRequest).user
+            const communitySlug = `r/${slug}`;
+            const community = await this.findCommunityBySlugUsecase.execute(communitySlug,_id)
+            console.log(community);
             res.status(HTTP_STATUS.OK).json(community);
         } catch (error) {
             console.log(error);
-        }
+        }   
     }
 
     async updateCommunity(req: Request, res: Response): Promise<void> {
@@ -70,6 +74,16 @@ export class CommunityController implements ICommunityController {
             const {communityId , dto } : {communityId : string , dto : Partial<ICommunityEntity>} = req.body;
             await this.updateCommunityUsecase.execute(communityId,dto)
             res.status(HTTP_STATUS.OK).json({success : true , message : SUCCESS_MESSAGES.UPDATE_SUCCESS})
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async createCommunityMember(req: Request, res: Response): Promise<void> {
+        try {
+            console.log('createCommunityMember',req.body);
+            await this.createCommuintyMember.execute(req.body)
+            res.status(HTTP_STATUS.CREATED).json({success: true, message : SUCCESS_MESSAGES.JOINED_SUCESS})
         } catch (error) {
             console.log(error);
         }

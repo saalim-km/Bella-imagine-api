@@ -175,5 +175,9 @@ export class ClientRoute extends BaseRoute {
     this.router.get('/client/community/:slug',verifyAuth,authorizeRole(['client']),(req: Request, res: Response)=> {
       communityController.findCommunityBySlug(req,res)
     })
+
+    this.router.post('/client/community/join',verifyAuth,authorizeRole(['client']),(req: Request, res: Response)=> {
+      communityController.createCommunityMember(req,res)
+    })
   }
 }
