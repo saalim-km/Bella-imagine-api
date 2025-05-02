@@ -43,4 +43,11 @@ export class ConversationRepository implements IConversationRepository {
             $inc : {[field] : 1}
         })
     }
+
+    async isConversationExists(clientId: string, vendorId: string): Promise<IConversationEntity | null> {
+        return await ConversationModel.findOne({
+            "client._id" : clientId,
+            "vendor._id" : vendorId
+        })
+    }
 }

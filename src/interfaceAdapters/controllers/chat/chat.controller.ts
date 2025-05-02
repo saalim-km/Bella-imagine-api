@@ -57,7 +57,7 @@ export class ChatController implements IChatController {
                 console.log('join event triggered 😘',userId);
                 socket.join(userId)
                 await this.updateUserOnlineStatus.execute(userId,userType,true)
-                socket.broadcast.emit('user_status',{userId , userType , status : true  })
+                socket.broadcast.emit('user_status',{userId , userType , status : true })
             })
 
 
