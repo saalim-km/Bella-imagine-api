@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
+  import { Request, Response } from "express";
 
-export interface IGetAllPaginatedCategoryController {
-  handle(req: Request, res: Response): Promise<void>;
-}
+  export interface IGetAllPaginatedCategoryController {
+    handle(req: Request, res: Response): Promise<void>;
+  }

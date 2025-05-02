@@ -42,5 +42,14 @@ export const config = {
 
   stripe : {
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY || '',
+  },
+
+  s3: {
+    AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || '',
+    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || '',
+    AWS_REGION: process.env.AWS_REGION || '',
+    AWS_BUCKET_NAME : process.env.BUCKET_NAME || '',
+    AWS_USERS_FOLDER : process.env.AWS_USERS_FOLDER || '',
+    AWS_WORK_SAMPLES_FOLDER : process.env.AWS_WORK_SAMPLES_FOLDER || ''
   }
 };

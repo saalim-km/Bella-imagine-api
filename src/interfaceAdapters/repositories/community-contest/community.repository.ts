@@ -7,7 +7,7 @@ import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 @injectable()
 export class ComminityRepository implements ICommunityRepository {
   async create(dto: Partial<ICommunityEntity>): Promise<void> {
-    const newMember = await CommunityModel.create(dto);
+    await CommunityModel.create(dto);
   }
 
   async findAll(
