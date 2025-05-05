@@ -133,7 +133,14 @@ export class AdminRoute extends BaseRoute {
         (req: Request, res: Response) => {
           updateCategoryController.handle(req, res);
         }
-      );
+      )
+      .put(
+        verifyAuth,
+        authorizeRole(['admin']),
+        (req: Request, res: Response)=> {
+          updateCategoryController.handle(req,res)
+        }
+      )
 
     // Category Request Management Routes
     // Manage category requests (get and update status)
