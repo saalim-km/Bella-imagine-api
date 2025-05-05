@@ -38,7 +38,7 @@ export class UpdateVendorRequestUsecase implements IUpdateVendorRequestUsecase {
             }
 
             vendor.isVerified = 'reject';
-            vendor.verificationDocuments = [];
+            vendor.verificationDocument = '';
             await this.vendorRepository.updateVendorProfile(receiverId,vendor);
             const notification : INotificationEntity = {
                 receiverId : receiverId,

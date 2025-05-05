@@ -9,7 +9,7 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import { config } from "../../shared/config";
-import { createReadStream, existsSync, unlink } from "fs";
+import { createReadStream } from "fs";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import path from "path";
 
@@ -39,7 +39,7 @@ export class AwsS3Service implements IAwsS3Service {
 
     try {
       await this.s3Client.send(new PutObjectCommand(uploadParams));
-      return key; // Return the key only
+      return key;
     } catch (error) {
       console.error("S3 upload error:", error);
       throw new Error("Failed to upload file to S3");

@@ -58,7 +58,8 @@ export class VendorRegisterStrategy implements IRegisterStrategy<IVendorEntity> 
                 categories: [],
                 languages: user.languages || [],
                 description: user.description || "",
-                verificationDocuments : [],
+                isOnline : false,
+                verificationDocument : "",
                 workSamples: [],
                 services : [],
             })
@@ -81,7 +82,8 @@ export class VendorRegisterStrategy implements IRegisterStrategy<IVendorEntity> 
                 categories: [],
                 languages: user.languages || [],
                 description: user.description || "",
-                verificationDocuments : [],
+                verificationDocument : "",
+                isOnline: false,
                 workSamples: [],
                 services : [],
             })

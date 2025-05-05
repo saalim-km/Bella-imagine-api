@@ -72,8 +72,8 @@ export const vendorSchema = new mongoose.Schema<IVendorEntity>(
     isActive: {
       type: Boolean,
     },
-    verificationDocuments: {
-      type: [String],
+    verificationDocument: {
+      type : String,
     },
     isOnline: {
       type: Boolean,

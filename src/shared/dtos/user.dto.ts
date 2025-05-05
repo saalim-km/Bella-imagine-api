@@ -48,5 +48,5 @@ export interface UpdateVendorDto {
     portfolioWebsite ?: string;
     profileDescription ?: string;
     profileImage?: string; 
-    verificationDocumentUrls ?: string[]
+    verificationDocument ?: string;
 }
