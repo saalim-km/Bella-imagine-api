@@ -11,6 +11,7 @@ import {
 import { config } from "../../shared/config";
 import { createReadStream, existsSync, unlink } from "fs";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import path from "path";
 
 @injectable()
 export class AwsS3Service implements IAwsS3Service {
@@ -25,27 +26,24 @@ export class AwsS3Service implements IAwsS3Service {
     });
   }
 
-  async uploadFileToAws(fileName: string, filePath: string): Promise<void> {
+  async uploadFileToAws(key: string, filePath: string): Promise<string> {
+    const fileStream = createReadStream(filePath);
+    const contentType = this.getContentType(key);
+
     const uploadParams = {
       Bucket: config.s3.AWS_BUCKET_NAME,
-      Key: fileName,
-      Body: createReadStream(filePath),
+      Key: key,
+      Body: fileStream,
+      ContentType: contentType,
     };
 
-    await this.s3Client
-      .send(new PutObjectCommand(uploadParams))
-      .then((data) => {
-        if (existsSync(filePath)) {
-          unlink(filePath, (err) => {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log("file deleted successfully");
-            }
-          });
-        }
-        console.log("image uploaded to s3 bucker 👍");
-      });
+    try {
+      await this.s3Client.send(new PutObjectCommand(uploadParams));
+      return key; // Return the key only
+    } catch (error) {
+      console.error("S3 upload error:", error);
+      throw new Error("Failed to upload file to S3");
+    }
   }
 
   async getFileUrlFromAws(
@@ -100,5 +98,15 @@ export class AwsS3Service implements IAwsS3Service {
     };
 
     await this.s3Client.send(new DeleteObjectCommand(uploadParams))
+  }
+
+  private getContentType(filename: string): string {
+    const ext = path.extname(filename).toLowerCase();
+    switch (ext) {
+      case '.jpg': case '.jpeg': return 'image/jpeg';
+      case '.png': return 'image/png';
+      case '.webp': return 'image/webp';
+      default: return 'application/octet-stream';
+    }
   }
 }

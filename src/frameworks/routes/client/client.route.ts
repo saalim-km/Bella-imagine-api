@@ -23,6 +23,7 @@ import {
   updateConfirmPayment,
 } from "../../di/resolver";
 import { checkStatus } from "../../../interfaceAdapters/middlewares/block-status.middleware";
+import { upload } from "../../../interfaceAdapters/middlewares/multer.middleware";
 
 export class ClientRoute extends BaseRoute {
   constructor() {
@@ -63,6 +64,7 @@ export class ClientRoute extends BaseRoute {
       .put(
         verifyAuth,
         authorizeRole(["client"]),
+        upload.single('profileImage'),
         (req: Request, res: Response) => {
           updateClientController.handle(req, res);
         }

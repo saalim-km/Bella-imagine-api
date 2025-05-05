@@ -10,23 +10,40 @@ import {
 } from "../../../shared/constants";
 import { ZodError } from "zod";
 import { CustomError } from "../../../entities/utils/custom-error";
+import { IAwsS3Service } from "../../../entities/services/awsS3-service.interface";
+import path from "path";
+import { unlinkSync } from "fs";
 
 @injectable()
 export class UpdateClientController implements IUpdateClientController {
   constructor(
     @inject("IUpdateClientUsecase")
-    private updateClientUseCase: IUpdateClientUsecase
+    private updateClientUseCase: IUpdateClientUsecase,
+    @inject('IAwsS3Service') private awsS3Service : IAwsS3Service
   ) {}
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      console.log(
-        "------------------------in update clinet controller----------------------"
-      );
+      console.log("In update client controller");
+      
       const { _id } = (req as CustomRequest).user;
-      console.log(_id);
-      console.log(req.body);
+      const updateData = { ...req.body };
 
-      await this.updateClientUseCase.excute(_id, req.body);
+      // Handle file upload if present
+      if (req.file) {
+        // Generate unique key for S3
+        const fileKey = `profile-images/${_id}/${Date.now()}${path.extname(req.file.originalname)}`;
+        
+        // Upload to S3 (returns the key)
+        await this.awsS3Service.uploadFileToAws(fileKey, req.file.path);
+        
+        // Store only the key in update data
+        updateData.profileImage = fileKey;
+        
+        // Delete local file
+        unlinkSync(req.file.path);
+      }
+
+      await this.updateClientUseCase.excute(_id, updateData);
 
       res
         .status(HTTP_STATUS.OK)

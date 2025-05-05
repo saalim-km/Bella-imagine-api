@@ -50,6 +50,7 @@ import { GetUserChatsController } from "../../interfaceAdapters/controllers/chat
 import { ChatController } from "../../interfaceAdapters/controllers/chat/chat.controller";
 import { GetContactsController } from "../../interfaceAdapters/controllers/chat/get-contacts.controller";
 import { CommunityController } from "../../interfaceAdapters/controllers/community-contest/community.controller";
+import { AwsS3Service } from "../../interfaceAdapters/services/awsS3.service";
 
 export class ControllerRegistry {
   static registerController(): void {
@@ -233,6 +234,11 @@ export class ControllerRegistry {
     //-------------------------------------- Chat Management ----------------------------------------------|
     container.register('CommunityController',{
       useClass : CommunityController
+    })
+
+    //-------------------------------------- AWS-S3 Management ----------------------------------------------|
+    container.register('IAwsS3Service',{
+      useClass : AwsS3Service
     })
   }
 }

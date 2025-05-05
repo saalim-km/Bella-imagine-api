@@ -12,6 +12,7 @@ export class UpdateClientUsecase implements IUpdateClientUsecase {
     ){}
     async excute(id : string , data: UpdateClientDto): Promise<void> {
         console.log('----------------------updateClientUseCase-----------------------------');
+        console.log(data);
 
         const client = await this.clientRepository.findById(id);
         console.log('client data : ',client);
