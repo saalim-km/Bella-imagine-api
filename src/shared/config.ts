@@ -51,5 +51,13 @@ export const config = {
     AWS_BUCKET_NAME : process.env.BUCKET_NAME || '',
     AWS_USERS_FOLDER : process.env.AWS_USERS_FOLDER || '',
     AWS_WORK_SAMPLES_FOLDER : process.env.AWS_WORK_SAMPLES_FOLDER || ''
+  },
+
+  redis : {
+    REDIS_USERNAME : process.env.REDIS_USERNAME || '',
+    REDIS_PASS : process.env.REDIS_PASS || '',
+    REDIS_HOST : process.env.REDIS_HOST || '',
+    REDIS_PORT : process.env.REDIS_PORT || '',
+    REDIS_PRESIGNED_URL_EXPIRY : process.env.REDIS_PRESIGNRED_URL_EXPIRY ? parseInt(process.env.REDIS_PRESIGNRED_URL_EXPIRY, 10) || 86400 : 86400
   }
 };

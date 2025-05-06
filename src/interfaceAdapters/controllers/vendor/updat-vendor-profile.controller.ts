@@ -19,67 +19,23 @@ export class UpdateVendorController implements IUpdateVendorController {
   ) {}
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      console.log('got the files bitch : ',req.files);
-      console.log('data for update : ',req.body);
       const user = (req as CustomRequest).user;
+      const files = req.files as { [fieldname: string]: Express.Multer.File[] };
       const updateData = { ...req.body };
-      
-      // Type the files object correctly
-      const files = req.files as { 
-        [fieldname: string]: Express.Multer.File[]
-      };
 
-      // Handle profile image upload if exists
-      if (files.profileImage?.[0]) {
-        const profileImage = files.profileImage[0];
-        const s3Key = `profile-images/${user._id}/${Date.now()}${path.extname(profileImage.originalname)}`;
-        
-        await this.awsS3Service.uploadFileToAws(s3Key, profileImage.path);
-        updateData.profileImage = s3Key;
-        
-        // Delete local file after upload
-        unlinkSync(profileImage.path);
-      }
-
-      // Handle verification document upload if exists
-      if (files.verificationDocument?.[0]) {
-        const verificationDoc = files.verificationDocument[0];
-        const s3Key = `vendor-documents/${user._id}/${Date.now()}${path.extname(verificationDoc.originalname)}`;
-        
-        await this.awsS3Service.uploadFileToAws(s3Key, verificationDoc.path);
-        updateData.verificationDocument = s3Key;
-        
-        // Delete local file after upload
-        unlinkSync(verificationDoc.path);
-      }
-
-      console.log('updated data after upoading to s3 : ',updateData);
-      const vendor = await this.updateVendorProfileUsecase.execute(user._id, updateData);
-      res.status(HTTP_STATUS.OK).json({success : true , message : SUCCESS_MESSAGES.UPDATE_SUCCESS,vendor : vendor})
+      const vendor = await this.updateVendorProfileUsecase.execute(user._id, updateData, files);
+      res.status(HTTP_STATUS.OK).json({ success: true, message: SUCCESS_MESSAGES.UPDATE_SUCCESS, vendor });
     } catch (error) {
       if (error instanceof ZodError) {
-        const errors = error.errors.map((err) => ({
-          message: err.message,
-        }));
-        console.log(errors);
-        res.status(HTTP_STATUS.BAD_REQUEST).json({
-          success: false,
-          message: ERROR_MESSAGES.VALIDATION_ERROR,
-          errors,
-        });
-        return;
+        const errors = error.errors.map(err => ({ message: err.message }));
+         res.status(HTTP_STATUS.BAD_REQUEST).json({ success: false, message: ERROR_MESSAGES.VALIDATION_ERROR, errors });
+         return
       }
       if (error instanceof CustomError) {
-        console.log(error);
-        res
-          .status(error.statusCode)
-          .json({ success: false, message: error.message });
-        return;
+         res.status(error.statusCode).json({ success: false, message: error.message });
+         return
       }
-      console.log(error);
-      res
-        .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
-        .json({ success: false, message: ERROR_MESSAGES.SERVER_ERROR });
+      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ success: false, message: ERROR_MESSAGES.SERVER_ERROR });
     }
   }
 }

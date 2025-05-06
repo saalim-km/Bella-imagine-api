@@ -8,6 +8,9 @@ import { ILoginStrategy } from "./interfaces/login-strategy.interface";
 import { CustomError } from "../../entities/utils/custom-error";
 import { IClientEntity } from "../../entities/models/client.entity";
 import { IAwsS3Service } from "../../entities/services/awsS3-service.interface";
+import { redisClient } from "../../frameworks/redis/redis.client";
+import { config } from "../../shared/config";
+import logger from "../../shared/utils/logger.utils";
 
 @injectable()
 export class GoogleLoginUsecase implements IGoogleUseCase {
@@ -94,16 +97,28 @@ export class GoogleLoginUsecase implements IGoogleUseCase {
     if (existingUser) {
       if (existingUser.googleId) {
         if (existingUser?.profileImage) {
-          const isFileAvailable =
-            await this.awsS3Service.isFileAvailableInAwsBucket(
-              existingUser.profileImage
-            );
-          if (isFileAvailable) {
-            existingUser.profileImage =
-              await this.awsS3Service.getFileUrlFromAws(
-                existingUser.profileImage,
-                604800
+          const cachedUrl = await redisClient.get(
+            `profile-url:${existingUser._id}`
+          );
+          if (cachedUrl) {
+            existingUser.profileImage = cachedUrl;
+          } else {
+            const isFileAvailable =
+              await this.awsS3Service.isFileAvailableInAwsBucket(
+                existingUser.profileImage
               );
+            if (isFileAvailable) {
+              const presignedUrl = await this.awsS3Service.getFileUrlFromAws(
+                existingUser.profileImage,
+                config.redis.REDIS_PRESIGNED_URL_EXPIRY
+              );
+              existingUser.profileImage = presignedUrl;
+              await redisClient.setEx(
+                `profile-url:${existingUser._id}`,
+                config.redis.REDIS_PRESIGNED_URL_EXPIRY,
+                presignedUrl
+              );
+            }
           }
         }
         return {
@@ -139,18 +154,31 @@ export class GoogleLoginUsecase implements IGoogleUseCase {
       );
     }
 
+    // Inside the newUser block
     if (newUser?.profileImage) {
-      const isFileAvailable =
-        await this.awsS3Service.isFileAvailableInAwsBucket(
-          newUser.profileImage
-        );
-      if (isFileAvailable) {
-        newUser.profileImage = await this.awsS3Service.getFileUrlFromAws(
-          newUser.profileImage,
-          604800
-        );
+      const cachedUrl = await redisClient.get(`profile-url:${newUser._id}`);
+      if (cachedUrl) {
+        newUser.profileImage = cachedUrl;
+      } else {
+        const isFileAvailable =
+          await this.awsS3Service.isFileAvailableInAwsBucket(
+            newUser.profileImage
+          );
+        if (isFileAvailable) {
+          const presignedUrl = await this.awsS3Service.getFileUrlFromAws(
+            newUser.profileImage,
+            config.redis.REDIS_PRESIGNED_URL_EXPIRY
+          );
+          newUser.profileImage = presignedUrl;
+          await redisClient.setEx(
+            `profile-url:${newUser._id}`,
+            config.redis.REDIS_PRESIGNED_URL_EXPIRY,
+            presignedUrl
+          );
+        }
       }
     }
+
     console.log("", newUser);
     return {
       email,

@@ -23,37 +23,21 @@ export class UpdateClientController implements IUpdateClientController {
   ) {}
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      console.log("In update client controller");
-      
       const { _id } = (req as CustomRequest).user;
       const updateData = { ...req.body };
 
-      // Handle file upload if present
+      await this.updateClientUseCase.excute(_id, updateData, req.file);
+
       if (req.file) {
-        // Generate unique key for S3
-        const fileKey = `profile-images/${_id}/${Date.now()}${path.extname(req.file.originalname)}`;
-        
-        // Upload to S3 (returns the key)
-        await this.awsS3Service.uploadFileToAws(fileKey, req.file.path);
-        
-        // Store only the key in update data
-        updateData.profileImage = fileKey;
-        
-        // Delete local file
         unlinkSync(req.file.path);
       }
-
-      await this.updateClientUseCase.excute(_id, updateData);
 
       res
         .status(HTTP_STATUS.OK)
         .json({ success: true, message: SUCCESS_MESSAGES.UPDATE_SUCCESS });
     } catch (error) {
       if (error instanceof ZodError) {
-        const errors = error.errors.map((err) => ({
-          message: err.message,
-        }));
-        console.log(errors);
+        const errors = error.errors.map((err) => ({ message: err.message }));
         res.status(HTTP_STATUS.BAD_REQUEST).json({
           success: false,
           message: ERROR_MESSAGES.VALIDATION_ERROR,
@@ -62,13 +46,11 @@ export class UpdateClientController implements IUpdateClientController {
         return;
       }
       if (error instanceof CustomError) {
-        console.log(error);
         res
           .status(error.statusCode)
           .json({ success: false, message: error.message });
         return;
       }
-      console.log(error);
       res
         .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
         .json({ success: false, message: ERROR_MESSAGES.SERVER_ERROR });

@@ -10,6 +10,7 @@ import { PrivateRoute } from "../routes/common/private.route";
 import http from "http";
 import { ChatRoute } from "../routes/chat/chat.route";
 import { chatController } from "../di/resolver";
+import logger from "../../shared/utils/logger.utils";
 
 export class Server {
     private _app : Application;
@@ -35,7 +36,10 @@ export class Server {
         );
 
         this._app.use(cookieparser());
-        // this._app.use(logger)
+        this._app.use((req,res,next)=> {
+            logger.info(`${req.method} ${req.url}`);
+            next();
+        })
         this._app.use(express.json())
         this._app.use(
             rateLimit({
