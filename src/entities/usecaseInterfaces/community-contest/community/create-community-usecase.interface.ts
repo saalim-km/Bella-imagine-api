@@ -1,6 +1,5 @@
-import { ICommunityMemberEntity } from "../../../models/community-members.entity";
-import { ICommunityEntity } from "../../../models/community.entity";
+import { CreateCommunityDto } from "../../../../shared/types/community/community.types";
 
 export interface ICreateCommunityUsecase {
-    execute(dto : Partial<ICommunityEntity>) : Promise<void>
+    execute(dto : CreateCommunityDto) : Promise<void>
 }

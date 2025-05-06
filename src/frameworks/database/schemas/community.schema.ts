@@ -18,11 +18,11 @@ const communitySchema = new Schema<ICommunityEntity>({
     rules: {
         type: [String],
     },
-    coverImageUrl: {
+    coverImage: {
         type: String,
         default: null
     },
-    iconImageUrl: {
+    iconImage: {
         type: String,
         default: null
     },

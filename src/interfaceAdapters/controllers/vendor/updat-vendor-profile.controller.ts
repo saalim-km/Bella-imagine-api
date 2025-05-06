@@ -26,7 +26,7 @@ export class UpdateVendorController implements IUpdateVendorController {
       
       // Type the files object correctly
       const files = req.files as { 
-        [fieldname: string]: Express.Multer.File[] 
+        [fieldname: string]: Express.Multer.File[]
       };
 
       // Handle profile image upload if exists

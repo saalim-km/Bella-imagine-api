@@ -25,27 +25,34 @@ export class ComminityRepository implements ICommunityRepository {
       .skip(skip)
       .limit(limit)
       .lean()
-      .sort({createdAt : -1})
+      .sort({ createdAt: -1 });
 
     return {
-      data : communities,
+      data: communities,
       total,
     };
   }
 
   async delete(communityId: string): Promise<void> {
-    await CommunityModel.findByIdAndDelete(communityId)
-  }
-  
-  async findBySlug(slug: string): Promise<ICommunityEntity | null> {
-    return await CommunityModel.findOne({slug : slug})
+    await CommunityModel.findByIdAndDelete(communityId);
   }
 
-  async updateCommunity(communityId: string, dto: Partial<ICommunityEntity>): Promise<void> {
-    await CommunityModel.findByIdAndUpdate(communityId, dto)
+  async findBySlug(slug: string): Promise<ICommunityEntity | null> {
+    return await CommunityModel.findOne({ slug: slug });
+  }
+
+  async updateCommunity(
+    communityId: string,
+    dto: Partial<ICommunityEntity>
+  ): Promise<void> {
+    await CommunityModel.findByIdAndUpdate(communityId, dto);
   }
 
   async findById(communityId: string): Promise<ICommunityEntity | null> {
-    return await CommunityModel.findById(communityId)
+    return await CommunityModel.findById(communityId);
   }
+
+  async findByName(name: string): Promise<ICommunityEntity | null> {
+    return await CommunityModel.findOne({ name: { $regex: `^${name}$`, $options: 'i' } });
+}
 }

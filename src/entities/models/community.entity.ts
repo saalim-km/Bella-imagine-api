@@ -6,8 +6,8 @@ export interface ICommunityEntity {
   name: string; 
   description: string; 
   rules: string[]; 
-  coverImageUrl: string | null; 
-  iconImageUrl: string | null; 
+  coverImage: string | null; 
+  iconImage: string | null; 
   isPrivate: boolean; 
   isFeatured: boolean; 
   memberCount: number; 

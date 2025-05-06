@@ -8,4 +8,5 @@ export interface ICommunityRepository {
     findBySlug(slug : string): Promise<ICommunityEntity | null>
     updateCommunity(communityId: string, dto: Partial<ICommunityEntity>): Promise<void>
     findById(communityId: string): Promise<ICommunityEntity | null>
+    findByName(name: string): Promise<ICommunityEntity | null>;
 }

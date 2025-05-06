@@ -23,6 +23,7 @@ import {
   updateUserStatusController,
   updateVendorRequestController,
 } from "../../di/resolver";
+import { upload } from "../../../interfaceAdapters/middlewares/multer.middleware";
 
 export class AdminRoute extends BaseRoute {
   constructor() {
@@ -183,12 +184,16 @@ export class AdminRoute extends BaseRoute {
       }
     );
 
-    // Contest-Commnity
+    // Commnity-Contest
     this.router
       .route("/admin/community")
       .post(
         verifyAuth,
         authorizeRole(["admin"]),
+        upload.fields([
+          {name : 'iconImage' , maxCount : 1},
+          {name : 'coverImage' , maxCount : 1}
+        ]),
         (req: Request, res: Response) => {
           communityController.createCommunity(req, res);
         }
@@ -208,6 +213,10 @@ export class AdminRoute extends BaseRoute {
       .put(
         verifyAuth,
         authorizeRole(["admin"]),
+        upload.fields([
+          {name : 'iconImageUrl' , maxCount : 1},
+          {name : 'coverImageUrl' , maxCount : 1}
+        ]),
         (req: Request, res: Response) => {
           communityController.updateCommunity(req, res);
         }
