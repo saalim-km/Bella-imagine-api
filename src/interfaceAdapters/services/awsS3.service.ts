@@ -109,4 +109,8 @@ export class AwsS3Service implements IAwsS3Service {
       default: return 'application/octet-stream';
     }
   }
+
+  getPublicFileUrl(fileKey: string): string {
+    return `https://${config.s3.AWS_BUCKET_NAME}.s3.${config.s3.AWS_REGION}.amazonaws.com/${fileKey}`;
+  }  
 }

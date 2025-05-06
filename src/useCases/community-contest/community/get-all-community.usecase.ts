@@ -28,8 +28,8 @@ export class GetAllCommunityUsecase implements IGetAllCommunityUsecase {
     paginated.data = await Promise.all(
       paginated.data.map(async (community) => ({
         ...community,
-        iconImage: community.iconImage ? await this.awsS3Service.getFileUrlFromAws(community.iconImage, 604800) : null,
-        coverImage: community.coverImage ? await this.awsS3Service.getFileUrlFromAws(community.coverImage, 604800) : null,
+        iconImage: community.iconImage ? await this.awsS3Service.getPublicFileUrl(community.iconImage) : null,
+        coverImage: community.coverImage ? await this.awsS3Service.getPublicFileUrl(community.coverImage) : null,
       }))
     );
   

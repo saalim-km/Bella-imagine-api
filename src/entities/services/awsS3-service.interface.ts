@@ -6,4 +6,5 @@ export interface IAwsS3Service {
     isFileAvailableInAwsBucket(fileName: string) : Promise<boolean>
     deleteFileFromAws (fileName: string) : Promise<void>
     isFileAvailableInAwsBucket (fileName : string) : Promise<boolean>
+    getPublicFileUrl(fileKy: string): string
 }
