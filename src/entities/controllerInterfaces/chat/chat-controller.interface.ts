@@ -6,5 +6,5 @@ export interface IChatController {
   io?: SocketIOServer;
   initialize(server: HTTPServer): void;
   initializeSocketEvents(): void;
-  handle(req : Request , res : Response): Promise<void>
+  uploadMedia(req : Request , res : Response): Promise<void>
 }

@@ -5,12 +5,16 @@ import { IMessageEntity } from "../../entities/models/message.entity";
 import IConversationRepository from "../../entities/repositoryInterfaces/chat/conversation-repository.interface";
 import { CustomError } from "../../entities/utils/custom-error";
 import { HTTP_STATUS, TRole } from "../../shared/constants";
+import { redisClient } from "../../frameworks/redis/redis.client";
+import { config } from "../../shared/config";
+import { IAwsS3Service } from "../../entities/services/awsS3-service.interface";
 
 @injectable()
 export class SendMessageUsecase implements ISendMessageUsecase {
     constructor(
         @inject('IMessageRepository') private messageRepository : IMessageRepository,
-        @inject('IConversationRepository') private conversationRepository : IConversationRepository
+        @inject('IConversationRepository') private conversationRepository : IConversationRepository,
+        @inject('IAwsS3Service') private awsS3Service : IAwsS3Service
     ){}
 
     async execute(dto: Partial<IMessageEntity>): Promise<IMessageEntity> {
@@ -24,7 +28,7 @@ export class SendMessageUsecase implements ISendMessageUsecase {
             senderId : dto.senderId,
             text : dto.text || '',
             type : dto.type,
-            mediaUrl : dto.mediaUrl || "",
+            mediaKey : dto.mediaKey || "",
             timestamp : new Date(),
             isDeleted : false
         }
@@ -44,6 +48,24 @@ export class SendMessageUsecase implements ISendMessageUsecase {
         ])
         
         console.log('got the new messae from repo : ',newMessage);
+
+        if (newMessage.mediaKey) {
+            let mediaUrl = await redisClient.get(newMessage.mediaKey);
+        
+            if (!mediaUrl) {
+                mediaUrl = await this.awsS3Service.getFileUrlFromAws(
+                    newMessage.mediaKey,
+                    config.redis.REDIS_PRESIGNED_URL_EXPIRY
+                );
+                await redisClient.setEx(
+                    newMessage.mediaKey,
+                    config.redis.REDIS_PRESIGNED_URL_EXPIRY,
+                    mediaUrl
+                );
+            }
+        
+            newMessage.mediaKey = mediaUrl;
+        }
         return newMessage
     }
 }

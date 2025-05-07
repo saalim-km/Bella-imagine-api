@@ -13,10 +13,10 @@ export const messageSchema = new mongoose.Schema<IMessageModel>(
     timestamp: { type: Date, required: true },
     type: {
       type: String,
-      enum: ["text", "media", "location"],
+      enum: ['text','image','location','video','document'],
       required: true,
     },
-    mediaUrl: { type: String },
+    mediaKey: { type: String },
     location: {
       latitude: { type: Number },
       longitude: { type: Number },

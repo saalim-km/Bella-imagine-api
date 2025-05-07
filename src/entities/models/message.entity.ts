@@ -7,7 +7,7 @@ export interface Reaction {
   username: string;
 }
 
-export type MessageType = 'text' | 'media' | 'location';
+export type MessageType = 'text' | 'image' | 'location' | 'video' | 'document'
 export type LocationType = {
   latitude: number;
   longitude: number;
@@ -20,7 +20,7 @@ export interface  IMessageEntity {
   text: string;
   timestamp: Date;
   type: MessageType;
-  mediaUrl?: string;
+  mediaKey?: string;
   location?: LocationType
   reactions?: Reaction[];
   isDeleted: boolean;
@@ -28,5 +28,6 @@ export interface  IMessageEntity {
   userType?: TRole;
   createdAt ?:  Date
   updatedAt ?:  Date
+  mediaUrl?: string
   __v ?:  number
 }

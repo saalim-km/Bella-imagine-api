@@ -63,8 +63,6 @@ export class CommunityController implements ICommunityController {
 
   async listCommunities(req: Request, res: Response): Promise<void> {
     try {
-      console.log(req.params);
-      console.log(req.query);
       const { page, limit } = req.query;
       const data = await this.getAllCommunityUsecase.execute({
         page: Number(page),

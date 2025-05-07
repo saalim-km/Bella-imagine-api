@@ -195,3 +195,648 @@
 [2025-05-06 21:29:32] INFO: [34mServer started running on port: 3002 ✅[0m
 [2025-05-06 21:29:36] INFO: [34mRedis connected successfully[0m
 [2025-05-06 21:29:36] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-06 21:29:39] INFO: [34mRedis connected successfully[0m
+[2025-05-06 21:29:39] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-06 21:30:09] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-06 21:30:09] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-06 21:30:09] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-06 21:30:10] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-06 21:30:42] INFO: [34mPOST /api/v_1/auth/login[0m
+[2025-05-06 21:46:44] INFO: [34mGET /api/v_1/_pvt/_ad/admin/community?page=1&limit=4[0m
+[2025-05-06 21:46:44] INFO: [34mFetching communities - Page: 1, Limit: 4[0m
+[2025-05-06 21:46:44] INFO: [34mTotal communities fetched: 2[0m
+[2025-05-06 21:46:44] INFO: [34m[CACHE MISS] icon URL for 6819ac716bc957b59ad27cda - Fetching from S3[0m
+[2025-05-06 21:46:44] INFO: [34m[CACHE MISS] icon URL for 6819a02ead8d62092597d483 - Fetching from S3[0m
+[2025-05-06 21:46:44] INFO: [34m[CACHE SET] icon URL for 6819ac716bc957b59ad27cda stored in Redis[0m
+[2025-05-06 21:46:44] INFO: [34m[CACHE SET] icon URL for 6819a02ead8d62092597d483 stored in Redis[0m
+[2025-05-06 21:46:44] INFO: [34m[CACHE MISS] cover URL for 6819ac716bc957b59ad27cda - Fetching from S3[0m
+[2025-05-06 21:46:44] INFO: [34m[CACHE MISS] cover URL for 6819a02ead8d62092597d483 - Fetching from S3[0m
+[2025-05-06 21:46:44] INFO: [34m[CACHE SET] cover URL for 6819ac716bc957b59ad27cda stored in Redis[0m
+[2025-05-06 21:46:44] INFO: [34m[CACHE SET] cover URL for 6819a02ead8d62092597d483 stored in Redis[0m
+[2025-05-06 21:46:57] INFO: [34mGET /api/v_1/_pvt/_ad/admin/community?page=1&limit=4[0m
+[2025-05-06 21:46:57] INFO: [34mFetching communities - Page: 1, Limit: 4[0m
+[2025-05-06 21:46:57] INFO: [34mTotal communities fetched: 2[0m
+[2025-05-06 21:46:57] INFO: [34m[CACHE HIT] icon URL for 6819ac716bc957b59ad27cda retrieved from Redis[0m
+[2025-05-06 21:46:57] INFO: [34m[CACHE HIT] icon URL for 6819a02ead8d62092597d483 retrieved from Redis[0m
+[2025-05-06 21:46:57] INFO: [34m[CACHE HIT] cover URL for 6819ac716bc957b59ad27cda retrieved from Redis[0m
+[2025-05-06 21:46:57] INFO: [34m[CACHE HIT] cover URL for 6819a02ead8d62092597d483 retrieved from Redis[0m
+[2025-05-06 21:48:02] INFO: [34mGET /api/v_1/_pvt/_ad/admin/community?page=1&limit=4[0m
+[2025-05-06 21:48:02] INFO: [34mFetching communities - Page: 1, Limit: 4[0m
+[2025-05-06 21:48:02] INFO: [34mTotal communities fetched: 2[0m
+[2025-05-06 21:48:02] INFO: [34m[CACHE HIT] icon URL for 6819ac716bc957b59ad27cda retrieved from Redis[0m
+[2025-05-06 21:48:02] INFO: [34m[CACHE HIT] icon URL for 6819a02ead8d62092597d483 retrieved from Redis[0m
+[2025-05-06 21:48:02] INFO: [34m[CACHE HIT] cover URL for 6819ac716bc957b59ad27cda retrieved from Redis[0m
+[2025-05-06 21:48:02] INFO: [34m[CACHE HIT] cover URL for 6819a02ead8d62092597d483 retrieved from Redis[0m
+[2025-05-06 21:49:40] INFO: [34mGET /api/v_1/_pvt/_ad/admin/community?page=1&limit=4[0m
+[2025-05-06 21:49:40] INFO: [34mFetching communities - Page: 1, Limit: 4[0m
+[2025-05-06 21:49:40] INFO: [34mTotal communities fetched: 2[0m
+[2025-05-06 21:49:40] INFO: [34m[CACHE HIT] icon URL for 6819ac716bc957b59ad27cda retrieved from Redis[0m
+[2025-05-06 21:49:40] INFO: [34m[CACHE HIT] icon URL for 6819a02ead8d62092597d483 retrieved from Redis[0m
+[2025-05-06 21:49:40] INFO: [34m[CACHE HIT] cover URL for 6819ac716bc957b59ad27cda retrieved from Redis[0m
+[2025-05-06 21:49:40] INFO: [34m[CACHE HIT] cover URL for 6819a02ead8d62092597d483 retrieved from Redis[0m
+[2025-05-06 21:51:48] INFO: [34mRedis connected successfully[0m
+[2025-05-06 21:51:48] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-06 21:56:10] INFO: [34mRedis connected successfully[0m
+[2025-05-06 21:56:10] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-06 21:56:19] INFO: [34mGET /api/v_1/_pvt/_ad/admin/community?page=1&limit=4[0m
+[2025-05-06 21:56:19] INFO: [34mFetching communities - Page: 1, Limit: 4[0m
+[2025-05-06 21:56:20] INFO: [34mTotal communities fetched: 2[0m
+[2025-05-06 21:56:20] INFO: [34m[CACHE HIT] icon URL for 6819ac716bc957b59ad27cda retrieved from Redis[0m
+[2025-05-06 21:56:20] INFO: [34m[CACHE HIT] icon URL for 6819a02ead8d62092597d483 retrieved from Redis[0m
+[2025-05-06 21:56:20] INFO: [34m[CACHE HIT] cover URL for 6819ac716bc957b59ad27cda retrieved from Redis[0m
+[2025-05-06 21:56:20] INFO: [34m[CACHE HIT] cover URL for 6819a02ead8d62092597d483 retrieved from Redis[0m
+[2025-05-07 10:13:17] INFO: [34mRedis connected successfully[0m
+[2025-05-07 10:13:17] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 10:13:29] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:13:29] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:13:29] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 10:13:40] INFO: [34mPOST /api/v_1/auth/google-auth[0m
+[2025-05-07 10:13:41] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:13:41] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:29:24] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:29:24] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:29:24] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 10:29:24] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:29:25] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:29:25] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 10:29:25] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:29:27] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:29:27] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:29:37] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:29:37] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:30:00] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:30:00] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:34:21] INFO: [34mRedis connected successfully[0m
+[2025-05-07 10:34:21] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 10:37:53] INFO: [34mRedis connected successfully[0m
+[2025-05-07 10:37:53] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 10:38:03] INFO: [34mRedis connected successfully[0m
+[2025-05-07 10:38:03] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 10:38:05] INFO: [34mRedis connected successfully[0m
+[2025-05-07 10:38:05] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 10:38:27] INFO: [34mRedis connected successfully[0m
+[2025-05-07 10:38:27] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 10:39:07] INFO: [34mRedis connected successfully[0m
+[2025-05-07 10:39:07] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 10:39:23] INFO: [34mRedis connected successfully[0m
+[2025-05-07 10:39:23] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 10:39:33] INFO: [34mRedis connected successfully[0m
+[2025-05-07 10:39:33] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 10:39:52] INFO: [34mRedis connected successfully[0m
+[2025-05-07 10:39:52] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 10:40:33] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:40:33] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:40:33] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 10:40:34] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:40:43] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:40:43] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:40:50] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:40:50] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:40:56] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:40:56] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:42:59] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:42:59] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:43:04] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:43:04] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:43:12] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 10:43:14] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:43:14] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:43:17] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:43:17] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:43:17] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:43:22] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:43:29] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:43:29] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:43:33] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:43:33] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:43:35] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:43:35] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:43:47] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:43:47] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:43:53] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:43:53] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:43:57] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:43:57] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:44:00] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:44:00] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:44:03] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:44:03] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:44:07] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:44:07] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:44:11] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 10:44:11] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 10:44:12] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 10:44:17] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:44:22] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:45:05] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 10:45:10] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:45:48] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 10:45:48] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 10:45:54] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:45:59] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:46:04] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:46:09] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:46:14] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:46:20] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:46:20] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:21] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:21] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:22] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:22] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:23] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:23] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:24] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:24] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:25] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:25] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:31] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:46:37] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:46:43] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:46:48] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:46:49] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:49] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:50] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:50] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:51] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:51] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:52] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:52] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:53] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:53] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:54] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:54] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:55] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:46:55] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:47:00] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:47:22] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 10:47:32] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:47:37] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:47:42] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:48:06] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 10:48:11] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:48:16] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:48:17] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:48:17] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:48:18] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:48:18] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:48:18] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:48:18] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:48:19] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:48:19] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:48:20] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:48:20] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:48:21] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:48:21] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:48:27] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:48:32] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:48:38] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:48:45] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:48:50] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:48:56] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:49:01] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:49:18] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 10:49:18] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 10:49:23] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:49:29] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:49:34] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:49:40] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:49:46] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:49:51] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:49:57] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:50:02] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:50:08] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:50:13] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:50:19] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:50:24] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 10:50:25] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:50:26] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:50:26] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:50:27] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:50:27] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 10:50:28] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 11:07:24] INFO: [34mRedis connected successfully[0m
+[2025-05-07 11:07:24] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 11:07:41] INFO: [34mRedis connected successfully[0m
+[2025-05-07 11:07:41] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 11:07:50] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 11:07:50] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 11:07:50] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 11:07:50] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 11:07:51] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 11:07:51] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 11:07:51] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 11:07:51] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 11:07:52] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 11:07:52] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 11:07:52] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 11:08:24] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 11:08:24] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 11:08:24] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 11:08:24] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 11:08:25] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 11:08:25] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 11:08:25] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 11:08:25] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 11:08:25] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 11:08:25] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 11:08:25] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 11:08:26] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 11:08:26] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 11:08:26] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 11:08:28] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 11:08:28] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 11:08:28] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 11:08:32] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 11:08:32] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 11:08:32] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 11:08:32] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 11:08:32] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 11:08:32] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 11:08:39] INFO: [34mPOST /api/v_1/auth/google-auth[0m
+[2025-05-07 11:08:40] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 11:08:40] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 11:09:01] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 11:10:35] INFO: [34mRedis connected successfully[0m
+[2025-05-07 11:10:35] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 11:10:57] INFO: [34mRedis connected successfully[0m
+[2025-05-07 11:10:57] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 11:11:08] INFO: [34mRedis connected successfully[0m
+[2025-05-07 11:11:08] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 11:11:13] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 11:11:13] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 11:11:14] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 11:11:14] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 11:11:14] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 11:11:26] INFO: [34mRedis connected successfully[0m
+[2025-05-07 11:11:26] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 11:11:29] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 11:12:33] INFO: [34mRedis connected successfully[0m
+[2025-05-07 11:12:33] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 11:13:56] INFO: [34mRedis connected successfully[0m
+[2025-05-07 11:13:56] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 11:15:18] INFO: [34mRedis connected successfully[0m
+[2025-05-07 11:15:18] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 11:15:23] INFO: [34mRedis connected successfully[0m
+[2025-05-07 11:15:23] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 11:17:11] INFO: [34mRedis connected successfully[0m
+[2025-05-07 11:17:11] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:00:00] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:00:00] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:00:06] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:00:06] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:00:34] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:00:34] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:01:53] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:01:53] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:02:22] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:02:22] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:02:42] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:02:42] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:03:08] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:03:08] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:03:23] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:03:23] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:03:51] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:03:51] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:03:58] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:03:58] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:04:05] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:04:05] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:04:13] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:04:13] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:04:38] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:04:38] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:05:05] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:05:05] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:05:16] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:05:16] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:05:28] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:05:28] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:06:59] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:06:59] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:07:06] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 12:07:06] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 12:07:06] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 12:07:06] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 12:07:07] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 12:07:07] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 12:07:07] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 12:07:08] INFO: [34mGET /api/v_1/_pvt/_cl/client/photographer/6818fbfd3dd5b43918304417[0m
+[2025-05-07 12:07:08] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 12:07:09] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 12:07:09] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 12:07:09] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 12:07:17] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 12:07:24] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:07:24] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:07:34] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:07:34] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:07:56] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 12:08:15] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:08:15] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:08:39] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:08:39] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:08:51] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:08:51] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:09:09] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:09:09] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:09:16] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:09:16] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:09:24] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:09:24] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:09:28] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:09:28] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:09:46] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:09:46] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:09:54] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:09:54] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:11:30] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:11:30] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:11:48] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:11:48] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:12:06] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:12:06] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:12:16] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:12:16] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:12:28] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:12:28] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:12:35] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:12:35] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:12:45] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:12:45] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:12:52] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:12:52] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:12:55] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:12:55] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:13:07] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:13:07] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:13:31] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:13:31] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:13:45] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:13:45] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:14:03] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:14:03] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:14:11] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:14:11] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:14:36] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:14:36] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:15:03] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:15:03] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 12:15:06] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 12:15:06] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 12:15:06] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 12:15:17] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 12:17:44] INFO: [34mRedis connected successfully[0m
+[2025-05-07 12:17:44] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:13:40] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:13:40] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:14:08] ERROR: [31mStartup error: Database connection failed[0m
+[2025-05-07 13:14:22] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:14:22] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:15:06] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 13:15:06] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 13:15:06] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 13:15:15] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:15:15] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:15:26] INFO: [34mPOST /api/v_1/auth/google-auth[0m
+[2025-05-07 13:15:26] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 13:15:26] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 13:15:52] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 13:32:57] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:32:57] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:33:00] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 13:33:00] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 13:33:00] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 13:33:00] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 13:33:01] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 13:33:01] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 13:33:01] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 13:33:46] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:33:46] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:34:28] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:34:28] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:34:42] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:34:42] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:35:19] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:35:19] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:35:24] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:35:24] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:35:38] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:35:38] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:38:42] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:38:42] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:38:56] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:38:56] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:39:13] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:39:13] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:39:24] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:39:24] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:42:00] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:42:00] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:44:03] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:44:03] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:44:26] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:44:26] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:44:35] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:44:35] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:44:44] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:44:44] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:45:24] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:45:24] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:46:50] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:46:50] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:47:15] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:47:15] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:48:53] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:48:53] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:48:58] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:48:58] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:49:08] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:49:08] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:49:23] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:49:23] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:49:51] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:49:51] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:50:00] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:50:00] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:51:07] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:51:07] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:51:31] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 13:52:45] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:52:45] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:52:47] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 13:52:47] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 13:52:47] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 13:52:47] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 13:52:48] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 13:52:48] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 13:52:48] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 13:52:50] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 13:52:50] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 13:52:50] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 13:52:50] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 13:52:51] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 13:52:51] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 13:52:51] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 13:52:53] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 13:52:53] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 13:52:53] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 13:53:09] INFO: [34mPOST /api/v_1/auth/google-auth[0m
+[2025-05-07 13:53:15] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 13:53:15] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 13:54:38] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 13:55:44] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:55:44] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:55:48] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:55:48] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:55:56] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 13:55:56] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 13:56:02] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 13:58:03] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 13:58:03] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 13:58:05] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 13:58:07] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 13:58:07] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 13:58:07] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 13:58:15] INFO: [34mRedis connected successfully[0m
+[2025-05-07 13:58:15] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 13:58:22] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 13:59:38] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 14:01:29] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 14:01:31] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 14:01:36] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 14:01:36] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:01:36] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:01:40] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 14:02:27] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:02:27] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:02:27] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 14:02:32] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 14:02:57] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 14:02:57] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:02:57] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:05:45] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 14:05:45] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:05:45] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:05:45] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 14:05:45] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 14:05:46] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:06:25] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:06:25] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:10:51] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:10:51] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:11:08] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 14:11:23] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:11:23] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:11:31] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 14:12:38] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:12:38] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:12:59] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 14:16:49] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:16:49] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:16:55] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:16:55] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:17:17] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:17:17] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:17:42] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:17:42] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:17:46] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:17:46] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:20:18] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:20:18] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:20:26] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:20:26] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:20:50] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:20:50] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:21:10] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:21:10] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:21:10] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 14:21:10] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:21:11] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:21:11] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 14:21:11] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:21:13] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:21:13] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 14:21:13] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:21:17] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:21:17] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 14:21:17] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:21:17] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 14:21:17] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 14:21:17] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 14:21:23] INFO: [34mPOST /api/v_1/auth/google-auth[0m
+[2025-05-07 14:21:27] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 14:21:27] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:21:43] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 14:21:53] INFO: [34mPOST /api/v_1/auth/login[0m
+[2025-05-07 14:21:53] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 14:21:53] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:22:53] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 14:28:02] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 14:29:37] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 14:32:13] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 14:34:37] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:34:37] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:34:41] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:34:42] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:34:54] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:34:54] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:40:11] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 14:40:11] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:40:11] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 14:40:11] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 14:40:12] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:40:12] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:40:12] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 14:40:19] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:40:19] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:40:45] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 14:40:45] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:40:45] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:40:47] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 14:40:47] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:40:47] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:41:11] INFO: [34mRedis connected successfully[0m
+[2025-05-07 14:41:11] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 14:41:19] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 14:41:19] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:41:19] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:41:20] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:41:20] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:41:20] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 14:41:28] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607379920.jpg[0m
+[2025-05-07 14:41:28] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607903650.JPG[0m
+[2025-05-07 14:41:28] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607973434.jpg[0m
+[2025-05-07 14:41:28] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608282658.JPG[0m
+[2025-05-07 14:41:28] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608377514.mp4[0m
+[2025-05-07 14:41:28] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608533784.zip[0m
+[2025-05-07 14:41:51] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 14:42:06] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 14:42:22] INFO: [34mPOST /api/v_1/_chat/upload-media[0m
+[2025-05-07 14:42:29] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607379920.jpg[0m
+[2025-05-07 14:42:29] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607903650.JPG[0m
+[2025-05-07 14:42:29] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607973434.jpg[0m
+[2025-05-07 14:42:29] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608282658.JPG[0m
+[2025-05-07 14:42:29] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608377514.mp4[0m
+[2025-05-07 14:42:29] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608533784.zip[0m
+[2025-05-07 14:42:29] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609111797.JPG[0m
+[2025-05-07 14:42:29] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609126152.mp4[0m
+[2025-05-07 14:42:29] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609142023.json[0m
+[2025-05-07 14:42:34] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 14:42:34] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:42:34] INFO: [34mPOST /api/v_1/_pvt/_ve/vendor/refresh-token[0m
+[2025-05-07 14:42:34] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 14:42:35] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 14:42:35] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:42:35] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 14:42:49] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607379920.jpg[0m
+[2025-05-07 14:42:49] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607903650.JPG[0m
+[2025-05-07 14:42:49] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607973434.jpg[0m
+[2025-05-07 14:42:49] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608282658.JPG[0m
+[2025-05-07 14:42:49] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608377514.mp4[0m
+[2025-05-07 14:42:49] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608533784.zip[0m
+[2025-05-07 14:42:49] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609111797.JPG[0m
+[2025-05-07 14:42:49] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609126152.mp4[0m
+[2025-05-07 14:42:49] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609142023.json[0m
+[2025-05-07 14:42:52] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 14:42:52] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m

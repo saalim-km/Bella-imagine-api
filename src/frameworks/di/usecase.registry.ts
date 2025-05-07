@@ -123,8 +123,6 @@ import { IUpdateContestUsecase } from "../../entities/usecaseInterfaces/admin/co
 import { UpdateContestUsecase } from "../../useCases/admin/contest_management/update-contest.usecase";
 import { IDeleteContestUsecase } from "../../entities/usecaseInterfaces/admin/contest_management/delete-contest-usecase.interface";
 import { DeleteContestUsecase } from "../../useCases/admin/contest_management/delete-contest-usecase";
-import { IGetPaginatedContestUsecase } from "../../entities/usecaseInterfaces/admin/contest_management/get-paginated-contest-usecase.interface";
-import { GetPaginatedContestUsecase } from "../../useCases/admin/contest_management/get-paginated-contest.usecase";
 import { ParticipateContestUsecase } from "../../useCases/contest/participate-contest.usecase";
 import { ICreateConversationUseCase } from "../../entities/usecaseInterfaces/chat/create-conversation-usecase.interface";
 import { CreateConversationUseCase } from "../../useCases/chat/create-conversation.usecase";
@@ -156,6 +154,8 @@ import { ICreateCommunityMemberUsecase } from "../../entities/usecaseInterfaces/
 import { CreateCommunityMemberUsecase } from "../../useCases/community-contest/community/create-community-member.usecase";
 import { ILeaveCommunityUsecase } from "../../entities/usecaseInterfaces/community-contest/community/leave-community-usecase.interface";
 import { LeaveCommunityUsecase } from "../../useCases/community-contest/community/leave-community.usecase";
+import { IUploadMediaChatUsecase } from "../../entities/usecaseInterfaces/chat/upload-media-chat-usecase.interface";
+import { UploadMediaChatUsecase } from "../../useCases/chat/upload-media-chat.usecase";
 
 
 export class UsecaseRegistry {
@@ -404,10 +404,6 @@ export class UsecaseRegistry {
       useClass : DeleteContestUsecase
     })
 
-    container.register<IGetPaginatedContestUsecase>('IGetPaginatedContestUsecase',{
-      useClass : GetPaginatedContestUsecase
-    })
-
     // |--------------------------------------------------------- Chat Management ---------------------------------------------------|
     container.register<ICreateConversationUseCase>('ICreateConversationUseCase',{
       useClass : CreateConversationUseCase
@@ -439,6 +435,10 @@ export class UsecaseRegistry {
 
     container.register<IUpdateLastSeenUsecase>('IUpdateLastSeenUsecase',{
       useClass : UpdateLastSeenUsecase
+    })
+
+    container.register<IUploadMediaChatUsecase>('IUploadMediaChatUsecase',{
+      useClass : UploadMediaChatUsecase
     })
 
     // |--------------------------------------------------------- Community Management ---------------------------------------------------|
