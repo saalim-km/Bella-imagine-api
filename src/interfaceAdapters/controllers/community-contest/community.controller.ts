@@ -37,107 +37,79 @@ export class CommunityController implements ICommunityController {
   ) {}
 
   async createCommunity(req: Request, res: Response): Promise<void> {
-    try {
-        console.log(req.body);
-        console.log(req.files);
-      const files = req.files as {
-        [fieldname: string]: Express.Multer.File[];
-      };
+    console.log(req.body);
+    console.log(req.files);
+    const files = req.files as {
+      [fieldname: string]: Express.Multer.File[];
+    };
 
-      await this.createCommunityUsecase.execute({
-        ...req.body,
-        files: {
-          iconImage: files.iconImage?.[0],
-          coverImage: files.coverImage?.[0],
-        },
-      });
+    await this.createCommunityUsecase.execute({
+      ...req.body,
+      files: {
+        iconImage: files.iconImage?.[0],
+        coverImage: files.coverImage?.[0],
+      },
+    });
 
-      res.status(HTTP_STATUS.CREATED).json({
-        success: true,
-        message: SUCCESS_MESSAGES.CREATED,
-      });
-    } catch (error) {
-      handleError(error, res);
-    }
+    res.status(HTTP_STATUS.CREATED).json({
+      success: true,
+      message: SUCCESS_MESSAGES.CREATED,
+    });
   }
 
   async listCommunities(req: Request, res: Response): Promise<void> {
-    try {
-      const { page, limit } = req.query;
-      const data = await this.getAllCommunityUsecase.execute({
-        page: Number(page),
-        limit: Number(limit),
-      });
-      res.status(HTTP_STATUS.OK).json(data);
-    } catch (error) {
-      handleError(error, res);
-    }
+    const { page, limit } = req.query;
+    const data = await this.getAllCommunityUsecase.execute({
+      page: Number(page),
+      limit: Number(limit),
+    });
+    res.status(HTTP_STATUS.OK).json(data);
   }
 
   async deleteCommunity(req: Request, res: Response): Promise<void> {
-    try {
-      console.log("in deletecommunity controller");
-      const { communityId } = req.body;
-      console.log(communityId);
-      await this.deleteCommunityUsecase.execute(communityId);
-      res
-        .status(HTTP_STATUS.CREATED)
-        .json({ success: true, message: SUCCESS_MESSAGES.DELETE_SUCCESS });
-    } catch (error) {
-      handleError(error, res);
-    }
+    console.log("in deletecommunity controller");
+    const { communityId } = req.body;
+    console.log(communityId);
+    await this.deleteCommunityUsecase.execute(communityId);
+    res
+      .status(HTTP_STATUS.CREATED)
+      .json({ success: true, message: SUCCESS_MESSAGES.DELETE_SUCCESS });
   }
 
   async findCommunityBySlug(req: Request, res: Response): Promise<void> {
-    try {
-      const { slug } = req.params;
-      const { _id } = (req as CustomRequest).user;
-      const communitySlug = `r/${slug}`;
-      const community = await this.findCommunityBySlugUsecase.execute(
-        communitySlug,
-        _id
-      );
-      console.log(community);
-      res.status(HTTP_STATUS.OK).json(community);
-    } catch (error) {
-      handleError(error, res);
-    }
+    const { slug } = req.params;
+    const { _id } = (req as CustomRequest).user;
+    const communitySlug = `r/${slug}`;
+    const community = await this.findCommunityBySlugUsecase.execute(
+      communitySlug,
+      _id
+    );
+    console.log(community);
+    res.status(HTTP_STATUS.OK).json(community);
   }
 
   async updateCommunity(req: Request, res: Response): Promise<void> {
-    try {
-      const {
-        communityId,
-        dto,
-      }: { communityId: string; dto: Partial<ICommunityEntity> } = req.body;
-      await this.updateCommunityUsecase.execute(communityId, dto);
-      res
-        .status(HTTP_STATUS.OK)
-        .json({ success: true, message: SUCCESS_MESSAGES.UPDATE_SUCCESS });
-    } catch (error) {
-      handleError(error, res);
-    }
+    const {
+      communityId,
+      dto,
+    }: { communityId: string; dto: Partial<ICommunityEntity> } = req.body;
+    await this.updateCommunityUsecase.execute(communityId, dto);
+    res
+      .status(HTTP_STATUS.OK)
+      .json({ success: true, message: SUCCESS_MESSAGES.UPDATE_SUCCESS });
   }
 
   async createCommunityMember(req: Request, res: Response): Promise<void> {
-    try {
-      console.log("createCommunityMember", req.body);
-      await this.createCommuintyMember.execute(req.body);
-      res.status(HTTP_STATUS.CREATED).json({ success: true });
-    } catch (error) {
-      handleError(error, res);
-    }
+    console.log("createCommunityMember", req.body);
+    await this.createCommuintyMember.execute(req.body);
+    res.status(HTTP_STATUS.CREATED).json({ success: true });
   }
 
   async leaveCommunity(req: Request, res: Response): Promise<void> {
-    try {
-      console.log("leaveCommunity", req.body);
-      const { communityId } = req.body;
-      const user = (req as CustomRequest).user;
-      await this.leaveCommunityUsecase.execute(communityId, user._id);
-      res.status(HTTP_STATUS.CREATED).json({ success: true });
-    } catch (error) {
-      handleError(error, res);
-    }
+    console.log("leaveCommunity", req.body);
+    const { communityId } = req.body;
+    const user = (req as CustomRequest).user;
+    await this.leaveCommunityUsecase.execute(communityId, user._id);
+    res.status(HTTP_STATUS.CREATED).json({ success: true });
   }
 }

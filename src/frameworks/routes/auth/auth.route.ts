@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
 import { BaseRoute } from "../base.route";
+
 import {
   forgotPasswordController,
   googleLoginController,
@@ -9,6 +9,7 @@ import {
   sendEmailController,
   veriryOtpController,
 } from "../../di/resolver";
+import { asyncHandler } from "../../../shared/handler/async-handler.utils";
 
 export class AuthRoute extends BaseRoute {
   constructor() {
@@ -16,35 +17,39 @@ export class AuthRoute extends BaseRoute {
   }
 
   protected initializeRoutes(): void {
-    this.router.post("/register", (req: Request, res: Response) => {
-      registerController.handle(req, res);
-    });
+    this.router.post(
+      "/register",
+      asyncHandler(registerController.handle.bind(registerController))
+    );
 
-    this.router.post("/send-otp", (req: Request, res: Response) => {
-      sendEmailController.handle(req, res);
-    });
+    this.router.post(
+      "/send-otp",
+      asyncHandler(sendEmailController.handle.bind(sendEmailController))
+    );
 
-    this.router.post("/verify-otp", (req: Request, res: Response) => {
-      veriryOtpController.handle(req, res);
-    });
+    this.router.post(
+      "/verify-otp",
+      asyncHandler(veriryOtpController.handle.bind(veriryOtpController))
+    );
 
-    this.router.post("/login", (req: Request, res: Response) => {
-      loginController.handle(req, res);
-    });
+    this.router.post(
+      "/login",
+      asyncHandler(loginController.handle.bind(loginController))
+    );
 
-    this.router.post("/google-auth", (req: Request, res: Response) => {
-      googleLoginController.handle(req, res);
-    });
+    this.router.post(
+      "/google-auth",
+      asyncHandler(googleLoginController.handle.bind(googleLoginController))
+    );
 
     this.router.post(
       "/forgot-password/send-otp",
-      (req: Request, res: Response) => {
-        forgotPasswordController.handle(req, res);
-      }
+      asyncHandler(forgotPasswordController.handle.bind(forgotPasswordController))
     );
 
-    this.router.post("/reset-password", (req: Request, res: Response) => {
-      resetPasswordController.handle(req, res);
-    });
+    this.router.post(
+      "/reset-password",
+      asyncHandler(resetPasswordController.handle.bind(resetPasswordController))
+    );
   }
 }

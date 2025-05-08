@@ -24,6 +24,7 @@ import {
   updateVendorRequestController,
 } from "../../di/resolver";
 import { upload } from "../../../interfaceAdapters/middlewares/multer.middleware";
+import { asyncHandler } from "../../../shared/handler/async-handler.utils";
 
 export class AdminRoute extends BaseRoute {
   constructor() {
@@ -32,203 +33,198 @@ export class AdminRoute extends BaseRoute {
 
   protected initializeRoutes(): void {
     // Authentication Routes
-    // Handles admin logout and token refresh
     this.router.post(
       "/admin/logout",
       verifyAuth,
-      (req: Request, res: Response) => {
-        logoutController.handle(req, res);
-      }
+      asyncHandler(logoutController.handle.bind(logoutController))
     );
 
     this.router.post(
       "/admin/refresh-token",
       decodeToken,
-      (req: Request, res: Response) => {
-        refreshTokenController.handle(req, res);
-      }
+      asyncHandler(refreshTokenController.handle.bind(refreshTokenController))
     );
 
     // Client Management Routes
-    // Retrieve all clients
     this.router
       .route("/admin/client")
       .get(
         verifyAuth,
         authorizeRole(["admin"]),
-        (req: Request, res: Response) => {
-          getAllClientController.handle(req, res);
-        }
+        asyncHandler(getAllClientController.handle.bind(getAllClientController))
       );
 
     // Vendor Management Routes
-    // Retrieve all vendors
     this.router
       .route("/admin/vendor")
       .get(
         verifyAuth,
         authorizeRole(["admin"]),
-        (req: Request, res: Response) => {
-          getAllVendorController.handle(req, res);
-        }
+        asyncHandler(getAllVendorController.handle.bind(getAllVendorController))
       );
 
     // User Management Routes
-    // Retrieve user details and update user status
     this.router.get(
       "/admin/user/details",
       verifyAuth,
       authorizeRole(["admin"]),
-      (req: Request, res: Response) => {
-        getUserDetailsController.handle(req, res);
-      }
+      asyncHandler(
+        getUserDetailsController.handle.bind(getUserDetailsController)
+      )
     );
 
     this.router.patch(
       "/admin/user-status",
       verifyAuth,
       authorizeRole(["admin"]),
-      (req: Request, res: Response) => {
-        updateUserStatusController.handle(req, res);
-      }
+      asyncHandler(
+        updateUserStatusController.handle.bind(updateUserStatusController)
+      )
     );
 
     // Vendor Request Management Routes
-    // Manage pending vendor requests (get and update)
     this.router
       .route("/admin/vendor-request")
       .get(
         verifyAuth,
         authorizeRole(["admin"]),
-        (req: Request, res: Response) => {
-          getPendingVendorController.handle(req, res);
-        }
+        asyncHandler(
+          getPendingVendorController.handle.bind(getPendingVendorController)
+        )
       )
       .post(
         verifyAuth,
         authorizeRole(["admin"]),
-        (req: Request, res: Response) => {
-          updateVendorRequestController.handle(req, res);
-        }
+        asyncHandler(
+          updateVendorRequestController.handle.bind(
+            updateVendorRequestController
+          )
+        )
       );
 
     // Category Management Routes
-    // Manage categories (get all, create, update)
     this.router
       .route("/admin/categories")
       .get(
         verifyAuth,
         authorizeRole(["admin"]),
-        (req: Request, res: Response) =>
-          getAllPaginatedCategoryController.handle(req, res)
+        asyncHandler(
+          getAllPaginatedCategoryController.handle.bind(
+            getAllPaginatedCategoryController
+          )
+        )
       )
       .post(
         verifyAuth,
         authorizeRole(["admin"]),
-        (req: Request, res: Response) =>
-          createNewCategoryController.handle(req, res)
+        asyncHandler(
+          createNewCategoryController.handle.bind(createNewCategoryController)
+        )
       )
       .patch(
         verifyAuth,
         authorizeRole(["admin"]),
-        (req: Request, res: Response) => {
-          updateCategoryController.handle(req, res);
-        }
+        asyncHandler(
+          updateCategoryController.handle.bind(updateCategoryController)
+        )
       )
       .put(
         verifyAuth,
-        authorizeRole(['admin']),
-        (req: Request, res: Response)=> {
-          updateCategoryController.handle(req,res)
-        }
-      )
+        authorizeRole(["admin"]),
+        asyncHandler(
+          updateCategoryController.handle.bind(updateCategoryController)
+        )
+      );
 
     // Category Request Management Routes
-    // Manage category requests (get and update status)
     this.router
       .route("/admin/category-request")
       .get(
         verifyAuth,
         authorizeRole(["admin"]),
-        (req: Request, res: Response) => {
-          getCategoryRequestController.handle(req, res);
-        }
+        asyncHandler(
+          getCategoryRequestController.handle.bind(getCategoryRequestController)
+        )
       )
       .patch(
         verifyAuth,
         authorizeRole(["admin"]),
-        (req: Request, res: Response) => {
-          updateCategoryRequestStatusController.handle(req, res);
-        }
+        asyncHandler(
+          updateCategoryRequestStatusController.handle.bind(
+            updateCategoryRequestStatusController
+          )
+        )
       );
 
     // Wallet Management Routes
-    // Retrieve wallet details for a user
     this.router.get(
       "/admin/wallet",
       verifyAuth,
       authorizeRole(["admin"]),
-      (req: Request, res: Response) => {
-        getWalletDetailsOfUserController.handle(req, res);
-      }
+      asyncHandler(
+        getWalletDetailsOfUserController.handle.bind(
+          getWalletDetailsOfUserController
+        )
+      )
     );
 
     // Transaction Management Routes
-    // Retrieve all transactions for a user
     this.router.get(
       "/admin/transactions",
       verifyAuth,
       authorizeRole(["admin"]),
-      (req: Request, res: Response) => {
-        getAllTransactionByUserIdController.handle(req, res);
-      }
+      asyncHandler(
+        getAllTransactionByUserIdController.handle.bind(
+          getAllTransactionByUserIdController
+        )
+      )
     );
 
-    // Commnity-Contest
+    // Community-Contest Routes
     this.router
       .route("/admin/community")
       .post(
         verifyAuth,
         authorizeRole(["admin"]),
         upload.fields([
-          {name : 'iconImage' , maxCount : 1},
-          {name : 'coverImage' , maxCount : 1}
+          { name: "iconImage", maxCount: 1 },
+          { name: "coverImage", maxCount: 1 },
         ]),
-        (req: Request, res: Response) => {
-          communityController.createCommunity(req, res);
-        }
+        asyncHandler(
+          communityController.createCommunity.bind(communityController)
+        )
       )
       .get(
-        (req: Request, res: Response) => {
-          communityController.listCommunities(req, res);
-        }
+        asyncHandler(
+          communityController.listCommunities.bind(communityController)
+        )
       )
       .delete(
         verifyAuth,
         authorizeRole(["admin"]),
-        (req: Request, res: Response) => {
-          communityController.deleteCommunity(req, res);
-        }
+        asyncHandler(
+          communityController.deleteCommunity.bind(communityController)
+        )
       )
       .put(
         verifyAuth,
         authorizeRole(["admin"]),
         upload.fields([
-          {name : 'iconImageUrl' , maxCount : 1},
-          {name : 'coverImageUrl' , maxCount : 1}
+          { name: "iconImageUrl", maxCount: 1 },
+          { name: "coverImageUrl", maxCount: 1 },
         ]),
-        (req: Request, res: Response) => {
-          communityController.updateCommunity(req, res);
-        }
+        asyncHandler(
+          communityController.updateCommunity.bind(communityController)
+        )
       );
 
     this.router.get(
       "/admin/community/:slug",
       verifyAuth,
       authorizeRole(["admin"]),
-      (req: Request, res: Response) => {
-        communityController.findCommunityBySlug(req, res);
-      }
+      asyncHandler(
+        communityController.findCommunityBySlug.bind(communityController)
+      )
     );
   }
 }

@@ -14,43 +14,19 @@ import { CustomError } from "../../../entities/utils/custom-error";
 @injectable()
 export class LogoutController implements ILogoutController {
   async handle(req: Request, res: Response): Promise<void> {
-    try {
-        console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<< in logout controller >>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-      const user = (req as CustomRequest).user;
-      console.log(user);
-      const accessTokenName = `${user.role}_access_token`;
-      const refreshTokenName = `${user.role}_refresh_token`;
+    console.log(
+      "<<<<<<<<<<<<<<<<<<<<<<<<<<< in logout controller >>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    );
+    const user = (req as CustomRequest).user;
+    console.log(user);
+    const accessTokenName = `${user.role}_access_token`;
+    const refreshTokenName = `${user.role}_refresh_token`;
 
-      console.log(user);
-      console.log(accessTokenName , refreshTokenName);
-      clearAuthCookies(res, accessTokenName, refreshTokenName);
-      res
-        .status(HTTP_STATUS.OK)
-        .json({ success: true, message: SUCCESS_MESSAGES.LOGOUT_SUCCESS });
-    } catch (error) {
-      if (error instanceof ZodError) {
-        const errors = error.errors.map((err) => ({
-          message: err.message,
-        }));
-        console.log(errors);
-        res.status(HTTP_STATUS.BAD_REQUEST).json({
-          success: false,
-          message: ERROR_MESSAGES.VALIDATION_ERROR,
-          errors,
-        });
-        return;
-      }
-      if (error instanceof CustomError) {
-        console.log(error);
-        res
-          .status(error.statusCode)
-          .json({ success: false, message: error.message });
-        return;
-      }
-      console.log(error);
-      res
-        .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
-        .json({ success: false, message: ERROR_MESSAGES.SERVER_ERROR });
-    }
+    console.log(user);
+    console.log(accessTokenName, refreshTokenName);
+    clearAuthCookies(res, accessTokenName, refreshTokenName);
+    res
+      .status(HTTP_STATUS.OK)
+      .json({ success: true, message: SUCCESS_MESSAGES.LOGOUT_SUCCESS });
   }
 }

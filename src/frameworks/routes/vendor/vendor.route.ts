@@ -25,6 +25,7 @@ import {
   updateWorkSampleController,
 } from "../../di/resolver";
 import { upload } from "../../../interfaceAdapters/middlewares/multer.middleware";
+import { asyncHandler } from "../../../shared/handler/async-handler.utils";
 
 export class VendorRoute extends BaseRoute {
   constructor() {
@@ -32,169 +33,164 @@ export class VendorRoute extends BaseRoute {
   }
 
   protected initializeRoutes(): void {
-    
     // Authentication Routes
-    // Handles vendor logout and token refresh
     this.router.post(
       "/vendor/logout",
       verifyAuth,
-      (req: Request, res: Response) => {
-        logoutController.handle(req, res);
-      }
+      asyncHandler(logoutController.handle.bind(logoutController))
     );
 
     this.router.post(
       "/vendor/refresh-token",
       decodeToken,
-      (req: Request, res: Response) => {
-        refreshTokenController.handle(req, res);
-      }
+      asyncHandler(refreshTokenController.handle.bind(refreshTokenController))
     );
 
     // Vendor Profile Management Routes
-    // Manage vendor details (get and update)
     this.router
       .route("/vendor/details")
       .get(
         verifyAuth,
         authorizeRole(["vendor"]),
-        (req: Request, res: Response) => {
-          getVendorDetialsController.handle(req, res);
-        }
+        asyncHandler(
+          getVendorDetialsController.handle.bind(getVendorDetialsController)
+        )
       )
       .put(
         verifyAuth,
         authorizeRole(["vendor"]),
         upload.fields([
-          {name : 'profileImage' , maxCount : 1},
-          {name : 'verificationDocument' , maxCount : 1}
+          { name: "profileImage", maxCount: 1 },
+          { name: "verificationDocument", maxCount: 1 },
         ]),
-        (req: Request, res: Response) => {
-          updateVendorController.handle(req, res);
-        }
+        asyncHandler(updateVendorController.handle.bind(updateVendorController))
       );
 
     // Notification Management Routes
-    // Retrieve all notifications for the vendor
     this.router
       .route("/vendor/notification")
       .get(
         verifyAuth,
         authorizeRole(["vendor"]),
-        (req: Request, res: Response) => {
-          getAllVendorNotificationController.handle(req, res);
-        }
+        asyncHandler(
+          getAllVendorNotificationController.handle.bind(
+            getAllVendorNotificationController
+          )
+        )
       );
 
     // Category Management Routes
-    // Retrieve vendor categories and request to join a category
     this.router
       .route("/vendor/categories")
       .get(
         verifyAuth,
         authorizeRole(["vendor"]),
-        (req: Request, res: Response) => {
-          getAllVendorCategoriesController.handle(req, res);
-        }
+        asyncHandler(
+          getAllVendorCategoriesController.handle.bind(
+            getAllVendorCategoriesController
+          )
+        )
       );
 
     this.router.post(
       "/vendor/categories/join",
       verifyAuth,
       authorizeRole(["vendor"]),
-      (req: Request, res: Response) => {
-        joinCategoryRequestController.handle(req, res);
-      }
+      asyncHandler(
+        joinCategoryRequestController.handle.bind(joinCategoryRequestController)
+      )
     );
 
     // Service Management Routes
-    // Manage services (create, get paginated, update)
     this.router
       .route("/vendor/service")
       .post(
         verifyAuth,
         authorizeRole(["vendor"]),
-        (req: Request, res: Response) => {
-          createServiceController.handle(req, res);
-        }
+        asyncHandler(
+          createServiceController.handle.bind(createServiceController)
+        )
       )
       .get(
         verifyAuth,
         authorizeRole(["vendor"]),
-        (req: Request, res: Response) => {
-          getAllPaginatedServiceController.handle(req, res);
-        }
+        asyncHandler(
+          getAllPaginatedServiceController.handle.bind(
+            getAllPaginatedServiceController
+          )
+        )
       )
       .put(
         verifyAuth,
         authorizeRole(["vendor"]),
-        (req: Request, res: Response) => {
-          updateServiceController.handle(req, res);
-        }
+        asyncHandler(
+          updateServiceController.handle.bind(updateServiceController)
+        )
       );
 
     // Work Sample Management Routes
-    // Manage work samples (create, get paginated, update, delete)
     this.router
       .route("/vendor/work-sample")
       .post(
         verifyAuth,
         authorizeRole(["vendor"]),
-        (req: Request, res: Response) => {
-          createWorkSampleController.handle(req, res);
-        }
+        asyncHandler(
+          createWorkSampleController.handle.bind(createWorkSampleController)
+        )
       )
       .get(
         verifyAuth,
         authorizeRole(["vendor"]),
-        (req: Request, res: Response) => {
-          getAllPaginatedWorkSample.handle(req, res);
-        }
+        asyncHandler(
+          getAllPaginatedWorkSample.handle.bind(getAllPaginatedWorkSample)
+        )
       )
       .delete(
         verifyAuth,
         authorizeRole(["vendor"]),
-        (req: Request, res: Response) => {
-          deleteWorkSampleController.handle(req, res);
-        }
+        asyncHandler(
+          deleteWorkSampleController.handle.bind(deleteWorkSampleController)
+        )
       )
       .put(
         verifyAuth,
         authorizeRole(["vendor"]),
-        (req: Request, res: Response) => {
-          updateWorkSampleController.handle(req, res);
-        }
+        asyncHandler(
+          updateWorkSampleController.handle.bind(updateWorkSampleController)
+        )
       );
 
     // Booking Management Routes
-    // Retrieve vendor bookings and update booking status
     this.router.get(
       "/vendor/vendor-bookings",
       verifyAuth,
       authorizeRole(["vendor"]),
-      (req: Request, res: Response) => {
-        getAllBookingForVendorController.handle(req, res);
-      }
+      asyncHandler(
+        getAllBookingForVendorController.handle.bind(
+          getAllBookingForVendorController
+        )
+      )
     );
 
     this.router.patch(
       "/vendor/booking/status",
       verifyAuth,
       authorizeRole(["vendor"]),
-      (req: Request, res: Response) => {
-        updateBookingStatusController.handle(req, res);
-      }
+      asyncHandler(
+        updateBookingStatusController.handle.bind(updateBookingStatusController)
+      )
     );
 
     // Wallet Management Routes
-    // Retrieve wallet details for the vendor
     this.router.get(
       "/vendor/wallet",
       verifyAuth,
       authorizeRole(["vendor"]),
-      (req: Request, res: Response) => {
-        getWalletDetailsOfUserController.handle(req, res);
-      }
+      asyncHandler(
+        getWalletDetailsOfUserController.handle.bind(
+          getWalletDetailsOfUserController
+        )
+      )
     );
   }
 }
