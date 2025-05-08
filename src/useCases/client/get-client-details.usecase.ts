@@ -4,7 +4,7 @@ import { IClientEntity } from "../../entities/models/client.entity";
 import { IClientRepository } from "../../entities/repositoryInterfaces/client/client-repository.interface";
 import { IAwsS3Service } from "../../entities/services/awsS3-service.interface";
 import { redisClient } from "../../frameworks/redis/redis.client";
-import logger from "../../shared/utils/logger.utils";
+import logger from "../../shared/logger/logger.utils";
 import { config } from "../../shared/config";
 
 @injectable()

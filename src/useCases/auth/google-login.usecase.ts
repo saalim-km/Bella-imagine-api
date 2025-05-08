@@ -10,7 +10,7 @@ import { IClientEntity } from "../../entities/models/client.entity";
 import { IAwsS3Service } from "../../entities/services/awsS3-service.interface";
 import { redisClient } from "../../frameworks/redis/redis.client";
 import { config } from "../../shared/config";
-import logger from "../../shared/utils/logger.utils";
+import logger from "../../shared/logger/logger.utils";
 
 @injectable()
 export class GoogleLoginUsecase implements IGoogleUseCase {

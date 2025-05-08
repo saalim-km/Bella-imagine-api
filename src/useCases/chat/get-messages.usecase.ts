@@ -5,7 +5,7 @@ import { IGetMessageUsecase } from "../../entities/usecaseInterfaces/chat/get-me
 import { redisClient } from "../../frameworks/redis/redis.client";
 import { config } from "../../shared/config";
 import { IAwsS3Service } from "../../entities/services/awsS3-service.interface";
-import logger from "../../shared/utils/logger.utils";
+import logger from "../../shared/logger/logger.utils";
 
 @injectable()
 export default class GetMessagesUseCase implements IGetMessageUsecase {

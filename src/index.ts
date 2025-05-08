@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { MongoConnect } from "./frameworks/database/mongodb/mongoConnect";
 import { Server } from "./frameworks/http/server";
 import { config } from "./shared/config";
-import logger from "./shared/utils/logger.utils";
+import logger from "./shared/logger/logger.utils";
 import { connectRedis } from "./frameworks/redis/redis.client";
 
 async function bootstrap() {

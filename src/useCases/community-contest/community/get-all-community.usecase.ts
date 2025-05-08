@@ -6,7 +6,7 @@ import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 import { CustomError } from "../../../entities/utils/custom-error";
 import { IAwsS3Service } from "../../../entities/services/awsS3-service.interface";
 import { redisClient } from "../../../frameworks/redis/redis.client";
-import logger from "../../../shared/utils/logger.utils";
+import logger from "../../../shared/logger/logger.utils";
 
 @injectable()
 export class GetAllCommunityUsecase implements IGetAllCommunityUsecase {

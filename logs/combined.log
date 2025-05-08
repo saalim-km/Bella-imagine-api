@@ -840,3 +840,760 @@
 [2025-05-07 14:42:49] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609142023.json[0m
 [2025-05-07 14:42:52] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
 [2025-05-07 14:42:52] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:49:50] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 14:49:50] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:56:21] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 14:56:21] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:56:21] INFO: [34mPOST /api/v_1/_pvt/_ve/vendor/refresh-token[0m
+[2025-05-07 14:56:21] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 14:57:28] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 14:57:28] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:57:53] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 14:57:53] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:58:11] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 14:58:11] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 14:58:20] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 14:58:20] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 15:15:50] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:15:50] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 15:15:51] INFO: [34mPOST /api/v_1/_pvt/_ve/vendor/refresh-token[0m
+[2025-05-07 15:15:51] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:15:52] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:15:52] INFO: [34mPOST /api/v_1/_pvt/_ve/vendor/refresh-token[0m
+[2025-05-07 15:15:52] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:15:54] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:15:54] INFO: [34mPOST /api/v_1/_pvt/_ve/vendor/refresh-token[0m
+[2025-05-07 15:15:54] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:15:58] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:15:58] INFO: [34mPOST /api/v_1/_pvt/_ve/vendor/refresh-token[0m
+[2025-05-07 15:15:58] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:15:59] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:15:59] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 15:15:59] INFO: [34mPOST /api/v_1/_pvt/_ve/vendor/refresh-token[0m
+[2025-05-07 15:15:59] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:16:00] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:16:00] INFO: [34mPOST /api/v_1/_pvt/_ve/vendor/refresh-token[0m
+[2025-05-07 15:16:00] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:16:02] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:16:02] INFO: [34mPOST /api/v_1/_pvt/_ve/vendor/refresh-token[0m
+[2025-05-07 15:16:02] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:16:06] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:16:06] INFO: [34mPOST /api/v_1/_pvt/_ve/vendor/refresh-token[0m
+[2025-05-07 15:16:06] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:34:07] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:34:07] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 15:34:07] INFO: [34mPOST /api/v_1/_pvt/_ve/vendor/refresh-token[0m
+[2025-05-07 15:34:10] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 15:34:10] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 15:34:10] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 15:34:29] INFO: [34mPOST /api/v_1/auth/google-auth[0m
+[2025-05-07 15:34:30] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 15:34:30] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 15:34:42] INFO: [34mPOST /api/v_1/auth/login[0m
+[2025-05-07 15:34:42] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:34:42] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 15:34:48] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607379920.jpg[0m
+[2025-05-07 15:34:48] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607903650.JPG[0m
+[2025-05-07 15:34:48] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607973434.jpg[0m
+[2025-05-07 15:34:48] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608282658.JPG[0m
+[2025-05-07 15:34:48] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608377514.mp4[0m
+[2025-05-07 15:34:48] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608533784.zip[0m
+[2025-05-07 15:34:48] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609111797.JPG[0m
+[2025-05-07 15:34:48] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609126152.mp4[0m
+[2025-05-07 15:34:48] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609142023.json[0m
+[2025-05-07 15:35:33] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607379920.jpg[0m
+[2025-05-07 15:35:33] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607903650.JPG[0m
+[2025-05-07 15:35:33] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607973434.jpg[0m
+[2025-05-07 15:35:33] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608282658.JPG[0m
+[2025-05-07 15:35:33] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608377514.mp4[0m
+[2025-05-07 15:35:33] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608533784.zip[0m
+[2025-05-07 15:35:33] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609111797.JPG[0m
+[2025-05-07 15:35:33] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609126152.mp4[0m
+[2025-05-07 15:35:33] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609142023.json[0m
+[2025-05-07 15:35:38] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 15:35:38] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:35:40] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607379920.jpg[0m
+[2025-05-07 15:35:40] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607903650.JPG[0m
+[2025-05-07 15:35:40] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607973434.jpg[0m
+[2025-05-07 15:35:40] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608282658.JPG[0m
+[2025-05-07 15:35:40] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608377514.mp4[0m
+[2025-05-07 15:35:40] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608533784.zip[0m
+[2025-05-07 15:35:40] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609111797.JPG[0m
+[2025-05-07 15:35:40] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609126152.mp4[0m
+[2025-05-07 15:35:40] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609142023.json[0m
+[2025-05-07 15:37:09] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607379920.jpg[0m
+[2025-05-07 15:37:09] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607903650.JPG[0m
+[2025-05-07 15:37:09] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607973434.jpg[0m
+[2025-05-07 15:37:09] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608282658.JPG[0m
+[2025-05-07 15:37:09] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608377514.mp4[0m
+[2025-05-07 15:37:09] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608533784.zip[0m
+[2025-05-07 15:37:09] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609111797.JPG[0m
+[2025-05-07 15:37:09] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609126152.mp4[0m
+[2025-05-07 15:37:09] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609142023.json[0m
+[2025-05-07 15:40:08] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607379920.jpg[0m
+[2025-05-07 15:40:08] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607903650.JPG[0m
+[2025-05-07 15:40:08] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607973434.jpg[0m
+[2025-05-07 15:40:08] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608282658.JPG[0m
+[2025-05-07 15:40:08] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608377514.mp4[0m
+[2025-05-07 15:40:08] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608533784.zip[0m
+[2025-05-07 15:40:08] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609111797.JPG[0m
+[2025-05-07 15:40:08] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609126152.mp4[0m
+[2025-05-07 15:40:08] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609142023.json[0m
+[2025-05-07 15:40:10] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607379920.jpg[0m
+[2025-05-07 15:40:10] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607903650.JPG[0m
+[2025-05-07 15:40:10] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607973434.jpg[0m
+[2025-05-07 15:40:10] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608282658.JPG[0m
+[2025-05-07 15:40:10] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608377514.mp4[0m
+[2025-05-07 15:40:10] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608533784.zip[0m
+[2025-05-07 15:40:10] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609111797.JPG[0m
+[2025-05-07 15:40:10] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609126152.mp4[0m
+[2025-05-07 15:40:10] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609142023.json[0m
+[2025-05-07 15:40:30] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607379920.jpg[0m
+[2025-05-07 15:40:30] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607903650.JPG[0m
+[2025-05-07 15:40:30] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607973434.jpg[0m
+[2025-05-07 15:40:30] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608282658.JPG[0m
+[2025-05-07 15:40:30] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608377514.mp4[0m
+[2025-05-07 15:40:30] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608533784.zip[0m
+[2025-05-07 15:40:30] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609111797.JPG[0m
+[2025-05-07 15:40:30] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609126152.mp4[0m
+[2025-05-07 15:40:30] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609142023.json[0m
+[2025-05-07 15:40:31] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607379920.jpg[0m
+[2025-05-07 15:40:31] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607903650.JPG[0m
+[2025-05-07 15:40:31] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607973434.jpg[0m
+[2025-05-07 15:40:31] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608282658.JPG[0m
+[2025-05-07 15:40:31] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608377514.mp4[0m
+[2025-05-07 15:40:31] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608533784.zip[0m
+[2025-05-07 15:40:31] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609111797.JPG[0m
+[2025-05-07 15:40:31] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609126152.mp4[0m
+[2025-05-07 15:40:31] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609142023.json[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607379920.jpg[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607903650.JPG[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607973434.jpg[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608282658.JPG[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608377514.mp4[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608533784.zip[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609111797.JPG[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609126152.mp4[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609142023.json[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607379920.jpg[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607903650.JPG[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607973434.jpg[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608282658.JPG[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608377514.mp4[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608533784.zip[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609111797.JPG[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609126152.mp4[0m
+[2025-05-07 15:40:32] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609142023.json[0m
+[2025-05-07 15:41:02] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607379920.jpg[0m
+[2025-05-07 15:41:02] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607903650.JPG[0m
+[2025-05-07 15:41:02] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607973434.jpg[0m
+[2025-05-07 15:41:02] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608282658.JPG[0m
+[2025-05-07 15:41:02] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608377514.mp4[0m
+[2025-05-07 15:41:02] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608533784.zip[0m
+[2025-05-07 15:41:02] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609111797.JPG[0m
+[2025-05-07 15:41:02] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609126152.mp4[0m
+[2025-05-07 15:41:02] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609142023.json[0m
+[2025-05-07 15:41:03] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607379920.jpg[0m
+[2025-05-07 15:41:03] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607903650.JPG[0m
+[2025-05-07 15:41:03] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607973434.jpg[0m
+[2025-05-07 15:41:03] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608282658.JPG[0m
+[2025-05-07 15:41:03] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608377514.mp4[0m
+[2025-05-07 15:41:03] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608533784.zip[0m
+[2025-05-07 15:41:03] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609111797.JPG[0m
+[2025-05-07 15:41:03] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609126152.mp4[0m
+[2025-05-07 15:41:03] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609142023.json[0m
+[2025-05-07 15:44:28] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:44:28] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 15:44:30] INFO: [34mPOST /api/v_1/_pvt/_ve/vendor/logout[0m
+[2025-05-07 15:44:45] INFO: [34mPOST /api/v_1/auth/login[0m
+[2025-05-07 15:44:45] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:44:45] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 15:44:48] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 15:44:49] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 15:44:54] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607379920.jpg[0m
+[2025-05-07 15:44:54] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607903650.JPG[0m
+[2025-05-07 15:44:54] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746607973434.jpg[0m
+[2025-05-07 15:44:54] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608282658.JPG[0m
+[2025-05-07 15:44:54] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608377514.mp4[0m
+[2025-05-07 15:44:54] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746608533784.zip[0m
+[2025-05-07 15:44:54] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609111797.JPG[0m
+[2025-05-07 15:44:54] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609126152.mp4[0m
+[2025-05-07 15:44:54] INFO: [34mCached media URL found for key: private-chat-media/6819cf027bccc2fa4aca7d20/1746609142023.json[0m
+[2025-05-07 17:00:05] INFO: [34mRedis connected successfully[0m
+[2025-05-07 17:00:05] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 17:00:14] INFO: [34mPOST /api/v_1/auth/login[0m
+[2025-05-07 17:00:15] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:00:15] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:00:17] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:00:18] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:00:33] INFO: [34mPOST /api/v_1/auth/google-auth[0m
+[2025-05-07 17:00:34] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:00:34] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:00:38] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:00:38] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:00:38] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:00:42] INFO: [34mGET /api/v_1/_pvt/_cl/client/photographer/6818fbfd3dd5b43918304417[0m
+[2025-05-07 17:00:42] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:00:51] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:00:51] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:00:51] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:00:55] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 17:00:55] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 17:00:55] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:02:51] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:02:51] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:02:59] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:02:59] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 17:02:59] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 17:03:07] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 17:03:07] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:03:07] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 17:03:11] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:03:11] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 17:03:11] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 17:03:29] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:03:29] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:03:29] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:03:29] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 17:03:29] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 17:03:36] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:03:36] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 17:03:36] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 17:03:45] INFO: [34mPUT /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 17:03:45] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 17:03:45] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 17:03:51] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:03:52] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:04:22] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:04:22] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 17:04:22] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 17:04:24] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:04:24] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:04:34] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:04:34] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 17:04:35] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 17:05:45] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:05:45] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:05:57] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:05:57] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:06:13] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:06:13] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:06:18] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:06:18] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:06:23] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:06:28] INFO: [34mPOST /api/v_1/auth/login[0m
+[2025-05-07 17:06:29] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:06:33] INFO: [34mPOST /api/v_1/_pvt/_ad/admin/vendor-request[0m
+[2025-05-07 17:06:34] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:06:40] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:06:40] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:06:40] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 17:06:40] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:06:40] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:06:46] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:06:46] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:07:06] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:07:06] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:07:07] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:07:07] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:07:11] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:07:11] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:07:13] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:07:13] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:07:47] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:07:52] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:07:52] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:08:25] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:08:26] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:08:26] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:08:27] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:08:28] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:09:03] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:09:03] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:09:04] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:09:04] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:09:13] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:09:25] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:09:25] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:09:26] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:09:49] INFO: [34mPUT /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:09:50] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:09:59] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:10:14] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:10:14] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:10:18] INFO: [34mGET /api/v_1/_pvt/_ad/admin/user/details?id=6818fbfd3dd5b43918304417&role=vendor[0m
+[2025-05-07 17:10:24] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:10:25] INFO: [34mGET /api/v_1/_pvt/_ad/admin/user/details?id=6818fbfd3dd5b43918304417&role=vendor[0m
+[2025-05-07 17:10:29] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:11:47] INFO: [34mRedis connected successfully[0m
+[2025-05-07 17:11:47] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 17:12:31] INFO: [34mRedis connected successfully[0m
+[2025-05-07 17:12:31] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 17:12:35] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:13:16] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:15:56] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:16:44] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:16:44] INFO: [34mPOST /api/v_1/_pvt/_ad/admin/refresh-token[0m
+[2025-05-07 17:16:44] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:18:47] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:18:47] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:18:47] INFO: [34mPOST /api/v_1/_pvt/_ve/vendor/refresh-token[0m
+[2025-05-07 17:18:47] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:18:49] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:18:56] INFO: [34mPUT /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:18:58] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:19:19] INFO: [34mRedis connected successfully[0m
+[2025-05-07 17:19:19] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 17:19:23] INFO: [34mPUT /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:19:25] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/details[0m
+[2025-05-07 17:19:37] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:19:37] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:19:39] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:19:43] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 17:19:43] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 17:19:43] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 17:19:43] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 17:19:43] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:19:46] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:19:46] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:19:47] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:19:47] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:19:47] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:19:52] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:19:52] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:19:52] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:19:55] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:19:55] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:19:56] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:20:03] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:20:03] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:20:03] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:20:14] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:20:14] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:20:14] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:20:39] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:20:39] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:20:39] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:20:54] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:20:54] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:20:54] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:21:48] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:21:48] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:21:48] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:22:25] INFO: [34mGET /api/v_1/_pvt/_cl/client/photographer/6818fbfd3dd5b43918304417[0m
+[2025-05-07 17:22:25] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:22:27] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:22:27] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:22:27] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:22:28] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:22:28] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:22:29] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:42:26] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:42:26] INFO: [34mPOST /api/v_1/_pvt/_ad/admin/refresh-token[0m
+[2025-05-07 17:42:26] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:42:27] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:42:27] INFO: [34mPOST /api/v_1/_pvt/_ad/admin/refresh-token[0m
+[2025-05-07 17:42:27] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:42:29] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:42:29] INFO: [34mPOST /api/v_1/_pvt/_ad/admin/refresh-token[0m
+[2025-05-07 17:42:29] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:43:33] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:43:34] INFO: [34mPOST /api/v_1/_pvt/_ad/admin/refresh-token[0m
+[2025-05-07 17:43:34] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:43:35] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:43:35] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:43:35] INFO: [34mPOST /api/v_1/_pvt/_ad/admin/refresh-token[0m
+[2025-05-07 17:43:35] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:43:35] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 17:43:35] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 17:43:35] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:43:36] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:43:36] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:43:36] INFO: [34mPOST /api/v_1/_pvt/_ve/vendor/refresh-token[0m
+[2025-05-07 17:43:36] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:43:37] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:43:37] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:43:37] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 17:43:37] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:43:39] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:43:39] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 17:43:39] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:43:40] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 17:43:40] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:43:40] INFO: [34mPOST /api/v_1/_pvt/_ve/vendor/refresh-token[0m
+[2025-05-07 17:43:40] INFO: [34mGET /api/v_1/_pvt/_ve/vendor/notification[0m
+[2025-05-07 17:43:43] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:43:43] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 17:43:43] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 17:43:43] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:43:43] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 17:43:43] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 17:46:37] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 17:46:37] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:37] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:37] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:37] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:37] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:38] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:38] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:38] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:38] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:39] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:39] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:40] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:40] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:41] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:41] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:42] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:42] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:44] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:44] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:45] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:45] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:46] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:47] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:47] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:48] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:48] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:49] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:49] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:50] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:50] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:51] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:51] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:52] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:52] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:53] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:53] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:54] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:54] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:55] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:55] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:56] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:56] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:57] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:57] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:58] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:58] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:59] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:46:59] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:00] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:00] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:01] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:01] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:02] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:02] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:03] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:03] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:04] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:04] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:05] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:06] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:06] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:07] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:07] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:08] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:08] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:09] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:09] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:10] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:10] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:11] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:11] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:12] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:12] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:13] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:13] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 17:47:14] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:05:31] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 18:12:43] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 18:12:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:44] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:44] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:44] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:45] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:45] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:46] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:46] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:47] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:47] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:48] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:48] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:49] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:49] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:50] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:50] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:51] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:51] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:52] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:52] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:54] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:54] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:55] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:56] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:56] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:57] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:57] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:58] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:58] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:59] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:12:59] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:00] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:00] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:01] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:01] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:02] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:02] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:03] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:03] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:04] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:04] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:05] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:05] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:06] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:06] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:07] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:07] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:08] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:08] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:09] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:09] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:10] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:10] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:11] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:11] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:12] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:12] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:13] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:13] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:14] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:14] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:15] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:15] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:16] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:16] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:17] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:13:18] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:14:26] INFO: [34mGET /api/v_1/_pvt/_ad/admin/vendor-request?search=&page=1&limit=2[0m
+[2025-05-07 18:14:26] INFO: [34mPOST /api/v_1/_pvt/_ad/admin/refresh-token[0m
+[2025-05-07 18:14:27] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:14:27] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 18:15:17] INFO: [34mPOST /api/v_1/auth/google-auth[0m
+[2025-05-07 18:15:19] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:15:19] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:15:22] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:15:22] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:15:25] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:15:25] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:15:31] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:15:31] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:15:34] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 18:15:50] INFO: [34mRedis connected successfully[0m
+[2025-05-07 18:15:50] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 18:15:50] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 18:15:50] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 18:15:50] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:16:01] INFO: [34mRedis connected successfully[0m
+[2025-05-07 18:16:01] INFO: [34mServer started running on port: 3002 ✅[0m
+[2025-05-07 18:16:38] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 18:16:38] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 18:16:39] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:21:24] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 18:21:24] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:21:24] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 18:22:42] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 18:22:42] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:23:00] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:23:02] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 18:23:17] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 18:23:22] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 18:23:32] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 18:23:32] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:23:32] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:23:32] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:23:33] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:23:33] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:23:33] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:23:33] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:23:34] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:23:36] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 18:23:36] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:23:39] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 18:24:10] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:24:10] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 18:24:16] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 18:24:21] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 18:24:26] ERROR: [31mRedis Client Error:  Connection timeout[0m
+[2025-05-07 18:24:27] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:24:27] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:24:27] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 18:33:20] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 18:33:20] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:33:20] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 18:33:20] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 18:33:20] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 18:35:32] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:35:32] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 18:35:33] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:35:39] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:35:39] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:43:30] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 18:43:30] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:43:30] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 18:43:30] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 18:43:30] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 18:44:04] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:44:04] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:45:36] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 18:45:36] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:45:36] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 18:45:37] INFO: [34mGET /api/v_1/_pvt/_cl/client/details[0m
+[2025-05-07 18:45:37] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:45:38] INFO: [34mclient profile was cacehd : [0m
+[2025-05-07 18:45:40] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:45:40] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 18:45:40] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:45:42] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:45:42] INFO: [34mGET /api/v_1/_pvt/_ad/admin/community?page=1&limit=5[0m
+[2025-05-07 18:45:42] INFO: [34mFetching communities - Page: 1, Limit: 5[0m
+[2025-05-07 18:45:42] INFO: [34mTotal communities fetched: 2[0m
+[2025-05-07 18:45:42] INFO: [34m[CACHE HIT] icon URL for 6819ac716bc957b59ad27cda retrieved from Redis[0m
+[2025-05-07 18:45:42] INFO: [34m[CACHE HIT] icon URL for 6819a02ead8d62092597d483 retrieved from Redis[0m
+[2025-05-07 18:45:42] INFO: [34m[CACHE HIT] cover URL for 6819ac716bc957b59ad27cda retrieved from Redis[0m
+[2025-05-07 18:45:42] INFO: [34m[CACHE HIT] cover URL for 6819a02ead8d62092597d483 retrieved from Redis[0m
+[2025-05-07 18:45:43] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:45:43] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:45:43] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 18:45:44] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:45:44] INFO: [34mGET /api/v_1/_pvt/_ad/admin/community?page=1&limit=5[0m
+[2025-05-07 18:45:44] INFO: [34mFetching communities - Page: 1, Limit: 5[0m
+[2025-05-07 18:45:44] INFO: [34mTotal communities fetched: 2[0m
+[2025-05-07 18:45:44] INFO: [34m[CACHE HIT] icon URL for 6819ac716bc957b59ad27cda retrieved from Redis[0m
+[2025-05-07 18:45:44] INFO: [34m[CACHE HIT] icon URL for 6819a02ead8d62092597d483 retrieved from Redis[0m
+[2025-05-07 18:45:44] INFO: [34m[CACHE HIT] cover URL for 6819ac716bc957b59ad27cda retrieved from Redis[0m
+[2025-05-07 18:45:44] INFO: [34m[CACHE HIT] cover URL for 6819a02ead8d62092597d483 retrieved from Redis[0m
+[2025-05-07 18:45:45] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:45:45] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:45:45] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 18:45:46] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:45:46] INFO: [34mGET /api/v_1/_pvt/_ad/admin/community?page=1&limit=5[0m
+[2025-05-07 18:45:46] INFO: [34mFetching communities - Page: 1, Limit: 5[0m
+[2025-05-07 18:45:46] INFO: [34mTotal communities fetched: 2[0m
+[2025-05-07 18:45:46] INFO: [34m[CACHE HIT] icon URL for 6819ac716bc957b59ad27cda retrieved from Redis[0m
+[2025-05-07 18:45:46] INFO: [34m[CACHE HIT] icon URL for 6819a02ead8d62092597d483 retrieved from Redis[0m
+[2025-05-07 18:45:47] INFO: [34m[CACHE HIT] cover URL for 6819ac716bc957b59ad27cda retrieved from Redis[0m
+[2025-05-07 18:45:47] INFO: [34m[CACHE HIT] cover URL for 6819a02ead8d62092597d483 retrieved from Redis[0m
+[2025-05-07 18:45:49] INFO: [34mGET /api/v_1/_pvt/_cl/client/community/landscape[0m
+[2025-05-07 18:45:49] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:45:59] INFO: [34mPOST /api/v_1/_pvt/_cl/client/community/join[0m
+[2025-05-07 18:46:16] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:46:16] INFO: [34mGET /api/v_1/_pvt/_cl/client/community/landscape[0m
+[2025-05-07 18:46:17] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:46:17] INFO: [34mGET /api/v_1/_pvt/_ad/admin/community?page=1&limit=5[0m
+[2025-05-07 18:46:17] INFO: [34mFetching communities - Page: 1, Limit: 5[0m
+[2025-05-07 18:46:17] INFO: [34mTotal communities fetched: 0[0m
+[2025-05-07 18:46:19] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:46:19] INFO: [34mGET /api/v_1/_pvt/_ad/admin/community?page=1&limit=5[0m
+[2025-05-07 18:46:19] INFO: [34mFetching communities - Page: 1, Limit: 5[0m
+[2025-05-07 18:46:19] INFO: [34mTotal communities fetched: 0[0m
+[2025-05-07 18:46:24] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:46:24] INFO: [34mGET /api/v_1/_pvt/_cl/client/vendors?page=1&limit=6[0m
+[2025-05-07 18:46:24] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:46:25] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:46:25] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:48:22] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:48:22] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:50:53] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:50:53] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:51:00] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:51:00] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:51:04] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:51:04] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:51:05] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 18:51:05] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:51:07] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 18:51:07] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 19:15:20] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 19:15:20] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 19:15:20] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 19:17:18] INFO: [34mGET /api/v_1/_pvt/_cl/client/categories[0m
+[2025-05-07 19:17:18] INFO: [34mGET /api/v_1/_pvt/_cl/client/notification[0m
+[2025-05-07 19:17:18] INFO: [34mPOST /api/v_1/_pvt/_cl/client/refresh-token[0m
+[2025-05-07 19:44:57] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 19:46:25] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 19:46:25] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:25] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:25] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:25] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:25] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:25] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:25] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:26] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:26] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:26] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:27] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:27] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:28] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:28] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:43] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 19:46:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 19:46:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 20:37:43] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 20:37:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 20:37:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 20:37:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 20:37:43] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 20:37:44] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 20:37:44] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 20:37:44] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 20:37:45] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 20:37:45] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 20:37:46] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 20:37:46] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 20:37:47] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 20:37:47] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 20:37:48] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 21:05:15] ERROR: [31mRedis Client Error:  read ECONNRESET[0m
+[2025-05-07 21:05:15] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 21:05:15] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 21:05:15] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 21:05:15] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 21:05:15] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 21:05:15] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 21:05:16] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 21:05:16] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 21:05:16] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 21:05:17] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 21:05:17] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 21:05:18] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 21:05:18] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-07 21:05:23] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:26] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:27] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:28] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:28] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:29] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:29] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:30] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:31] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:31] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:32] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:32] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:33] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:33] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:34] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:34] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:35] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:35] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:36] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m
+[2025-05-08 00:28:36] ERROR: [31mRedis Client Error:  getaddrinfo ENOTFOUND redis-10579.c264.ap-south-1-1.ec2.redns.redis-cloud.com[0m

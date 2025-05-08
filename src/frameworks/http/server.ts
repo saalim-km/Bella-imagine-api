@@ -10,7 +10,7 @@ import { PrivateRoute } from "../routes/common/private.route";
 import http from "http";
 import { ChatRoute } from "../routes/chat/chat.route";
 import { chatController } from "../di/resolver";
-import logger from "../../shared/utils/logger.utils";
+import logger from "../../shared/logger/logger.utils";
 
 export class Server {
     private _app : Application;
