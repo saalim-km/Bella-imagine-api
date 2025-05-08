@@ -47,7 +47,7 @@ export const verifyAuth = async (
   ) => {
     try {
       const token = extractToken(req);
-
+      console.log('token: ',token);
       if (!token) {
         res
           .status(HTTP_STATUS.UNAUTHORIZED)

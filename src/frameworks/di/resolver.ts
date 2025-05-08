@@ -18,7 +18,7 @@ import { ForgotPasswordSendOtpController } from "../../interfaceAdapters/control
 import { ResetPasswordController } from "../../interfaceAdapters/controllers/auth/reset-password.controller";
 import { GetPendingVendorController } from "../../interfaceAdapters/controllers/admin/vendor_request/get-pending-vendor-request.controller";
 import { UpdateVendorRequestController } from "../../interfaceAdapters/controllers/admin/vendor_request/update-vendor-request.controller";
-import { CreateNewCategoryController } from "../../interfaceAdapters/controllers/admin/category/create-new-category.controller"
+import { CreateNewCategoryController } from "../../interfaceAdapters/controllers/admin/category/create-new-category.controller";
 import { GetAllPaginatedCategoryController } from "../../interfaceAdapters/controllers/admin/category/get-all-paginated-category.controller";
 import { GetAllVendorCategoriesController } from "../../interfaceAdapters/controllers/vendor/get-all-vendor-categories.controller";
 import { UpdateCategoryController } from "../../interfaceAdapters/controllers/admin/category/update-category.controller";
@@ -46,15 +46,12 @@ import { GetAllBookingForVendorController } from "../../interfaceAdapters/contro
 import { UpdateBookingStatusController } from "../../interfaceAdapters/controllers/booking/update-booking-status.controller";
 import { GetWalletDetailsOfUserController } from "../../interfaceAdapters/controllers/wallet/get-wallet-details.controller";
 import { GetAllTransactionsByUserIdController } from "../../interfaceAdapters/controllers/payment/get-all-transaction-by-userId.controller";
-import { CreateContestController } from "../../interfaceAdapters/controllers/admin/contest_management/create-contest.controller";
-import { UpdateContestController } from "../../interfaceAdapters/controllers/admin/contest_management/update-contest.controller";
-import { DeleteContestController } from "../../interfaceAdapters/controllers/admin/contest_management/delete-contest.controller";
-import { GetPaginatedContestController } from "../../interfaceAdapters/controllers/admin/contest_management/get-paginated-contest-controller";
-import { ParticipateContestController } from "../../interfaceAdapters/controllers/contest/participate-contest.controller";
 import { ChatController } from "../../interfaceAdapters/controllers/chat/chat.controller";
 import { CreateConversationController } from "../../interfaceAdapters/controllers/chat/create-conversation.controller";
 import { GetUserChatsController } from "../../interfaceAdapters/controllers/chat/get-user-chats.controller";
 import { GetContactsController } from "../../interfaceAdapters/controllers/chat/get-contacts.controller";
+import { CommunityController } from "../../interfaceAdapters/controllers/community-contest/community.controller";
+import { AwsS3Service } from "../../interfaceAdapters/services/awsS3.service";
 
 DependencyInjection.registerAll();
 
@@ -188,42 +185,27 @@ export const getAllBookingForVendorController = container.resolve(
   GetAllBookingForVendorController
 );
 export const updateBookingStatusController = container.resolve(
-    UpdateBookingStatusController
-)
+  UpdateBookingStatusController
+);
 export const getWalletDetailsOfUserController = container.resolve(
   GetWalletDetailsOfUserController
-)
+);
 export const getAllTransactionByUserIdController = container.resolve(
   GetAllTransactionsByUserIdController
-)
-
-// |====================================== Contest Management ====================================|
-export const createContestController = container.resolve(
-  CreateContestController
-)
-export const updateContestController = container.resolve(
-  UpdateContestController
-)
-export const deleteContestController = container.resolve(
-  DeleteContestController
-)
-export const getPaginatedContestController = container.resolve(
-  GetPaginatedContestController
-)
-export const participateContestController = container.resolve(
-  ParticipateContestController
-)
+);
 
 // |====================================== Chat Management ====================================|
-export const chatController = container.resolve(
-  ChatController
-)
+export const chatController = container.resolve(ChatController);
 export const createConversationController = container.resolve(
   CreateConversationController
-)
-export const getUserChatsController = container.resolve(
-  GetUserChatsController
-)
+);
+export const getUserChatsController = container.resolve(GetUserChatsController);
 export const getUserContactsController = container.resolve(
   GetContactsController
-)
+);
+
+// |====================================== Community Management ====================================|
+export const communityController = container.resolve(CommunityController);
+
+// |====================================== Community Management ====================================|
+export const awsS3Controller = container.resolve(AwsS3Service);

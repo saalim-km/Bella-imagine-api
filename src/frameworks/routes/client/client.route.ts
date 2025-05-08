@@ -6,25 +6,24 @@ import {
 } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
 import {
+  communityController,
   createPaymentIntentController,
   getAllBookingsByClientController,
   getAllClientCategoriesController,
   getAllClientNotificatioController,
   getClientDetailsController,
-  getPaginatedContestController,
   getPaginatedVendorsController,
   getPhotographerDetailsController,
   getServiceController,
-  getVendorDetailsForChatController,
   getWalletDetailsOfUserController,
   logoutController,
-  participateContestController,
   refreshTokenController,
   updateBookingStatusController,
   updateClientController,
   updateConfirmPayment,
 } from "../../di/resolver";
 import { checkStatus } from "../../../interfaceAdapters/middlewares/block-status.middleware";
+import { upload } from "../../../interfaceAdapters/middlewares/multer.middleware";
 
 export class ClientRoute extends BaseRoute {
   constructor() {
@@ -65,6 +64,7 @@ export class ClientRoute extends BaseRoute {
       .put(
         verifyAuth,
         authorizeRole(["client"]),
+        upload.single('profileImage'),
         (req: Request, res: Response) => {
           updateClientController.handle(req, res);
         }
@@ -173,19 +173,17 @@ export class ClientRoute extends BaseRoute {
       }
     );
 
-    // Contest Management Routes
-    // Get All Contests
-    this.router.route('/client/contest')
-    .get(verifyAuth,authorizeRole(["client"]),(req: Request, res: Response)=> {
-      getPaginatedContestController.handle(req,res)
-    })
-    .post(verifyAuth,authorizeRole(["client"]),(req: Request, res: Response)=> {
-      participateContestController.handle(req,res)
+    // Community Management
+    this.router.get('/client/community/:slug',verifyAuth,authorizeRole(['client']),(req: Request, res: Response)=> {
+      communityController.findCommunityBySlug(req,res)
     })
 
-    // Chat Management Route
-    this.router.get('/client/vendors/:vendorId',(req,res)=> {
-      getVendorDetailsForChatController.handle(req,res)
+    this.router.route('/client/community/join')
+    .post(verifyAuth,authorizeRole(['client']),(req: Request, res: Response)=> {
+      communityController.createCommunityMember(req,res)
+    })
+    .delete(verifyAuth,authorizeRole(['client']),(req: Request, res: Response)=> {
+      communityController.leaveCommunity(req, res)
     })
   }
 }

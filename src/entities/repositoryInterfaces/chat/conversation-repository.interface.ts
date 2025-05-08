@@ -9,4 +9,5 @@ export default interface IConversationRepository {
   updateConversation(conversationId : string , conversation: IConversationEntity): Promise<void>;
   getConversationById(conversationId: string) : Promise<IConversationEntity | null>
   incrementUnreadCount(conversationId : string , userType : TRole) : Promise<void>
+  isConversationExists(clientId : string, vendorId : string) : Promise<IConversationEntity | null>
 }

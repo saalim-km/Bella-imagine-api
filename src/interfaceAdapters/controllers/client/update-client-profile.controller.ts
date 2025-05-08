@@ -10,33 +10,34 @@ import {
 } from "../../../shared/constants";
 import { ZodError } from "zod";
 import { CustomError } from "../../../entities/utils/custom-error";
+import { IAwsS3Service } from "../../../entities/services/awsS3-service.interface";
+import path from "path";
+import { unlinkSync } from "fs";
 
 @injectable()
 export class UpdateClientController implements IUpdateClientController {
   constructor(
     @inject("IUpdateClientUsecase")
-    private updateClientUseCase: IUpdateClientUsecase
+    private updateClientUseCase: IUpdateClientUsecase,
+    @inject('IAwsS3Service') private awsS3Service : IAwsS3Service
   ) {}
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      console.log(
-        "------------------------in update clinet controller----------------------"
-      );
       const { _id } = (req as CustomRequest).user;
-      console.log(_id);
-      console.log(req.body);
+      const updateData = { ...req.body };
 
-      await this.updateClientUseCase.excute(_id, req.body);
+      await this.updateClientUseCase.excute(_id, updateData, req.file);
+
+      if (req.file) {
+        unlinkSync(req.file.path);
+      }
 
       res
         .status(HTTP_STATUS.OK)
         .json({ success: true, message: SUCCESS_MESSAGES.UPDATE_SUCCESS });
     } catch (error) {
       if (error instanceof ZodError) {
-        const errors = error.errors.map((err) => ({
-          message: err.message,
-        }));
-        console.log(errors);
+        const errors = error.errors.map((err) => ({ message: err.message }));
         res.status(HTTP_STATUS.BAD_REQUEST).json({
           success: false,
           message: ERROR_MESSAGES.VALIDATION_ERROR,
@@ -45,13 +46,11 @@ export class UpdateClientController implements IUpdateClientController {
         return;
       }
       if (error instanceof CustomError) {
-        console.log(error);
         res
           .status(error.statusCode)
           .json({ success: false, message: error.message });
         return;
       }
-      console.log(error);
       res
         .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
         .json({ success: false, message: ERROR_MESSAGES.SERVER_ERROR });

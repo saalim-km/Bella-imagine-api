@@ -10,7 +10,6 @@ export class MongoConnect {
 
     async connect() {
         try {
-            console.log(this.MongoUrl);
             await mongoose.connect(this.MongoUrl);
             console.log('Database connect aayi 🕺');
 

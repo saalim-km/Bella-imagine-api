@@ -24,14 +24,16 @@ import { BookingRepository } from "../../interfaceAdapters/repositories/booking/
 import { PaymentRepository } from "../../interfaceAdapters/repositories/payment/payment.repository";
 import { IWalletRepository } from "../../entities/repositoryInterfaces/wallet-repository.interface";
 import { WalletRepository } from "../../interfaceAdapters/repositories/wallet/wallet.repository";
-import { IContestRepository } from "../../entities/repositoryInterfaces/contest/contest-repository.interface";
 import { ContestRepository } from "../../interfaceAdapters/repositories/contest/contest.repository";
-import { IParticipateContestRepository } from "../../entities/repositoryInterfaces/contest/participate-contest.repository";
 import { ParticipateContestRepository } from "../../interfaceAdapters/repositories/contest/participate-contest.repository";
 import { MessageRepository } from "../../interfaceAdapters/repositories/chat/message.repository";
 import IConversationRepository from "../../entities/repositoryInterfaces/chat/conversation-repository.interface";
 import { ConversationRepository } from "../../interfaceAdapters/repositories/chat/conversation.repository";
 import IMessageRepository from "../../entities/repositoryInterfaces/chat/message-repository.interface";
+import { ICommunityRepository } from "../../entities/repositoryInterfaces/community-contest/community-repository.interface";
+import { ComminityRepository } from "../../interfaceAdapters/repositories/community-contest/community.repository";
+import { ICommunityMemberRepository } from "../../entities/repositoryInterfaces/community-contest/community-member-repository.interface";
+import { CommunityMemberRepository } from "../../interfaceAdapters/repositories/community-contest/community-member.repository";
 export class RepositoryRegistry {
   static registerRepositories(): void {
     // |-------------------------- Repository Registrations ----------------------------------|
@@ -86,20 +88,20 @@ export class RepositoryRegistry {
       useClass : WalletRepository
     })
 
-    container.register<IContestRepository>('IContestRepository',{
-      useClass : ContestRepository
-    })
-
-    container.register<IParticipateContestRepository>("IParticipateContestRepository" , {
-      useClass : ParticipateContestRepository
-    })
-
     container.register<IConversationRepository>('IConversationRepository',{
       useClass : ConversationRepository
     })
 
     container.register<IMessageRepository>('IMessageRepository',{
       useClass : MessageRepository
+    })
+
+    container.register<ICommunityRepository>('ICommunityRepository',{
+      useClass : ComminityRepository
+    })
+
+    container.register<ICommunityMemberRepository>("ICommunityMemberRepository",{
+      useClass : CommunityMemberRepository
     })
   }
 }

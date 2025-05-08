@@ -2,7 +2,7 @@ import { ObjectId } from "mongoose";
 import { TRole } from "../../shared/constants";
 
 export interface IClientEntity {
-    _id ?: ObjectId;
+    _id ?: ObjectId | string;
     name : string;
     email : string;
     profileImage ?: string;
@@ -13,8 +13,8 @@ export interface IClientEntity {
     role : TRole;
     savedPhotographers ?: ObjectId[];
     savedPhotos ?: ObjectId[];
-    isOnline : boolean;
-    lastSeen : Date
+    isOnline ?: boolean;
+    lastSeen ?: Date
     isActive ?: boolean;
     isblocked ?: boolean;
     createdAt ?: Date;

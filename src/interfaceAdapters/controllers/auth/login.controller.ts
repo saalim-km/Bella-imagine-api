@@ -67,6 +67,7 @@ export class LoginController implements ILoginControllerInterface {
         refreshTokenName
       );
 
+      console.log('user logged in: ',user);
       res.status(HTTP_STATUS.OK).json({
         success: true,
         message: SUCCESS_MESSAGES.LOGIN_SUCCESS,
@@ -75,6 +76,7 @@ export class LoginController implements ILoginControllerInterface {
           name: user.name,
           email: user.email,
           role: user.role,
+          avatar: user.profileImage
         },
       });
 

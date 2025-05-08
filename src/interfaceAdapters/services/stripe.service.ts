@@ -7,6 +7,7 @@ import { CustomError } from "../../entities/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
 import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface";
 import { IPaymentService } from "../../entities/services/stripe-service.interface";
+import { TPaymentStatus } from "../../entities/models/booking.entity";
 
 @injectable()
 export class StripeService implements IPaymentService {
@@ -125,7 +126,7 @@ export class StripeService implements IPaymentService {
     if (payment) {
       this.bookingRepository.findByIdAndUpdatePaymentStatus(
         payment.bookingId,
-        status
+        status as TPaymentStatus
       );
 
       if (status === "refunded") {

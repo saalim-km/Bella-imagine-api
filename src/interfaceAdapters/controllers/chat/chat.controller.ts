@@ -1,9 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IChatController } from "../../../entities/controllerInterfaces/chat/chat-controller.interface";
-import { Server as SocketIoServer, DefaultEventsMap, Socket } from "socket.io";
-import { IncomingMessage, Server } from "http";
+import { Server as SocketIoServer } from "socket.io";
 import { Request, Response } from "express";
-import { boolean, string } from "zod";
 import { IGetUserContactsUsecase } from "../../../entities/usecaseInterfaces/chat/get-user-contacts-usecase.interface";
 import { IGetConversationsUsecase } from "../../../entities/usecaseInterfaces/chat/get-conversations-usecase.interface";
 import { ISendMessageUsecase } from "../../../entities/usecaseInterfaces/chat/send-message-usecase.interface";
@@ -11,6 +9,9 @@ import { IGetMessageUsecase } from "../../../entities/usecaseInterfaces/chat/get
 import { IMessageEntity } from "../../../entities/models/message.entity";
 import { IUpdateUserOnlineStatusUsecase } from "../../../entities/usecaseInterfaces/chat/update-user-online-status-usecase.interface";
 import { IUpdateLastSeenUsecase } from "../../../entities/usecaseInterfaces/chat/update-last-seen-usecase.interface";
+import { handleError } from "../../../shared/utils/error-handler.utils";
+import { IUploadMediaChatUsecase } from "../../../entities/usecaseInterfaces/chat/upload-media-chat-usecase.interface";
+import { Server } from "http";
 
 @injectable()
 export class ChatController implements IChatController {
@@ -22,7 +23,8 @@ export class ChatController implements IChatController {
         @inject('ISendMessageUsecase') private sendMessageUsecase : ISendMessageUsecase,
         @inject('IGetMessageUsecase') private getMessagesUsecase : IGetMessageUsecase,
         @inject("IUpdateUserOnlineStatusUsecase") private updateUserOnlineStatus : IUpdateUserOnlineStatusUsecase,
-        @inject('IUpdateLastSeenUsecase') private updateLastSeenUsecase : IUpdateLastSeenUsecase
+        @inject('IUpdateLastSeenUsecase') private updateLastSeenUsecase : IUpdateLastSeenUsecase,
+        @inject('IUploadMediaChatUsecase') private uploadMediaUsecase : IUploadMediaChatUsecase
     ){}
 
     initialize(server: Server): void {
@@ -57,7 +59,7 @@ export class ChatController implements IChatController {
                 console.log('join event triggered 😘',userId);
                 socket.join(userId)
                 await this.updateUserOnlineStatus.execute(userId,userType,true)
-                socket.broadcast.emit('user_status',{userId , userType , status : true  })
+                socket.broadcast.emit('user_status',{userId , userType , status : true })
             })
 
 
@@ -119,11 +121,15 @@ export class ChatController implements IChatController {
         })
     }
 
-    async handle(req: Request, res: Response): Promise<void> {
+    async uploadMedia(req: Request, res: Response): Promise<void> {
         try {
-            
+            console.log(req.file);
+            const {conversationId} = req.body;
+            const response = await this.uploadMediaUsecase.execute(req.file!,conversationId);
+            console.log('got the file key and fileurl from usecase : ',response);
+            res.status(200).json(response)
         } catch (error) {
-            console.log('error occured while feching user chats',error);
+            handleError(error,res)
         }
     }
 }

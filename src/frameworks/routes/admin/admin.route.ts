@@ -6,15 +6,13 @@ import {
 } from "../../../interfaceAdapters/middlewares/auth.middleware";
 import { BaseRoute } from "../base.route";
 import {
-  createContestController,
+  communityController,
   createNewCategoryController,
-  deleteContestController,
   getAllClientController,
   getAllPaginatedCategoryController,
   getAllTransactionByUserIdController,
   getAllVendorController,
   getCategoryRequestController,
-  getPaginatedContestController,
   getPendingVendorController,
   getUserDetailsController,
   getWalletDetailsOfUserController,
@@ -22,10 +20,10 @@ import {
   refreshTokenController,
   updateCategoryController,
   updateCategoryRequestStatusController,
-  updateContestController,
   updateUserStatusController,
   updateVendorRequestController,
 } from "../../di/resolver";
+import { upload } from "../../../interfaceAdapters/middlewares/multer.middleware";
 
 export class AdminRoute extends BaseRoute {
   constructor() {
@@ -136,7 +134,14 @@ export class AdminRoute extends BaseRoute {
         (req: Request, res: Response) => {
           updateCategoryController.handle(req, res);
         }
-      );
+      )
+      .put(
+        verifyAuth,
+        authorizeRole(['admin']),
+        (req: Request, res: Response)=> {
+          updateCategoryController.handle(req,res)
+        }
+      )
 
     // Category Request Management Routes
     // Manage category requests (get and update status)
@@ -179,20 +184,51 @@ export class AdminRoute extends BaseRoute {
       }
     );
 
-    // Contest Management Routes
-    // Create Contest
-    this.router.route("/admin/contest")
-    .post(verifyAuth,authorizeRole(["admin"]),(req: Request, res: Response) => {
-      createContestController.handle(req, res);
-    })
-    .put(verifyAuth,authorizeRole(["admin"]),(req: Request, res: Response)=> {
-      updateContestController.handle(req,res)
-    })
-    .delete(verifyAuth,authorizeRole(["admin"]),(req: Request, res: Response)=> {
-      deleteContestController.handle(req,res)
-    })
-    .get(verifyAuth,authorizeRole(["admin"]),(req: Request, res: Response)=> {
-      getPaginatedContestController.handle(req,res)
-    })
+    // Commnity-Contest
+    this.router
+      .route("/admin/community")
+      .post(
+        verifyAuth,
+        authorizeRole(["admin"]),
+        upload.fields([
+          {name : 'iconImage' , maxCount : 1},
+          {name : 'coverImage' , maxCount : 1}
+        ]),
+        (req: Request, res: Response) => {
+          communityController.createCommunity(req, res);
+        }
+      )
+      .get(
+        (req: Request, res: Response) => {
+          communityController.listCommunities(req, res);
+        }
+      )
+      .delete(
+        verifyAuth,
+        authorizeRole(["admin"]),
+        (req: Request, res: Response) => {
+          communityController.deleteCommunity(req, res);
+        }
+      )
+      .put(
+        verifyAuth,
+        authorizeRole(["admin"]),
+        upload.fields([
+          {name : 'iconImageUrl' , maxCount : 1},
+          {name : 'coverImageUrl' , maxCount : 1}
+        ]),
+        (req: Request, res: Response) => {
+          communityController.updateCommunity(req, res);
+        }
+      );
+
+    this.router.get(
+      "/admin/community/:slug",
+      verifyAuth,
+      authorizeRole(["admin"]),
+      (req: Request, res: Response) => {
+        communityController.findCommunityBySlug(req, res);
+      }
+    );
   }
 }

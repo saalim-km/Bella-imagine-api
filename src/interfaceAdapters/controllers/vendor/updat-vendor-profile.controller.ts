@@ -6,43 +6,36 @@ import { IUpdateVendorProfileUsecase } from "../../../entities/usecaseInterfaces
 import { ZodError } from "zod";
 import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../../shared/constants";
 import { CustomError } from "../../../entities/utils/custom-error";
+import { IAwsS3Service } from "../../../entities/services/awsS3-service.interface";
+import path from "path";
+import { unlinkSync } from "fs";
 
 @injectable()
 export class UpdateVendorController implements IUpdateVendorController {
   constructor(
-    @inject("IUpdateVendorProfileUsecase")
-    private updateVendorProfileUsecase: IUpdateVendorProfileUsecase
+    @inject("IUpdateVendorProfileUsecase") 
+    private updateVendorProfileUsecase: IUpdateVendorProfileUsecase,
+    @inject('IAwsS3Service') private awsS3Service : IAwsS3Service
   ) {}
   async handle(req: Request, res: Response): Promise<void> {
     try {
       const user = (req as CustomRequest).user;
-      await this.updateVendorProfileUsecase.execute(user._id, req.body);
+      const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+      const updateData = { ...req.body };
 
-      res.status(HTTP_STATUS.OK).json({success : true , message : SUCCESS_MESSAGES.UPDATE_SUCCESS})
+      const vendor = await this.updateVendorProfileUsecase.execute(user._id, updateData, files);
+      res.status(HTTP_STATUS.OK).json({ success: true, message: SUCCESS_MESSAGES.UPDATE_SUCCESS, vendor });
     } catch (error) {
       if (error instanceof ZodError) {
-        const errors = error.errors.map((err) => ({
-          message: err.message,
-        }));
-        console.log(errors);
-        res.status(HTTP_STATUS.BAD_REQUEST).json({
-          success: false,
-          message: ERROR_MESSAGES.VALIDATION_ERROR,
-          errors,
-        });
-        return;
+        const errors = error.errors.map(err => ({ message: err.message }));
+         res.status(HTTP_STATUS.BAD_REQUEST).json({ success: false, message: ERROR_MESSAGES.VALIDATION_ERROR, errors });
+         return
       }
       if (error instanceof CustomError) {
-        console.log(error);
-        res
-          .status(error.statusCode)
-          .json({ success: false, message: error.message });
-        return;
+         res.status(error.statusCode).json({ success: false, message: error.message });
+         return
       }
-      console.log(error);
-      res
-        .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
-        .json({ success: false, message: ERROR_MESSAGES.SERVER_ERROR });
+      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ success: false, message: ERROR_MESSAGES.SERVER_ERROR });
     }
   }
 }

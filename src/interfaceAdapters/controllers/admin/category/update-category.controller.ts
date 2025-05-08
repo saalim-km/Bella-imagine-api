@@ -19,6 +19,7 @@ export class UpdateCategoryController implements IUpdateCategoryController {
 
   async handle(req: Request, res: Response): Promise<void> {
     try {
+      console.log(req.body);
       const { id, data } = req.body;
       await this.updateCategoryUsecase.execute(id, data);
       res

@@ -24,6 +24,7 @@ import {
   updateVendorController,
   updateWorkSampleController,
 } from "../../di/resolver";
+import { upload } from "../../../interfaceAdapters/middlewares/multer.middleware";
 
 export class VendorRoute extends BaseRoute {
   constructor() {
@@ -64,6 +65,10 @@ export class VendorRoute extends BaseRoute {
       .put(
         verifyAuth,
         authorizeRole(["vendor"]),
+        upload.fields([
+          {name : 'profileImage' , maxCount : 1},
+          {name : 'verificationDocument' , maxCount : 1}
+        ]),
         (req: Request, res: Response) => {
           updateVendorController.handle(req, res);
         }

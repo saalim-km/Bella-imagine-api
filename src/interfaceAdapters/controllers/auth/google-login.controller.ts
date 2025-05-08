@@ -42,7 +42,7 @@ export class GoogleLoginController implements IGoogleLoginController {
 
       setAuthCookies(res,tokens.accessToken,tokens.refreshToken,accessTokenName,refreshTokenName)
 
-      console.log(userId,user);
+      console.log('logged in user',user);
       res.status(HTTP_STATUS.OK).json({
         success: true,
         message: 'User successfully authenticated',
@@ -51,6 +51,7 @@ export class GoogleLoginController implements IGoogleLoginController {
           name: user.name,
           email: user.email,
           role: user.role,
+          avatar : user.avatar
         },
       });
 

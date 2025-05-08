@@ -20,15 +20,20 @@ export class CreateConversationUseCase implements ICreateConversationUseCase {
 
     async execute(clientId: string, vendorId: string , bookingId : string): Promise<IConversationEntity> {
         try {
-            const [client , vendor] = await Promise.all([
+            const [client , vendor , conversation] = await Promise.all([
                 this.clientRepository.findById(clientId),
-                this.vendorRepository.findById(vendorId)
+                this.vendorRepository.findById(vendorId),
+                this.conversationRepository.isConversationExists(clientId,vendorId)
             ])
     
             if(!client || !vendor) {
                 throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND,HTTP_STATUS.BAD_REQUEST);
             }
     
+            if(conversation) {
+                return conversation;
+            }
+            
             const booking = await this.bookingRepository.findById(bookingId);
     
             if(!booking) {
@@ -58,6 +63,7 @@ export class CreateConversationUseCase implements ICreateConversationUseCase {
                 client : clientParticipant,
                 vendor : vendorParticipant
             }
+
 
             return await this.conversationRepository.createConversation(newConvo)
         } catch (error) {

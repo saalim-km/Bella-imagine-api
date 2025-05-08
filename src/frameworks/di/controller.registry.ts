@@ -45,15 +45,12 @@ import { GetAllBookingForVendorController } from "../../interfaceAdapters/contro
 import { UpdateBookingStatusController } from "../../interfaceAdapters/controllers/booking/update-booking-status.controller";
 import { GetWalletDetailsOfUserController } from "../../interfaceAdapters/controllers/wallet/get-wallet-details.controller";
 import { GetAllTransactionsByUserIdController } from "../../interfaceAdapters/controllers/payment/get-all-transaction-by-userId.controller";
-import { CreateContestController } from "../../interfaceAdapters/controllers/admin/contest_management/create-contest.controller";
-import { UpdateContestController } from "../../interfaceAdapters/controllers/admin/contest_management/update-contest.controller";
-import { DeleteContestController } from "../../interfaceAdapters/controllers/admin/contest_management/delete-contest.controller";
-import { GetPaginatedContestController } from "../../interfaceAdapters/controllers/admin/contest_management/get-paginated-contest-controller";
-import { ParticipateContestController } from "../../interfaceAdapters/controllers/contest/participate-contest.controller";
 import { CreateConversationController } from "../../interfaceAdapters/controllers/chat/create-conversation.controller";
 import { GetUserChatsController } from "../../interfaceAdapters/controllers/chat/get-user-chats.controller";
 import { ChatController } from "../../interfaceAdapters/controllers/chat/chat.controller";
 import { GetContactsController } from "../../interfaceAdapters/controllers/chat/get-contacts.controller";
+import { CommunityController } from "../../interfaceAdapters/controllers/community-contest/community.controller";
+import { AwsS3Service } from "../../interfaceAdapters/services/awsS3.service";
 
 export class ControllerRegistry {
   static registerController(): void {
@@ -217,23 +214,6 @@ export class ControllerRegistry {
       useClass: GetAllTransactionsByUserIdController,
     });
 
-    //-------------------------------------- Contest Management ----------------------------------------------|
-    container.register("CreateContestController", {
-      useClass: CreateContestController,
-    });
-    container.register("UpdateContestController", {
-      useClass: UpdateContestController,
-    });
-    container.register("DeleteContestController", {
-      useClass: DeleteContestController,
-    });
-    container.register("GetPaginatedContestController", {
-      useClass: GetPaginatedContestController,
-    });
-    container.register('ParticipateContestController',{
-      useClass : ParticipateContestController
-    })
-
     //-------------------------------------- Chat Management ----------------------------------------------|
     container.register('CreateConversationController',{
       useClass : CreateConversationController
@@ -249,6 +229,16 @@ export class ControllerRegistry {
 
     container.register('GetContactsController',{
       useClass : GetContactsController
+    })
+
+    //-------------------------------------- Chat Management ----------------------------------------------|
+    container.register('CommunityController',{
+      useClass : CommunityController
+    })
+
+    //-------------------------------------- AWS-S3 Management ----------------------------------------------|
+    container.register('IAwsS3Service',{
+      useClass : AwsS3Service
     })
   }
 }
