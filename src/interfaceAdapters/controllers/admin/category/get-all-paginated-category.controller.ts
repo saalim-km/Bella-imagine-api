@@ -15,7 +15,6 @@ export class GetAllPaginatedCategoryController
     private getAllPaginatedCategoryUseCase: IGetAllPaginatedCategoryUseCase
   ) {}
   async handle(req: Request, res: Response): Promise<void> {
-    try {
       const { limit, page, search, status } = req.query;
 
       const parsedPage = page ? parseInt(page as string, 10) : 1;
@@ -40,24 +39,6 @@ export class GetAllPaginatedCategoryController
         currentPage: parsedPage,
         totalCategory: all,
       });
-    } catch (error) {
-      if (error instanceof ZodError) {
-        res.status(HTTP_STATUS.BAD_REQUEST).json({
-          success: false,
-          message: ERROR_MESSAGES.VALIDATION_ERROR,
-          errors: error.errors.map((err) => ({ message: err.message })),
-        });
-        return;
-      }
-      if (error instanceof CustomError) {
-        res.status(error.statusCode).json({ success: false, message: error.message });
-        return;
-      }
-      console.error(error);
-      res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
-        success: false,
-        message: ERROR_MESSAGES.SERVER_ERROR,
-      });
-    }
+
   }
 }

@@ -122,14 +122,11 @@ export class ChatController implements IChatController {
     }
 
     async uploadMedia(req: Request, res: Response): Promise<void> {
-        try {
             console.log(req.file);
             const {conversationId} = req.body;
             const response = await this.uploadMediaUsecase.execute(req.file!,conversationId);
             console.log('got the file key and fileurl from usecase : ',response);
             res.status(200).json(response)
-        } catch (error) {
-            handleError(error,res)
-        }
+
     }
 }

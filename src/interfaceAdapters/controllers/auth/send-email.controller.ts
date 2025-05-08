@@ -11,7 +11,6 @@ import {
 import { ZodError } from "zod";
 import { CustomError } from "../../../entities/utils/custom-error";
 
-
 @injectable()
 export class SendEmailController implements ISendEmailController {
   constructor(
@@ -19,59 +18,14 @@ export class SendEmailController implements ISendEmailController {
   ) {}
 
   async handle(req: Request, res: Response): Promise<void> {
-    try {
+    console.log("-> in Send-Email-Controller ->>>>>>>>>>>>");
+    console.log(req.body);
 
-        
-      console.log("-> in Send-Email-Controller ->>>>>>>>>>>>");
-      console.log(req.body);
-      
-      const { email } = req.body;
-      await this.sendEmailUsecase.execute(email);
+    const { email } = req.body;
+    await this.sendEmailUsecase.execute(email);
 
-      res
-        .status(HTTP_STATUS.OK)
-        .json({ success: true, message: SUCCESS_MESSAGES.OTP_SEND_SUCCESS });
-
-
-
-    } catch (error) {
-
-
-        
-      if (error instanceof ZodError) {
-
-        const errors = error.errors.map((err) => ({
-          message: err.message,
-        }));
-
-        res.status(HTTP_STATUS.BAD_REQUEST).json({
-          success: false,
-          message: ERROR_MESSAGES.VALIDATION_ERROR,
-          errors,
-        });
-
-        return;
-      }
-
-
-      if (error instanceof CustomError) {
-
-        res
-          .status(error.statusCode)
-          .json({ success: false, message: error.message });
-        return;
-        
-      }
-
-      console.log(error);
-      res
-        .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
-        .json({ success: false, message: ERROR_MESSAGES.SERVER_ERROR });
-
-
-
-
-
-    }
+    res
+      .status(HTTP_STATUS.OK)
+      .json({ success: true, message: SUCCESS_MESSAGES.OTP_SEND_SUCCESS });
   }
 }

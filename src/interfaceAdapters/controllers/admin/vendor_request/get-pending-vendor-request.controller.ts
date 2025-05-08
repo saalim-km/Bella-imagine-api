@@ -17,7 +17,6 @@ export class GetPendingVendorController
   ) {}
 
   async handle(req: Request, res: Response): Promise<void> {
-    try {
       const filter: PaginatedRequestUser = {
         search: req.query.search as string,
         page: req.query.page ? parseInt(req.query.page as string) : 1,
@@ -34,30 +33,6 @@ export class GetPendingVendorController
       };
       const vendors = await this.getPendingVendorUsecase.execute(filter, filter.page, filter.limit);
       res.status(HTTP_STATUS.OK).json({vendors})
-    } catch (error) {
-      if (error instanceof ZodError) {
-        const errors = error.errors.map((err) => ({
-          message: err.message,
-        }));
-        console.log(errors);
-        res.status(HTTP_STATUS.BAD_REQUEST).json({
-          success: false,
-          message: ERROR_MESSAGES.VALIDATION_ERROR,
-          errors,
-        });
-        return;
-      }
-      if (error instanceof CustomError) {
-        console.log(error);
-        res
-          .status(error.statusCode)
-          .json({ success: false, message: error.message });
-        return;
-      }
-      console.log(error);
-      res
-        .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
-        .json({ success: false, message: ERROR_MESSAGES.SERVER_ERROR });
-    }
+
   }
 }

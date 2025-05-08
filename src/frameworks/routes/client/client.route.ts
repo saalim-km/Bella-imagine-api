@@ -24,6 +24,7 @@ import {
 } from "../../di/resolver";
 import { checkStatus } from "../../../interfaceAdapters/middlewares/block-status.middleware";
 import { upload } from "../../../interfaceAdapters/middlewares/multer.middleware";
+import { asyncHandler } from "../../../shared/handler/async-handler.utils";
 
 export class ClientRoute extends BaseRoute {
   constructor() {
@@ -31,159 +32,165 @@ export class ClientRoute extends BaseRoute {
   }
 
   protected initializeRoutes(): void {
-    
     // Authentication Routes
-    // Handles client logout and token refresh
     this.router.post(
       "/client/logout",
       verifyAuth,
-      (req: Request, res: Response) => {
-        logoutController.handle(req, res);
-      }
+      asyncHandler(logoutController.handle.bind(logoutController))
     );
 
     this.router.post(
       "/client/refresh-token",
       decodeToken,
-      (req: Request, res: Response) => {
-        refreshTokenController.handle(req, res);
-      }
+      asyncHandler(refreshTokenController.handle.bind(refreshTokenController))
     );
 
     // Client Profile Management Routes
-    // Manage client details (get and update)
     this.router
       .route("/client/details")
       .get(
         verifyAuth,
         authorizeRole(["client"]),
-        (req: Request, res: Response) => {
-          getClientDetailsController.handle(req, res);
-        }
+        asyncHandler(
+          getClientDetailsController.handle.bind(getClientDetailsController)
+        )
       )
       .put(
         verifyAuth,
         authorizeRole(["client"]),
-        upload.single('profileImage'),
-        (req: Request, res: Response) => {
-          updateClientController.handle(req, res);
-        }
+        upload.single("profileImage"),
+        asyncHandler(updateClientController.handle.bind(updateClientController))
       );
 
     // Notification Management Routes
-    // Retrieve all notifications for the client
     this.router
       .route("/client/notification")
       .get(
         verifyAuth,
         authorizeRole(["client"]),
-        (req: Request, res: Response) => {
-          getAllClientNotificatioController.handle(req, res);
-        }
+        asyncHandler(
+          getAllClientNotificatioController.handle.bind(
+            getAllClientNotificatioController
+          )
+        )
       );
 
     // Vendor Discovery Routes
-    // Retrieve paginated vendors
     this.router
       .route("/client/vendors")
       .get(
         verifyAuth,
         authorizeRole(["client"]),
         checkStatus as RequestHandler,
-        (req: Request, res: Response) => {
-          getPaginatedVendorsController.handle(req, res);
-        }
+        asyncHandler(
+          getPaginatedVendorsController.handle.bind(
+            getPaginatedVendorsController
+          )
+        )
       );
 
     // Category Management Routes
-    // Retrieve all categories available to the client
     this.router.get(
       "/client/categories",
-      (req: Request, res: Response) => {
-        getAllClientCategoriesController.handle(req, res);
-      }
+      asyncHandler(
+        getAllClientCategoriesController.handle.bind(
+          getAllClientCategoriesController
+        )
+      )
     );
 
     // Photographer and Service Details Routes
-    // Retrieve details of a specific photographer or service
     this.router.get(
       "/client/photographer/:id",
       verifyAuth,
       authorizeRole(["client"]),
-      (req: Request, res: Response) => {
-        getPhotographerDetailsController.handle(req, res);
-      }
+      asyncHandler(
+        getPhotographerDetailsController.handle.bind(
+          getPhotographerDetailsController
+        )
+      )
     );
 
     this.router.get(
       "/client/service/:id",
       verifyAuth,
       authorizeRole(["client"]),
-      (req: Request, res: Response) => {
-        getServiceController.handle(req, res);
-      }
+      asyncHandler(getServiceController.handle.bind(getServiceController))
     );
 
     // Payment Management Routes
-    // Handle payment intent creation and confirmation
     this.router.post(
       "/client/create-payment-intent",
       verifyAuth,
       authorizeRole(["client"]),
-      (req: Request, res: Response) => {
-        createPaymentIntentController.handle(req, res);
-      }
+      asyncHandler(
+        createPaymentIntentController.handle.bind(createPaymentIntentController)
+      )
     );
 
     this.router.post(
       "/client/confirm-payment",
-      (req: Request, res: Response) => {
-        updateConfirmPayment.handle(req, res);
-      }
+      asyncHandler(updateConfirmPayment.handle.bind(updateConfirmPayment))
     );
 
     // Booking Management Routes
-    // Retrieve client bookings and update booking status
     this.router.get(
       "/client/client-bookings",
       verifyAuth,
       authorizeRole(["client"]),
-      (req: Request, res: Response) => {
-        getAllBookingsByClientController.handle(req, res);
-      }
+      asyncHandler(
+        getAllBookingsByClientController.handle.bind(
+          getAllBookingsByClientController
+        )
+      )
     );
 
     this.router.patch(
       "/client/booking/status",
       verifyAuth,
       authorizeRole(["client"]),
-      (req: Request, res: Response) => {
-        updateBookingStatusController.handle(req, res);
-      }
+      asyncHandler(
+        updateBookingStatusController.handle.bind(updateBookingStatusController)
+      )
     );
 
     // Wallet Management Routes
-    // Retrieve wallet details for the client
     this.router.get(
       "/client/wallet",
       verifyAuth,
       authorizeRole(["client"]),
-      (req: Request, res: Response) => {
-        getWalletDetailsOfUserController.handle(req, res);
-      }
+      asyncHandler(
+        getWalletDetailsOfUserController.handle.bind(
+          getWalletDetailsOfUserController
+        )
+      )
     );
 
     // Community Management
-    this.router.get('/client/community/:slug',verifyAuth,authorizeRole(['client']),(req: Request, res: Response)=> {
-      communityController.findCommunityBySlug(req,res)
-    })
+    this.router.get(
+      "/client/community/:slug",
+      verifyAuth,
+      authorizeRole(["client"]),
+      asyncHandler(
+        communityController.findCommunityBySlug.bind(communityController)
+      )
+    );
 
-    this.router.route('/client/community/join')
-    .post(verifyAuth,authorizeRole(['client']),(req: Request, res: Response)=> {
-      communityController.createCommunityMember(req,res)
-    })
-    .delete(verifyAuth,authorizeRole(['client']),(req: Request, res: Response)=> {
-      communityController.leaveCommunity(req, res)
-    })
+    this.router
+      .route("/client/community/join")
+      .post(
+        verifyAuth,
+        authorizeRole(["client"]),
+        asyncHandler(
+          communityController.createCommunityMember.bind(communityController)
+        )
+      )
+      .delete(
+        verifyAuth,
+        authorizeRole(["client"]),
+        asyncHandler(
+          communityController.leaveCommunity.bind(communityController)
+        )
+      );
   }
 }
