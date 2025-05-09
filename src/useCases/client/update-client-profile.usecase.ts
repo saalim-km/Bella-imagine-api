@@ -7,6 +7,10 @@ import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
 import { redisClient } from "../../frameworks/redis/redis.client";
 import { IAwsS3Service } from "../../entities/services/awsS3-service.interface";
 import path from "path";
+import { config } from "../../shared/config";
+import { s3UrlCache } from "../../frameworks/di/resolver";
+import { unlinkSync } from "fs";
+import logger from "../../shared/logger/logger.utils";
 
 @injectable()
 export class UpdateClientUsecase implements IUpdateClientUsecase {
@@ -16,20 +20,33 @@ export class UpdateClientUsecase implements IUpdateClientUsecase {
     ) {}
 
     async excute(id: string, data: UpdateClientDto, file?: Express.Multer.File): Promise<void> {
+        logger.info('in the updatecient usecase : ')
+        console.log(file);
+        console.log(data,id);
         const client = await this.clientRepository.findById(id);
         if (!client) {
             throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND, HTTP_STATUS.BAD_REQUEST);
         }
 
         if (file) {
-            const fileKey = `profile-images/${id}/${Date.now()}${path.extname(file.originalname)}`;
+            // delete existing object form s3 before uploading the new image
+            const isFileExists = await this.awsS3Service.isFileAvailableInAwsBucket(client.profileImage!);
+            if(isFileExists){
+                await this.awsS3Service.deleteFileFromAws(client.profileImage!);        
+            }
+            
+            const fileKey = `${config.s3.profile}/${id}/${Date.now()}${path.extname(file.originalname)}`;
 
             // Upload to S3
             await this.awsS3Service.uploadFileToAws(fileKey, file.path);
+            try {
+                unlinkSync(file.path)
+            } catch (error) {
+                logger.warn('failed to delete file')
+            }
 
             // Always update the presigned URL since a new image was uploaded
-            const presignedUrl = await this.awsS3Service.getFileUrlFromAws(fileKey, 86400);
-            await redisClient.setEx(`profile-url:${id}`, 86400, presignedUrl);
+            await s3UrlCache.getCachedSignUrl(fileKey)
 
             data.profileImage = fileKey;
         }

@@ -226,6 +226,8 @@ export class ControllerRegistry {
     container.register("CommunityController", {
       useClass: CommunityController,
     });
+
+    // Cache Service
     container.register("IAwsS3Service", { useClass: AwsS3Service });
   }
 }

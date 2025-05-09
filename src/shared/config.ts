@@ -50,7 +50,13 @@ export const config = {
     AWS_REGION: process.env.AWS_REGION || '',
     AWS_BUCKET_NAME : process.env.BUCKET_NAME || '',
     AWS_USERS_FOLDER : process.env.AWS_USERS_FOLDER || '',
-    AWS_WORK_SAMPLES_FOLDER : process.env.AWS_WORK_SAMPLES_FOLDER || ''
+    AWS_WORK_SAMPLES_FOLDER : process.env.AWS_WORK_SAMPLES_FOLDER || '',
+    profile : 'user-avatar',
+    community : 'community',
+    communityPost : 'community-post',
+    groupChatMedia: 'group-chat-media',
+    privateChatMedia : 'private-chat-media',
+    vendorDocuments : 'vendor-documents'
   },
 
   redis : {

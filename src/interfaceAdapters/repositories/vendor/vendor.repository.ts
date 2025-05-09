@@ -30,7 +30,8 @@ export class VendorRepository implements IVendorRepository {
         ])
         .sort({ createdAt: sort })
         .skip(skip)
-        .limit(limit),
+        .limit(limit)
+        .lean(),
       VendorModel.countDocuments(filter),
     ]);
 
@@ -197,13 +198,9 @@ export class VendorRepository implements IVendorRepository {
       vendorId,
       { isOnline: status, lastStatusUpdated: new Date() },
       { new: true }
-    ).exec();
-  }
-
-  async findByIds(vendorIds: string[]): Promise<IVendorModel[]> {
-    return await VendorModel.find({
-      _id: { $in: vendorIds },
-    }).exec();
+    )
+      .lean()
+      .exec() as IVendorModel | null;
   }
 
   async updateLastSeen(vendorId: string, lastSeen: string): Promise<void> {

@@ -6,6 +6,7 @@ import { CustomError } from "../../../entities/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
 import { IBcrypt } from "../../../frameworks/security/bcrypt.interface";
 import { IClientEntity } from "../../../entities/models/client.entity";
+import { s3UrlCache } from "../../../frameworks/di/resolver";
 
 @injectable()
 export class ClientLoginStrategy implements ILoginStrategy<IClientEntity> {
@@ -43,6 +44,11 @@ export class ClientLoginStrategy implements ILoginStrategy<IClientEntity> {
                 'Wrong Password',
                 HTTP_STATUS.UNAUTHORIZED
             )
+        }
+
+        if(client.profileImage){
+            const cachedProfileImage = await s3UrlCache.getCachedSignUrl(client.profileImage)
+            client.profileImage = cachedProfileImage;
         }
 
         return client;

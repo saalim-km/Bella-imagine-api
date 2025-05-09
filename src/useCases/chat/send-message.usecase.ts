@@ -8,6 +8,7 @@ import { HTTP_STATUS, TRole } from "../../shared/constants";
 import { redisClient } from "../../frameworks/redis/redis.client";
 import { config } from "../../shared/config";
 import { IAwsS3Service } from "../../entities/services/awsS3-service.interface";
+import { s3UrlCache } from "../../frameworks/di/resolver";
 
 @injectable()
 export class SendMessageUsecase implements ISendMessageUsecase {
@@ -50,20 +51,7 @@ export class SendMessageUsecase implements ISendMessageUsecase {
         console.log('got the new messae from repo : ',newMessage);
 
         if (newMessage.mediaKey) {
-            let mediaUrl = await redisClient.get(newMessage.mediaKey);
-        
-            if (!mediaUrl) {
-                mediaUrl = await this.awsS3Service.getFileUrlFromAws(
-                    newMessage.mediaKey,
-                    config.redis.REDIS_PRESIGNED_URL_EXPIRY
-                );
-                await redisClient.setEx(
-                    newMessage.mediaKey,
-                    config.redis.REDIS_PRESIGNED_URL_EXPIRY,
-                    mediaUrl
-                );
-            }
-        
+            let mediaUrl = await s3UrlCache.getCachedSignUrl(newMessage.mediaKey);
             newMessage.mediaKey = mediaUrl;
         }
         return newMessage

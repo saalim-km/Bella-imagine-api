@@ -3,7 +3,8 @@ import { IGetPhotographerDetailsUsecase } from "../../entities/usecaseInterfaces
 import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
 import { IVendorEntity } from "../../entities/models/vendor.entity";
 import { CustomError } from "../../entities/utils/custom-error";
-import { HTTP_STATUS } from "../../shared/constants";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
+import { s3UrlCache } from "../../frameworks/di/resolver";
 
 @injectable()
 export class GetPhotographerDetailsUsecase implements IGetPhotographerDetailsUsecase {
@@ -16,6 +17,17 @@ export class GetPhotographerDetailsUsecase implements IGetPhotographerDetailsUse
             throw new CustomError('vendorid is required',HTTP_STATUS.BAD_REQUEST);
         }
 
-        return await this.vendorRepository.findById(vendorId)
+        const vendor = await this.vendorRepository.findById(vendorId)
+    
+        if(!vendor){
+            throw new CustomError(ERROR_MESSAGES.VENDOR_NOT_FOUND,HTTP_STATUS.BAD_REQUEST)
+        }
+
+        if(vendor.profileImage){
+            const cachedUrl = await s3UrlCache.getCachedSignUrl(vendor.profileImage)
+            vendor.profileImage = cachedUrl;
+        }
+
+        return vendor;
     }
 }

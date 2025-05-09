@@ -8,6 +8,8 @@ import { redisClient } from "../../frameworks/redis/redis.client";
 import { unlinkSync } from "fs";
 import path from "path";
 import { config } from "../../shared/config";
+import logger from "../../shared/logger/logger.utils";
+import { s3UrlCache } from "../../frameworks/di/resolver";
 
 @injectable()
 export class UpdateVendorUsecase implements IUpdateVendorProfileUsecase {
@@ -28,7 +30,7 @@ export class UpdateVendorUsecase implements IUpdateVendorProfileUsecase {
           }
         
           const profileFile = files.profileImage[0];
-          const key = `profile-images/${id}/${Date.now()}${path.extname(profileFile.originalname)}`;
+          const key = `${config.s3.profile}/${id}/${Date.now()}${path.extname(profileFile.originalname)}`;
           await this.awsS3Service.uploadFileToAws(key, profileFile.path);
           data!.profileImage = key;
           try {
@@ -46,43 +48,45 @@ export class UpdateVendorUsecase implements IUpdateVendorProfileUsecase {
           }
 
           const docFile = files.verificationDocument[0];
-          const key = `vendor-documents/${id}/${Date.now()}${path.extname(docFile.originalname)}`;
+          const key = `${config.s3.vendorDocuments}/${id}/${Date.now()}${path.extname(docFile.originalname)}`;
           await this.awsS3Service.uploadFileToAws(key, docFile.path);
           data!.verificationDocument = key;
-          unlinkSync(docFile.path);
+          try {
+            unlinkSync(docFile.path);
+          } catch (e) {
+            logger.warn('filed to delete local file',e)
+          }
         }
     
         // Apply updates
         if (data?.name !== undefined) vendor.name = data.name;
         if (data?.phoneNumber !== undefined) vendor.phoneNumber = data.phoneNumber;
-        if (data?.profileImage !== undefined) vendor.profileImage = data.profileImage;
         if (data?.location !== undefined) vendor.location = data.location;
         if (data?.languages !== undefined) vendor.languages = data.languages;
         if (data?.profileDescription !== undefined) vendor.description = data.profileDescription;
-        if (data?.portfolioWebsite !== undefined) vendor.portfolioWebsite = data.portfolioWebsite;
-        if (data?.verificationDocument !== undefined) vendor.verificationDocument = data.verificationDocument;
-    
+        if (data?.portfolioWebsite !== undefined ) vendor.portfolioWebsite = data.portfolioWebsite;
+        
+        // Only assign profileImage if it's a valid S3 key (not a signed URL)
+        if (data?.profileImage && !data.profileImage.startsWith('http')) {
+          vendor.profileImage = data.profileImage;
+        }
+
+        // Only assign VerficiationDoc if it's a valid S3 key (not a signed URL)
+        if (data?.verificationDocument && !data.verificationDocument.startsWith('http')) {
+          vendor.verificationDocument = data.verificationDocument;
+        }
         const updatedVendor = await this.vendorRepository.updateVendorProfile(id, vendor);
     
         console.log('updated vendor : ',updatedVendor);
+
         // Caching pre-signed profile image
         if (updatedVendor?.profileImage) {
-          const isFileAvailable = await this.awsS3Service.isFileAvailableInAwsBucket(updatedVendor.profileImage);
-          if (isFileAvailable) {
-            const url = await this.awsS3Service.getFileUrlFromAws(updatedVendor.profileImage, config.redis.REDIS_PRESIGNED_URL_EXPIRY);
-            updatedVendor.profileImage = url;
-            await redisClient.setEx(`profile-url:${id}`, config.redis.REDIS_PRESIGNED_URL_EXPIRY, url);
-          }
+          await s3UrlCache.getCachedSignUrl(updatedVendor.profileImage)
         }
     
         // Caching pre-signed verification document
         if (updatedVendor?.verificationDocument) {
-          const isFileAvailable = await this.awsS3Service.isFileAvailableInAwsBucket(updatedVendor.verificationDocument);
-          if (isFileAvailable) {
-            const url = await this.awsS3Service.getFileUrlFromAws(updatedVendor.verificationDocument, 86400);
-            updatedVendor.verificationDocument = url;
-            await redisClient.setEx(`verification-doc-url:${id}`, config.redis.REDIS_PRESIGNED_URL_EXPIRY, url);
-          }
+          await s3UrlCache.getCachedSignUrl(updatedVendor.verificationDocument)
         }
     
         if (!updatedVendor) {

@@ -5,6 +5,7 @@ import { IVendorRepository } from "../../entities/repositoryInterfaces/vendor/ve
 import { IAwsS3Service } from "../../entities/services/awsS3-service.interface";
 import { redisClient } from "../../frameworks/redis/redis.client";
 import { config } from "../../shared/config";
+import { s3UrlCache } from "../../frameworks/di/resolver";
 
 @injectable()
 export class GetVendorDetailUsecase implements IGetVendorDetailsUsecase {
@@ -22,32 +23,14 @@ export class GetVendorDetailUsecase implements IGetVendorDetailsUsecase {
 
     // Handle profileImage
     if (data?.profileImage) {
-      const cachedProfileUrl = await redisClient.get(`profile-url:${id}`);
-      if (cachedProfileUrl) {
-        data.profileImage = cachedProfileUrl;
-      } else {
-        const isFileAvailable = await this.awsS3Service.isFileAvailableInAwsBucket(data.profileImage);
-        if (isFileAvailable) {
-          const presignedUrl = await this.awsS3Service.getFileUrlFromAws(data.profileImage, config.redis.REDIS_PRESIGNED_URL_EXPIRY);
-          data.profileImage = presignedUrl;
-          await redisClient.setEx(`profile-url:${id}`, config.redis.REDIS_PRESIGNED_URL_EXPIRY, presignedUrl);
-        }
-      }
+      const cachedProfileUrl = await s3UrlCache.getCachedSignUrl(data.profileImage)
+      data.profileImage = cachedProfileUrl;
     }
 
     // Handle verificationDocument
     if (data?.verificationDocument) {
-      const cachedDocUrl = await redisClient.get(`verification-doc-url:${id}`);
-      if (cachedDocUrl) {
-        data.verificationDocument = cachedDocUrl;
-      } else {
-        const isFileAvailable = await this.awsS3Service.isFileAvailableInAwsBucket(data.verificationDocument);
-        if (isFileAvailable) {
-          const presignedUrl = await this.awsS3Service.getFileUrlFromAws(data.verificationDocument, config.redis.REDIS_PRESIGNED_URL_EXPIRY);
-          data.verificationDocument = presignedUrl;
-          await redisClient.setEx(`verification-doc-url:${id}`, config.redis.REDIS_PRESIGNED_URL_EXPIRY, presignedUrl);
-        }
-      }
+      const cachedDocUrl = await s3UrlCache.getCachedSignUrl(data.verificationDocument)
+      data.verificationDocument = cachedDocUrl;
     }
 
     return data;
