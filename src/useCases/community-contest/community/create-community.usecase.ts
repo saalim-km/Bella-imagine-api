@@ -9,6 +9,7 @@ import path from "path";
 import { ICommunityEntity } from "../../../entities/models/community.entity";
 import { CreateCommunityDto } from "../../../shared/types/community/community.types";
 import { IAwsS3Service } from "../../../entities/services/awsS3-service.interface";
+import { config } from "../../../shared/config";
 
 @injectable()
 export class CreateCommunityUsecase implements ICreateCommunityUsecase {
@@ -40,7 +41,7 @@ export class CreateCommunityUsecase implements ICreateCommunityUsecase {
         try {
             if (dto.files?.iconImage) {
                 const iconImage = dto.files.iconImage;
-                const s3Key = `community/${Date.now()}${path.extname(iconImage.originalname)}`;
+                const s3Key = `${config.s3.community}/${Date.now()}${path.extname(iconImage.originalname)}`;
                 await this.awsS3Service.uploadFileToAws(s3Key, iconImage.path);
                 newCommunity.iconImage = s3Key;
                 unlinkSync(iconImage.path);
@@ -48,7 +49,7 @@ export class CreateCommunityUsecase implements ICreateCommunityUsecase {
 
             if (dto.files?.coverImage) {
                 const coverImage = dto.files.coverImage;
-                const s3Key = `community/${Date.now()}${path.extname(coverImage.originalname)}`;
+                const s3Key = `${config.s3.community}/${Date.now()}${path.extname(coverImage.originalname)}`;
                 await this.awsS3Service.uploadFileToAws(s3Key, coverImage.path);
                 newCommunity.coverImage = s3Key;
                 unlinkSync(coverImage.path);

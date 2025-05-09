@@ -7,6 +7,7 @@ import { CustomError } from "../../../entities/utils/custom-error";
 import { IAwsS3Service } from "../../../entities/services/awsS3-service.interface";
 import { redisClient } from "../../../frameworks/redis/redis.client";
 import logger from "../../../shared/logger/logger.utils";
+import { s3UrlCache } from "../../../frameworks/di/resolver";
 
 @injectable()
 export class GetAllCommunityUsecase implements IGetAllCommunityUsecase {
@@ -16,28 +17,6 @@ export class GetAllCommunityUsecase implements IGetAllCommunityUsecase {
     @inject("IAwsS3Service")
     private awsS3Service: IAwsS3Service
   ) {}
-
-  private async resolveCachedImageUrl(type: "icon" | "cover", communityId: string, s3Key?: string): Promise<string | null> {
-    if (!s3Key) {
-      logger.info(`No ${type} s3Key found for community: ${communityId}`);
-      return null;
-    }
-
-    const cacheKey = `community:${type}:${communityId}`;
-    const cachedUrl = await redisClient.get(cacheKey);
-
-    if (cachedUrl) {
-      logger.info(`[CACHE HIT] ${type} URL for ${communityId} retrieved from Redis`);
-      return cachedUrl;
-    }
-
-    logger.info(`[CACHE MISS] ${type} URL for ${communityId} - Fetching from S3`);
-    const publicUrl = await this.awsS3Service.getPublicFileUrl(s3Key);
-    await redisClient.setEx(cacheKey, 86400, publicUrl);
-    logger.info(`[CACHE SET] ${type} URL for ${communityId} stored in Redis`);
-    
-    return publicUrl;
-  }
 
   async execute(dto: {
     page: number;
@@ -56,8 +35,8 @@ export class GetAllCommunityUsecase implements IGetAllCommunityUsecase {
 
     paginated.data = await Promise.all(
       paginated.data.map(async (community) => {
-        const iconImage = await this.resolveCachedImageUrl("icon", community._id as string, community.iconImage!);
-        const coverImage = await this.resolveCachedImageUrl("cover", community._id as string, community.coverImage!);
+        const iconImage = await s3UrlCache.getCachedSignUrl(community.iconImage!)
+        const coverImage = await s3UrlCache.getCachedSignUrl(community.coverImage!)
         return {
           ...community,
           iconImage,
