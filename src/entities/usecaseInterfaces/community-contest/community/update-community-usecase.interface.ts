@@ -1,5 +1,6 @@
+import { UpdateCommunityDto } from "../../../../shared/types/community/community.types";
 import { ICommunityEntity } from "../../../models/community.entity";
 
 export interface IUpdateCommunityUsecase {
-    execute(communityId: string, dto: Partial<ICommunityEntity>) : Promise<void>
+    execute(dto: UpdateCommunityDto) : Promise<void>
 } 

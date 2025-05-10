@@ -66,6 +66,7 @@ import { GetContactsController } from "../../interfaceAdapters/controllers/chat/
 // Community and Services
 import { CommunityController } from "../../interfaceAdapters/controllers/community-contest/community.controller";
 import { AwsS3Service } from "../../interfaceAdapters/services/awsS3.service";
+import { createS3UrlCache } from "../../shared/cache/s3-url-cache-factory";
 
 DependencyInjection.registerAll();
 
@@ -207,4 +208,7 @@ export const getUserContactsController = container.resolve(
 
 // Community and Services
 export const communityController = container.resolve(CommunityController);
+
+// Cache Service
 export const awsS3Controller = container.resolve(AwsS3Service);
+export const s3UrlCache = createS3UrlCache(awsS3Controller)

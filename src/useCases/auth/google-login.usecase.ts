@@ -11,6 +11,7 @@ import { IAwsS3Service } from "../../entities/services/awsS3-service.interface";
 import { redisClient } from "../../frameworks/redis/redis.client";
 import { config } from "../../shared/config";
 import logger from "../../shared/logger/logger.utils";
+import { s3UrlCache } from "../../frameworks/di/resolver";
 
 @injectable()
 export class GoogleLoginUsecase implements IGoogleUseCase {
@@ -97,9 +98,7 @@ export class GoogleLoginUsecase implements IGoogleUseCase {
     if (existingUser) {
       if (existingUser.googleId) {
         if (existingUser?.profileImage) {
-          const cachedUrl = await redisClient.get(
-            `profile-url:${existingUser._id}`
-          );
+          const cachedUrl = await s3UrlCache.getCachedSignUrl(`${config.s3.profile}:${existingUser._id}`)
           if (cachedUrl) {
             existingUser.profileImage = cachedUrl;
           } else {
@@ -156,7 +155,7 @@ export class GoogleLoginUsecase implements IGoogleUseCase {
 
     // Inside the newUser block
     if (newUser?.profileImage) {
-      const cachedUrl = await redisClient.get(`profile-url:${newUser._id}`);
+      const cachedUrl = await redisClient.get(`${config.s3.profile}:${newUser._id}`);
       if (cachedUrl) {
         newUser.profileImage = cachedUrl;
       } else {

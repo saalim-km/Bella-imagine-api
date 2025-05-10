@@ -3,6 +3,7 @@ import { IGetPendingVendorRequestUsecase } from "../../../entities/usecaseInterf
 import { IVendorRepository } from "../../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
 import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 import { IVendorEntity } from "../../../entities/models/vendor.entity";
+import { s3UrlCache } from "../../../frameworks/di/resolver";
 
 @injectable()
 export class GetPendingVendorRequestUsecase implements IGetPendingVendorRequestUsecase {
@@ -31,7 +32,25 @@ export class GetPendingVendorRequestUsecase implements IGetPendingVendorRequestU
         sort = filters.createdAt;
       }
       const result = await this.vendorRepository.find(search, skip, limit,sort);
+              const mappedData = await Promise.all(
+                result.data.map(async (vendor) => {
+                  const { password, ...safeVendor } = vendor;
+          
+                  if (vendor.profileImage) {
+                    safeVendor.profileImage = await s3UrlCache.getCachedSignUrl(vendor.profileImage);
+                  }
+          
+                  if (vendor.verificationDocument) {
+                    safeVendor.verificationDocument = await s3UrlCache.getCachedSignUrl(vendor.verificationDocument);
+                  }
+          
+                  return safeVendor;
+                })
+              );
       console.log(result);
-      return result;
+      return {
+        data : mappedData,
+        total : result.total
+      }
     }
 }

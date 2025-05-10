@@ -6,6 +6,7 @@ import { CustomError } from "../../../entities/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
 import { IVendorEntity } from "../../../entities/models/vendor.entity";
 import { LoginUserDto } from "../../../shared/dtos/user.dto";
+import { s3UrlCache } from "../../../frameworks/di/resolver";
 
 @injectable()
 export class VendorLoginStrategy implements ILoginStrategy {
@@ -38,6 +39,11 @@ export class VendorLoginStrategy implements ILoginStrategy {
                 'Wrong Password',
                 HTTP_STATUS.UNAUTHORIZED
             )
+        }
+
+        if(vendor.profileImage) {
+            const cachedProfileImage = await s3UrlCache.getCachedSignUrl(vendor.profileImage)
+            vendor.profileImage = cachedProfileImage;
         }
 
         return vendor;

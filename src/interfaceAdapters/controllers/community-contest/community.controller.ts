@@ -89,14 +89,22 @@ export class CommunityController implements ICommunityController {
   }
 
   async updateCommunity(req: Request, res: Response): Promise<void> {
-    const {
-      communityId,
-      dto,
-    }: { communityId: string; dto: Partial<ICommunityEntity> } = req.body;
-    await this.updateCommunityUsecase.execute(communityId, dto);
-    res
-      .status(HTTP_STATUS.OK)
-      .json({ success: true, message: SUCCESS_MESSAGES.UPDATE_SUCCESS });
+    console.log('in update community controller');
+    console.log(req.body);
+    console.log(req.files);
+    const files = req.files as {
+      [fieldname: string]: Express.Multer.File[];
+    }
+
+    await this.updateCommunityUsecase.execute({
+      ...req.body,
+      files : {
+        iconImage: files.iconImage?.[0],
+        coverImage: files.coverImage?.[0],
+      }
+    })
+    
+    res.status(HTTP_STATUS.OK).json({success : true , message : SUCCESS_MESSAGES.UPDATE_SUCCESS})
   }
 
   async createCommunityMember(req: Request, res: Response): Promise<void> {

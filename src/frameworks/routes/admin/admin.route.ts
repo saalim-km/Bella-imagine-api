@@ -210,8 +210,8 @@ export class AdminRoute extends BaseRoute {
         verifyAuth,
         authorizeRole(["admin"]),
         upload.fields([
-          { name: "iconImageUrl", maxCount: 1 },
-          { name: "coverImageUrl", maxCount: 1 },
+          { name: "iconImage", maxCount: 1 },
+          { name: "coverImage", maxCount: 1 },
         ]),
         asyncHandler(
           communityController.updateCommunity.bind(communityController)

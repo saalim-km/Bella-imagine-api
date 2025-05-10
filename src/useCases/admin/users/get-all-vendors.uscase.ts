@@ -3,6 +3,7 @@ import { IGetAllVendorsUsecase } from "../../../entities/usecaseInterfaces/admin
 import { IVendorRepository } from "../../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
 import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
 import { IVendorEntity } from "../../../entities/models/vendor.entity";
+import { s3UrlCache } from "../../../frameworks/di/resolver";
 
 @injectable()
 export class GetAllVendorsUsecase implements IGetAllVendorsUsecase {
@@ -50,7 +51,25 @@ export class GetAllVendorsUsecase implements IGetAllVendorsUsecase {
     }
 
     const result = await this.vendorRepository.find(search, skip, limit, sort);
-    console.log(result);
-    return result;
+        const mappedData = await Promise.all(
+          result.data.map(async (vendor) => {
+            const { password, ...safeVendor } = vendor;
+    
+            if (vendor.profileImage) {
+              safeVendor.profileImage = await s3UrlCache.getCachedSignUrl(vendor.profileImage);
+            }
+    
+            if (vendor.verificationDocument) {
+              safeVendor.verificationDocument = await s3UrlCache.getCachedSignUrl(vendor.verificationDocument);
+            }
+    
+            return safeVendor;
+          })
+        );
+        console.log('mapped result : ',mappedData);
+    return {
+      data: mappedData,
+      total : result.total
+    }
   }
 }

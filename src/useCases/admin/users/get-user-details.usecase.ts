@@ -6,6 +6,7 @@ import { IVendorRepository } from "../../../entities/repositoryInterfaces/vendor
 import { TRole } from "../../../shared/constants";
 import { IClientEntity } from "../../../entities/models/client.entity";
 import { IVendorEntity } from "../../../entities/models/vendor.entity";
+import { s3UrlCache } from "../../../frameworks/di/resolver";
 
 
 @injectable()
@@ -26,6 +27,10 @@ export class GetUserDetailsUsecase implements IGetUserDetailsUsecase {
             const vendor = await this.vendorRepository.findById(userId);
             if (!vendor) {
             throw new Error("Vendor not found");
+            }
+
+            if(vendor.verificationDocument){
+                vendor.verificationDocument = await s3UrlCache.getCachedSignUrl(vendor.verificationDocument)
             }
             return vendor;
         } else {

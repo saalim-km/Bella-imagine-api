@@ -3,8 +3,9 @@ import { IFindCommunityBySlugUsecase } from "../../../entities/usecaseInterfaces
 import { ICommunityRepository } from "../../../entities/repositoryInterfaces/community-contest/community-repository.interface";
 import { ICommunityEntity } from "../../../entities/models/community.entity";
 import { CustomError } from "../../../entities/utils/custom-error";
-import { HTTP_STATUS } from "../../../shared/constants";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
 import { ICommunityMemberRepository } from "../../../entities/repositoryInterfaces/community-contest/community-member-repository.interface";
+import { s3UrlCache } from "../../../frameworks/di/resolver";
 
 @injectable()
 export class FindCommunityBySlugUsecase implements IFindCommunityBySlugUsecase {
@@ -20,6 +21,20 @@ export class FindCommunityBySlugUsecase implements IFindCommunityBySlugUsecase {
 
         const community = await this.communityRepository.findBySlug(slug);
 
+        if(!community){
+            throw new CustomError(ERROR_MESSAGES.COMMUNITY_NO_EXIST,HTTP_STATUS.NOT_FOUND,)
+        }
+
+        if(community.iconImage){
+            const cachedUrl = await s3UrlCache.getCachedSignUrl(community.iconImage);
+            community.iconImage = cachedUrl
+        }
+
+        if(community.coverImage){
+            const cachedUrl = await s3UrlCache.getCachedSignUrl(community.coverImage);
+            community.coverImage = cachedUrl
+        }
+        
         console.log('got the userid and community id : ',userId,community?._id);
         let isMember = false;
         if(userId && community?._id) { 
