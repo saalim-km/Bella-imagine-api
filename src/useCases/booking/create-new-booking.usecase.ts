@@ -14,7 +14,8 @@ export class CreateNewBookingUseCase implements ICreateNewBookingUseCase {
     @inject("IBookingRepository") private bookingRepository: IBookingRepository,
     @inject("IServiceRepository") private serviceRepository: IServiceRepository,
     @inject("IVendorRepository") private vendorRepository: IVendorRepository,
-    @inject('ICreateConversationUseCase') private createConversationUsecase : ICreateConversationUseCase
+    @inject("ICreateConversationUseCase")
+    private createConversationUsecase: ICreateConversationUseCase
   ) {}
 
   async execute(
@@ -36,7 +37,6 @@ export class CreateNewBookingUseCase implements ICreateNewBookingUseCase {
     if (!service) {
       throw new CustomError(ERROR_MESSAGES.WRONG_ID, HTTP_STATUS.BAD_REQUEST);
     }
-
 
     const availableDateEntry = service.availableDates.find(
       (availableDate) => availableDate.date === data.bookingDate
@@ -90,14 +90,25 @@ export class CreateNewBookingUseCase implements ICreateNewBookingUseCase {
       timeSlot: data.timeSlot,
       vendorId,
       totalPrice: data.totalPrice,
+      location: {
+        lat: data.location.lat,
+        lng: data.location.lng,
+      },
     });
 
-    if(!newBooking || !newBooking._id) {
-      throw new CustomError('error creating booking please try again later',HTTP_STATUS.BAD_REQUEST)
+    if (!newBooking || !newBooking._id) {
+      throw new CustomError(
+        "error creating booking please try again later",
+        HTTP_STATUS.BAD_REQUEST
+      );
     }
 
     // creating chat conversation straight out a booking creation
-    await this.createConversationUsecase.execute(userId,vendorId,newBooking._id as string);
+    await this.createConversationUsecase.execute(
+      userId,
+      vendorId,
+      newBooking._id as string
+    );
     return newBooking;
   }
 }

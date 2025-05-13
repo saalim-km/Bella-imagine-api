@@ -13,9 +13,8 @@ export class GetCategoryRequestController {
   ) {}
 
   async handle(req: Request, res: Response): Promise<void> {
-      const categoryRequest = await this.getCategoryRequestUsecase.execute();
-      console.log(categoryRequest);
-      res.status(HTTP_STATUS.OK).json({ success: true, categoryRequest });
-
+    const categoryRequest = await this.getCategoryRequestUsecase.execute();
+    console.log(categoryRequest);
+    res.status(HTTP_STATUS.OK).json({ success: true, categoryRequest });
   }
 }
