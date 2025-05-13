@@ -34,7 +34,10 @@ export const bookingSchema = new Schema<IBookingModel>({
     ],
     default: "pending",
   },
-
+  location : {
+    lat: { type: Number, required: true },
+    lng: { type: Number, required: true },
+  },
   status: {
     type: String,
     enum: ["pending", "confirmed", "cancelled", "completed"],

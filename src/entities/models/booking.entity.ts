@@ -1,7 +1,11 @@
 import { ObjectId } from "mongoose";
 
 export type TPaymentStatus = "pending" | "completed" | "failed" | "refunded";
-export type TBookingStatus = "pending" | "confirmed" | "cancelled" | "completed";
+export type TBookingStatus =
+  | "pending"
+  | "confirmed"
+  | "cancelled"
+  | "completed";
 
 export interface IBookingEntity {
   _id?: string | ObjectId;
@@ -25,15 +29,18 @@ export interface IBookingEntity {
     startTime: string;
     endTime: string;
   };
-
+  location: {
+    lat: number;
+    lng: number;
+  };
   totalPrice: number;
-  paymentStatus: TPaymentStatus
-  status: TBookingStatus
+  paymentStatus: TPaymentStatus;
+  status: TBookingStatus;
 
   createdAt: Date;
 }
 
-export interface  Booking {
+export interface Booking {
   vendorId: any;
 
   serviceId: any;
@@ -43,7 +50,10 @@ export interface  Booking {
     startTime: string;
     endTime: string;
   };
-
+  location: {
+    lat: number;
+    lng: number;
+  };
   totalPrice: number;
 }
 

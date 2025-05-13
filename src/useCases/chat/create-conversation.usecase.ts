@@ -53,7 +53,7 @@ export class CreateConversationUseCase implements ICreateConversationUseCase {
                 _id : vendor._id?.toString(),
                 role:'vendor',
                 name : vendor.name,
-                avatar : vendor.profileImage,
+                avatar : vendor.profileImage || '',
                 isOnline : false,
                 lastSeen : new Date().toISOString()
             }
