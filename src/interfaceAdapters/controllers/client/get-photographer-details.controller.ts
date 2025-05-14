@@ -15,35 +15,23 @@ export class GetPhotographerDetailsController
     private getPhotographerDetailsUsecase: IGetPhotographerDetailsUsecase
   ) {}
 
-  async handle(req: Request, res: Response): Promise<void> {
-    try {
-        const {id} = req.params
-        const vendor = await this.getPhotographerDetailsUsecase.execute(id)
-        res.status(HTTP_STATUS.OK).json(vendor)
-    } catch (error) {
-      if (error instanceof ZodError) {
-        const errors = error.errors.map((err) => ({
-          message: err.message,
-        }));
-        console.log(errors);
-        res.status(HTTP_STATUS.BAD_REQUEST).json({
-          success: false,
-          message: ERROR_MESSAGES.VALIDATION_ERROR,
-          errors,
-        });
-        return;
-      }
-      if (error instanceof CustomError) {
-        console.log(error);
-        res
-          .status(error.statusCode)
-          .json({ success: false, message: error.message });
-        return;
-      }
-      console.log(error);
-      res
-        .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
-        .json({ success: false, message: ERROR_MESSAGES.SERVER_ERROR });
-    }
-  }
+async handle(req: Request, res: Response): Promise<void> {
+  const { id } = req.params;
+  const {
+    servicePage = "1",
+    serviceLimit = "3",
+    samplePage = "1",
+    sampleLimit = "3"
+  } = req.query;
+
+  const vendor = await this.getPhotographerDetailsUsecase.execute(
+    id,
+    Number(servicePage),
+    Number(serviceLimit),
+    Number(samplePage),
+    Number(sampleLimit)
+  );
+
+  res.status(HTTP_STATUS.OK).json(vendor);
+}
 }
