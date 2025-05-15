@@ -29,7 +29,6 @@ async execute(vendorId: string, servicePage = 1, serviceLimit = 3, samplePage = 
 
   const {data : services,total : totalServices} = await this.vendorRepository.findPaginatedServices(vendorId, servicePage, serviceLimit);
   const {data : workSamples,total : totalSamples} = await this.vendorRepository.findPaginatedWorkSamples(vendorId, samplePage, sampleLimit);
-  console.log('got photographer details');
   console.log({
     ...vendor,
     services,

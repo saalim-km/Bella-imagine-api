@@ -135,12 +135,12 @@ export class VendorRepository implements IVendorRepository {
     const aggregatedData = await VendorModel.aggregate(pipeline).exec();
     const result: {
       _id: string;
-      workSamples: IWorkSampleEntity[];
+      samples: IWorkSampleEntity[];
       totalSamples: number;
     } = aggregatedData[0];
     console.log("worksample result from aggregate", result);
     return {
-      data: result.workSamples,
+      data: result.samples,
       total: result.totalSamples,
     };
   }

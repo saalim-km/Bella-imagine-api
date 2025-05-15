@@ -1,5 +1,12 @@
 import { ObjectId } from "mongoose";
 import { TRole } from "../../shared/constants";
+import { Location } from "../../shared/types/vendor/service.type";
+
+export type TLocation = {
+    address: string;
+    lat: number;
+    lng: number;
+}
 
 export interface IClientEntity {
     _id ?: ObjectId | string;
@@ -8,7 +15,7 @@ export interface IClientEntity {
     profileImage ?: string;
     password ?: string;
     phoneNumber ?: number;
-    location ?: string;
+    location ?: TLocation;
     googleId ?: string;
     role : TRole;
     savedPhotographers ?: ObjectId[];

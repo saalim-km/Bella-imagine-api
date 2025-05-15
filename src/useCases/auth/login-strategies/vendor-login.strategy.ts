@@ -16,6 +16,7 @@ export class VendorLoginStrategy implements ILoginStrategy {
     ){}
 
     async login(data: LoginUserDto): Promise<IVendorEntity> {
+        console.log('login data : ',data);
         const vendor = await this.vendorRepository.findByEmail(data.email);
 
         if(!vendor) {
@@ -29,10 +30,15 @@ export class VendorLoginStrategy implements ILoginStrategy {
             throw new CustomError(ERROR_MESSAGES.BLOCKED,HTTP_STATUS.FORBIDDEN)
         }
         
-        if(!data.password || !vendor.password) {
+        if(!data.password) {
             throw new Error('password is missing in vendor login strategy')
         }
-        const isPassMatch = await this.passBcrypt.compare(data.password, vendor.password)
+
+        if(!vendor.password && vendor.googleId) {
+            throw new CustomError('Please login with Google', HTTP_STATUS.UNAUTHORIZED)
+        }
+
+        const isPassMatch = await this.passBcrypt.compare(data.password, vendor.password!)
 
         if(!isPassMatch) {
             throw new CustomError(

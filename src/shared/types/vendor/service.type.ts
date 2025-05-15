@@ -22,7 +22,7 @@ export interface RecurringAvailability {
 }
 
 export interface Location {
-  travelFee: number;
+  travelFee ?: number;
   lat : number,
   lng : number,
 }
