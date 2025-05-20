@@ -26,7 +26,15 @@ export const vendorSchema = new mongoose.Schema<IVendorEntity>(
       type: String,
     },
     location: {
-      type: String,
+      address: {
+        type: String,
+      },
+      lat: {
+        type: Number,
+      },
+      lng: {
+        type: Number,
+      },
     },
     languages: {
       type: [String],

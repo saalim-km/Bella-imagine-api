@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { chatController, createConversationController, getUserChatsController, getUserContactsController } from "../../di/resolver";
+import { chatController } from "../../di/resolver";
 import { BaseRoute } from "../base.route";
 import { upload } from "../../../interfaceAdapters/middlewares/multer.middleware";
 import { asyncHandler } from "../../../shared/handler/async-handler.utils";

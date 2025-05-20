@@ -69,6 +69,7 @@ export class CreateNewBookingUseCase implements ICreateNewBookingUseCase {
       );
     }
 
+    // updating the capacity of the time slot
     await this.serviceRepository.saveCount(
       service._id!,
       data.bookingDate,
@@ -77,6 +78,7 @@ export class CreateNewBookingUseCase implements ICreateNewBookingUseCase {
     );
 
     const serviceDetails = {
+      _id : service._id!,
       serviceTitle: service.serviceTitle,
       serviceDescription: service.serviceDescription,
       cancellationPolicies: service.cancellationPolicies,

@@ -22,7 +22,15 @@ export const clientSchema = new mongoose.Schema<IClientModel>(
       type: String,
     },
     location: {
-      type: String,
+      address: {
+        type: String,
+      },
+      lat: {
+        type: Number,
+      },
+      lng: {
+        type: Number,
+      },
     },
     googleId : {
       type : String

@@ -72,19 +72,49 @@ export const ERROR_MESSAGES = {
   ROUTE_NOT_FOUND: "Route not found.",
 };
 
-export const VERIFICATION_MAIL_CONTENT = (otp: string) => `
-  <div style="font-family: Arial, sans-serif; color: #333;">
-    <h2 style="color: #0a74da;">Welcome to Bella Imagine!</h2>
-    <p>Dear user,</p>
-    <p>Thank you for signing up with <strong>Bella Imagine</strong>. We’re excited to have you on board! To complete your registration, please verify your email address using the OTP code provided below:</p>
-    <div style="text-align: center; margin: 20px 0;">
-      <span style="font-size: 24px; font-weight: bold; background-color: #f2f2f2; padding: 10px; border-radius: 5px;">${otp}</span>
-    </div>
-    <p>With Bella Imagine, you can explore, organize, and attend amazing events seamlessly.</p>
-    <p>If you didn’t request this, please ignore this email or reach out to our support team.</p>
-    <p>We can't wait to help you create and discover unforgettable moments!</p>
-    <p>Best regards,<br/>The Bellaa Imagine Team</p>
-    <hr style="border: none; border-top: 1px solid #ccc;" />
-    <p style="font-size: 12px; color: #777;">This email was sent from an unmonitored account. Please do not reply to this email.</p>
+const EMAIL_WRAPPER = (content: string) => `
+  <div style="max-width: 600px; margin: 0 auto; padding: 40px 30px; font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #ffffff; color: #333; border-radius: 8px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);">
+    ${content}
+    <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 40px 0 20px;" />
+    <p style="font-size: 12px; color: #999; text-align: center;">
+      This email was sent from an unmonitored address. Please do not reply to this message.
+    </p>
   </div>
 `;
+
+export const VERIFICATION_MAIL_CONTENT = (otp: string) =>
+  EMAIL_WRAPPER(`
+    <h1 style="color: #1F2122; font-size: 24px; margin-bottom: 16px;">Welcome to Bella Imagine 🎉</h1>
+    <p style="font-size: 16px; line-height: 1.6;">Thank you for signing up with <strong>Bella Imagine</strong>. To complete your registration, please verify your email address with the following code:</p>
+    <div style="text-align: center; margin: 32px 0;">
+      <span style="display: inline-block; font-size: 28px; font-weight: 600; background-color: #f9f9f9; color: #1F2122; padding: 14px 24px; border-radius: 8px; letter-spacing: 2px;">
+        ${otp}
+      </span>
+    </div>
+    <p style="font-size: 16px; line-height: 1.6;">With Bella Imagine, you can explore, organize, and attend amazing events seamlessly.</p>
+    <p style="font-size: 16px; line-height: 1.6;">If this wasn’t you, please ignore this email or contact our support team.</p>
+    <p style="margin-top: 24px; font-size: 16px;">Cheers,<br /><strong>The Bella Imagine Team</strong></p>
+`);
+
+export const CATEGORY_APPROVED_MAIL_CONTENT = (categoryName: string) =>
+  EMAIL_WRAPPER(`
+    <h1 style="color: #0a74da; font-size: 22px; margin-bottom: 16px;">Category Approved ✅</h1>
+    <p style="font-size: 16px; line-height: 1.6;">Good news! Your request for the category <strong>${categoryName}</strong> has been approved by the <strong>Bella Imagine</strong> team.</p>
+    <p style="font-size: 16px; line-height: 1.6;">You can now start adding services or listings under this category.</p>
+    <p style="font-size: 16px; line-height: 1.6;">If you need any help, don’t hesitate to reach out to us.</p>
+    <p style="margin-top: 24px; font-size: 16px;">Best regards,<br /><strong>The Bella Imagine Team</strong></p>
+`);
+
+export const RESET_PASSWORD_MAIL_CONTENT = (otp: string) =>
+  EMAIL_WRAPPER(`
+    <h1 style="color: #0a74da; font-size: 22px; margin-bottom: 16px;">Reset Your Password</h1>
+    <p style="font-size: 16px; line-height: 1.6;">We received a request to reset your <strong>Bella Imagine</strong> account password.</p>
+    <p style="font-size: 16px; line-height: 1.6;">Use the OTP code below to proceed:</p>
+    <div style="text-align: center; margin: 32px 0;">
+      <span style="display: inline-block; font-size: 28px; font-weight: 600; background-color: #f9f9f9; color: #1F2122; padding: 14px 24px; border-radius: 8px; letter-spacing: 2px;">
+        ${otp}
+      </span>
+    </div>
+    <p style="font-size: 16px; line-height: 1.6;">This code is valid for a limited time. If you didn’t request this, simply ignore the message.</p>
+    <p style="margin-top: 24px; font-size: 16px;">Stay safe,<br /><strong>The Bella Imagine Team</strong></p>
+`);

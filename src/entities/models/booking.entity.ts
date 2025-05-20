@@ -18,6 +18,7 @@ export interface IBookingEntity {
   isVendorApproved: boolean;
 
   serviceDetails: {
+    _id : string | ObjectId;
     serviceTitle: string;
     serviceDescription: string;
     cancellationPolicies: string[];

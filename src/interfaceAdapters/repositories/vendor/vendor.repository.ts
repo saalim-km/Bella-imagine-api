@@ -5,8 +5,10 @@ import {
   IVendorModel,
   VendorModel,
 } from "../../../frameworks/database/models/vendor.model";
-import { ObjectId } from "mongoose";
+import { ObjectId, Types } from "mongoose";
 import { PaginatedResponse } from "../../../shared/types/admin/admin.type";
+import { IServiceEntity } from "../../../entities/models/service.entity";
+import { IWorkSampleEntity } from "../../../entities/models/work-sample.entity";
 
 @injectable()
 export class VendorRepository implements IVendorRepository {
@@ -50,18 +52,97 @@ export class VendorRepository implements IVendorRepository {
   }
 
   async findById(id: string | ObjectId): Promise<IVendorEntity | null> {
-    return await VendorModel.findById(id)
-      .populate([
-        {
-          path: "services",
-          populate: {
-            path: "category",
-          },
+    const result =  await VendorModel.findById(id)
+    .populate('categories')
+    .select('-password')
+    .lean<Omit<IVendorEntity,"password">>()
+    .exec()
+
+    return result
+  }
+
+  async findPaginatedServices(
+    vendorId: string,
+    page: number,
+    limit: number
+  ): Promise<{ data: IServiceEntity[]; total: number }> {
+    const pipeline = [
+      { $match: { _id: new Types.ObjectId(vendorId) } },
+      {
+        $lookup: {
+          from: "services",
+          localField: "services",
+          foreignField: "_id",
+          as: "services",
         },
-        { path: "workSamples" },
-        { path: "categories" },
-      ])
-      .exec();
+      },
+      {
+        $addFields: {
+          totalServices: { $size: "$services" },
+          services: { $slice: ["$services", (page - 1) * limit, limit] },
+        },
+      },
+      {
+        $project: {
+          services: 1,
+          totalServices: 1,
+        },
+      },
+    ];
+
+    const aggregatedData = await VendorModel.aggregate(pipeline).exec();
+    const result: {
+      _id: string;
+      services: IServiceEntity[];
+      totalServices: number;
+    } = aggregatedData[0];
+    console.log("service result from aggregate", result);
+    return {
+      data: result.services,
+      total: result.totalServices,
+    };
+  }
+
+  async findPaginatedWorkSamples(
+    vendorId: string,
+    page: number,
+    limit: number
+  ): Promise<{ data: IWorkSampleEntity[]; total: number }> {
+    const pipeline = [
+      { $match: { _id: new Types.ObjectId(vendorId) } },
+      {
+        $lookup: {
+          from: "worksamples",
+          localField: "workSamples",
+          foreignField: "_id",
+          as: "samples",
+        },
+      },
+      {
+        $addFields: {
+          totalSamples: { $size: "$samples" },
+          samples: { $slice: ["$samples", (page - 1) * limit, limit] },
+        },
+      },
+      {
+        $project: {
+          samples: 1,
+          totalSamples: 1,
+        },
+      },
+    ];
+
+    const aggregatedData = await VendorModel.aggregate(pipeline).exec();
+    const result: {
+      _id: string;
+      samples: IWorkSampleEntity[];
+      totalSamples: number;
+    } = aggregatedData[0];
+    console.log("worksample result from aggregate", result);
+    return {
+      data: result.samples,
+      total: result.totalSamples,
+    };
   }
 
   async findByIdAndUpdateVendorCategories(
@@ -73,10 +154,6 @@ export class VendorRepository implements IVendorRepository {
       { categories: categories },
       { new: true }
     );
-  }
-
-  async findByIdAndResetCategory(id: string | ObjectId): Promise<void> {
-    await VendorModel.findByIdAndUpdate(id, { categories: [] });
   }
 
   async updateVendorStatus(
@@ -100,24 +177,6 @@ export class VendorRepository implements IVendorRepository {
     return await VendorModel.findByIdAndUpdate(id, data, { new: true });
   }
 
-  async addAvailableSlot(
-    id: string | ObjectId,
-    slot: { slotDate: string; slotBooked: boolean }
-  ): Promise<void> {
-    await VendorModel.findByIdAndUpdate(id, {
-      $push: { availableSlots: slot },
-    });
-  }
-
-  async removeAvailableSlot(
-    id: string | ObjectId,
-    slotDate: string
-  ): Promise<void> {
-    await VendorModel.findByIdAndUpdate(id, {
-      $pull: { availableSlots: { slotDate } },
-    });
-  }
-
   async updateSlotBookingStatus(
     id: string | ObjectId,
     slotDate: string,
@@ -129,37 +188,8 @@ export class VendorRepository implements IVendorRepository {
     );
   }
 
-  async addNotification(
-    id: string | ObjectId,
-    notification: string
-  ): Promise<void> {
-    await VendorModel.findByIdAndUpdate(id, {
-      $push: { notifications: notification },
-    });
-  }
-
   async clearNotifications(id: string | ObjectId): Promise<void> {
     await VendorModel.findByIdAndUpdate(id, { notifications: [] });
-  }
-
-  async addService(
-    id: string | ObjectId,
-    service: {
-      category: string | ObjectId;
-      duration: number;
-      pricePerHour: number;
-    }
-  ): Promise<void> {
-    await VendorModel.findByIdAndUpdate(id, { $push: { services: service } });
-  }
-
-  async removeService(
-    id: string | ObjectId,
-    categoryId: string | ObjectId
-  ): Promise<void> {
-    await VendorModel.findByIdAndUpdate(id, {
-      $pull: { services: { category: categoryId } },
-    });
   }
 
   async updateServiceDetails(
@@ -194,13 +224,13 @@ export class VendorRepository implements IVendorRepository {
     vendorId: string,
     status: true | false
   ): Promise<IVendorModel | null> {
-    return await VendorModel.findByIdAndUpdate(
+    return (await VendorModel.findByIdAndUpdate(
       vendorId,
       { isOnline: status, lastStatusUpdated: new Date() },
       { new: true }
     )
       .lean()
-      .exec() as IVendorModel | null;
+      .exec()) as IVendorModel | null;
   }
 
   async updateLastSeen(vendorId: string, lastSeen: string): Promise<void> {

@@ -1,12 +1,3 @@
-import { Types } from "mongoose";
-
-
-
-export interface IDepositRequired {
-  amount: number;
-  isPercentage: boolean;
-}
-
 export interface TimeSlot {
   startTime: string;
   endTime: string;
@@ -31,14 +22,9 @@ export interface RecurringAvailability {
 }
 
 export interface Location {
-  options: {
-    studio: boolean;
-    onLocation: boolean;
-  };
-  travelFee: number;
-  city: string;
-  state: string;
-  country: string;
+  travelFee ?: number;
+  lat : number,
+  lng : number,
 }
 
 

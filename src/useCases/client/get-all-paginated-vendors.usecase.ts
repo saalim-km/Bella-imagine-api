@@ -13,7 +13,9 @@ export class GetAllPaginatedVendorsUsecase implements IGetAllPaginatedVendorsUse
   ) {}
 
   async execute(filters: IVendorsFilter): Promise<PaginatedResponse<IVendorEntity>> {
-    const search: Record<string, any> = {};
+    const search: Record<string, any> = {
+      isVerified : {$eq : "accept"},
+    };
     const skip = (filters.page ? filters.page - 1 : 0) * (filters.limit || 10);
     const limit = filters.limit || 10;
     const sort = -1;

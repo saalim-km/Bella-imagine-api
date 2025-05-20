@@ -3,7 +3,7 @@ import { ISendEmailUseCase } from "../../entities/usecaseInterfaces/auth/send-em
 import { IEmailService } from "../../entities/services/email-service.interface";
 import { IEmailExistenceService } from "../../entities/services/email-existence-service.interface";
 import { CustomError } from "../../entities/utils/custom-error";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
+import { ERROR_MESSAGES, HTTP_STATUS, VERIFICATION_MAIL_CONTENT } from "../../shared/constants";
 import { IOtpService } from "../../entities/services/otp-service.interface";
 import { IBcrypt } from "../../frameworks/security/bcrypt.interface";
 import { OtpBcrypt } from "../../frameworks/security/otp.bcrypt.";
@@ -31,7 +31,7 @@ export class SendEmailUseCase implements ISendEmailUseCase {
         await this.emailService.sendEmail(
             email,
             "BELLA IMAGINE - Verify Your Email",
-            otp
+            VERIFICATION_MAIL_CONTENT(otp)
         );
     }
 }

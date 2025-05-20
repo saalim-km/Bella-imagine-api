@@ -1,5 +1,5 @@
 import { IVendorEntity } from "../../models/vendor.entity";
 
 export interface IGetPhotographerDetailsUsecase {
-    execute (vendorId : string) : Promise<IVendorEntity | null>
+    execute (vendorId: string, servicePage : number, serviceLimit : number, samplePage : number, sampleLimit : number) : Promise<IVendorEntity | null>
 }

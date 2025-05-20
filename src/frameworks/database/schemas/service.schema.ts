@@ -38,25 +38,16 @@ export const serviceSchema = new mongoose.Schema<IServiceModel>({
   ],
   features: [String],
   location: {
-    options: {
-      studio: {
-        type: Boolean,
-      },
-      onLocation: {
-        type: Boolean,
-      },
-    },
     travelFee: {
       type: Number,
     },
-    city: {
-      type: String,
+    lat : {
+      type: Number,
+      required: true
     },
-    state: {
-      type: String,
-    },
-    country: {
-      type: String,
+    lng : {
+      type: Number,
+      required: true
     },
   },
   equipment: [String],

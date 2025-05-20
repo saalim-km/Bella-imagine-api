@@ -58,9 +58,6 @@ import { GetAllTransactionsByUserIdController } from "../../interfaceAdapters/co
 
 // Chat Controllers
 import { ChatController } from "../../interfaceAdapters/controllers/chat/chat.controller";
-import { CreateConversationController } from "../../interfaceAdapters/controllers/chat/create-conversation.controller";
-import { GetUserChatsController } from "../../interfaceAdapters/controllers/chat/get-user-chats.controller";
-import { GetContactsController } from "../../interfaceAdapters/controllers/chat/get-contacts.controller";
 
 // Community and Services
 import { CommunityController } from "../../interfaceAdapters/controllers/community-contest/community.controller";
@@ -212,15 +209,6 @@ export class ControllerRegistry {
 
     // Chat Controllers
     container.register("ChatController", { useClass: ChatController });
-    container.register("CreateConversationController", {
-      useClass: CreateConversationController,
-    });
-    container.register("GetUserChatsController", {
-      useClass: GetUserChatsController,
-    });
-    container.register("GetContactsController", {
-      useClass: GetContactsController,
-    });
 
     // Community and Services
     container.register("CommunityController", {

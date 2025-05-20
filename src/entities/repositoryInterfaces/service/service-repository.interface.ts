@@ -20,10 +20,16 @@ export interface IServiceRepository {
     updateData: Partial<IServiceEntity>
   ): Promise<IServiceEntity | null>;
 
-  findByServiceName(name: string): Promise<IServiceEntity | null>;
+  serviceExists(name: string , vendorId : string): Promise<IServiceEntity | null>;
 
   saveCount(
     serviceId: string | ObjectId,
+    dateString: string,
+    startTime: string,
+    endTime: string
+  ): Promise<void>;
+
+  addslot(serviceId: string | ObjectId,
     dateString: string,
     startTime: string,
     endTime: string

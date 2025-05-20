@@ -5,4 +5,6 @@ export interface INotificationEntity {
     message : string;
     receiverId : string;
     isRead ?: boolean
+    createdAt ?: Date;
+    updatedAt ?: Date;
 }

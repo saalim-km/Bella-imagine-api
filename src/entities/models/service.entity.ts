@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose";
-import { DateSlot, IDepositRequired , SessionDuration , RecurringAvailability , Location} from "../../shared/types/vendor/service.type";
+import { DateSlot , SessionDuration , RecurringAvailability , Location} from "../../shared/types/vendor/service.type";
 
 export interface IServiceEntity {
   _id ?: ObjectId | string

@@ -5,8 +5,8 @@ import { INotificationEntity } from "../../../entities/models/notification.entit
 
 @injectable()
 export class NotificationRepository implements INotificationRepository {
-    async save(data : INotificationEntity): Promise<void> {
-        await NotificationModel.create(data)
+    async save(data : INotificationEntity): Promise<INotificationEntity> {
+        return await NotificationModel.create(data)
     }
     async find(): Promise<INotificationEntity[]> {
         return await NotificationModel.find()
