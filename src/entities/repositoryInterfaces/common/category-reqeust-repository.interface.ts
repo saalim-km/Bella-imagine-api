@@ -11,7 +11,7 @@ export interface ICategoryRequestRepository {
   findById(id: any): Promise<ICategoryRequestEntity | null>;
 
   findByVendorAndCategory(
-    vendorId: ObjectId,
+    vendorId: ObjectId | string,
     categoryId: ObjectId
   ): Promise<ICategoryRequestEntity | null>;
 

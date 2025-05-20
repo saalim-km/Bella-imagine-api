@@ -176,6 +176,8 @@ import { CreateCommunityMemberUsecase } from "../../useCases/community-contest/c
 import { ILeaveCommunityUsecase } from "../../entities/usecaseInterfaces/community-contest/community/leave-community-usecase.interface";
 import { LeaveCommunityUsecase } from "../../useCases/community-contest/community/leave-community.usecase";
 import GetMessagesUseCase from "../../useCases/chat/get-messages.usecase";
+import { INotificationUsecase } from "../../entities/usecaseInterfaces/notification/notification-usecase.interface";
+import { NotificationUsecase } from "../../useCases/notification/notification.usecase";
 
 export class UsecaseRegistry {
   static registerUsecase(): void {
@@ -455,5 +457,11 @@ export class UsecaseRegistry {
     container.register<ILeaveCommunityUsecase>("ILeaveCommunityUsecase", {
       useClass: LeaveCommunityUsecase,
     });
+
+    //notification usecases
+    container.register<INotificationUsecase>(
+      "INotificationUsecase",
+      { useClass: NotificationUsecase }
+    );
   }
 }

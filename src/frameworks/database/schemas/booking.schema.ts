@@ -11,6 +11,7 @@ export const bookingSchema = new Schema<IBookingModel>({
   isVendorApproved: { type: Boolean, default: false },
 
   serviceDetails: {
+    _id : { type: Schema.Types.ObjectId, ref: "Service", required: true },
     serviceTitle: { type: String, required: true },
     serviceDescription: { type: String, required: true },
     cancellationPolicies: { type: [String], required: true },

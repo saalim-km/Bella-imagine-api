@@ -17,6 +17,7 @@ export const notificationSchema = new mongoose.Schema(
     }
     ,{
         timestamps : true,
-        capped : {size: 1048576, max: 6}
     }
 )
+
+notificationSchema.index({ createdAt : 1 }, { expireAfterSeconds: 60 * 60 * 24 * 30 }) // 30 days expiration

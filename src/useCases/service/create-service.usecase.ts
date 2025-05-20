@@ -27,7 +27,7 @@ export class CreateServiceUsecase implements ICreateServiceUsecase {
             throw new CustomError('Vendor Id is Required',HTTP_STATUS.BAD_REQUEST)
         }
 
-        const existinService = await this.serviceRepository.findByServiceName(data.serviceTitle);
+        const existinService = await this.serviceRepository.serviceExists(data.serviceTitle , vendorId);
         console.log('existence service : ',existinService);
         if(existinService) {
             throw new CustomError('Service already exists',HTTP_STATUS.CONFLICT)

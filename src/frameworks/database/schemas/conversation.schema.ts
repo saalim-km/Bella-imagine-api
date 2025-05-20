@@ -8,7 +8,7 @@ const userSubSchema = new mongoose.Schema(
     _id: { type: mongoose.Types.ObjectId, required: true },
     name: { type: String, required: true },
     role: { type: String, enum : ["client","vendor"],required: true },
-    avatar: { type: String, required: true },
+    avatar: { type: String },
     isOnline: { type: Boolean, required: true },
     lastSeen: { type: Date },
   },

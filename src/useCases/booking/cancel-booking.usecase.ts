@@ -6,6 +6,7 @@ import { ICancelBookingUseCase } from "../../entities/usecaseInterfaces/booking/
 import { CustomError } from "../../entities/utils/custom-error";
 import { HTTP_STATUS } from "../../shared/constants";
 import { IWalletRepository } from "../../entities/repositoryInterfaces/wallet-repository.interface";
+import { IServiceRepository } from "../../entities/repositoryInterfaces/service/service-repository.interface";
 
 @injectable()
 export class CancelBookingUseCase implements ICancelBookingUseCase {
@@ -13,7 +14,8 @@ export class CancelBookingUseCase implements ICancelBookingUseCase {
     @inject("IBookingRepository") private bookingRepository: IBookingRepository,
     @inject("IPaymentRepository") private paymentRepository: IPaymentRepository,
     @inject("IPaymentService") private paymentService: IPaymentService,
-    @inject("IWalletRepository") private walletRepository: IWalletRepository
+    @inject("IWalletRepository") private walletRepository: IWalletRepository,
+    @inject('IServiceRepository') private serviceRepository : IServiceRepository
   ) {}
   async execute(bookingId: string): Promise<void> {
     const booking = await this.bookingRepository.findById(bookingId);
@@ -33,10 +35,16 @@ export class CancelBookingUseCase implements ICancelBookingUseCase {
       "cancelled"
     );
     await Promise.all([
-      await this.walletRepository.findWalletByUserIdAndUpdateBalanceAndAddPaymentId(
+      this.walletRepository.findWalletByUserIdAndUpdateBalanceAndAddPaymentId(
         booking.userId,
         booking.totalPrice,
         payment?._id
+      ),
+      this.serviceRepository.addslot(
+        booking.serviceDetails._id,
+        booking.bookingDate,
+        booking.timeSlot.startTime,
+        booking.timeSlot.endTime
       ),
     ]);
   }

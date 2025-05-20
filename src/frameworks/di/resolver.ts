@@ -59,9 +59,6 @@ import { GetAllTransactionsByUserIdController } from "../../interfaceAdapters/co
 
 // Chat Controllers
 import { ChatController } from "../../interfaceAdapters/controllers/chat/chat.controller";
-import { CreateConversationController } from "../../interfaceAdapters/controllers/chat/create-conversation.controller";
-import { GetUserChatsController } from "../../interfaceAdapters/controllers/chat/get-user-chats.controller";
-import { GetContactsController } from "../../interfaceAdapters/controllers/chat/get-contacts.controller";
 
 // Community and Services
 import { CommunityController } from "../../interfaceAdapters/controllers/community-contest/community.controller";
@@ -198,13 +195,6 @@ export const getAllTransactionByUserIdController = container.resolve(
 
 // Chat Controllers
 export const chatController = container.resolve(ChatController);
-export const createConversationController = container.resolve(
-  CreateConversationController
-);
-export const getUserChatsController = container.resolve(GetUserChatsController);
-export const getUserContactsController = container.resolve(
-  GetContactsController
-);
 
 // Community and Services
 export const communityController = container.resolve(CommunityController);
