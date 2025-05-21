@@ -1,0 +1,1 @@
+export type TCategoryRequestStatus = "pending" | "approved" | "rejected";

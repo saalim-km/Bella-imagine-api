@@ -1,0 +1,69 @@
+import { Schema , ObjectId , Types, model } from "mongoose";
+import { IClient } from "../../../domain/models/client";
+
+export const clientSchema = new Schema<IClient>(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    profileImage: {
+      type: String,
+    },
+    password: {
+      type: String, 
+    },
+    phoneNumber: {
+      type: Number,
+    },
+    location: {
+      address: {
+        type: String,
+      },
+      lat: {
+        type: Number,
+      },
+      lng: {
+        type: Number,
+      },
+    },
+    googleId : {
+      type : String
+    },
+    role: {
+      type: String,
+      enum: ["client", "vendor", "admin"],
+      default: "client",
+    },
+    isblocked : {
+      type : Boolean,
+      required : true,
+      default : false
+    },
+    savedPhotographers: [
+      {
+        type: Types.ObjectId,
+        ref: "Vendor",
+      },
+    ],
+    isOnline: {
+      type: Boolean,
+      default: false,
+    },
+    lastSeen: { type: Date, default: Date.now },
+    savedPhotos: [
+      {
+        type: Types.ObjectId,
+        ref: "Photo",
+      },
+    ],
+  },
+  { timestamps: true }
+);
+
+export const Client = model<IClient>("Client", clientSchema);
