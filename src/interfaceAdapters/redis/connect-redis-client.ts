@@ -1,6 +1,6 @@
 import { createClient } from "redis";
-import logger from "../../shared/logger/logger.utils";
-import { config } from "../../shared/config";
+import { config } from "../config/config";
+import logger from "../../domain/shared/logger/logger";
 
 export const redisClient = createClient({
   username: config.redis.REDIS_USERNAME,

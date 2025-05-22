@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose";
-import { TRole } from "../../infrastructure/constants/constants";
+import { TRole } from "../../interfaceAdapters/constants/constants";
 
 export interface IUserBase {
   _id: ObjectId;

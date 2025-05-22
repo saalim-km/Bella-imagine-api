@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import logger from "../../domain/shared/logger/logger";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../infrastructure/constants/constants";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../interfaceAdapters/constants/constants";
 
 
 //  Centralized Error Hanlder

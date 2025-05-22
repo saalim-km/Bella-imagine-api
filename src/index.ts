@@ -1,9 +1,9 @@
 import "reflect-metadata";
-import { MongoConnect } from "./infrastructure/database/mongodb/connect-mongo";
-import { connectRedis } from "./infrastructure/redis/connect-redis-client";
+import { MongoConnect } from "./interfaceAdapters/database/mongodb/connect-mongo";
+import { connectRedis } from "./interfaceAdapters/redis/connect-redis-client";
 import logger from "./domain/shared/logger/logger";
 import { Server } from "./presentation/http/server";
-import { config } from "./infrastructure/config/config";
+import { config } from "./interfaceAdapters/config/config";
 
 async function bootstrap() {
     try {
