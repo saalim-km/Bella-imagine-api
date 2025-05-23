@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import logger from "../../domain/shared/logger/logger";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../interfaceAdapters/constants/constants";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../domain/shared/constants/constants";
 
 
 //  Centralized Error Hanlder
@@ -24,5 +24,4 @@ export const errorHandler = (
     statusCode,
     message,
   });
-
 };

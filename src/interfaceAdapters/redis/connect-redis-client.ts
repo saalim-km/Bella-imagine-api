@@ -1,5 +1,5 @@
 import { createClient } from "redis";
-import { config } from "../config/config";
+import { config } from "../../domain/shared/config/config";
 import logger from "../../domain/shared/logger/logger";
 
 export const redisClient = createClient({

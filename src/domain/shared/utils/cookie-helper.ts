@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { config } from "../../../interfaceAdapters/config/config";
+import { config } from "../config/config";
 
 export const setAuthCookies = (res : Response , accessToken : string , refreshToken : string , accessTokenName: string,refreshTokenName : string)=> {
 
