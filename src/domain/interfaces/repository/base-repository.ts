@@ -1,9 +1,10 @@
-import { Document, ObjectId } from "mongoose";
+import { FilterQuery, ObjectId } from "mongoose";
 
-export interface IBaseRepository<T , TDoc extends Document> {
-  create(data: Partial<T>): Promise<TDoc>;
-  findById(id: ObjectId): Promise<TDoc | null>;
-  findAll(): Promise<TDoc[]>;
-  update(id: ObjectId, data: Partial<TDoc>): Promise<TDoc | null>;
+export interface IBaseRepository<T> {
+  create(data: Partial<T>): Promise<T>;
+  findById(id: ObjectId): Promise<T | null>;
+  findOne(query: FilterQuery<T>): Promise<T | null>;
+  findAll(): Promise<T[]>;
+  update(id: ObjectId, data: FilterQuery<T>): Promise<T | null>;
   delete(id: ObjectId): Promise<boolean>;
 }

@@ -1,30 +1,34 @@
-import { Document, Model , ObjectId, Types } from "mongoose";
+import { Document, FilterQuery, Model , ObjectId, Types } from "mongoose";
 import { IBaseRepository } from "../../domain/interfaces/repository/base-repository";
 
-export class BaseRepository<T , TDoc extends Document> implements IBaseRepository<T , TDoc> {
-    private model : Model<TDoc>
-    constructor(model : Model<TDoc>){
+export class BaseRepository<T> implements IBaseRepository<T> {
+    protected model : Model<T>
+    constructor(model : Model<T>){
         this.model = model;
     }
 
-    async create(data: Partial<T>): Promise<TDoc> {
+    async create(data: Partial<T>): Promise<T> {
         return await this.model.create(data)
     }
 
-    findAll(): Promise<TDoc[]> {
-        return this.model.find()
-    }
-
-    async findById(id: ObjectId): Promise<TDoc | null> {
+    async findById(id: ObjectId): Promise<T | null> {
         return await this.model.findById(id)
     }
 
-    async update(id: ObjectId, data: Partial<TDoc>): Promise<TDoc | null> {
-        return await this.model.findByIdAndUpdate(id,data,{new : true});    
+    async findOne(query: FilterQuery<T>): Promise<T | null> {
+        return await this.model.findOne(query)
+    }
+
+    findAll(): Promise<T[]> {
+        return this.model.find()
+    }
+
+    async update(id: ObjectId, data: FilterQuery<T>): Promise<T | null> {
+        return await this.model.findByIdAndUpdate(id, data, { new: true })
     }
 
     async delete(id: ObjectId): Promise<boolean> {
-        const res = await this.model.findByIdAndDelete(id)
-        return !!res
+        const result = await this.model.findByIdAndDelete(id)
+        return !!result
     }
 }

@@ -1,3 +1,5 @@
+import { INVALID } from "zod";
+
 export type TRole = "client" | "vendor" | "admin";
 
 export type TStatus = "blocked" | "unblocked";
@@ -59,6 +61,7 @@ export const ERROR_MESSAGES = {
   CATEGORY_NOT_FOUND: "Category Not Found",
   INVALID_TOKEN: "Invalid token",
   INVALID_CREDENTIALS: "Invalid credentials provided.",
+  INVALID_DATAS : "Didn't meet the required data to update",
   USER_NOT_FOUND: "User not found.",
   UNAUTHORIZED_ACCESS: "Unauthorized access.",
   SERVER_ERROR: "An error occurred, please try again later.",
