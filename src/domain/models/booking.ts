@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose";
-import { TBookingStatus, TPaymentStatus } from "../shared/types/booking.types";
+import { TBookingStatus, TPaymentStatus } from "../../shared/types/booking.types";
 
 export interface IBookingEntity {
   _id: ObjectId;

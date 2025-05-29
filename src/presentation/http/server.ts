@@ -3,11 +3,11 @@ import http from "http";
 import cors from 'cors'
 import cookieparser from 'cookie-parser';
 import rateLimit from "express-rate-limit";
-import { config } from "../../domain/shared/config/config";
-import { AuthRoute } from "../routes/auth/auth-route";
-import { PrivateRoute } from "../routes/common/private-route";
-import { errorHandler } from "../middlewares/error-middleware";
-import logger from "../../domain/shared/logger/logger";
+import { config } from "../../shared/config/config";
+import { AuthRoute } from "../routes/auth/auth.routes";
+import { PrivateRoute } from "../routes/common/private.route";
+import { errorHandler } from "../middlewares/error.middleware";
+import logger from "../../shared/logger/logger";
 
 
 export class Server {
@@ -33,12 +33,19 @@ export class Server {
       })
     );
 
+    // Middleware to parse cookies
     this._app.use(cookieparser());
+    
+    // Middleware to log requests
     this._app.use((req, res, next) => {
       logger.info(`${req.method} ${req.url}`);
       next();
     });
+
     this._app.use(express.json());
+
+    // Rate limiting to prevent abuse
+    // This is a basic rate limiter that allows 1000 requests per 15 minutes
     this._app.use(
       rateLimit({
         windowMs: 15 * 60 * 1000,
@@ -47,9 +54,9 @@ export class Server {
     );
   }
 
-//   private configureSocket(): void {
-//     chatController.initialize(this._server);
-//   }
+  // private configureSocket(): void {
+  //   chatController.initialize(this._server);
+  // }
 
   private configureRoutes(): void {
     this._app.use("/api/v_1/auth", new AuthRoute().router);

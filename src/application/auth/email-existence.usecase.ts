@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { IEmailExistenceUsecase } from "../../domain/interfaces/usecase/common-usecase-interfaces";
+import { IEmailExistenceUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { IBaseUserRepository } from "../../domain/interfaces/repository/base-user-repository";
 import { IClient } from "../../domain/models/client";
 import { IVendor } from "../../domain/models/vendor";
-import { ERROR_MESSAGES, TRole } from "../../domain/shared/constants/constants";
-import { CustomError } from "../../domain/shared/utils/custom-error";
+import { ERROR_MESSAGES, TRole } from "../../shared/constants/constants";
+import { CustomError } from "../../shared/utils/custom-error";
 
 @injectable()
 export class EmailExistenceUsecase implements IEmailExistenceUsecase{

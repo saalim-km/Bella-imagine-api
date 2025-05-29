@@ -1,5 +1,5 @@
 export interface IOtpService {
     generateOtp(): string;
-    verifyOtp(email : string , otp : number): Promise<boolean>;
-    storeOtp(otp : number , email : string) : Promise<void>
+    verifyOtp(email: string, otp: string): Promise<boolean>;
+    storeOtp(otp: string, email: string) : Promise<void>
 }

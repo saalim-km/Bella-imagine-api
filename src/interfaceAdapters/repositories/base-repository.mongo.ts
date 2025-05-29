@@ -1,4 +1,4 @@
-import { Document, FilterQuery, Model , ObjectId, Types } from "mongoose";
+import { Document, FilterQuery, Model , ObjectId, Types, UpdateQuery } from "mongoose";
 import { IBaseRepository } from "../../domain/interfaces/repository/base-repository";
 
 export class BaseRepository<T> implements IBaseRepository<T> {
@@ -23,7 +23,7 @@ export class BaseRepository<T> implements IBaseRepository<T> {
         return this.model.find()
     }
 
-    async update(id: ObjectId, data: FilterQuery<T>): Promise<T | null> {
+    async update(id: ObjectId, data: UpdateQuery<T>): Promise<T | null> {
         return await this.model.findByIdAndUpdate(id, data, { new: true })
     }
 

@@ -1,5 +1,5 @@
-import { BaseRoute } from "../base-route";
-import { ClientRoute } from "../client/client-route";
+import { BaseRoute } from "../base.route";
+import { ClientRoute } from "../client/client.route";
 
 export class PrivateRoute extends BaseRoute {
     protected initializeRoutes(): void {

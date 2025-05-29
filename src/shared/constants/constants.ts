@@ -33,6 +33,7 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  PASSWORD_REQUIRED : "Password is required",
   VENDOR_NOT_FOUND : 'Vendor Not Found',
   COMMUNITY_NO_EXIST : "Community didn't exist",
   NO_SUCH_DATA: "No such data found.",
