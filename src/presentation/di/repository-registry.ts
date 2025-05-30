@@ -6,6 +6,7 @@ import { ClientRepository } from "../../interfaceAdapters/repositories/client-re
 import { IVendorRepository } from "../../domain/interfaces/repository/vendor-repository";
 import { IBaseUserRepository } from "../../domain/interfaces/repository/base-user-repository";
 import { VendorRepository } from "../../interfaceAdapters/repositories/vendor-repository.mongo";
+import { BaseUserRepository } from "../../interfaceAdapters/repositories/base-user-repository.mongo";
 
 export class RepositoryRegistry {
     static registerRepositories() : void {
@@ -18,5 +19,10 @@ export class RepositoryRegistry {
         container.register<IVendorRepository>('IVendorRepository',{
             useClass : VendorRepository
         })
+        
+        container.register('IBaseUserRepository',{
+            useClass : BaseUserRepository
+        })
+
     }
 }

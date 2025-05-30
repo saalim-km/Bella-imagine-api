@@ -16,6 +16,7 @@ export const HTTP_STATUS = {
 };
 
 export const SUCCESS_MESSAGES = {
+  OTP_VERIFY_SUCCESS : 'OTP verified successfully',
   JOINED_SUCESS :"Joined",
   BOOKING_SUCCESS: "Booking completed.",
   CREATED: "Created successfully.",
@@ -33,6 +34,7 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  OTP_EXPIRED : 'OTP expired',
   PASSWORD_REQUIRED : "Password is required",
   VENDOR_NOT_FOUND : 'Vendor Not Found',
   COMMUNITY_NO_EXIST : "Community didn't exist",

@@ -1,4 +1,4 @@
-import { emailSchema, nameSchema, passwordSchema } from "./validations"
+import { emailSchema, nameSchema, otpSchema, passwordSchema } from "./validations"
 import { z } from "zod";
 
 const clienRegistertSchema = z.object({
@@ -19,3 +19,8 @@ export const userRegisterSchema = {
     client : clienRegistertSchema,
     vendor : vendorRegisterSchema,
 }
+
+export const verifyRegisterationSchema = z.object({
+    otp : otpSchema,
+    email : emailSchema
+})

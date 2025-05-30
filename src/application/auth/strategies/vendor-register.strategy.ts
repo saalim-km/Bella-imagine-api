@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IVendorRegisterStrategy } from "../../../domain/interfaces/usecase/auth-usecase.interfaces";
+import { IRegisterUserStrategy, } from "../../../domain/interfaces/usecase/auth-usecase.interfaces";
 import { IWalletRepository } from "../../../domain/interfaces/repository/wallet-repository";
 import { RegisterUserInput } from "../auth.types";
 import { CustomError } from "../../../shared/utils/custom-error";
@@ -10,7 +10,7 @@ import { IVendor } from "../../../domain/models/vendor";
 import { IVendorRepository } from "../../../domain/interfaces/repository/vendor-repository";
 
 @injectable()
-export class VendorRegisterStrategy implements IVendorRegisterStrategy {
+export class VendorRegisterStrategy implements IRegisterUserStrategy {
     constructor(
         @inject('IWalletRepository') private _walletRepository : IWalletRepository,
         @inject('IVendorRepository') private _vendorRepository : IVendorRepository,
@@ -48,6 +48,7 @@ export class VendorRegisterStrategy implements IVendorRegisterStrategy {
             data.password = hashedNewPassword!
         }
 
-        await this._vendorRepository.saveUser(data);
+        const newVendor = await this._vendorRepository.saveUser(data);
+        await this._walletRepository.createWallet({userId : newVendor._id , userType : 'Vendor',role : 'vendor'});
     }
 }

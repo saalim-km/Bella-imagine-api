@@ -1,5 +1,4 @@
 import { inject, injectable } from "tsyringe";
-import { IClientRegisterStrategy } from "../../../domain/interfaces/usecase/auth-usecase.interfaces";
 import { IWalletRepository } from "../../../domain/interfaces/repository/wallet-repository";
 import { IClientRepository } from "../../../domain/interfaces/repository/client-repository";
 import { RegisterUserInput } from "../auth.types";
@@ -8,9 +7,10 @@ import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants/constants
 import { IEmailExistenceUsecase } from "../../../domain/interfaces/usecase/common-usecase.interfaces";
 import { IBcryptService } from "../../../domain/interfaces/service/bcrypt-service.interface";
 import { IClient } from "../../../domain/models/client";
+import { IRegisterUserStrategy } from "../../../domain/interfaces/usecase/auth-usecase.interfaces";
 
 @injectable()
-export class ClientRegisterStrategy implements IClientRegisterStrategy {
+export class ClientRegisterStrategy implements IRegisterUserStrategy {
     constructor(
         @inject('IWalletRepository') private _walletRepository : IWalletRepository,
         @inject('IClientRepository') private _clientRepository : IClientRepository,
@@ -50,6 +50,7 @@ export class ClientRegisterStrategy implements IClientRegisterStrategy {
             data.password = hashedNewPassword!
         }
 
-        await this._clientRepository.saveUser(data);
+        const newClient = await this._clientRepository.saveUser(data);
+        await this._walletRepository.createWallet({userId : newClient._id , userType : 'Client' , role : 'client' })
     }
 }

@@ -19,3 +19,8 @@ export interface clientRegisterDto {
 }
 
 export type RegisterInputDto = vendorRegisterDto | clientRegisterDto
+
+export interface VerifyRegisterationDto {
+    otp : string;
+    email : string;
+}

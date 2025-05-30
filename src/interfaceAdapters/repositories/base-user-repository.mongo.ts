@@ -8,8 +8,8 @@ import { IVendor } from "../../domain/models/vendor";
 @injectable()
 export class BaseUserRepository<T> extends BaseRepository<T> implements IBaseUserRepository<T> {
 
-    async saveUser(input: Partial<T>): Promise<void> {
-        await this.create(input)
+    async saveUser(input: Partial<T>): Promise<T> {
+        return await this.create(input)
     }
 
     async findByEmail(email: string): Promise<T | null> {

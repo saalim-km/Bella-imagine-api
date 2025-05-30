@@ -3,20 +3,20 @@ import { BaseRepository } from "./base-repository.mongo";
 import { IWalletRepository } from "../../domain/interfaces/repository/wallet-repository";
 import { Wallet } from "../database/schemas/wallet.schema";
 import { IWallet } from "../../domain/models/wallet";
-import { TRole } from "../../shared/constants/constants";
-import { ObjectId } from "mongoose";
+import { CreateWalletInput } from "../../domain/types/wallet.types";
 
 @injectable()
-export class WalletRepository extends BaseRepository<IWalletEntity> implements IWalletRepository {
+export class WalletRepository extends BaseRepository<IWallet> implements IWalletRepository {
     constructor(){
         super(Wallet)
     }
 
-    async createWallet(userId: ObjectId, userType: string, role: TRole): Promise<void> {
+    async createWallet(input : CreateWalletInput): Promise<void> {
         const data : Partial<IWallet> = {
-            userId : userId,
-            userType : userType,
-            role : role
+            userId : input.userId,
+            userType : input.userType,
+            role : input.role
         }
+        await this.create(data)
     }
 }

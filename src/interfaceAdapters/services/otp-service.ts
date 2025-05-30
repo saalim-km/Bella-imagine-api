@@ -3,6 +3,8 @@ import crypto from 'crypto';
 import { IOtpService } from "../../domain/interfaces/service/otp-service.interface";
 import { IRedisService } from "../../domain/interfaces/service/redis-service.interface";
 import { IBcryptService } from "../../domain/interfaces/service/bcrypt-service.interface";
+import { VerifyOtpResultOutput } from "../../application/auth/auth.types";
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../../shared/constants/constants";
 
 @injectable()
 export class OtpService implements IOtpService {
@@ -26,18 +28,28 @@ export class OtpService implements IOtpService {
         await this.redisService.set(key, hashedOtp, 60);
     }
 
-    async verifyOtp(email: string, otp: string): Promise<boolean> {
+    async verifyOtp(email: string, otp: string): Promise<VerifyOtpResultOutput> {
         const key = this.getRedisKey(email);
         const storedHashedOtp = await this.redisService.get(key);
-        if (!storedHashedOtp) return false;
-
-        const hashedInputOtp = await this._bcryptService.hash(otp);
-        const isMatch = await this._bcryptService.compare(otp, storedHashedOtp)
-
-        if (isMatch) {
-            await this.redisService.delete(key); // Invalidate OTP after successful verification
+        if (!storedHashedOtp) {
+            return {
+                success: false,
+                message: ERROR_MESSAGES.OTP_EXPIRED
+            }
         }
 
-        return isMatch;
+        const isMatch = await this._bcryptService.compare(otp, storedHashedOtp)
+
+        if(!isMatch){
+            return {
+                success: false,
+                message: ERROR_MESSAGES.INVALID_OTP
+            }
+        }
+
+        return {
+            success : true,
+            message : SUCCESS_MESSAGES.OTP_VERIFY_SUCCESS
+        }
     }
 }
