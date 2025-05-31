@@ -24,3 +24,8 @@ export interface VerifyRegisterationDto {
     otp : string;
     email : string;
 }
+
+export interface LoginInputDto {
+    email : string;
+    password : string;
+}

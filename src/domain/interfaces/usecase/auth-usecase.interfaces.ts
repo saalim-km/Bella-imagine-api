@@ -1,4 +1,4 @@
-import { RegisterUserInput, SendOtpEmailInput, VerifyOtpInput } from "../../../application/auth/auth.types";
+import { LoginUserInput, RegisterUserInput, SendOtpEmailInput, VerifyOtpInput } from "../../../application/auth/auth.types";
 import { TRole } from "../../../shared/constants/constants";
 
 export interface ISendAuthEmailUsecase {
@@ -15,4 +15,12 @@ export interface IRegisterUserStrategy {
 
 export interface IVerifyOtpUsecase {
     verifyOtp(input : VerifyOtpInput) : Promise<void>
+}
+
+export interface IUserLoginUsecase {
+    loginUser(input : LoginUserInput) : Promise<void>
+}
+
+export interface ILoginUserStrategy {
+    login(input : LoginUserInput) : Promise<void>
 }

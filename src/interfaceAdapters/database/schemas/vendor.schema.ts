@@ -94,4 +94,4 @@ export const vendorSchema = new Schema<IVendor>(
   { timestamps: true }
 );
 
-export const Vendor = model<IVendor>("Client", vendorSchema);
+export const Vendor = model<IVendor>("Vendor", vendorSchema);

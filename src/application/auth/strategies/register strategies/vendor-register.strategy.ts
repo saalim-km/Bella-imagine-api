@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
-import { IRegisterUserStrategy, } from "../../../domain/interfaces/usecase/auth-usecase.interfaces";
-import { IWalletRepository } from "../../../domain/interfaces/repository/wallet-repository";
-import { RegisterUserInput } from "../auth.types";
-import { CustomError } from "../../../shared/utils/custom-error";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants/constants";
-import { IEmailExistenceUsecase } from "../../../domain/interfaces/usecase/common-usecase.interfaces";
-import { IBcryptService } from "../../../domain/interfaces/service/bcrypt-service.interface";
-import { IVendor } from "../../../domain/models/vendor";
-import { IVendorRepository } from "../../../domain/interfaces/repository/vendor-repository";
+import { IRegisterUserStrategy, } from "../../../../domain/interfaces/usecase/auth-usecase.interfaces";
+import { IWalletRepository } from "../../../../domain/interfaces/repository/wallet-repository";
+import { RegisterUserInput } from "../../auth.types";
+import { CustomError } from "../../../../shared/utils/custom-error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../../../shared/constants/constants";
+import { IEmailExistenceUsecase } from "../../../../domain/interfaces/usecase/common-usecase.interfaces";
+import { IBcryptService } from "../../../../domain/interfaces/service/bcrypt-service.interface";
+import { IVendor } from "../../../../domain/models/vendor";
+import { IVendorRepository } from "../../../../domain/interfaces/repository/vendor-repository";
 
 @injectable()
 export class VendorRegisterStrategy implements IRegisterUserStrategy {
@@ -24,7 +24,7 @@ export class VendorRegisterStrategy implements IRegisterUserStrategy {
         }
 
         const userExists = await this._emailExistence.doesEmailExist(input.email,input.role);
-        if(userExists) {
+        if(userExists.success) {
             throw new CustomError(ERROR_MESSAGES.EMAIL_EXISTS, HTTP_STATUS.BAD_REQUEST)
         }
 

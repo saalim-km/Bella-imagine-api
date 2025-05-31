@@ -22,3 +22,9 @@ export interface VerifyOtpResultOutput {
     success : boolean;
     message : string
 }
+
+export interface LoginUserInput {
+    email : string;
+    password : string;
+    role : TRole;
+}

@@ -4,8 +4,8 @@ import { EmailExistenceUsecase } from "../../application/auth/email-existence.us
 import { IRegisterUserStrategy, IRegisterUserUsecase, ISendAuthEmailUsecase, IVerifyOtpUsecase } from "../../domain/interfaces/usecase/auth-usecase.interfaces";
 import { SendAuthOtpEmailUsecase } from "../../application/auth/send-auth-otp.usecase";
 import { RegisterUserUsecase } from "../../application/auth/register-user.usecase";
-import { ClientRegisterStrategy } from "../../application/auth/strategies/client-register.strategy";
-import { VendorRegisterStrategy } from "../../application/auth/strategies/vendor-register.strategy";
+import { ClientRegisterStrategy } from "../../application/auth/strategies/register strategies/client-register.strategy";
+import { VendorRegisterStrategy } from "../../application/auth/strategies/register strategies/vendor-register.strategy";
 import { VerifyOtpUsecase } from "../../application/auth/verify-otp.usecase";
 
 export class UsecaseRegistry {

@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { Request, Response } from "express";
 import { IRegisterUserUsecase, ISendAuthEmailUsecase, IVerifyOtpUsecase } from "../../domain/interfaces/usecase/auth-usecase.interfaces";
-import { RegisterInputDto, SendOtpEmailInputDto, VerifyRegisterationDto } from "../dto/auth-dto";
+import { LoginInputDto, RegisterInputDto, SendOtpEmailInputDto, VerifyRegisterationDto } from "../dto/auth-dto";
 import { SUCCESS_MESSAGES } from "../../shared/constants/constants";
 import { ResponseHandler } from "../../shared/utils/response-handler";
 import { IAuthController } from "../../domain/interfaces/controller/auth-controller.interface";
@@ -16,9 +16,8 @@ export class AuthController implements IAuthController {
     ) {}
 
     async sendOtp(req: Request, res: Response) : Promise<void> {
-        const { email, role } = req.body as SendOtpEmailInputDto;
-
-        await this._sendAuthEmailUsecase.sendAuthEmail({email : email , userRole : role});
+        const payload = req.body as SendOtpEmailInputDto;
+        await this._sendAuthEmailUsecase.sendAuthEmail({email : payload.email , userRole : payload.role});
         ResponseHandler.success(res, SUCCESS_MESSAGES.OTP_SEND_SUCCESS)
     }
 
@@ -37,5 +36,9 @@ export class AuthController implements IAuthController {
         
         await this._verifyotpUsecase.verifyOtp(validatedData)
         ResponseHandler.success(res,SUCCESS_MESSAGES.OTP_VERIFY_SUCCESS)
+    }
+
+    async login(req: Request, res: Response): Promise<void> {
+        const payload = req.body as LoginInputDto;
     }
 }

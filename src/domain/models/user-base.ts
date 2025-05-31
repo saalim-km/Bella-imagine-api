@@ -1,5 +1,8 @@
 import { ObjectId } from "mongoose";
 import { TRole } from "../../shared/constants/constants";
+import { IClient } from "./client";
+import { IVendor } from "./vendor";
+import { IAdmin } from "./admin";
 
 export interface IUserBase {
   _id: ObjectId;
@@ -21,3 +24,5 @@ export interface IUserBase {
   updatedAt?: Date;
   createdAt?: Date;
 }
+
+export type IUser = IClient | IVendor | IAdmin

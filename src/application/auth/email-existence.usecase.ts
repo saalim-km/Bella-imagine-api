@@ -1,24 +1,49 @@
 import { inject, injectable } from "tsyringe";
-import { IEmailExistenceUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
-import { IBaseUserRepository } from "../../domain/interfaces/repository/base-user-repository";
-import { IClient } from "../../domain/models/client";
-import { IVendor } from "../../domain/models/vendor";
+import {
+  IEmailCheckResult,
+  IEmailExistenceUsecase,
+} from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { ERROR_MESSAGES, TRole } from "../../shared/constants/constants";
 import { CustomError } from "../../shared/utils/custom-error";
+import { IClientRepository } from "../../domain/interfaces/repository/client-repository";
+import { IVendorRepository } from "../../domain/interfaces/repository/vendor-repository";
+import { IUser } from "../../domain/models/user-base";
 
 @injectable()
-export class EmailExistenceUsecase implements IEmailExistenceUsecase{
-    constructor(
-        @inject('IBaseUserRepository') private userRepository : IBaseUserRepository<IClient | IVendor>
-    ){}
-    async doesEmailExist(email: string, userRole: TRole): Promise<boolean> {
-        if(!email || !userRole){
-            throw new CustomError(ERROR_MESSAGES.INVALID_DATAS, 400);
-        }
-        const user = await this.userRepository.findByEmail(email)
-        if(user && user.role === userRole){
-            return true;
-        }
-        return false
+export class EmailExistenceUsecase implements IEmailExistenceUsecase<IUser> {
+  constructor(
+    @inject("IClientRepository") private _clientRepository: IClientRepository,
+    @inject("IVendorRepository") private _vendorRepository: IVendorRepository
+  ) {}
+  async doesEmailExist(
+    email: string,
+    userRole: TRole
+  ): Promise<IEmailCheckResult<IUser>> {
+    if (!email || !userRole) {
+      throw new CustomError(ERROR_MESSAGES.INVALID_DATAS, 400);
     }
+
+    switch (userRole) {
+      case "client":
+        const client = await this._clientRepository.findByEmail(email);
+        return {
+          success: !!client,
+          data: client,
+        };
+      case "vendor":
+        const vendor = await this._vendorRepository.findByEmail(email);
+        return {
+          success: !!vendor,
+          data: vendor,
+        };
+      case 'admin' : 
+        const admin = await this._clientRepository.findAdmin(email);
+        return {
+          success: !!admin,
+          data: admin,
+        };
+      default:
+        throw new CustomError(ERROR_MESSAGES.INVALID_ROLE, 400);
+    }
+  }
 }

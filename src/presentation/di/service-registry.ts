@@ -5,20 +5,24 @@ import { IBcryptService } from "../../domain/interfaces/service/bcrypt-service.i
 import { BcryptService } from "../../interfaceAdapters/services/bcrypt-service";
 import { IOtpService } from "../../domain/interfaces/service/otp-service.interface";
 import { OtpService } from "../../interfaceAdapters/services/otp-service";
+import { IRedisService } from "../../domain/interfaces/service/redis-service.interface";
+import { RedisService } from "../../interfaceAdapters/services/redis-service";
 
 export class ServiceRegistry {
-    static registerServices(): void{
-        container.register<IEmailService>('IEmailService',{
-            useClass : EmailService 
-        });
+  static registerServices(): void {
+    container.register<IEmailService>("IEmailService", {
+      useClass: EmailService,
+    });
 
-        container.register<IBcryptService>('IBcryptService',{
-            useClass : BcryptService 
-        });
-        container.register<IOtpService>('IOtpService',{
-            useClass : OtpService 
-        });
+    container.register<IBcryptService>("IBcryptService", {
+      useClass: BcryptService,
+    });
+    container.register<IOtpService>("IOtpService", {
+      useClass: OtpService,
+    });
 
-
-    }
+    container.register<IRedisService>("IRedisService", {
+      useClass: RedisService,
+    });
+  }
 }
