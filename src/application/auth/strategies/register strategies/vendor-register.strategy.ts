@@ -14,7 +14,7 @@ export class VendorRegisterStrategy implements IRegisterUserStrategy {
     constructor(
         @inject('IWalletRepository') private _walletRepository : IWalletRepository,
         @inject('IVendorRepository') private _vendorRepository : IVendorRepository,
-        @inject('IEmailExistenceUsecase') private _emailExistence : IEmailExistenceUsecase,
+        @inject('IEmailExistenceUsecase') private _emailExistence : IEmailExistenceUsecase<IVendor>,
         @inject('IBcryptService') private _bcryptService : IBcryptService
     ){}
 

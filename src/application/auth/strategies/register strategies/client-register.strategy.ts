@@ -14,7 +14,7 @@ export class ClientRegisterStrategy implements IRegisterUserStrategy {
     constructor(
         @inject('IWalletRepository') private _walletRepository : IWalletRepository,
         @inject('IClientRepository') private _clientRepository : IClientRepository,
-        @inject('IEmailExistenceUsecase') private _emailExistence : IEmailExistenceUsecase,
+        @inject('IEmailExistenceUsecase') private _emailExistence : IEmailExistenceUsecase<IClient>,
         @inject('IBcryptService') private _bcryptService : IBcryptService
     ){}
 

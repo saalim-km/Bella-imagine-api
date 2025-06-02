@@ -8,6 +8,6 @@ export class AuthRoute extends BaseRoute {
         .post('/register',asyncHandler(authController.register.bind(authController)))
         .post('/send-otp',asyncHandler(authController.sendOtp.bind(authController)))
         .post('/verify-otp',asyncHandler(authController.verifyOtp.bind(authController)))
-        .post('/login',)
+        .post('/login',asyncHandler(authController.login.bind(authController)))
     }
 }

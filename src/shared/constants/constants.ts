@@ -34,8 +34,10 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  USER_BLOCKED : "User blocked by admin",
   OTP_EXPIRED : 'OTP expired',
   PASSWORD_REQUIRED : "Password is required",
+  USER_LOGIN_WITHOUT_PASSWORD : 'The email address you entered is already registered with Google. Please log in using Google, or use a different email to continue.',
   VENDOR_NOT_FOUND : 'Vendor Not Found',
   COMMUNITY_NO_EXIST : "Community didn't exist",
   NO_SUCH_DATA: "No such data found.",

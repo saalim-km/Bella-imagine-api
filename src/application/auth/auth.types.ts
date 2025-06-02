@@ -28,3 +28,11 @@ export interface LoginUserInput {
     password : string;
     role : TRole;
 }
+
+export interface LoginUserOuput {
+    _id : string;
+    name : string;
+    email : string;
+    role : TRole;
+    avatar : string;
+}
