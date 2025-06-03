@@ -8,11 +8,11 @@ export class GenerateTokenUsecase implements IGenerateTokenUsecase {
     constructor(
         @inject("IJwtservice") private jwtService : IJwtservice  
     ) {}
-    async generateToken(data: TJwtPayload): Promise<JwtOutput> {
-        const accessToken = await this.jwtService.generateAccessToken(data);
-        const refreshToken = await this.jwtService.generateRefreshToken(data);  
+    async generateToken(input: TJwtPayload): Promise<JwtOutput> {
+        const accessToken = await this.jwtService.generateAccessToken(input);
+        const refreshToken = await this.jwtService.generateRefreshToken(input);  
         
-        console.log(`token generated access: ${accessToken} \n
+        console.log(`token generated access : ${accessToken} \n
                 refresh : ${refreshToken}
             `);
             

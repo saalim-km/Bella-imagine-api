@@ -2,7 +2,7 @@ import { TRole } from "../../shared/constants/constants";
 
 export interface SendOtpEmailInputDto {
     email : string;
-    role : TRole
+    userRole : TRole
 }
 
 export interface vendorRegisterDto {
@@ -28,4 +28,10 @@ export interface VerifyRegisterationDto {
 export interface LoginInputDto {
     email : string;
     password : string;
+}
+
+export interface ResetPasswordDto {
+    email : string;
+    role : TRole;
+    password : string
 }

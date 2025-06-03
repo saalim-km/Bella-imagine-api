@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IRegisterUserStrategy, IRegisterUserUsecase } from "../../domain/interfaces/usecase/auth-usecase.interfaces";
-import { RegisterUserInput } from "./auth.types";
+import { RegisterUserInput } from "../../domain/interfaces/usecase/types/auth.types";
 import { CustomError } from "../../shared/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 

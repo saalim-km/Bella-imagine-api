@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import { IOtpService } from "../../domain/interfaces/service/otp-service.interface";
 import { IRedisService } from "../../domain/interfaces/service/redis-service.interface";
 import { IBcryptService } from "../../domain/interfaces/service/bcrypt-service.interface";
-import { VerifyOtpResultOutput } from "../../application/auth/auth.types";
+import { VerifyOtpResultOutput } from "../../domain/interfaces/usecase/types/auth.types";
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../../shared/constants/constants";
 
 @injectable()

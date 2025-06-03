@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IRegisterUserStrategy, } from "../../../../domain/interfaces/usecase/auth-usecase.interfaces";
 import { IWalletRepository } from "../../../../domain/interfaces/repository/wallet-repository";
-import { RegisterUserInput } from "../../auth.types";
+import { RegisterUserInput } from "../../../../domain/interfaces/usecase/types/auth.types";
 import { CustomError } from "../../../../shared/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../../shared/constants/constants";
 import { IEmailExistenceUsecase } from "../../../../domain/interfaces/usecase/common-usecase.interfaces";

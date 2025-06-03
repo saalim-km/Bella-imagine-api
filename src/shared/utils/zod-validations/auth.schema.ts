@@ -36,3 +36,5 @@ export const userLoginSchema = z.object({
     password : passwordSchema,
     role : z.enum(["client","vendor","admin"])
 })
+
+export const resetPasswordSchema = userLoginSchema;

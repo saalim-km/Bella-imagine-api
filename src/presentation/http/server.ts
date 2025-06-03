@@ -8,6 +8,7 @@ import { AuthRoute } from "../routes/auth/auth.routes";
 import { PrivateRoute } from "../routes/common/private.route";
 import { errorHandler } from "../middlewares/error.middleware";
 import logger from "../../shared/logger/logger";
+import { globalRateLimit } from "../middlewares/rate-limit.middleware";
 
 
 export class Server {
@@ -44,14 +45,8 @@ export class Server {
 
     this._app.use(express.json());
 
-    // Rate limiting to prevent abuse
-    // This is a basic rate limiter that allows 1000 requests per 15 minutes
-    this._app.use(
-      rateLimit({
-        windowMs: 15 * 60 * 1000,
-        max: 1000,
-      })
-    );
+    // Rate limiting
+    this._app.use(globalRateLimit);
   }
 
   // private configureSocket(): void {

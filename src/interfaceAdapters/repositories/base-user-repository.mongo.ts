@@ -25,13 +25,13 @@ export class BaseUserRepository<T> extends BaseRepository<T> implements IBaseUse
         });
     }
 
-    async updateLastSeen(userId: ObjectId, lastSeen: string): Promise<void> {
+    async updateLastSeenById(userId: ObjectId, lastSeen: string): Promise<void> {
         
     }
 
     async findByIdAndUpdatePassword(userId: ObjectId, hashedNewPassword: string): Promise<void> {
     }
 
-    async updateProfile(userId: ObjectId, data: Partial<T>): Promise<void> {
+    async updateProfileById(userId: ObjectId, data: Partial<T>): Promise<void> {
     }
 }

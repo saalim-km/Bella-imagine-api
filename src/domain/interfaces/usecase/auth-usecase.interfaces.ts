@@ -1,5 +1,4 @@
-import { LoginUserInput, LoginUserOuput, RegisterUserInput, SendOtpEmailInput, VerifyOtpInput } from "../../../application/auth/auth.types";
-import { TRole } from "../../../shared/constants/constants";
+import { LoginUserInput, LoginUserOuput, RegisterUserInput, ResetPasswordInput, SendOtpEmailInput, VerifyOtpInput } from "./types/auth.types";
 import { JwtOutput, TJwtPayload } from "../../types/auth.types";
 
 export interface ISendAuthEmailUsecase {
@@ -27,5 +26,17 @@ export interface ILoginUserStrategy {
 }
 
 export interface IGenerateTokenUsecase {
-    generateToken (data : TJwtPayload) : Promise<JwtOutput>
+    generateToken (input : TJwtPayload) : Promise<JwtOutput>
+}
+
+export interface IForgotPasswordUsecase {
+    forgotPassword(input : SendOtpEmailInput) : Promise<void>
+}
+
+export interface IResetPasswordUsecase {
+    resetPassword(input : ResetPasswordInput) : Promise<void>
+}
+
+export interface IResetPasswordStrategy {
+    resetPassword(input : ResetPasswordInput) : Promise<void>
 }

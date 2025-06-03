@@ -6,7 +6,7 @@ export interface IBaseUserRepository<T> {
   saveUser(input : Partial<IClient | IVendor>): Promise<T>
   findByEmail(email: string): Promise<T | null>;
   updateOnlineStatus(payload : {userId : ObjectId , isOnline : boolean , lastSeen : string}): Promise<T | null>;
-  updateLastSeen(userId: ObjectId, lastSeen: string): Promise<void>;
+  updateLastSeenById(userId: ObjectId, lastSeen: string): Promise<void>;
   findByIdAndUpdatePassword(userId : ObjectId , hashedNewPassword : string) : Promise<void>
-  updateProfile(userId : ObjectId , data : Partial<T>) : Promise<void>
+  updateProfileById(userId : ObjectId , data : Partial<T>) : Promise<void>
 }

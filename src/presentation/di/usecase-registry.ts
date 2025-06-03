@@ -1,11 +1,13 @@
 import { container } from "tsyringe";
-import { IEmailExistenceUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { EmailExistenceUsecase } from "../../application/auth/email-existence.usecase";
 import {
+    IForgotPasswordUsecase,
     IGenerateTokenUsecase,
     ILoginUserStrategy,
     IRegisterUserStrategy,
     IRegisterUserUsecase,
+    IResetPasswordStrategy,
+    IResetPasswordUsecase,
     ISendAuthEmailUsecase,
     IUserLoginUsecase,
     IVerifyOtpUsecase
@@ -15,12 +17,15 @@ import { RegisterUserUsecase } from "../../application/auth/register-user.usecas
 import { ClientRegisterStrategy } from "../../application/auth/strategies/register strategies/client-register.strategy";
 import { VendorRegisterStrategy } from "../../application/auth/strategies/register strategies/vendor-register.strategy";
 import { VerifyOtpUsecase } from "../../application/auth/verify-otp.usecase";
-import { IUser } from "../../domain/models/user-base";
 import { ClientLoginStrategy } from "../../application/auth/strategies/login strategies/client-login.strategy";
 import { VendorLoginStrategy } from "../../application/auth/strategies/login strategies/vendor-login.strategy";
 import { AdminLoginStrategy } from "../../application/auth/strategies/login strategies/admin-login.strategy";
-import { LoginUserUsecase } from "../../application/auth/login.usecase";
+import { LoginUserUsecase } from "../../application/auth/login-user.usecase";
 import { GenerateTokenUsecase } from "../../application/auth/generate-token.usecase";
+import { ForgotPasswordUsecase } from "../../application/auth/forgot-password.usecase";
+import { ClientResetPasswordStrategy } from "../../application/auth/strategies/reset password/client-reset-password.usecase";
+import { VendorResetPasswordStrategy } from "../../application/auth/strategies/reset password/vendor-reset-password.usecase";
+import { ResetPasswordUsecase } from "../../application/auth/reset-password.usecase";
 
 export class UsecaseRegistry {
     static registerUsecases(): void {
@@ -70,6 +75,22 @@ export class UsecaseRegistry {
 
         container.register<IGenerateTokenUsecase>('IGenerateTokenUsecase',{
             useClass : GenerateTokenUsecase
+        })
+
+        container.register<IForgotPasswordUsecase>('IForgotPasswordUsecase',{
+            useClass: ForgotPasswordUsecase
+        })
+
+        container.register<IResetPasswordUsecase>('IResetPasswordUsecase' , {
+            useClass : ResetPasswordUsecase
+        })
+
+        container.register<IResetPasswordStrategy>('ClientResetPasswordStrategy',{
+            useClass : ClientResetPasswordStrategy
+        })
+
+        container.register<IResetPasswordStrategy>('VendorResetPasswordStrategy',{
+            useClass : VendorResetPasswordStrategy
         })
     }
 }

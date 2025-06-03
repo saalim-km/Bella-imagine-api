@@ -1,4 +1,4 @@
-import { VerifyOtpResultOutput } from "../../../application/auth/auth.types";
+import { VerifyOtpResultOutput } from "../usecase/types/auth.types";
 
 export interface IOtpService {
     generateOtp(): string;

@@ -1,4 +1,4 @@
-import { TRole } from "../../shared/constants/constants";
+import { TRole } from "../../../../shared/constants/constants";
 
 export interface SendOtpEmailInput {
     email : string;
@@ -35,4 +35,10 @@ export interface LoginUserOuput {
     email : string;
     role : TRole;
     avatar : string;
+}
+
+export interface ResetPasswordInput {
+    email : string;
+    password : string;
+    role : TRole;
 }
