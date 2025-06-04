@@ -6,6 +6,8 @@ import { IUser } from "../../../domain/models/user-base";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants/constants";
 import { CustomError } from "../../../shared/utils/custom-error";
 import { IGetPresignedUrlUsecase } from "../../../domain/interfaces/usecase/common-usecase.interfaces";
+import { IVendor } from "../../../domain/models/vendor";
+import { IClient } from "../../../domain/models/client";
 
 @injectable()
 export class GetClientDetailsStrategy implements IGetUserDetailsStrategy {
@@ -16,7 +18,7 @@ export class GetClientDetailsStrategy implements IGetUserDetailsStrategy {
 
     }
 
-    async getDetails(input: UserDetailsInput): Promise<IUser> {
+    async getDetails(input: UserDetailsInput): Promise<IClient> {
         const {id , role} = input;
         const client = await this._clientRepository.findById(id)
         if(!client){

@@ -1,4 +1,4 @@
-import { Schema , ObjectId , Types, model } from "mongoose";
+import { Schema , model } from "mongoose";
 import { IClient } from "../../../domain/models/client";
 
 export const clientSchema = new Schema<IClient>(
@@ -47,7 +47,7 @@ export const clientSchema = new Schema<IClient>(
     },
     savedPhotographers: [
       {
-        type: Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Vendor",
       },
     ],
@@ -58,7 +58,7 @@ export const clientSchema = new Schema<IClient>(
     lastSeen: { type: Date, default: Date.now },
     savedPhotos: [
       {
-        type: Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Photo",
       },
     ],

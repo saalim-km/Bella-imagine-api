@@ -1,5 +1,7 @@
 import { FilterQuery, Model , Types, UpdateQuery } from "mongoose";
 import { IBaseRepository } from "../../domain/interfaces/repository/base-repository";
+import '../database/schemas/category.schema'
+import '../database/schemas/category-request.schema'
 
 export class BaseRepository<T> implements IBaseRepository<T> {
     protected model : Model<T>
@@ -11,8 +13,10 @@ export class BaseRepository<T> implements IBaseRepository<T> {
         return await this.model.create(data)
     }
 
-    async findById(id: Types.ObjectId): Promise<T | null> {
-        return await this.model.findById(id)
+    async findById(id: Types.ObjectId , populate : string[] = []): Promise<T | null> {
+        const query = this.model.findById(id);
+        populate.forEach((path)=> query.populate({path : path}))
+        return await query.exec()
     }
 
     async findOne(query: FilterQuery<T>): Promise<T | null> {

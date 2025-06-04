@@ -5,7 +5,6 @@ import { VendorRequestFilterInput } from "../../domain/interfaces/usecase/types/
 import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";
 import { IVendor } from "../../domain/models/vendor";
 import { FilterQuery } from "mongoose";
-import { skip } from "node:test";
 
 @injectable()
 export class GetVendorRequestUsecase implements IGetVendorRequestUsecase {

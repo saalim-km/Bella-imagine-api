@@ -8,7 +8,7 @@ export interface IGetUsersUsecase {
   getUsers(input: UsersFilterInput): Promise<PaginatedResponse<IUser>>;
 }
 
-export interface IGetUsersStrategy<T> {
+export interface IGetUsersStrategy<T = IUser> {
   getUsers(input: UserStrategyFilterInput): Promise<PaginatedResponse<T>>;
 }
 
@@ -16,8 +16,8 @@ export interface IGetUserDetailsUsecase {
   getUserDetail(input: UserDetailsInput): Promise<IUser>;
 }
 
-export interface IGetUserDetailsStrategy {
-  getDetails(input: UserDetailsInput): Promise<IUser>;
+export interface IGetUserDetailsStrategy<T = IUser> {
+  getDetails(input: UserDetailsInput): Promise<T>;
 }
 
 export interface IGetVendorRequestUsecase {

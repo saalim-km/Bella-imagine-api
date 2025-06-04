@@ -40,101 +40,83 @@ import { IVendor } from "../../domain/models/vendor";
 import { GetVendorRequestUsecase } from "../../application/admin/get-vendor-requests.usecase";
 
 export class UsecaseRegistry {
+    // Static method to register all use cases and strategies
     static registerUsecases(): void {
-        // -------------------- Common Use Cases --------------------
+        // Common Use Cases
         container.register('IEmailExistenceUsecase', {
             useClass: EmailExistenceUsecase
         });
 
-        // -------------------- Auth Use Cases --------------------
+        // Auth Use Cases
         container.register<ISendAuthEmailUsecase>('ISendAuthEmailUsecase', {
             useClass: SendAuthOtpEmailUsecase
         });
-
         container.register<IRegisterUserUsecase>('IRegisterUserUsecase', {
             useClass: RegisterUserUsecase
         });
-
         container.register<IVerifyOtpUsecase>('IVerifyOtpUsecase', {
             useClass: VerifyOtpUsecase
         });
-
-        container.register<IUserLoginUsecase>('IUserLoginUsecase',{
+        container.register<IUserLoginUsecase>('IUserLoginUsecase', {
             useClass: LoginUserUsecase
-        })
+        });
+        container.register<IGenerateTokenUsecase>('IGenerateTokenUsecase', {
+            useClass: GenerateTokenUsecase
+        });
+        container.register<IForgotPasswordUsecase>('IForgotPasswordUsecase', {
+            useClass: ForgotPasswordUsecase
+        });
+        container.register<IResetPasswordUsecase>('IResetPasswordUsecase', {
+            useClass: ResetPasswordUsecase
+        });
+        container.register<IRefreshTokenUsecase>('IRefreshTokenUsecase', {
+            useClass: RefreshTokenUsecase
+        });
 
-        // -------------------- Auth Strategies --------------------
+        // Auth Strategies
         container.register<IRegisterUserStrategy>('ClientRegisterStrategy', {
             useClass: ClientRegisterStrategy
         });
-
         container.register<IRegisterUserStrategy>('VendorRegisterStrategy', {
             useClass: VendorRegisterStrategy
         });
-
         container.register<ILoginUserStrategy>('ClientLoginStrategy', {
             useClass: ClientLoginStrategy
         });
-
         container.register<ILoginUserStrategy>('VendorLoginStrategy', {
             useClass: VendorLoginStrategy
         });
-
         container.register<ILoginUserStrategy>('AdminLoginStrategy', {
             useClass: AdminLoginStrategy
-        })
+        });
+        container.register<IResetPasswordStrategy>('ClientResetPasswordStrategy', {
+            useClass: ClientResetPasswordStrategy
+        });
+        container.register<IResetPasswordStrategy>('VendorResetPasswordStrategy', {
+            useClass: VendorResetPasswordStrategy
+        });
 
-
-        container.register<IGenerateTokenUsecase>('IGenerateTokenUsecase',{
-            useClass : GenerateTokenUsecase
-        })
-
-        container.register<IForgotPasswordUsecase>('IForgotPasswordUsecase',{
-            useClass: ForgotPasswordUsecase
-        })
-
-        container.register<IResetPasswordUsecase>('IResetPasswordUsecase' , {
-            useClass : ResetPasswordUsecase
-        })
-
-        container.register<IResetPasswordStrategy>('ClientResetPasswordStrategy',{
-            useClass : ClientResetPasswordStrategy
-        })
-
-        container.register<IResetPasswordStrategy>('VendorResetPasswordStrategy',{
-            useClass : VendorResetPasswordStrategy
-        })
-
-        container.register<IRefreshTokenUsecase>('IRefreshTokenUsecase',{
-            useClass : RefreshTokenUsecase
-        })
-
-        container.register<IGetUsersUsecase>('IGetUsersUsecase',{
+        // Admin Use Cases
+        container.register<IGetUsersUsecase>('IGetUsersUsecase', {
             useClass: GetUsersUsecase
-        })
-
-        container.register<IGetUsersStrategy<IClient>>('GetClientsStrategy',{
-            useClass : GetClientsUsecase
-        })
-        
-        container.register<IGetUsersStrategy<IVendor>>('GetVendorsStrategy',{
-            useClass : GetVendorsUsecase
-        })
-
-        container.register<IGetUserDetailsUsecase>('IGetUserDetailsUsecase',{
-            useClass : GetuserDetailsUsecase
-        })
-
-        container.register<IGetUserDetailsStrategy>('GetClientDetailsStrategy',{
+        });
+        container.register<IGetUsersStrategy>('GetClientsStrategy', {
+            useClass: GetClientsUsecase
+        });
+        container.register<IGetUsersStrategy>('GetVendorsStrategy', {
+            useClass: GetVendorsUsecase
+        });
+        container.register<IGetUserDetailsUsecase>('IGetUserDetailsUsecase', {
+            useClass: GetuserDetailsUsecase
+        });
+        container.register<IGetUserDetailsStrategy>('GetClientDetailsStrategy', {
             useClass: GetClientDetailsStrategy
-        })
-
-        container.register<IGetUserDetailsStrategy>('GetVendorDetailsStrategy',{
+        });
+        container.register<IGetUserDetailsStrategy>('GetVendorDetailsStrategy', {
             useClass: GetVendorDetailsStrategy
-        })
-
-        container.register<IGetVendorRequestUsecase>('IGetVendorRequestUsecase',{
-            useClass : GetVendorRequestUsecase
-        })
+        });
+        container.register<IGetVendorRequestUsecase>('IGetVendorRequestUsecase', {
+            useClass: GetVendorRequestUsecase
+        });
     }
 }

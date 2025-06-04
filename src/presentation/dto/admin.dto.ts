@@ -1,4 +1,4 @@
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 import { TRole } from "../../shared/constants/constants";
 
 export interface PaginationQueryDto<T> {
@@ -19,6 +19,6 @@ export interface UserQueryParams {
 };
 
 export interface UserDetailsDto {
-  id ?: ObjectId;
+  id ?: Types.ObjectId;
   role ?: TRole
 }

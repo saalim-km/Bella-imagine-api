@@ -15,7 +15,7 @@ export class GetVendorDetailsStrategy implements IGetUserDetailsStrategy {
     ){}
 
     async getDetails(input: UserDetailsInput): Promise<IVendor> {
-        const vendor = await this._vendorRepository.findById(input.id)
+        const vendor = await this._vendorRepository.findById(input.id , ['categories']) 
         if(!vendor){
             throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND , HTTP_STATUS.BAD_REQUEST)
         }
