@@ -4,6 +4,7 @@ import { IClientRepository } from "../../domain/interfaces/repository/client-rep
 import { IClient } from "../../domain/models/client";
 import { Client } from "../database/schemas/client.schema";
 import { IAdmin } from "../../domain/models/admin";
+import { IBaseRepository } from "../../domain/interfaces/repository/base-repository";
 
 @injectable()
 export class ClientRepository extends BaseUserRepository<IClient> implements IClientRepository {
@@ -14,4 +15,6 @@ export class ClientRepository extends BaseUserRepository<IClient> implements ICl
     async findAdmin(email: string): Promise<IClient | null> {
         return await this.findOne({email : email , role : 'admin'})
     }
+
+    
 }

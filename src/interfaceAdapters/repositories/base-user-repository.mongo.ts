@@ -1,15 +1,21 @@
 import { injectable } from "tsyringe";
 import { IBaseUserRepository } from "../../domain/interfaces/repository/base-user-repository";
-import { model, Model, ObjectId } from "mongoose";
+import { FilterQuery,ObjectId } from "mongoose";
 import { BaseRepository } from "./base-repository.mongo";
-import { IClient } from "../../domain/models/client";
-import { IVendor } from "../../domain/models/vendor";
 
 @injectable()
 export class BaseUserRepository<T> extends BaseRepository<T> implements IBaseUserRepository<T> {
 
     async saveUser(input: Partial<T>): Promise<T> {
         return await this.create(input)
+    }
+
+    async find(filter: FilterQuery<T>, skip: number, limit: number, sort: any): Promise<T[]> {
+        return await this.findAll(filter, skip, limit, sort)
+    }
+
+    async count(filter: FilterQuery<T>): Promise<number> {
+        return await this.model.countDocuments(filter)
     }
 
     async findByEmail(email: string): Promise<T | null> {

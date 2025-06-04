@@ -1,4 +1,4 @@
-import { emailSchema, nameSchema, otpSchema, passwordSchema } from "./validations";
+import { emailSchema, nameSchema, otpSchema, passwordSchema } from "../validators/validations";
 import { z } from "zod";
 
 // Schema for client registration

@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import jwt,{ JwtPayload, Secret } from "jsonwebtoken";
+import jwt, { JwtPayload, Secret } from "jsonwebtoken";
 import ms from "ms";
 import { config } from "../../shared/config/config";
 import { IJwtservice } from "../../domain/interfaces/service/jwt-service.interface";
@@ -7,43 +7,40 @@ import { TJwtPayload } from "../../domain/types/auth.types";
 
 @injectable()
 export class JwtService implements IJwtservice {
-    private accessSecret : Secret;
-    private accessExpireIn : string;
-    private refreshSecret : Secret;
-    private refreshExpireIn : string;
+  private accessSecret: Secret;
+  private accessExpireIn: string;
+  private refreshSecret: Secret;
+  private refreshExpireIn: string;
 
-    constructor(){
-        this.accessSecret = config.jwt.ACCESS_SECRET_KEY,
-        this.accessExpireIn = config.jwt.ACCESS_EXPIRES_IN,
+  constructor() {
+    (this.accessSecret = config.jwt.ACCESS_SECRET_KEY),
+      (this.accessExpireIn = config.jwt.ACCESS_EXPIRES_IN),
+      (this.refreshExpireIn = config.jwt.REFRESH_EXPIRES_IN),
+      (this.refreshSecret = config.jwt.REFRESH_SECRET_KEY);
+  }
 
-        this.refreshExpireIn = config.jwt.REFRESH_EXPIRES_IN,
-        this.refreshSecret = config.jwt.REFRESH_SECRET_KEY
-    }
+  generateAccessToken(data: TJwtPayload): string {
+    return jwt.sign(data, this.accessSecret, {
+      expiresIn: this.accessExpireIn as ms.StringValue,
+    });
+  }
 
-    generateAccessToken(data: TJwtPayload): string {
-        console.log(`Access secret ${this.accessSecret} and expires in ${this.accessExpireIn}`);
-        console.log(`Refresh secret ${this.refreshSecret} and expires in ${this.refreshExpireIn}`);
-        return jwt.sign(data , this.accessSecret , {expiresIn : this.accessExpireIn as ms.StringValue})
-    }
+  generateRefreshToken(data: TJwtPayload): string {
+    return jwt.sign(data, this.refreshSecret, {
+      expiresIn: this.refreshExpireIn as ms.StringValue,
+    });
+  }
 
-    generateRefreshToken(data: TJwtPayload): string {
-        return jwt.sign(data , this.refreshSecret , {expiresIn : this.refreshExpireIn as ms.StringValue})
-    }
+  verifyAccessToken(token: string): JwtPayload | null {
+    return jwt.verify(token, this.accessSecret) as TJwtPayload;
+  }
 
-    verifyAccessToken(token: string): JwtPayload | null {
-        console.log(`Access token for verification ${token} and access secret for verification ${this.accessSecret}`);
-        return jwt.verify(token,this.accessSecret) as TJwtPayload
-    }
+  verifyRefreshToken(token: string): JwtPayload | null {
+    return jwt.verify(token, this.refreshSecret) as TJwtPayload;
+  }
 
-    verifyRefreshToken(token: string): JwtPayload | null {
-        return jwt.verify(token , this.refreshSecret) as TJwtPayload
-    }
-
-    decodeRefreshToken(token: string): JwtPayload | null {
-        console.log('token is here decodeRefreshService : ',token);
-        const decode = jwt.decode(token) as JwtPayload
-        console.log('-<<<<<<<<<<<<<<<<after decoding->>>>>>>>>>>>>>>>>>>>>');
-        console.log(decode);
-        return decode;
-    }
+  decodeRefreshToken(token: string): JwtPayload | null {
+    const decode = jwt.decode(token) as JwtPayload;
+    return decode;
+  }
 }

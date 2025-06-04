@@ -26,7 +26,7 @@ import {
   userLoginSchema,
   userRegisterSchema,
   verifyOtpSchema,
-} from "../../shared/utils/zod-validations/auth.schema";
+} from "../../shared/utils/zod-validations/presentation/auth.schema";
     import { setAuthCookies } from "../../shared/utils/cookie-helper";
 
 @injectable()

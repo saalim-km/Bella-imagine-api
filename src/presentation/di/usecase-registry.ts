@@ -26,6 +26,15 @@ import { ForgotPasswordUsecase } from "../../application/auth/forgot-password.us
 import { ClientResetPasswordStrategy } from "../../application/auth/strategies/reset password/client-reset-password.usecase";
 import { VendorResetPasswordStrategy } from "../../application/auth/strategies/reset password/vendor-reset-password.usecase";
 import { ResetPasswordUsecase } from "../../application/auth/reset-password.usecase";
+import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
+import { RefreshTokenUsecase } from "../../application/auth/refresh-token.usecase";
+import { IGetUserDetailsStrategy, IGetUserDetailsUsecase, IGetUsersStrategy, IGetUsersUsecase } from "../../domain/interfaces/usecase/admin-usecase.interface";
+import { GetUsersUsecase } from "../../application/admin/get-users.usecase";
+import { GetClientsUsecase } from "../../application/admin/strategies/get-clients.strategy";
+import { GetVendorsUsecase } from "../../application/admin/strategies/get-vendors.strategy";
+import { GetuserDetailsUsecase } from "../../application/admin/get-user-details.usecase";
+import { GetClientDetailsStrategy } from "../../application/admin/strategies/get-client-details.strategy";
+import { GetVendorDetailsStrategy } from "../../application/admin/strategies/get-vendor-details.strategy";
 
 export class UsecaseRegistry {
     static registerUsecases(): void {
@@ -91,6 +100,34 @@ export class UsecaseRegistry {
 
         container.register<IResetPasswordStrategy>('VendorResetPasswordStrategy',{
             useClass : VendorResetPasswordStrategy
+        })
+
+        container.register<IRefreshTokenUsecase>('IRefreshTokenUsecase',{
+            useClass : RefreshTokenUsecase
+        })
+
+        container.register<IGetUsersUsecase>('IGetUsersUsecase',{
+            useClass: GetUsersUsecase
+        })
+
+        container.register<IGetUsersStrategy>('GetClientsStrategy',{
+            useClass : GetClientsUsecase
+        })
+        
+        container.register<IGetUsersStrategy>('GetVendorsStrategy',{
+            useClass : GetVendorsUsecase
+        })
+
+        container.register<IGetUserDetailsUsecase>('IGetUserDetailsUsecase',{
+            useClass : GetuserDetailsUsecase
+        })
+
+        container.register<IGetUserDetailsStrategy>('GetClientDetailsStrategy',{
+            useClass: GetClientDetailsStrategy
+        })
+
+        container.register<IGetUserDetailsStrategy>('GetVendorDetailsStrategy',{
+            useClass: GetVendorDetailsStrategy
         })
     }
 }

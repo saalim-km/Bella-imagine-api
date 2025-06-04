@@ -16,6 +16,7 @@ export const HTTP_STATUS = {
 };
 
 export const SUCCESS_MESSAGES = {
+  REFRESH_TOKEN_SUCCESS : "Access token created successfully",
   OTP_VERIFY_SUCCESS : 'OTP verified successfully',
   JOINED_SUCESS :"Joined",
   BOOKING_SUCCESS: "Booking completed.",

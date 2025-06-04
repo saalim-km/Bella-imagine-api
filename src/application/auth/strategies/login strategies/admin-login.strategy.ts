@@ -18,11 +18,7 @@ export class AdminLoginStrategy implements ILoginUserStrategy {
         const {email , password , role} = input;
         const admin = await this._emailExistenceUsecase.doesEmailExist(email , role);
         if(!admin.success){
-            throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND , HTTP_STATUS.NOT_FOUND)
-        }
-
-        if(admin.data?.isblocked) {
-            throw new CustomError(ERROR_MESSAGES.USER_BLOCKED, HTTP_STATUS.FORBIDDEN)
+            throw new CustomError(ERROR_MESSAGES.INVALID_ROLE , HTTP_STATUS.NOT_FOUND)
         }
 
         if(!admin.data?.password){

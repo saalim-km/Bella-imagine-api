@@ -20,9 +20,6 @@ export const phoneNumberSchema = z
   .length(10, { message: "Phone number must be exactly 10 digits" })
   .regex(/^\d{10}$/, { message: "Phone number must contain only digits" });
 
-export const roleSchema = z.object({
-  role: z.enum(["client", "admin", "vendor"]),
-});
 
 export const passwordSchema = z
   .string()
@@ -34,3 +31,33 @@ export const passwordSchema = z
   .regex(/[@$!%*?&]/, {
     message: "Password must contain at least one special character",
   });
+
+
+
+
+
+
+export const searchQuerySchema = z.string().optional();
+
+export const pageQuerySchema = z
+  .string()
+  .regex(/^\d+$/, { message: "Page must be a number" })
+  .transform(Number)
+  .refine((val) => val > 0, { message: "Page must be greater than 0" });
+
+export const limitQuerySchema = z
+  .string()
+  .regex(/^\d+$/, { message: "Limit must be a number" })
+  .transform(Number)
+  .refine((val) => val > 0, { message: "Limit must be greater than 0" });
+
+export const isBlockedQuerySchema = z
+  .string()
+  .transform((val) => val === "true")
+  .optional();
+
+export const createdAtQuerySchema = z
+  .string()
+  .regex(/^\d+$/, { message: "createdAt must be a number" })
+  .transform(Number)
+  .optional();
