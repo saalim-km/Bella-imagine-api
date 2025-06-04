@@ -1,14 +1,14 @@
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 import { IUserBase } from "./user-base";
 
 export interface IVendor extends IUserBase {
   vendorId: string;
   languages: string[];
-  services: ObjectId[];
-  workSamples: ObjectId[];
+  services: Types.ObjectId[];
+  workSamples: Types.ObjectId[];
   description: string;
   portfolioWebsite: string;
-  categories: ObjectId[];
+  categories: Types.ObjectId[];
   verificationDocument: string;
   isVerified: "pending" | "accept" | "reject";
 }

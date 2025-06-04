@@ -9,19 +9,27 @@ import {
 import { ResponseHandler } from "../../shared/utils/response-handler";
 import { SUCCESS_MESSAGES } from "../../shared/constants/constants";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
-import { PaginationQueryDto, UserDetailsDto, UserQueryParams } from "../dto/admin.dto";
+import {
+  PaginationQueryDto,
+  UserDetailsDto,
+  UserQueryParams,
+} from "../dto/admin.dto";
 import { IClient } from "../../domain/models/client";
-import { IGetUserDetailsUsecase, IGetUsersUsecase } from "../../domain/interfaces/usecase/admin-usecase.interface";
+import {
+  IGetUserDetailsUsecase,
+  IGetUsersUsecase,
+} from "../../domain/interfaces/usecase/admin-usecase.interface";
 import { UserDetailsInput } from "../../domain/interfaces/usecase/types/admin.types";
-import { getUsersQuerySchema } from "../../shared/utils/zod-validations/presentation/dto.schema";
+import { getUserDetailsQuerySchema, getUsersQuerySchema, getVendorRequestsQuerySchema } from "../../shared/utils/zod-validations/presentation/dto.schema";
 
 @injectable()
 export class AdminController implements IAdminController {
   constructor(
     @inject("IRefreshTokenUsecase")
     private _refreshTokenUsecase: IRefreshTokenUsecase,
-    @inject('IGetUsersUsecase') private _getUsersUsecase : IGetUsersUsecase,
-    @inject('IGetUserDetailsUsecase') private _getUserDetailsUsecase : IGetUserDetailsUsecase
+    @inject("IGetUsersUsecase") private _getUsersUsecase: IGetUsersUsecase,
+    @inject("IGetUserDetailsUsecase")
+    private _getUserDetailsUsecase: IGetUserDetailsUsecase
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -49,33 +57,19 @@ export class AdminController implements IAdminController {
   }
 
   async getUsers(req: Request, res: Response): Promise<void> {
-    const payload = getUsersQuerySchema.parse(req.query)
-    const users = await this._getUsersUsecase.getUsers(payload)
-    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,users)
+    const parsed = getUsersQuerySchema.parse(req.query);
+    const users = await this._getUsersUsecase.getUsers(parsed);
+    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, users);
   }
 
-  async getUserDetails(req: Request, res: Response) : Promise<void> {
-    const {id , role} = req.query as UserDetailsDto;
-    const user = await this._getUserDetailsUsecase.getUserDetail({
-        id : id!,
-        role : role!
-    })
+  async getUserDetails(req: Request, res: Response): Promise<void> {
+    const parsed = getUserDetailsQuerySchema.parse(req.query)
+    const user = await this._getUserDetailsUsecase.getUserDetail(parsed);
 
-    ResponseHandler.success(res , SUCCESS_MESSAGES.DATA_RETRIEVED , user)
+    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, user);
   }
 
   async getVendoRequests(req: Request, res: Response): Promise<void> {
-    const { page, limit , } = req.query as UserQueryParams;
-        const filter: UserQueryParams = {
-      search: req.query.search as string,
-      page: req.query.page ? parseInt(req.query.page as string) : 1,
-      limit: req.query.limit ? parseInt(req.query.limit as string) : 10,
-      isblocked: req.query.isblocked
-        ? req.query.isblocked === "true"
-        : undefined,
-      createdAt: req.query.createdAt
-        ? parseInt(req.query.createdAt as string)
-        : undefined,
-    };
+    const parsed = getVendorRequestsQuerySchema.parse(req.query)
   }
 }

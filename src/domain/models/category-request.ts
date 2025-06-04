@@ -1,9 +1,9 @@
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 
 export interface ICategoryRequest {
-  _id: ObjectId;
-  vendorId: ObjectId;
-  categoryId: ObjectId;
+  _id: Types.ObjectId;
+  vendorId: Types.ObjectId;
+  categoryId: Types.ObjectId;
   status: string;
   createdAt?: Date;
   updatedAt?: Date;

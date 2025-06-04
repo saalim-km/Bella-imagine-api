@@ -10,6 +10,6 @@ export class AdminRoute extends BaseRoute {
         .post('/admin/refresh-token',verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.refreshToken.bind(adminController)))
         .get('/admin/users',verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.getUsers.bind(adminController)))
         .get('/admin/user',verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.getUserDetails.bind(adminController)))
-        .get('/admin/vendor-request',verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.getUserDetails.bind(adminController)))
+        .get('/admin/vendor-request',verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.getVendoRequests.bind(adminController)))
     }
 }

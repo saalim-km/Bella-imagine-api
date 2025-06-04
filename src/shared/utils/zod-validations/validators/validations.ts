@@ -10,6 +10,8 @@ export const emailSchema = z
     message: "Invalid email format",
   });
 
+export const roleSchema = z.enum(["client","vendor","admin"]);
+
 export const otpSchema = z
   .string()
   .length(6, "OTP must be exactly 6 digits")

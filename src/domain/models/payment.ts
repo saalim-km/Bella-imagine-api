@@ -1,4 +1,4 @@
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 
 export type PaymentStatus =
   | "pending"
@@ -10,10 +10,10 @@ export type PaymentStatus =
 
 export type Purpose = "vendor-booking";
 export interface IPaymentEntity {
-  _id?: string | ObjectId;
-  userId: string | ObjectId;
-  receiverId?: string | ObjectId;
-  bookingId?: string | ObjectId;
+  _id?: Types.ObjectId
+  userId: Types.ObjectId
+  receiverId?: Types.ObjectId
+  bookingId?: Types.ObjectId
   createrType: "Client" | "Vendor" | "Admin";
   receiverType: "Client" | "Vendor" | "Admin";
   transactionId: string;
@@ -29,13 +29,13 @@ export interface IPaymentEntity {
 export interface PopulatedPayments
   extends Omit<IPaymentEntity, "userId" | "recieverId"> {
   userId: {
-    _id: string | ObjectId;
+    _id: Types.ObjectId
     firstName?: string;
     lastName?: string;
     email: string;
   };
   recieverId: {
-    _id: string | ObjectId;
+    _id: Types.ObjectId
     firstName?: string;
     lastName?: string;
     email: string;

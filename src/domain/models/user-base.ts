@@ -1,11 +1,11 @@
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 import { TRole } from "../../shared/constants/constants";
 import { IClient } from "./client";
 import { IVendor } from "./vendor";
 import { IAdmin } from "./admin";
 
 export interface IUserBase {
-  _id: ObjectId;
+  _id: Types.ObjectId;
   name: string;
   email: string;
   phoneNumber: number;

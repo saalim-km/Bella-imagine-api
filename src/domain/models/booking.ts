@@ -1,18 +1,18 @@
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 import { TBookingStatus, TPaymentStatus } from "../../shared/types/booking.types";
 
 export interface IBookingEntity {
-  _id: ObjectId;
-  userId: ObjectId;
-  vendorId: ObjectId;
+  _id: Types.ObjectId;
+  userId: Types.ObjectId;
+  vendorId: Types.ObjectId;
 
-  paymentId: ObjectId;
+  paymentId: Types.ObjectId;
 
   isClientApproved: boolean;
   isVendorApproved: boolean;
 
   serviceDetails: {
-    _id: ObjectId;
+    _id: Types.ObjectId;
     serviceTitle: string;
     serviceDescription: string;
     cancellationPolicies: string[];

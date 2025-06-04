@@ -1,12 +1,12 @@
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 import { TRole } from "../../shared/constants/constants";
 import { PaymentStatus, Purpose } from "./payment";
 
 export interface IWallet {
-  _id:  ObjectId;
-  userId: ObjectId;
+  _id:  Types.ObjectId;
+  userId: Types.ObjectId;
   userType: "Client" | "Vendor" | "Admin";
-  paymentId: ObjectId[];
+  paymentId: Types.ObjectId[];
   role: TRole
   balance: number;
   createdAt?: Date;
@@ -16,15 +16,15 @@ export interface IWallet {
 export interface PopulatedWallet
   extends Omit<IWallet, "userId" | "paymentId"> {
   userId: {
-    _id: ObjectId;
+    _id: Types.ObjectId;
     firstName: string;
     lastName: string;
     email: string;
   };
   paymentId: {
-    _id: ObjectId;
-    userId: ObjectId;
-    bookingId: ObjectId;
+    _id: Types.ObjectId;
+    userId: Types.ObjectId;
+    bookingId: Types.ObjectId;
     transactionId: string;
     amount: number;
     currency: string;

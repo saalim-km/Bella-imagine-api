@@ -1,11 +1,11 @@
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 import { DateSlot, SessionDuration } from "../../shared/types/service.types";
 
 export interface IService {
-  _id: ObjectId | string
-  vendor: string | ObjectId
+  _id: Types.ObjectId
+  vendor: Types.ObjectId
   serviceTitle: string;
-  category: string | ObjectId;
+  category: Types.ObjectId
   yearsOfExperience: number;
   styleSpecialty: string[];
   tags: string[];

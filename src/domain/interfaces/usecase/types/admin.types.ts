@@ -1,5 +1,4 @@
-import { ObjectId } from "mongoose";
-import { UserQueryParams } from "../../../../presentation/dto/admin.dto";
+import { Types } from "mongoose";
 import { TRole } from "../../../../shared/constants/constants";
 
 export interface UsersFilterInput {
@@ -12,6 +11,6 @@ export interface UsersFilterInput {
 }
 
 export interface UserDetailsInput {
-    id : ObjectId;
+    id : Types.ObjectId;
     role : TRole
 }

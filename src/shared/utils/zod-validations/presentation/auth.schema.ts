@@ -1,4 +1,4 @@
-import { emailSchema, nameSchema, otpSchema, passwordSchema } from "../validators/validations";
+import { emailSchema, nameSchema, otpSchema, passwordSchema, roleSchema } from "../validators/validations";
 import { z } from "zod";
 
 // Schema for client registration
@@ -34,7 +34,7 @@ export const verifyOtpSchema = z.object({
 export const userLoginSchema = z.object({
     email : emailSchema,
     password : passwordSchema,
-    role : z.enum(["client","vendor","admin"])
+    role : roleSchema
 })
 
 export const resetPasswordSchema = userLoginSchema;
