@@ -10,17 +10,12 @@ import { ResponseHandler } from "../../shared/utils/response-handler";
 import { SUCCESS_MESSAGES } from "../../shared/constants/constants";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import {
-  PaginationQueryDto,
-  UserDetailsDto,
-  UserQueryParams,
-} from "../dto/admin.dto";
-import { IClient } from "../../domain/models/client";
-import {
   IGetUserDetailsUsecase,
   IGetUsersUsecase,
+  IGetVendorRequestUsecase,
 } from "../../domain/interfaces/usecase/admin-usecase.interface";
-import { UserDetailsInput } from "../../domain/interfaces/usecase/types/admin.types";
 import { getUserDetailsQuerySchema, getUsersQuerySchema, getVendorRequestsQuerySchema } from "../../shared/utils/zod-validations/presentation/dto.schema";
+
 
 @injectable()
 export class AdminController implements IAdminController {
@@ -29,7 +24,8 @@ export class AdminController implements IAdminController {
     private _refreshTokenUsecase: IRefreshTokenUsecase,
     @inject("IGetUsersUsecase") private _getUsersUsecase: IGetUsersUsecase,
     @inject("IGetUserDetailsUsecase")
-    private _getUserDetailsUsecase: IGetUserDetailsUsecase
+    private _getUserDetailsUsecase: IGetUserDetailsUsecase,
+    @inject('IGetVendorRequestUsecase') private _getVendorRequestsUsecase : IGetVendorRequestUsecase
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -65,11 +61,12 @@ export class AdminController implements IAdminController {
   async getUserDetails(req: Request, res: Response): Promise<void> {
     const parsed = getUserDetailsQuerySchema.parse(req.query)
     const user = await this._getUserDetailsUsecase.getUserDetail(parsed);
-
     ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, user);
   }
 
   async getVendoRequests(req: Request, res: Response): Promise<void> {
     const parsed = getVendorRequestsQuerySchema.parse(req.query)
+    const vendors = await this._getVendorRequestsUsecase.getVendorRequests(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,vendors)
   }
 }

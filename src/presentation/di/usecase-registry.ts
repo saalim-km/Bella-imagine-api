@@ -28,13 +28,16 @@ import { VendorResetPasswordStrategy } from "../../application/auth/strategies/r
 import { ResetPasswordUsecase } from "../../application/auth/reset-password.usecase";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { RefreshTokenUsecase } from "../../application/auth/refresh-token.usecase";
-import { IGetUserDetailsStrategy, IGetUserDetailsUsecase, IGetUsersStrategy, IGetUsersUsecase } from "../../domain/interfaces/usecase/admin-usecase.interface";
+import { IGetUserDetailsStrategy, IGetUserDetailsUsecase, IGetUsersStrategy, IGetUsersUsecase, IGetVendorRequestUsecase } from "../../domain/interfaces/usecase/admin-usecase.interface";
 import { GetUsersUsecase } from "../../application/admin/get-users.usecase";
 import { GetClientsUsecase } from "../../application/admin/strategies/get-clients.strategy";
 import { GetVendorsUsecase } from "../../application/admin/strategies/get-vendors.strategy";
 import { GetuserDetailsUsecase } from "../../application/admin/get-user-details.usecase";
 import { GetClientDetailsStrategy } from "../../application/admin/strategies/get-client-details.strategy";
 import { GetVendorDetailsStrategy } from "../../application/admin/strategies/get-vendor-details.strategy";
+import { IClient } from "../../domain/models/client";
+import { IVendor } from "../../domain/models/vendor";
+import { GetVendorRequestUsecase } from "../../application/admin/get-vendor-requests.usecase";
 
 export class UsecaseRegistry {
     static registerUsecases(): void {
@@ -110,11 +113,11 @@ export class UsecaseRegistry {
             useClass: GetUsersUsecase
         })
 
-        container.register<IGetUsersStrategy>('GetClientsStrategy',{
+        container.register<IGetUsersStrategy<IClient>>('GetClientsStrategy',{
             useClass : GetClientsUsecase
         })
         
-        container.register<IGetUsersStrategy>('GetVendorsStrategy',{
+        container.register<IGetUsersStrategy<IVendor>>('GetVendorsStrategy',{
             useClass : GetVendorsUsecase
         })
 
@@ -128,6 +131,10 @@ export class UsecaseRegistry {
 
         container.register<IGetUserDetailsStrategy>('GetVendorDetailsStrategy',{
             useClass: GetVendorDetailsStrategy
+        })
+
+        container.register<IGetVendorRequestUsecase>('IGetVendorRequestUsecase',{
+            useClass : GetVendorRequestUsecase
         })
     }
 }

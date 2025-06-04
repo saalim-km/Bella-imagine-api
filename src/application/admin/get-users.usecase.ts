@@ -8,13 +8,16 @@ import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.
 import { CustomError } from "../../shared/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { IUser } from "../../domain/models/user-base";
+import { FilterQuery } from "mongoose";
+import { IClient } from "../../domain/models/client";
+import { IVendor } from "../../domain/models/vendor";
 
 @injectable()
 export class GetUsersUsecase implements IGetUsersUsecase {
-  private _strategies: Record<string, IGetUsersStrategy>;
+  private _strategies: Record<string, IGetUsersStrategy<IUser>>;
   constructor(
-    @inject("GetClientsStrategy") private _clientStrategy: IGetUsersStrategy,
-    @inject("GetVendorsStrategy") private _vendorStrategy: IGetUsersStrategy
+    @inject("GetClientsStrategy") private _clientStrategy: IGetUsersStrategy<IClient>,
+    @inject("GetVendorsStrategy") private _vendorStrategy: IGetUsersStrategy<IVendor>
   ) {
     this._strategies = {
       client: this._clientStrategy,
@@ -30,19 +33,19 @@ export class GetUsersUsecase implements IGetUsersUsecase {
       );
     }
 
-    let search: any = { role: input.role };
+    let search: FilterQuery<IUser> = { role: input.role };
 
     if (input) {
       if (input.isblocked !== undefined) {
         search.isblocked = input.isblocked;
       }
 
-      if (typeof input.search === "string" && input.search.trim() !== "") {
+      if (typeof input.search === "string" && input.search !== "") {
         search = {
           ...search,
           $or: [
-            { name: { $regex: input.search.trim(), $options: "i" } },
-            { email: { $regex: input.search.trim(), $options: "i" } },
+            { name: { $regex: input.search, $options: "i" } },
+            { email: { $regex: input.search, $options: "i" } },
           ],
         };
       }

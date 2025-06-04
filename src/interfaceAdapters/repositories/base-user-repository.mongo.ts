@@ -1,6 +1,6 @@
 import { injectable } from "tsyringe";
 import { IBaseUserRepository } from "../../domain/interfaces/repository/base-user-repository";
-import { FilterQuery,ObjectId } from "mongoose";
+import { FilterQuery,Types } from "mongoose";
 import { BaseRepository } from "./base-repository.mongo";
 
 @injectable()
@@ -22,7 +22,7 @@ export class BaseUserRepository<T> extends BaseRepository<T> implements IBaseUse
         return await this.findOne({ email });
     }
 
-    async updateOnlineStatus(payload : {userId : ObjectId , isOnline : boolean , lastSeen : string}): Promise<T | null> {
+    async updateOnlineStatus(payload : {userId : Types.ObjectId , isOnline : boolean , lastSeen : string}): Promise<T | null> {
         return await this.update(payload.userId , {
             $set : {
                 isOnline : payload.isOnline,
@@ -31,13 +31,13 @@ export class BaseUserRepository<T> extends BaseRepository<T> implements IBaseUse
         });
     }
 
-    async updateLastSeenById(userId: ObjectId, lastSeen: string): Promise<void> {
+    async updateLastSeenById(userId: Types.ObjectId, lastSeen: string): Promise<void> {
         
     }
 
-    async findByIdAndUpdatePassword(userId: ObjectId, hashedNewPassword: string): Promise<void> {
+    async findByIdAndUpdatePassword(userId: Types.ObjectId, hashedNewPassword: string): Promise<void> {
     }
 
-    async updateProfileById(userId: ObjectId, data: Partial<T>): Promise<void> {
+    async updateProfileById(userId: Types.ObjectId, data: Partial<T>): Promise<void> {
     }
 }

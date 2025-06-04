@@ -1,15 +1,15 @@
 import { IClient } from "../../models/client";
 import { IUser } from "../../models/user-base";
 import { IVendor } from "../../models/vendor";
-import { UserDetailsInput, UsersFilterInput } from "./types/admin.types";
+import { UserDetailsInput, UsersFilterInput, UserStrategyFilterInput, VendorRequestFilterInput } from "./types/admin.types";
 import { PaginatedResponse } from "./types/common.types";
 
 export interface IGetUsersUsecase {
   getUsers(input: UsersFilterInput): Promise<PaginatedResponse<IUser>>;
 }
 
-export interface IGetUsersStrategy {
-  getUsers(input: UsersFilterInput): Promise<PaginatedResponse<IUser>>;
+export interface IGetUsersStrategy<T> {
+  getUsers(input: UserStrategyFilterInput): Promise<PaginatedResponse<T>>;
 }
 
 export interface IGetUserDetailsUsecase {
@@ -21,5 +21,5 @@ export interface IGetUserDetailsStrategy {
 }
 
 export interface IGetVendorRequestUsecase {
-  getVendorRequests(input : UsersFilterInput): Promise<PaginatedResponse<IVendor>>
+  getVendorRequests(input : VendorRequestFilterInput): Promise<PaginatedResponse<IVendor>>
 }

@@ -1,4 +1,4 @@
-import { FilterQuery, Model , ObjectId, Types, UpdateQuery } from "mongoose";
+import { FilterQuery, Model , Types, UpdateQuery } from "mongoose";
 import { IBaseRepository } from "../../domain/interfaces/repository/base-repository";
 
 export class BaseRepository<T> implements IBaseRepository<T> {
@@ -11,7 +11,7 @@ export class BaseRepository<T> implements IBaseRepository<T> {
         return await this.model.create(data)
     }
 
-    async findById(id: ObjectId): Promise<T | null> {
+    async findById(id: Types.ObjectId): Promise<T | null> {
         return await this.model.findById(id)
     }
 
@@ -24,11 +24,11 @@ export class BaseRepository<T> implements IBaseRepository<T> {
         return this.model.find(filter).skip(skip).limit(limit).sort({createdAt : sort}).exec()
     }
 
-    async update(id: ObjectId, data: UpdateQuery<T>): Promise<T | null> {
+    async update(id: Types.ObjectId, data: UpdateQuery<T>): Promise<T | null> {
         return await this.model.findByIdAndUpdate(id, data, { new: true })
     }
 
-    async delete(id: ObjectId): Promise<boolean> {
+    async delete(id: Types.ObjectId): Promise<boolean> {
         const result = await this.model.findByIdAndDelete(id)
         return !!result
     }

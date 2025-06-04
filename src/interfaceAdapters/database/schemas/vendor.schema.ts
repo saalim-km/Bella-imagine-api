@@ -1,4 +1,4 @@
-import mongoose, { model, Schema } from "mongoose";
+import mongoose, { model, Schema, Types } from "mongoose";
 import { IVendor } from "../../../domain/models/vendor";
 
 
@@ -42,13 +42,13 @@ export const vendorSchema = new Schema<IVendor>(
     },
     services : [
       {
-        type : mongoose.Types.ObjectId,
+        type : Types.ObjectId,
         ref : "Service"
       }
     ],
     workSamples : [
       {
-        type : mongoose.Types.ObjectId,
+        type : Types.ObjectId,
         ref : "WorkSample"
       }
     ],
@@ -68,7 +68,7 @@ export const vendorSchema = new Schema<IVendor>(
     },
     categories: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Types.ObjectId,
         ref: "Category", 
       },
     ],
