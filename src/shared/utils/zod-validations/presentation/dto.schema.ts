@@ -8,6 +8,7 @@ import {
   isBlockedQuerySchema,
   createdAtQuerySchema,
   roleSchema,
+  parseBooleanSchema,
 } from "../validators/validations";
 
 export const getUsersQuerySchema = z.object({
@@ -37,3 +38,15 @@ export const getUserDetailsQuerySchema = z.object({
   id: objectIdSchema,
   role : roleSchema
 });
+
+export const updateUserBlockStatusSchema = z.object({
+  id: objectIdSchema,
+  role: roleSchema,
+  isblocked: parseBooleanSchema
+});
+
+export const updateVendorRequestSchema = z.object({
+  id : objectIdSchema,
+  reason : z.string().optional(),
+  status : parseBooleanSchema,
+})

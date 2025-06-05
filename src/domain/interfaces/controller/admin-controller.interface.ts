@@ -5,4 +5,6 @@ export interface IAdminController {
     refreshToken(req: Request, res: Response) : Promise<void>
     getUserDetails(req: Request, res: Response) : Promise<void>
     getVendoRequests(req: Request, res: Response) : Promise<void>
+    updateBlockStatus(req: Request, res: Response) : Promise<void>
+    updateVendorRequest(req: Request, res: Response) : Promise<void>
 }

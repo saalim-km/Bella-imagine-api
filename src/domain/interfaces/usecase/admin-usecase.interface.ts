@@ -1,7 +1,7 @@
 import { IClient } from "../../models/client";
 import { IUser } from "../../models/user-base";
 import { IVendor } from "../../models/vendor";
-import { UserDetailsInput, UsersFilterInput, UserStrategyFilterInput, VendorRequestFilterInput } from "./types/admin.types";
+import { updateUserStatusInput, updateVendorRequestInput, UserDetailsInput, UsersFilterInput, UserStrategyFilterInput, VendorRequestFilterInput } from "./types/admin.types";
 import { PaginatedResponse } from "./types/common.types";
 
 export interface IGetUsersUsecase {
@@ -22,4 +22,12 @@ export interface IGetUserDetailsStrategy<T = IUser> {
 
 export interface IGetVendorRequestUsecase {
   getVendorRequests(input : VendorRequestFilterInput): Promise<PaginatedResponse<IVendor>>
+}
+
+export interface IManageUserBlockStatusUseCase{
+  blockUser(input : updateUserStatusInput) : Promise<void>
+}
+
+export interface IUpdateVendorRequestUsecase{
+  updateRequest(input : updateVendorRequestInput) : Promise<void>
 }

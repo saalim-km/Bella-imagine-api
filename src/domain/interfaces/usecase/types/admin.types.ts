@@ -21,3 +21,13 @@ export interface UserDetailsInput {
 
 export interface VendorRequestFilterInput
   extends Pick<UsersFilterInput, "createdAt" | "limit" | "page" | "search"> {}
+
+export interface updateUserStatusInput extends UserDetailsInput {
+  isblocked : boolean
+}
+
+export interface updateVendorRequestInput {
+  id:  Types.ObjectId;
+  status : boolean;
+  reason ?: string;
+}

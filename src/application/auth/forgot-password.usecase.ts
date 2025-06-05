@@ -1,5 +1,4 @@
 import { inject, injectable } from "tsyringe";
-import { IForgotPasswordUsecase } from "../../domain/interfaces/usecase/auth-usecase.interfaces";
 import { IEmailExistenceUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { IUser } from "../../domain/models/user-base";
 import { SendOtpEmailInput } from "../../domain/interfaces/usecase/types/auth.types";
@@ -7,6 +6,7 @@ import { CustomError } from "../../shared/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS, RESET_PASSWORD_MAIL_CONTENT } from "../../shared/constants/constants";
 import { IOtpService } from "../../domain/interfaces/service/otp-service.interface";
 import { IEmailService } from "../../domain/interfaces/service/email-service.interface";
+import { IForgotPasswordUsecase } from "../../domain/interfaces/usecase/auth-usecase.interfaces";
 
 @injectable()
 export class ForgotPasswordUsecase implements IForgotPasswordUsecase {

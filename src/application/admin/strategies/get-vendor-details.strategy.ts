@@ -8,7 +8,7 @@ import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants/constants
 import { IVendor } from "../../../domain/models/vendor";
 
 @injectable()
-export class GetVendorDetailsStrategy implements IGetUserDetailsStrategy {
+export class GetVendorDetailsStrategy implements IGetUserDetailsStrategy<IVendor> {
     constructor(
         @inject('IVendorRepository') private _vendorRepository : IVendorRepository,
         @inject('IGetPresignedUrlUsecase') private _getSigned : IGetPresignedUrlUsecase

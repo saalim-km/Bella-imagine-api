@@ -1,12 +1,5 @@
 import { TRole } from "../../../shared/constants/constants";
-
-export interface IEmailCheckResult<T> {
-    success : boolean;
-    data : T | null
-}
-export interface IDecoded {
-    _id: string ; email : string ; role : string ; refreshToken : string
-}
+import { IDecoded, IEmailCheckResult, SendEmailInput } from "./types/common.types";
 
 export interface IEmailExistenceUsecase<T> {
     doesEmailExist(email : string , userRole : TRole) : Promise<IEmailCheckResult<T>>
@@ -18,4 +11,8 @@ export interface IGetPresignedUrlUsecase {
 
 export interface IRefreshTokenUsecase {
     execute(decoded : IDecoded) : string;
+}
+
+export interface ISendEmailUsecase {
+  sendEmail(input : SendEmailInput): Promise<void>;
 }

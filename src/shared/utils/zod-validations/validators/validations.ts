@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { CustomError } from "../../custom-error";
+import { HTTP_STATUS } from "../../../constants/constants";
 
 export const nameSchema = z
   .string()
@@ -10,7 +12,7 @@ export const emailSchema = z
     message: "Invalid email format",
   });
 
-export const roleSchema = z.enum(["client","vendor","admin"]);
+export const roleSchema = z.enum(["client", "vendor", "admin"]);
 
 export const otpSchema = z
   .string()
@@ -21,7 +23,6 @@ export const phoneNumberSchema = z
   .string()
   .length(10, { message: "Phone number must be exactly 10 digits" })
   .regex(/^\d{10}$/, { message: "Phone number must contain only digits" });
-
 
 export const passwordSchema = z
   .string()
@@ -34,8 +35,14 @@ export const passwordSchema = z
     message: "Password must contain at least one special character",
   });
 
-
-
+export const parseBooleanSchema = z
+  .union([z.boolean(), z.string()])
+  .transform((val) => {
+    if (val === true || val === false) return val;
+    if (val === "true") return true;
+    if (val === "false") return false;
+    throw new CustomError("Invalid boolean string", HTTP_STATUS.BAD_REQUEST);
+  });
 
 
 

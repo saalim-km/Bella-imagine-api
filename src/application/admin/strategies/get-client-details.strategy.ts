@@ -10,7 +10,7 @@ import { IVendor } from "../../../domain/models/vendor";
 import { IClient } from "../../../domain/models/client";
 
 @injectable()
-export class GetClientDetailsStrategy implements IGetUserDetailsStrategy {
+export class GetClientDetailsStrategy implements IGetUserDetailsStrategy<IClient> {
     constructor(
         @inject('IClientRepository') private _clientRepository : IClientRepository,
         @inject('IGetPresignedUrlUsecase') private _getSigned : IGetPresignedUrlUsecase
@@ -19,7 +19,7 @@ export class GetClientDetailsStrategy implements IGetUserDetailsStrategy {
     }
 
     async getDetails(input: UserDetailsInput): Promise<IClient> {
-        const {id , role} = input;
+        const {id} = input;
         const client = await this._clientRepository.findById(id)
         if(!client){
             throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND , HTTP_STATUS.BAD_REQUEST)

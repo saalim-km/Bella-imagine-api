@@ -13,8 +13,9 @@ import {
   IGetUserDetailsUsecase,
   IGetUsersUsecase,
   IGetVendorRequestUsecase,
+  IManageUserBlockStatusUseCase,
 } from "../../domain/interfaces/usecase/admin-usecase.interface";
-import { getUserDetailsQuerySchema, getUsersQuerySchema, getVendorRequestsQuerySchema } from "../../shared/utils/zod-validations/presentation/dto.schema";
+import { getUserDetailsQuerySchema, getUsersQuerySchema, getVendorRequestsQuerySchema, updateUserBlockStatusSchema, updateVendorRequestSchema } from "../../shared/utils/zod-validations/presentation/dto.schema";
 
 
 @injectable()
@@ -25,7 +26,8 @@ export class AdminController implements IAdminController {
     @inject("IGetUsersUsecase") private _getUsersUsecase: IGetUsersUsecase,
     @inject("IGetUserDetailsUsecase")
     private _getUserDetailsUsecase: IGetUserDetailsUsecase,
-    @inject('IGetVendorRequestUsecase') private _getVendorRequestsUsecase : IGetVendorRequestUsecase
+    @inject('IGetVendorRequestUsecase') private _getVendorRequestsUsecase : IGetVendorRequestUsecase,
+    @inject('IManageUserBlockStatusUseCase') private _updateUserBlockStatusUsecase : IManageUserBlockStatusUseCase
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -68,5 +70,17 @@ export class AdminController implements IAdminController {
     const parsed = getVendorRequestsQuerySchema.parse(req.query)
     const vendors = await this._getVendorRequestsUsecase.getVendorRequests(parsed)
     ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,vendors)
+  }
+
+  async updateBlockStatus(req: Request, res: Response): Promise<void> {
+    const parsed = updateUserBlockStatusSchema.parse(req.query)
+    await this._updateUserBlockStatusUsecase.blockUser(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
+  }
+
+  async updateVendorRequest(req: Request, res: Response): Promise<void> {
+    console.log(req.query);
+    const parsed = updateVendorRequestSchema.parse(req.query);
+    
   }
 }
