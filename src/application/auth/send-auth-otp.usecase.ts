@@ -16,7 +16,7 @@ export class SendAuthOtpEmailUsecase implements ISendAuthEmailUsecase {
         @inject('IOtpService') private _otpService : IOtpService,
     ){}
     async sendAuthEmail(input : SendOtpEmailInput): Promise<void> {
-        const isEmailExists = await this._emailExistenceCheck.doesEmailExist(input.email,input.userRole)
+        const isEmailExists = await this._emailExistenceCheck.doesEmailExist(input.email,input.role)
         if(isEmailExists.success){
             throw new CustomError(ERROR_MESSAGES.EMAIL_EXISTS,HTTP_STATUS.CONFLICT)
         }

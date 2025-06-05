@@ -10,6 +10,7 @@ import {
   roleSchema,
   parseBooleanSchema,
 } from "../validators/validations";
+import { updateUserStatusInput } from "../../../../domain/interfaces/usecase/types/admin.types";
 
 export const getUsersQuerySchema = z.object({
   role: roleSchema,
@@ -29,9 +30,6 @@ export const getVendorRequestsQuerySchema = z.object({
 
 export const objectIdSchema = z
   .string()
-  .refine((val) => Types.ObjectId.isValid(val), {
-    message: "Invalid ObjectId",
-  })
   .transform((val) => new Types.ObjectId(val));
 
 export const getUserDetailsQuerySchema = z.object({
@@ -43,7 +41,7 @@ export const updateUserBlockStatusSchema = z.object({
   id: objectIdSchema,
   role: roleSchema,
   isblocked: parseBooleanSchema
-});
+})
 
 export const updateVendorRequestSchema = z.object({
   id : objectIdSchema,

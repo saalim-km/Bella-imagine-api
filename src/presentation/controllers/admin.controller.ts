@@ -13,9 +13,10 @@ import {
   IGetUserDetailsUsecase,
   IGetUsersUsecase,
   IGetVendorRequestUsecase,
-  IManageUserBlockStatusUseCase,
+  IUserManagementUsecase,
 } from "../../domain/interfaces/usecase/admin-usecase.interface";
-import { getUserDetailsQuerySchema, getUsersQuerySchema, getVendorRequestsQuerySchema, updateUserBlockStatusSchema, updateVendorRequestSchema } from "../../shared/utils/zod-validations/presentation/dto.schema";
+import { getUserDetailsQuerySchema, getUsersQuerySchema, getVendorRequestsQuerySchema, updateUserBlockStatusSchema, updateVendorRequestSchema } from "../../shared/utils/zod-validations/presentation/admin.schema";
+import { parse } from "path";
 
 
 @injectable()
@@ -27,7 +28,7 @@ export class AdminController implements IAdminController {
     @inject("IGetUserDetailsUsecase")
     private _getUserDetailsUsecase: IGetUserDetailsUsecase,
     @inject('IGetVendorRequestUsecase') private _getVendorRequestsUsecase : IGetVendorRequestUsecase,
-    @inject('IManageUserBlockStatusUseCase') private _updateUserBlockStatusUsecase : IManageUserBlockStatusUseCase
+    @inject('IUserManagementUsecase') private _userManagmentUsecase : IUserManagementUsecase
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -73,14 +74,16 @@ export class AdminController implements IAdminController {
   }
 
   async updateBlockStatus(req: Request, res: Response): Promise<void> {
-    const parsed = updateUserBlockStatusSchema.parse(req.query)
-    await this._updateUserBlockStatusUsecase.blockUser(parsed)
+    const parsed  = updateUserBlockStatusSchema.parse(req.query)
+    await this._userManagmentUsecase.updateBlockStatus(parsed)
     ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
   }
 
   async updateVendorRequest(req: Request, res: Response): Promise<void> {
     console.log(req.query);
     const parsed = updateVendorRequestSchema.parse(req.query);
-    
+    console.log(parsed);
+    await this._userManagmentUsecase.updateVendorRequest(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS);
   }
 }

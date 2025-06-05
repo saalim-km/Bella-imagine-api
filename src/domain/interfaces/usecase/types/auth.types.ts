@@ -2,7 +2,7 @@ import { TRole } from "../../../../shared/constants/constants";
 
 export interface SendOtpEmailInput {
     email : string;
-    userRole : TRole;
+    role : TRole;
 }
 export interface RegisterUserInput {
     name : string;

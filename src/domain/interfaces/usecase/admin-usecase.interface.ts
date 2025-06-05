@@ -24,10 +24,7 @@ export interface IGetVendorRequestUsecase {
   getVendorRequests(input : VendorRequestFilterInput): Promise<PaginatedResponse<IVendor>>
 }
 
-export interface IManageUserBlockStatusUseCase{
-  blockUser(input : updateUserStatusInput) : Promise<void>
-}
-
-export interface IUpdateVendorRequestUsecase{
-  updateRequest(input : updateVendorRequestInput) : Promise<void>
+export interface IUserManagementUsecase {
+  updateBlockStatus(input : updateUserStatusInput) : Promise<void>
+  updateVendorRequest(input : updateVendorRequestInput) : Promise<void>
 }

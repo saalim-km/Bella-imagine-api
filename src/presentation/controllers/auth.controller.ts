@@ -45,10 +45,8 @@ export class AuthController implements IAuthController {
 
   async sendOtp(req: Request, res: Response): Promise<void> {
     const payload = req.body as SendOtpEmailInputDto;
-    await this._sendAuthEmailUsecase.sendAuthEmail({
-      email: payload.email,
-      userRole: payload.userRole,
-    });
+    console.log(payload);
+    await this._sendAuthEmailUsecase.sendAuthEmail(payload);
     ResponseHandler.success(res, SUCCESS_MESSAGES.OTP_SEND_SUCCESS);
   }
 

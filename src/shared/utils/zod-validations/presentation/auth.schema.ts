@@ -23,6 +23,11 @@ export const userRegisterSchema = {
     vendor: vendorRegisterSchema,
 };
 
+export const sendOtpInputSchema = {
+    email : emailSchema,
+    role : roleSchema
+}
+
 // Schema for OTP verification
 export const verifyOtpSchema = z.object({
     otp: otpSchema,

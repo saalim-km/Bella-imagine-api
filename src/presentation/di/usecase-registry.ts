@@ -26,7 +26,7 @@ import { ClientResetPasswordStrategy } from "../../application/auth/strategies/r
 import { VendorResetPasswordStrategy } from "../../application/auth/strategies/reset password/vendor-reset-password.usecase";
 import { ResetPasswordUsecase } from "../../application/auth/reset-password.usecase";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
-import { IGetUserDetailsStrategy, IGetUserDetailsUsecase, IGetUsersStrategy, IGetUsersUsecase, IGetVendorRequestUsecase } from "../../domain/interfaces/usecase/admin-usecase.interface";
+import { IGetUserDetailsStrategy, IGetUserDetailsUsecase, IGetUsersStrategy, IGetUsersUsecase, IGetVendorRequestUsecase, IUserManagementUsecase } from "../../domain/interfaces/usecase/admin-usecase.interface";
 import { GetUsersUsecase } from "../../application/admin/get-users.usecase";
 import { GetClientsUsecase } from "../../application/admin/strategies/get-clients.strategy";
 import { GetVendorsUsecase } from "../../application/admin/strategies/get-vendors.strategy";
@@ -36,6 +36,7 @@ import { GetVendorDetailsStrategy } from "../../application/admin/strategies/get
 import { GetVendorRequestUsecase } from "../../application/admin/get-vendor-requests.usecase";
 import { RefreshTokenUsecase } from "../../application/common/refresh-token.usecase";
 import { EmailExistenceUsecase } from "../../application/common/email-existence.usecase";
+import { UserManagementUsecase } from "../../application/admin/user-management.usecase";
 
 export class UsecaseRegistry {
     // Static method to register all use cases and strategies
@@ -116,5 +117,8 @@ export class UsecaseRegistry {
         container.register<IGetVendorRequestUsecase>('IGetVendorRequestUsecase', {
             useClass: GetVendorRequestUsecase
         });
+        container.register<IUserManagementUsecase>('IUserManagementUsecase',{
+            useClass:  UserManagementUsecase
+        })
     }
 }
