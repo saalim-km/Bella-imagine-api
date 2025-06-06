@@ -2,12 +2,14 @@ import { FilterQuery , Types } from "mongoose";
 import { TRole } from "../../../../shared/constants/constants";
 import { IUser } from "../../../models/user-base";
 
-export interface UsersFilterInput {
-  search?: string;
+export interface PaginationInput {
   page: number;
   limit: number;
-  isblocked?: boolean;
+  search?: string;
   createdAt?: number;
+}
+export interface UsersFilterInput extends PaginationInput {
+  isblocked?: boolean;
   role: TRole;
 }
 
@@ -30,4 +32,8 @@ export interface updateVendorRequestInput {
   id:  Types.ObjectId;
   status : boolean;
   reason ?: string;
+}
+
+export interface getCategoriesFilterInput extends Omit<PaginationInput,'createdAt'> {
+  status : boolean
 }

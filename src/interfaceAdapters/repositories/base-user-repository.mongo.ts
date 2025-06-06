@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { IBaseUserRepository } from "../../domain/interfaces/repository/base-user-repository";
+import { IBaseUserRepository } from "../../domain/interfaces/repository/base-user.repository";
 import { FilterQuery,Types } from "mongoose";
 import { BaseRepository } from "./base-repository.mongo";
 

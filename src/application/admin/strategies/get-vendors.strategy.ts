@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { IGetUsersStrategy } from "../../../domain/interfaces/usecase/admin-usecase.interface";
 import { UserStrategyFilterInput } from "../../../domain/interfaces/usecase/types/admin.types";
 import { PaginatedResponse } from "../../../domain/interfaces/usecase/types/common.types";
-import { IVendorRepository } from "../../../domain/interfaces/repository/vendor-repository";
+import { IVendorRepository } from "../../../domain/interfaces/repository/vendor.repository";
 import { IVendor } from "../../../domain/models/vendor";
 
 

@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { IWalletRepository } from "../../../../domain/interfaces/repository/wallet-repository";
-import { IClientRepository } from "../../../../domain/interfaces/repository/client-repository";
+import { IWalletRepository } from "../../../../domain/interfaces/repository/wallet.repository";
+import { IClientRepository } from "../../../../domain/interfaces/repository/client.repository";
 import { RegisterUserInput } from "../../../../domain/interfaces/usecase/types/auth.types";
 import { CustomError } from "../../../../shared/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../../shared/constants/constants";

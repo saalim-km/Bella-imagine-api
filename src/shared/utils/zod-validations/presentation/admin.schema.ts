@@ -48,3 +48,10 @@ export const updateVendorRequestSchema = z.object({
   reason : z.string().optional(),
   status : parseBooleanSchema,
 })
+
+export const getCategoriesSchema = z.object({
+  search : searchQuerySchema,
+  page : pageQuerySchema,
+  limit : limitQuerySchema,
+  status : parseBooleanSchema
+})

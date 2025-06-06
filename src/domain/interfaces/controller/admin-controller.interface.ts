@@ -7,4 +7,5 @@ export interface IAdminController {
     getVendoRequests(req: Request, res: Response) : Promise<void>
     updateBlockStatus(req: Request, res: Response) : Promise<void>
     updateVendorRequest(req: Request, res: Response) : Promise<void>
+    getCategories(req: Request, res: Response) : Promise<void>
 }

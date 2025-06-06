@@ -1,6 +1,6 @@
 import { injectable } from "tsyringe";
 import { BaseRepository } from "./base-repository.mongo";
-import { IWalletRepository } from "../../domain/interfaces/repository/wallet-repository";
+import { IWalletRepository } from "../../domain/interfaces/repository/wallet.repository";
 import { Wallet } from "../database/schemas/wallet.schema";
 import { IWallet } from "../../domain/models/wallet";
 import { CreateWalletInput } from "../../domain/types/wallet.types";

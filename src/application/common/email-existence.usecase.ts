@@ -4,8 +4,8 @@ import {
 } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { ERROR_MESSAGES, TRole } from "../../shared/constants/constants";
 import { CustomError } from "../../shared/utils/custom-error";
-import { IClientRepository } from "../../domain/interfaces/repository/client-repository";
-import { IVendorRepository } from "../../domain/interfaces/repository/vendor-repository";
+import { IClientRepository } from "../../domain/interfaces/repository/client.repository";
+import { IVendorRepository } from "../../domain/interfaces/repository/vendor.repository";
 import { IUser } from "../../domain/models/user-base";
 import { IEmailCheckResult } from "../../domain/interfaces/usecase/types/common.types";
 

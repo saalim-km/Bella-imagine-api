@@ -1,7 +1,8 @@
+import { ICategory } from "../../models/category";
 import { IClient } from "../../models/client";
 import { IUser } from "../../models/user-base";
 import { IVendor } from "../../models/vendor";
-import { updateUserStatusInput, updateVendorRequestInput, UserDetailsInput, UsersFilterInput, UserStrategyFilterInput, VendorRequestFilterInput } from "./types/admin.types";
+import { getCategoriesFilterInput, updateUserStatusInput, updateVendorRequestInput, UserDetailsInput, UsersFilterInput, UserStrategyFilterInput, VendorRequestFilterInput } from "./types/admin.types";
 import { PaginatedResponse } from "./types/common.types";
 
 export interface IGetUsersUsecase {
@@ -27,4 +28,8 @@ export interface IGetVendorRequestUsecase {
 export interface IUserManagementUsecase {
   updateBlockStatus(input : updateUserStatusInput) : Promise<void>
   updateVendorRequest(input : updateVendorRequestInput) : Promise<void>
+}
+
+export interface ICategoryManagementUsecase {
+  getCategories(input : getCategoriesFilterInput): Promise<PaginatedResponse<ICategory>>
 }

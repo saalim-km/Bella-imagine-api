@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IGetVendorRequestUsecase } from "../../domain/interfaces/usecase/admin-usecase.interface";
-import { IVendorRepository } from "../../domain/interfaces/repository/vendor-repository";
+import { IVendorRepository } from "../../domain/interfaces/repository/vendor.repository";
 import { VendorRequestFilterInput } from "../../domain/interfaces/usecase/types/admin.types";
 import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";
 import { IVendor } from "../../domain/models/vendor";

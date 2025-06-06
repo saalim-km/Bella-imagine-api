@@ -1,9 +1,9 @@
 import { container } from "tsyringe";
-import { IWalletRepository } from "../../domain/interfaces/repository/wallet-repository";
+import { IWalletRepository } from "../../domain/interfaces/repository/wallet.repository";
 import { WalletRepository } from "../../interfaceAdapters/repositories/wallet-repository.mongo";
-import { IClientRepository } from "../../domain/interfaces/repository/client-repository";
+import { IClientRepository } from "../../domain/interfaces/repository/client.repository";
 import { ClientRepository } from "../../interfaceAdapters/repositories/client-repotitory.mongo";
-import { IVendorRepository } from "../../domain/interfaces/repository/vendor-repository";
+import { IVendorRepository } from "../../domain/interfaces/repository/vendor.repository";
 import { VendorRepository } from "../../interfaceAdapters/repositories/vendor-repository.mongo";
 
 export class RepositoryRegistry {

@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { IGetUsersStrategy } from "../../../domain/interfaces/usecase/admin-usecase.interface";
 import { UserStrategyFilterInput } from "../../../domain/interfaces/usecase/types/admin.types";
 import { PaginatedResponse } from "../../../domain/interfaces/usecase/types/common.types";
-import { IClientRepository } from "../../../domain/interfaces/repository/client-repository";
+import { IClientRepository } from "../../../domain/interfaces/repository/client.repository";
 import { IClient } from "../../../domain/models/client";
 import { FilterQuery } from "mongoose";
 

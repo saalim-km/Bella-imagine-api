@@ -15,7 +15,7 @@ import {
   IGetVendorRequestUsecase,
   IUserManagementUsecase,
 } from "../../domain/interfaces/usecase/admin-usecase.interface";
-import { getUserDetailsQuerySchema, getUsersQuerySchema, getVendorRequestsQuerySchema, updateUserBlockStatusSchema, updateVendorRequestSchema } from "../../shared/utils/zod-validations/presentation/admin.schema";
+import { getCategoriesSchema, getUserDetailsQuerySchema, getUsersQuerySchema, getVendorRequestsQuerySchema, updateUserBlockStatusSchema, updateVendorRequestSchema } from "../../shared/utils/zod-validations/presentation/admin.schema";
 import { parse } from "path";
 
 
@@ -85,5 +85,10 @@ export class AdminController implements IAdminController {
     console.log(parsed);
     await this._userManagmentUsecase.updateVendorRequest(parsed)
     ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS);
+  }
+
+  async getCategories(req: Request, res: Response): Promise<void> {
+    const parsed = getCategoriesSchema.parse(req.query)
+    await 
   }
 }

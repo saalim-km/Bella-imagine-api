@@ -1,5 +1,5 @@
 import { FilterQuery, Model , Types, UpdateQuery } from "mongoose";
-import { IBaseRepository } from "../../domain/interfaces/repository/base-repository";
+import { IBaseRepository } from "../../domain/interfaces/repository/base.repository";
 import '../database/schemas/category.schema'
 import '../database/schemas/category-request.schema'
 

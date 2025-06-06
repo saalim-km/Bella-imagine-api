@@ -6,7 +6,7 @@ import { IClient } from "../../../../domain/models/client";
 import { ResetPasswordInput } from "../../../../domain/interfaces/usecase/types/auth.types";
 import { CustomError } from "../../../../shared/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../../shared/constants/constants";
-import { IClientRepository } from "../../../../domain/interfaces/repository/client-repository";
+import { IClientRepository } from "../../../../domain/interfaces/repository/client.repository";
 
 @injectable()
 export class ClientResetPasswordStrategy implements IResetPasswordStrategy {
