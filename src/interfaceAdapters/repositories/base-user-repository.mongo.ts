@@ -14,9 +14,6 @@ export class BaseUserRepository<T> extends BaseRepository<T> implements IBaseUse
         return await this.findAll(filter, skip, limit, sort)
     }
 
-    async count(filter: FilterQuery<T>): Promise<number> {
-        return await this.model.countDocuments(filter)
-    }
 
     async findByEmail(email: string): Promise<T | null> {
         return await this.findOne({ email });

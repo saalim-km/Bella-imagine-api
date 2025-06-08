@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IGenerateTokenUsecase } from "../../domain/interfaces/usecase/auth-usecase.interfaces";
-import { JwtOutput, TJwtPayload } from "../../domain/types/auth.types";
 import { IJwtservice } from "../../domain/interfaces/service/jwt-service.interface";
+import { JwtOutput, TJwtPayload } from "../../domain/types/auth.types";
 
 @injectable()
 export class GenerateTokenUsecase implements IGenerateTokenUsecase {

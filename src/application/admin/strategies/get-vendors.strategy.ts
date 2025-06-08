@@ -13,16 +13,8 @@ export class GetVendorsUsecase implements IGetUsersStrategy<IVendor> {
     ){}
 
     async getUsers(input: UserStrategyFilterInput): Promise<PaginatedResponse<IVendor>> {
-        const skip = (input.page - 1) * input.limit;
-
-        const [users , count] = await Promise.all([
-            this._vendorRepository.find(input.search as IVendor, skip , input.limit , input.createdAt),
-            this._vendorRepository.count(input.search)
-        ])
-        
-        return {
-            data : users,
-            total : count
-        }
+        const {limit , page , createdAt , search} = input;
+        const skip = (page - 1) * limit;
+        return await this._vendorRepository.findAllVendors({filter : search! ,limit : limit , skip : skip , sort : createdAt })
     }
 }

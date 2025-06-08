@@ -15,5 +15,15 @@ export class AdminRoute extends BaseRoute {
         this.router.route('/admin/vendor-request')
         .get(verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.getVendoRequests.bind(adminController)))
         .patch(verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.updateVendorRequest.bind(adminController)))
+
+        this.router.route('/admin/categories')
+        .post(verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.createNewCategory.bind(adminController)))
+        .get(verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.getCategories.bind(adminController)))
+        .patch(verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.updateCategoryStatus.bind(adminController)))
+        .put(verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.updateCategory.bind(adminController)))
+
+        this.router.route('/admin/category-request')
+        .get(verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.getCatJoinRequests.bind(adminController)))
+        .patch(verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.updateCatRequest.bind(adminController)))
     }
 }

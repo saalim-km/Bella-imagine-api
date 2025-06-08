@@ -8,7 +8,6 @@ export interface IBaseUserRepository<T> {
   skip: number,
   limit: number,
   sort: any) : Promise<T[]>
-  count(filter : any) : Promise<number>
   findByEmail(email: string): Promise<T | null>;
   updateOnlineStatus(payload : {userId : Types.ObjectId , isOnline : boolean , lastSeen : string}): Promise<T | null>;
   updateLastSeenById(userId: Types.ObjectId, lastSeen: string): Promise<void>;

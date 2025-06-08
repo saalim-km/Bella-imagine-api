@@ -33,7 +33,7 @@ export class GetUsersUsecase implements IGetUsersUsecase {
       );
     }
 
-    let search: FilterQuery<IUser> = { role: input.role };
+    let search: FilterQuery<IUser> = {};
 
     if (input) {
       if (input.isblocked !== undefined) {
@@ -41,13 +41,8 @@ export class GetUsersUsecase implements IGetUsersUsecase {
       }
 
       if (typeof input.search === "string" && input.search !== "") {
-        search = {
-          ...search,
-          $or: [
-            { name: { $regex: input.search, $options: "i" } },
-            { email: { $regex: input.search, $options: "i" } },
-          ],
-        };
+        search.name = input.search;
+        search.email = input.search
       }
     }
 
@@ -58,8 +53,8 @@ export class GetUsersUsecase implements IGetUsersUsecase {
 
     return await strategy.getUsers({
       search: search,
-      page: input.page!,
-      limit: input.limit!,
+      page: input.page,
+      limit: input.limit,
       createdAt : sort,
       role: input.role,
     });

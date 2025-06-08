@@ -19,12 +19,16 @@ export class BaseRepository<T> implements IBaseRepository<T> {
         return await query.exec()
     }
 
+    async count(filter: FilterQuery<T>): Promise<number> {
+        return await this.model.countDocuments(filter)
+    }
+
+
     async findOne(query: FilterQuery<T>): Promise<T | null> {
         return await this.model.findOne(query)
     }
 
-    findAll(filter: FilterQuery<T>, skip: number, limit: number, sort: any): Promise<T[]> {
-        console.log(filter);
+    findAll(filter: FilterQuery<T>, skip: number, limit: number, sort: any = -1): Promise<T[]> {
         return this.model.find(filter).skip(skip).limit(limit).sort({createdAt : sort}).exec()
     }
 

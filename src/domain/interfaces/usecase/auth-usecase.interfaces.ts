@@ -1,5 +1,5 @@
-import { LoginUserInput, LoginUserOuput, RegisterUserInput, ResetPasswordInput, SendOtpEmailInput, VerifyOtpInput } from "./types/auth.types";
 import { JwtOutput, TJwtPayload } from "../../types/auth.types";
+import { LoginUserInput, LoginUserOuput, RegisterUserInput, ResetPasswordInput, SendOtpEmailInput, VerifyOtpInput } from "./types/auth.types";
 
 export interface ISendAuthEmailUsecase {
     sendAuthEmail(input : SendOtpEmailInput): Promise<void>

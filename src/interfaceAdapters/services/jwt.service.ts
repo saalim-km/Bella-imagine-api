@@ -20,12 +20,14 @@ export class JwtService implements IJwtservice {
   }
 
   generateAccessToken(data: TJwtPayload): string {
+    console.log('access token expiry time : ',this.accessExpireIn);
     return jwt.sign(data, this.accessSecret, {
       expiresIn: this.accessExpireIn as ms.StringValue,
     });
   }
 
   generateRefreshToken(data: TJwtPayload): string {
+    console.log('refersh token expiry time : ',this.refreshExpireIn);
     return jwt.sign(data, this.refreshSecret, {
       expiresIn: this.refreshExpireIn as ms.StringValue,
     });

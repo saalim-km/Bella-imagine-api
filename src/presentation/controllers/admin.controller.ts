@@ -10,13 +10,15 @@ import { ResponseHandler } from "../../shared/utils/response-handler";
 import { SUCCESS_MESSAGES } from "../../shared/constants/constants";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import {
+  ICategoryManagementUsecase,
   IGetUserDetailsUsecase,
   IGetUsersUsecase,
   IGetVendorRequestUsecase,
   IUserManagementUsecase,
 } from "../../domain/interfaces/usecase/admin-usecase.interface";
-import { getCategoriesSchema, getUserDetailsQuerySchema, getUsersQuerySchema, getVendorRequestsQuerySchema, updateUserBlockStatusSchema, updateVendorRequestSchema } from "../../shared/utils/zod-validations/presentation/admin.schema";
-import { parse } from "path";
+import { createCategorySchema, getCategoriesSchema, getCatJoinRequestsSchema, getUserDetailsQuerySchema, getUsersQuerySchema, getVendorRequestsQuerySchema, updateUserBlockStatusSchema, updateVendorRequestSchema } from "../../shared/utils/zod-validations/presentation/admin.schema";
+import { objectIdSchema } from "../../shared/utils/zod-validations/validators/validations";
+import { UpdateCategory } from "../../domain/interfaces/usecase/types/admin.types";
 
 
 @injectable()
@@ -28,7 +30,8 @@ export class AdminController implements IAdminController {
     @inject("IGetUserDetailsUsecase")
     private _getUserDetailsUsecase: IGetUserDetailsUsecase,
     @inject('IGetVendorRequestUsecase') private _getVendorRequestsUsecase : IGetVendorRequestUsecase,
-    @inject('IUserManagementUsecase') private _userManagmentUsecase : IUserManagementUsecase
+    @inject('IUserManagementUsecase') private _userManagmentUsecase : IUserManagementUsecase,
+    @inject('ICategoryManagementUsecase') private _categoryManagmentUsecase : ICategoryManagementUsecase
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -80,15 +83,43 @@ export class AdminController implements IAdminController {
   }
 
   async updateVendorRequest(req: Request, res: Response): Promise<void> {
-    console.log(req.query);
     const parsed = updateVendorRequestSchema.parse(req.query);
-    console.log(parsed);
     await this._userManagmentUsecase.updateVendorRequest(parsed)
     ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS);
   }
 
   async getCategories(req: Request, res: Response): Promise<void> {
     const parsed = getCategoriesSchema.parse(req.query)
-    await 
+    const categories = await this._categoryManagmentUsecase.getCategories(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,categories)
+  }
+
+  async updateCategoryStatus(req: Request, res: Response): Promise<void> {
+    const parsed = objectIdSchema.parse(req.query.id)
+    await this._categoryManagmentUsecase.updateCategoryStatus(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
+  }
+
+  async createNewCategory(req: Request, res: Response): Promise<void> {
+    const parsed = createCategorySchema.parse(req.body)
+    await this._categoryManagmentUsecase.createNewCategory(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.CREATED)
+  }
+
+  async getCatJoinRequests(req: Request, res: Response): Promise<void> {
+    const parsed = getCatJoinRequestsSchema .parse(req.query)
+    const data = await this._categoryManagmentUsecase.getCatJoinRequest(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.CREATED,data)
+  }
+
+  async updateCategory(req: Request, res: Response): Promise<void> {
+    console.log(req.body);
+    await this._categoryManagmentUsecase.updateCategory(req.body as UpdateCategory)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
+  }
+
+  async updateCatRequest(req: Request, res: Response): Promise<void> {
+    await this._categoryManagmentUsecase.updateCatJoinRequest(req.body)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
   }
 }

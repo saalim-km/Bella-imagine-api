@@ -5,6 +5,10 @@ import { IClientRepository } from "../../domain/interfaces/repository/client.rep
 import { ClientRepository } from "../../interfaceAdapters/repositories/client-repotitory.mongo";
 import { IVendorRepository } from "../../domain/interfaces/repository/vendor.repository";
 import { VendorRepository } from "../../interfaceAdapters/repositories/vendor-repository.mongo";
+import { ICategoryRepository } from "../../domain/interfaces/repository/category.repository";
+import { CategoryRepository } from "../../interfaceAdapters/repositories/category-repository.mongo";
+import { ICategoryRequestRepository } from "../../domain/interfaces/repository/category-request.repository";
+import { CategoryRequestRepository } from "../../interfaceAdapters/repositories/category-request-repository.mongo";
 
 export class RepositoryRegistry {
     static registerRepositories() : void {
@@ -19,6 +23,14 @@ export class RepositoryRegistry {
 
         container.register<IVendorRepository>('IVendorRepository',{
             useClass : VendorRepository
+        })
+
+        container.register<ICategoryRepository>('ICategoryRepository',{
+            useClass : CategoryRepository
+        })
+
+        container.register<ICategoryRequestRepository>('ICategoryRequestRepository', {
+            useClass : CategoryRequestRepository
         })
     }
 }

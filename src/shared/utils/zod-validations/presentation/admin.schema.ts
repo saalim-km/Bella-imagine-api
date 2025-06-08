@@ -1,5 +1,4 @@
 import { z } from "zod";
-import {Types} from 'mongoose'
 
 import {
   searchQuerySchema,
@@ -9,8 +8,9 @@ import {
   createdAtQuerySchema,
   roleSchema,
   parseBooleanSchema,
+  statusQuerySchema,
+  objectIdSchema,
 } from "../validators/validations";
-import { updateUserStatusInput } from "../../../../domain/interfaces/usecase/types/admin.types";
 
 export const getUsersQuerySchema = z.object({
   role: roleSchema,
@@ -28,9 +28,6 @@ export const getVendorRequestsQuerySchema = z.object({
   createdAt: createdAtQuerySchema,
 });
 
-export const objectIdSchema = z
-  .string()
-  .transform((val) => new Types.ObjectId(val));
 
 export const getUserDetailsQuerySchema = z.object({
   id: objectIdSchema,
@@ -53,5 +50,23 @@ export const getCategoriesSchema = z.object({
   search : searchQuerySchema,
   page : pageQuerySchema,
   limit : limitQuerySchema,
-  status : parseBooleanSchema
+  status : statusQuerySchema
+})
+
+
+export const createCategorySchema = z.object({
+  title: z
+    .string()
+    .min(1, "Title is required")
+    .regex(/^[A-Za-z\s]+$/, "Title can only contain letters and spaces"),
+  status: parseBooleanSchema,
+});
+
+export const getCatJoinRequestsSchema = z.object({
+  limit : limitQuerySchema,
+  page : pageQuerySchema
+})
+
+export const updateCategorySchema = z.object({
+  id : objectIdSchema,
 })

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { CustomError } from "../../custom-error";
 import { HTTP_STATUS } from "../../../constants/constants";
+import { Types } from "mongoose";
 
 export const nameSchema = z
   .string()
@@ -36,7 +37,7 @@ export const passwordSchema = z
   });
 
 export const parseBooleanSchema = z
-  .union([z.boolean(), z.string()])
+  .union([z.boolean(), z.string()]).optional()
   .transform((val) => {
     if (val === true || val === false) return val;
     if (val === "true") return true;
@@ -44,7 +45,13 @@ export const parseBooleanSchema = z
     throw new CustomError("Invalid boolean string", HTTP_STATUS.BAD_REQUEST);
   });
 
-
+export const statusQuerySchema = z
+  .preprocess((val) => {
+    if (val === "true" || val === true) return true;
+    if (val === "false" || val === false) return false;
+    return undefined; // invalid or missing → omit
+  }, z.boolean())
+  .optional();
 
 export const searchQuerySchema = z.string().optional();
 
@@ -70,3 +77,7 @@ export const createdAtQuerySchema = z
   .regex(/^\d+$/, { message: "createdAt must be a number" })
   .transform(Number)
   .optional();
+
+  export const objectIdSchema = z
+  .string()
+  .transform((val) => new Types.ObjectId(val));

@@ -1,6 +1,7 @@
 import { FilterQuery , Types } from "mongoose";
 import { TRole } from "../../../../shared/constants/constants";
 import { IUser } from "../../../models/user-base";
+import { TCategoryRequestStatus } from "../../../../shared/types/category.types";
 
 export interface PaginationInput {
   page: number;
@@ -24,16 +25,37 @@ export interface UserDetailsInput {
 export interface VendorRequestFilterInput
   extends Pick<UsersFilterInput, "createdAt" | "limit" | "page" | "search"> {}
 
-export interface updateUserStatusInput extends UserDetailsInput {
+export interface UpdateUserStatusInput extends UserDetailsInput {
   isblocked : boolean
 }
 
-export interface updateVendorRequestInput {
+export interface UpdateVendorRequestInput {
   id:  Types.ObjectId;
   status : boolean;
   reason ?: string;
 }
 
-export interface getCategoriesFilterInput extends Omit<PaginationInput,'createdAt'> {
+export interface GetCategoriesFilterInput extends Omit<PaginationInput,'createdAt'> {
+  status ?: boolean
+}
+
+export interface CreateNewCategoryInput {
+  title : string;
   status : boolean
+}
+
+export interface getCatJoinRequestInput extends Pick<PaginationInput , 'limit' | 'page' > {}
+
+export interface UpdateCategory {
+  id : Types.ObjectId,
+  data : {
+    title : string;
+    status : boolean
+  }
+}
+
+export interface UupdateCatReqInput {
+  categoryId : Types.ObjectId,
+  status : TCategoryRequestStatus,
+  vendorId : Types.ObjectId
 }

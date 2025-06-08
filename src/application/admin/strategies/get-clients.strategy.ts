@@ -4,7 +4,6 @@ import { UserStrategyFilterInput } from "../../../domain/interfaces/usecase/type
 import { PaginatedResponse } from "../../../domain/interfaces/usecase/types/common.types";
 import { IClientRepository } from "../../../domain/interfaces/repository/client.repository";
 import { IClient } from "../../../domain/models/client";
-import { FilterQuery } from "mongoose";
 
 @injectable()   
 export class GetClientsUsecase implements IGetUsersStrategy<IClient> {
@@ -13,16 +12,8 @@ export class GetClientsUsecase implements IGetUsersStrategy<IClient> {
     ){}
 
     async getUsers(input: UserStrategyFilterInput): Promise<PaginatedResponse<IClient>> {
-        const skip = (input.page - 1) * input.limit;
-        
-        const [users , count] = await Promise.all([
-            this._clientRepository.find(input.search as FilterQuery<IClient>, skip , input.limit , input.createdAt),
-            this._clientRepository.count(input.search)
-        ])
-        
-        return {
-            data : users,
-            total : count
-        }
+        const {limit , page , createdAt , isblocked , search} = input;
+        const skip = (page - 1) * limit;
+        return await this._clientRepository.findAllClients({filter : search! ,limit : limit , skip : skip , sort : createdAt })
     }
 }

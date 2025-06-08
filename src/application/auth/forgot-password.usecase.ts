@@ -17,8 +17,8 @@ export class ForgotPasswordUsecase implements IForgotPasswordUsecase {
     ){}
 
     async forgotPassword(input: SendOtpEmailInput): Promise<void> {
-        const {email , userRole} = input;
-        const userExists = await this._emailExist.doesEmailExist(email , userRole);
+        const {email , role} = input;
+        const userExists = await this._emailExist.doesEmailExist(email , role);
 
         if(!userExists.success){
             throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND , HTTP_STATUS.BAD_REQUEST)

@@ -1,9 +1,11 @@
+import { Types } from "mongoose";
 import { ICategory } from "../../models/category";
 import { IClient } from "../../models/client";
 import { IUser } from "../../models/user-base";
 import { IVendor } from "../../models/vendor";
-import { getCategoriesFilterInput, updateUserStatusInput, updateVendorRequestInput, UserDetailsInput, UsersFilterInput, UserStrategyFilterInput, VendorRequestFilterInput } from "./types/admin.types";
+import { CreateNewCategoryInput, GetCategoriesFilterInput, getCatJoinRequestInput, UpdateCategory, UpdateUserStatusInput, UpdateVendorRequestInput, UserDetailsInput, UsersFilterInput, UserStrategyFilterInput, UupdateCatReqInput, VendorRequestFilterInput } from "./types/admin.types";
 import { PaginatedResponse } from "./types/common.types";
+import { ICategoryRequest } from "../../models/category-request";
 
 export interface IGetUsersUsecase {
   getUsers(input: UsersFilterInput): Promise<PaginatedResponse<IUser>>;
@@ -26,10 +28,15 @@ export interface IGetVendorRequestUsecase {
 }
 
 export interface IUserManagementUsecase {
-  updateBlockStatus(input : updateUserStatusInput) : Promise<void>
-  updateVendorRequest(input : updateVendorRequestInput) : Promise<void>
+  updateBlockStatus(input : UpdateUserStatusInput) : Promise<void>
+  updateVendorRequest(input : UpdateVendorRequestInput) : Promise<void>
 }
 
 export interface ICategoryManagementUsecase {
-  getCategories(input : getCategoriesFilterInput): Promise<PaginatedResponse<ICategory>>
+  createNewCategory(input : CreateNewCategoryInput) : Promise<void>
+  getCategories(input : GetCategoriesFilterInput): Promise<PaginatedResponse<ICategory>>
+  updateCategory(input : UpdateCategory) : Promise<void>
+  updateCategoryStatus(categoryId : Types.ObjectId) : Promise<void> 
+  getCatJoinRequest(input : getCatJoinRequestInput) : Promise<PaginatedResponse<ICategoryRequest>>
+  updateCatJoinRequest(input : UupdateCatReqInput) : Promise<void> 
 }
