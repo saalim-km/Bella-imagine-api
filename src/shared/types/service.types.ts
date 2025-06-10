@@ -16,6 +16,7 @@ export interface SessionDuration {
 }
 
 export interface Location {
+  address : string;
   travelFee?: number;
   lat: number;
   lng: number;

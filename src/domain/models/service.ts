@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { DateSlot, SessionDuration } from "../../shared/types/service.types";
+import { DateSlot, Location, SessionDuration } from "../../shared/types/service.types";
 
 export interface IService {
   _id: Types.ObjectId
