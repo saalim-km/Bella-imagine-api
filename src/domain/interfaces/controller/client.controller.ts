@@ -6,4 +6,5 @@ export interface IClientController {
     getVendors(req: Request, res: Response) : Promise<void>
     getCategories(req: Request, res: Response) : Promise<void>
     getVendorDetails(req: Request, res: Response) : Promise<void>
+    getServiceDetails(req: Request, res: Response) : Promise<void>
 }

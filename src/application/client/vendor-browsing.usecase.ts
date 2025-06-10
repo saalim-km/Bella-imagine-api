@@ -6,18 +6,21 @@ import {
 } from "../../domain/interfaces/usecase/types/client.types";
 import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";
 import { IVendor } from "../../domain/models/vendor";
-import { FilterQuery } from "mongoose";
+import { FilterQuery, Types } from "mongoose";
 import { IVendorRepository } from "../../domain/interfaces/repository/vendor.repository";
 import { CustomError } from "../../shared/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
+import { IService } from "../../domain/models/service";
+import { IServiceRepository } from "../../domain/interfaces/repository/service.repository";
 
 @injectable()
 export class VendorBrowsingUsecase implements IVendorBrowsingUseCase {
   constructor(
     @inject("IVendorRepository") private _vendorRepsitory: IVendorRepository,
     @inject("IGetPresignedUrlUsecase")
-    private _presignedUrl: IGetPresignedUrlUsecase
+    private _presignedUrl: IGetPresignedUrlUsecase,
+    @inject('IServiceRepository') private _serviceRepository : IServiceRepository
   ) {}
 
   async fetchAvailableVendors(
@@ -91,5 +94,14 @@ export class VendorBrowsingUsecase implements IVendorBrowsingUseCase {
         total: totalSamples,
       },
     };
+  }
+
+  async fetchVendorServiceForBooking(serviceId: Types.ObjectId): Promise<IService> {
+    const service =  await this._serviceRepository.findById(serviceId)
+    if(!service) {
+      throw new CustomError(ERROR_MESSAGES.SERVICE_NOT_FOUND,HTTP_STATUS.BAD_REQUEST)
+    }
+
+    return service;
   }
 }

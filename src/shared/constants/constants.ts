@@ -35,6 +35,7 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  SERVICE_NOT_FOUND : 'Service not found',
   USER_BLOCKED : "User blocked by admin",
   OTP_EXPIRED : 'OTP expired',
   PASSWORD_REQUIRED : "Password is required",

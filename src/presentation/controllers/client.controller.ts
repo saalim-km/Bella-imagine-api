@@ -67,4 +67,10 @@ export class ClientController implements IClientController {
     console.log(vendor);
     ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,vendor)
   }
+
+  async getServiceDetails(req: Request, res: Response): Promise<void> {
+    const serviceId = objectIdSchema.parse(req.params.serviceId)
+    const service = await this._vendorBrowsingUsecase.fetchVendorServiceForBooking(serviceId)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,service)
+  }
 }
