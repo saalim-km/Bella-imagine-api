@@ -3,8 +3,8 @@ import {
   IUserManagementUsecase,
 } from "../../domain/interfaces/usecase/admin-usecase.interface";
 import {
-  updateUserStatusInput,
-  updateVendorRequestInput,
+  UpdateUserStatusInput,
+  UpdateVendorRequestInput,
 } from "../../domain/interfaces/usecase/types/admin.types";
 import { IVendorRepository } from "../../domain/interfaces/repository/vendor.repository";
 import { IClientRepository } from "../../domain/interfaces/repository/client.repository";
@@ -18,7 +18,7 @@ export class UserManagementUsecase implements IUserManagementUsecase {
     @inject("IClientRepository") private _clientRepository: IClientRepository
   ) {}
 
-  async updateBlockStatus(input: updateUserStatusInput): Promise<void> {
+  async updateBlockStatus(input: UpdateUserStatusInput): Promise<void> {
     switch (input.role) {
       case "client":
         await this._clientRepository.update(input.id, {
@@ -40,7 +40,7 @@ export class UserManagementUsecase implements IUserManagementUsecase {
     }
   }
 
-  async updateVendorRequest(input: updateVendorRequestInput): Promise<void> {
+  async updateVendorRequest(input: UpdateVendorRequestInput): Promise<void> {
     const status = input.status ? "accept" : "reject";
     const vendor = await this._vendorRepository.update(input.id, { isVerified: status });
 

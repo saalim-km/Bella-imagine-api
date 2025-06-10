@@ -10,7 +10,7 @@ export interface PaginationQuery<T = any> {
 
 export interface GetCategoryInput extends PaginationQuery<ICategory> {}
 
-export interface GetUsersInput extends PaginationQuery<IUser> {
+export interface GetQueryInput extends PaginationQuery<IUser> {
 }
 
 export interface GetCatRequestInput extends Pick<PaginationQuery , 'limit' | 'skip'> {}

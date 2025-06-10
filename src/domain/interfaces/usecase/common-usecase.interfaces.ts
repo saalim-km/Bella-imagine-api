@@ -12,7 +12,3 @@ export interface IGetPresignedUrlUsecase {
 export interface IRefreshTokenUsecase {
     execute(decoded : IDecoded) : string;
 }
-
-export interface ISendEmailUsecase {
-  sendEmail(input : SendEmailInput): Promise<void>;
-}

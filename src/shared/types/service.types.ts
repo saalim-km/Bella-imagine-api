@@ -20,3 +20,15 @@ export interface Location {
   lat: number;
   lng: number;
 }
+
+
+export type TMedia = {
+    url: string;
+    type: "image" | "video";
+}
+
+export type TComment = {
+    user: string;
+    text: string;
+    createdAt: Date;
+}

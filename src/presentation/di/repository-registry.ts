@@ -9,6 +9,10 @@ import { ICategoryRepository } from "../../domain/interfaces/repository/category
 import { CategoryRepository } from "../../interfaceAdapters/repositories/category-repository.mongo";
 import { ICategoryRequestRepository } from "../../domain/interfaces/repository/category-request.repository";
 import { CategoryRequestRepository } from "../../interfaceAdapters/repositories/category-request-repository.mongo";
+import { IServiceRepository } from "../../domain/interfaces/repository/service.repository";
+import { ServiceRepository } from "../../interfaceAdapters/repositories/service-repository.mongo";
+import { IWorksampleRepository } from "../../domain/interfaces/repository/worksample.repository";
+import { WorkSampleRepository } from "../../interfaceAdapters/repositories/worksample-repository.mongo";
 
 export class RepositoryRegistry {
     static registerRepositories() : void {
@@ -31,6 +35,14 @@ export class RepositoryRegistry {
 
         container.register<ICategoryRequestRepository>('ICategoryRequestRepository', {
             useClass : CategoryRequestRepository
+        })
+
+        container.register<IServiceRepository>('IServiceRepository',{
+            useClass : ServiceRepository
+        })
+
+        container.register<IWorksampleRepository>('IWorksampleRepository' , {
+            useClass : WorkSampleRepository
         })
     }
 }

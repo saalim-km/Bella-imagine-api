@@ -80,4 +80,4 @@ export const createdAtQuerySchema = z
 
   export const objectIdSchema = z
   .string()
-  .transform((val) => new Types.ObjectId(val));
+  .transform((val) => new Types.ObjectId(val))

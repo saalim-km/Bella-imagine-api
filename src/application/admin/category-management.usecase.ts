@@ -48,7 +48,6 @@ export class CategoryManagementUsecase implements ICategoryManagementUsecase {
 
     async getCatJoinRequest(input: getCatJoinRequestInput): Promise<PaginatedResponse<ICategoryRequest>> {
         const skip = (input.page - 1) * input.limit;
-        console.log(input);
         return await this._categoryRequestRepository.findAllRequests({limit : input.limit , skip : skip})
     }
 
@@ -63,7 +62,6 @@ export class CategoryManagementUsecase implements ICategoryManagementUsecase {
             throw new CustomError(ERROR_MESSAGES.REQUEST_NOT_FOUND , HTTP_STATUS.BAD_REQUEST)
         }
 
-        console.log('got the request',request);
         await this._categoryRequestRepository.update(request._id , {status : status})
     }
 }
