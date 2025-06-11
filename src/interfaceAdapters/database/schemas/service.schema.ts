@@ -38,6 +38,10 @@ export const serviceSchema = new mongoose.Schema<IService>({
   ],
   features: [String],
   location: {
+    address : {
+      type : String,
+      required: true
+    },
     travelFee: {
       type: Number,
     },
