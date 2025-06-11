@@ -38,8 +38,9 @@ import { RefreshTokenUsecase } from "../../application/common/refresh-token.usec
 import { EmailExistenceUsecase } from "../../application/common/email-existence.usecase";
 import { UserManagementUsecase } from "../../application/admin/user-management.usecase";
 import { CategoryManagementUsecase } from "../../application/admin/category-management.usecase";
-import { IVendorBrowsingUseCase } from "../../domain/interfaces/usecase/client-usecase.interface";
+import { IBookingCommandUsecase, IVendorBrowsingUseCase } from "../../domain/interfaces/usecase/client-usecase.interface";
 import { VendorBrowsingUsecase } from "../../application/client/vendor-browsing.usecase";
+import { BookingCommandUsecase } from "../../application/client/booking-command.usecase";
 
 export class UsecaseRegistry {
     // Static method to register all use cases and strategies
@@ -128,6 +129,10 @@ export class UsecaseRegistry {
         })
         container.register<IVendorBrowsingUseCase>('IVendorBrowsingUseCase' , {
             useClass : VendorBrowsingUsecase
+        })
+
+        container.register<IBookingCommandUsecase>('IBookingCommandUsecase' , {
+            useClass : BookingCommandUsecase
         })
     }
 }

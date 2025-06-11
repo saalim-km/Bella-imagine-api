@@ -13,6 +13,10 @@ import { IServiceRepository } from "../../domain/interfaces/repository/service.r
 import { ServiceRepository } from "../../interfaceAdapters/repositories/service-repository.mongo";
 import { IWorksampleRepository } from "../../domain/interfaces/repository/worksample.repository";
 import { WorkSampleRepository } from "../../interfaceAdapters/repositories/worksample-repository.mongo";
+import { IBookingRepository } from "../../domain/interfaces/repository/booking.repository";
+import { BookingRepository } from "../../interfaceAdapters/repositories/booking-repository.mongo";
+import { IPaymentRepository } from "../../domain/interfaces/repository/payment.repository";
+import { PaymentRepository } from "../../interfaceAdapters/repositories/payment-repository.mongo";
 
 export class RepositoryRegistry {
     static registerRepositories() : void {
@@ -43,6 +47,14 @@ export class RepositoryRegistry {
 
         container.register<IWorksampleRepository>('IWorksampleRepository' , {
             useClass : WorkSampleRepository
+        })
+
+        container.register<IBookingRepository>('IBookingRepository' , {
+            useClass : BookingRepository
+        })
+
+        container.register<IPaymentRepository>('IPaymentRepository' , {
+            useClass : PaymentRepository
         })
     }
 }

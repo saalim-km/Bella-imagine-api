@@ -59,7 +59,7 @@ export class CategoryManagementUsecase implements ICategoryManagementUsecase {
         const {categoryId , status , vendorId} = input;
         const request = await this._categoryRequestRepository.findOne({categoryId : categoryId})
         if(!request){
-            throw new CustomError(ERROR_MESSAGES.REQUEST_NOT_FOUND , HTTP_STATUS.BAD_REQUEST)
+            throw new CustomError(ERROR_MESSAGES.REQUEST_NOT_FOUND , HTTP_STATUS.NOT_FOUND)
         }
 
         await this._categoryRequestRepository.update(request._id , {status : status})

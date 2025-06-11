@@ -25,7 +25,7 @@ export class VendorRegisterStrategy implements IRegisterUserStrategy {
 
         const userExists = await this._emailExistence.doesEmailExist(input.email,input.role);
         if(userExists.success) {
-            throw new CustomError(ERROR_MESSAGES.EMAIL_EXISTS, HTTP_STATUS.BAD_REQUEST)
+            throw new CustomError(ERROR_MESSAGES.EMAIL_EXISTS, HTTP_STATUS.CONFLICT)
         }
 
         let hashedNewPassword = null;

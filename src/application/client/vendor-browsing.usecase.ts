@@ -55,7 +55,7 @@ export class VendorBrowsingUsecase implements IVendorBrowsingUseCase {
     if (!vendor) {
       throw new CustomError(
         ERROR_MESSAGES.VENDOR_NOT_FOUND,
-        HTTP_STATUS.BAD_REQUEST
+        HTTP_STATUS.NOT_FOUND
       );
     }
 
@@ -99,7 +99,7 @@ export class VendorBrowsingUsecase implements IVendorBrowsingUseCase {
   async fetchVendorServiceForBooking(serviceId: Types.ObjectId): Promise<IService> {
     const service =  await this._serviceRepository.findById(serviceId)
     if(!service) {
-      throw new CustomError(ERROR_MESSAGES.SERVICE_NOT_FOUND,HTTP_STATUS.BAD_REQUEST)
+      throw new CustomError(ERROR_MESSAGES.SERVICE_NOT_FOUND,HTTP_STATUS.NOT_FOUND)
     }
 
     return service;

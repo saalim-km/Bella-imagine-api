@@ -12,5 +12,7 @@ export class ClientRoute extends BaseRoute {
         .get('/client/categories',verifyAuth,authorizeRole(['client']),asyncHandler(clientController.getCategories.bind(clientController)))
         .get('/client/photographer/:vendorId',verifyAuth,authorizeRole(['client']),asyncHandler(clientController.getVendorDetails.bind(clientController)))
         .get('/client/service/:serviceId',verifyAuth,authorizeRole(['client']),asyncHandler(clientController.getServiceDetails.bind(clientController)))
+        .post('/client/create-payment-intent',verifyAuth,authorizeRole(['client']),asyncHandler(clientController.createPaymentIntent.bind(clientController)))
+        .post('/client/webhook',clientController.handleWebhook.bind(clientController))
     }
 }

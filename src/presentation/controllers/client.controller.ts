@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { IClientController } from "../../domain/interfaces/controller/client.controller";
 import { Request, Response } from "express";
 import { CustomRequest } from "../middlewares/auth.middleware";
+import {Stripe} from 'stripe'
 import {
   clearAuthCookies,
   updateCookieWithAccessToken,
@@ -10,9 +11,10 @@ import { ResponseHandler } from "../../shared/utils/response-handler";
 import { SUCCESS_MESSAGES } from "../../shared/constants/constants";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { ICategoryManagementUsecase } from "../../domain/interfaces/usecase/admin-usecase.interface";
-import { getVendorDetailsSchema, getVendorsSchema } from "../../shared/utils/zod-validations/presentation/client.schema";
-import { IVendorBrowsingUseCase } from "../../domain/interfaces/usecase/client-usecase.interface";
+import { createBookingSchema, getVendorDetailsSchema, getVendorsSchema } from "../../shared/utils/zod-validations/presentation/client.schema";
+import { IBookingCommandUsecase, IVendorBrowsingUseCase } from "../../domain/interfaces/usecase/client-usecase.interface";
 import { objectIdSchema } from "../../shared/utils/zod-validations/validators/validations";
+import { IStripeService } from "../../domain/interfaces/service/stripe-service.interface";
 
 @injectable()
 export class ClientController implements IClientController {
@@ -20,7 +22,9 @@ export class ClientController implements IClientController {
     @inject("IRefreshTokenUsecase")
     private _refreshTokenUsecase: IRefreshTokenUsecase,
     @inject('ICategoryManagementUsecase') private _categoryManagementUsecase : ICategoryManagementUsecase,
-    @inject("IVendorBrowsingUseCase") private _vendorBrowsingUsecase : IVendorBrowsingUseCase
+    @inject("IVendorBrowsingUseCase") private _vendorBrowsingUsecase : IVendorBrowsingUseCase,
+    @inject('IBookingCommandUsecase') private _bookingCommandUsecase : IBookingCommandUsecase,
+    @inject('IStripeService') private _stripeService : IStripeService
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -72,5 +76,18 @@ export class ClientController implements IClientController {
     const serviceId = objectIdSchema.parse(req.params.serviceId)
     const service = await this._vendorBrowsingUsecase.fetchVendorServiceForBooking(serviceId)
     ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,service)
+  }
+
+  async createPaymentIntent(req: Request, res: Response): Promise<void> {
+    const {_id} = (req as CustomRequest).user
+    const parsed = createBookingSchema.parse({...req.body,clientId : _id})
+    const clientSecret = await this._bookingCommandUsecase.createPaymentIntentAndBooking(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.CLIENT_SECRET_SUCCESS,clientSecret)
+  }
+
+  async handleWebhook(req: Request, res: Response): Promise<void> {
+    console.log('------------------------webhook triggered--------------------');
+    const event : Stripe.Event = req.body
+    await this._stripeService.handleWebhookEvent(event)
   }
 }

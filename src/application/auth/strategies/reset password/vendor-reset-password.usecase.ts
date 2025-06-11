@@ -22,7 +22,7 @@ export class VendorResetPasswordStrategy implements IResetPasswordStrategy {
         const emailExists = await this._emailExistence.doesEmailExist(email , role)
 
         if(!emailExists.success){
-            throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND , HTTP_STATUS.BAD_REQUEST)
+            throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND , HTTP_STATUS.NOT_FOUND)
         }
 
         const newHashedPass = await this._bcryptService.hash(password);

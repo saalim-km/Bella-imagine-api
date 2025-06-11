@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-
+export type createrType = "Client" | "Vendor" | "Admin";
 export type PaymentStatus =
   | "pending"
   | "processing"
@@ -8,14 +8,14 @@ export type PaymentStatus =
   | "refunded"
   | "partially_refunded";
 
-export type Purpose = "vendor-booking";
-export interface IPaymentEntity {
+export type Purpose = "vendor-booking"
+export interface IPayment {
   _id?: Types.ObjectId
   userId: Types.ObjectId
   receiverId?: Types.ObjectId
   bookingId?: Types.ObjectId
-  createrType: "Client" | "Vendor" | "Admin";
-  receiverType: "Client" | "Vendor" | "Admin";
+  createrType: createrType
+  receiverType: createrType
   transactionId: string;
   amount: number;
   currency: string;
@@ -27,7 +27,7 @@ export interface IPaymentEntity {
 }
 
 export interface PopulatedPayments
-  extends Omit<IPaymentEntity, "userId" | "recieverId"> {
+  extends Omit<IPayment, "userId" | "recieverId"> {
   userId: {
     _id: Types.ObjectId
     firstName?: string;

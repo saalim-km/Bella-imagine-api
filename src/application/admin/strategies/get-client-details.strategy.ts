@@ -20,7 +20,7 @@ export class GetClientDetailsStrategy implements IGetUserDetailsStrategy<IClient
         const {id} = input;
         const client = await this._clientRepository.findById(id)
         if(!client){
-            throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND , HTTP_STATUS.BAD_REQUEST)
+            throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND , HTTP_STATUS.NOT_FOUND)
         }
 
         if(client.profileImage){

@@ -22,7 +22,7 @@ export class GetuserDetailsUsecase implements IGetUserDetailsUsecase {
         const strategy = this._strategies[input.role];
 
         if(!strategy){
-            throw new CustomError(ERROR_MESSAGES.INVALID_ROLE , HTTP_STATUS.BAD_REQUEST)
+            throw new CustomError(ERROR_MESSAGES.INVALID_ROLE , HTTP_STATUS.UNAUTHORIZED)
         }
 
         return await strategy.getDetails(input)

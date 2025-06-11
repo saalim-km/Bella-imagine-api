@@ -16,6 +16,7 @@ export const HTTP_STATUS = {
 };
 
 export const SUCCESS_MESSAGES = {
+  CLIENT_SECRET_SUCCESS: "Client secret generated successfully.",
   REFRESH_TOKEN_SUCCESS : "Access token created successfully",
   OTP_VERIFY_SUCCESS : 'OTP verified successfully',
   JOINED_SUCESS :"Joined",
@@ -35,6 +36,7 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  PAYMENT_FAILED : 'Failed to process payment, server is down please try again layer',
   SERVICE_NOT_FOUND : 'Service not found',
   USER_BLOCKED : "User blocked by admin",
   OTP_EXPIRED : 'OTP expired',

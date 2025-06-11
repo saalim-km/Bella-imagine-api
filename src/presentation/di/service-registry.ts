@@ -13,6 +13,8 @@ import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-
 import { GetPresignedUrlUsecase } from "../../application/common/get-presigned-url.usecase";
 import { IJwtservice } from "../../domain/interfaces/service/jwt-service.interface";
 import { JwtService } from "../../interfaceAdapters/services/jwt.service";
+import { IStripeService } from "../../domain/interfaces/service/stripe-service.interface";
+import { StripeService } from "../../interfaceAdapters/services/stripe.service";
 
 export class ServiceRegistry {
   static registerServices(): void {
@@ -41,6 +43,10 @@ export class ServiceRegistry {
 
     container.register<IJwtservice>('IJwtservice',{
       useClass : JwtService
+    })
+
+    container.register<IStripeService>('IStripeService' , {
+      useClass : StripeService
     })
   }
 }

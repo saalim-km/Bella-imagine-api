@@ -1,12 +1,11 @@
 import { Types } from "mongoose";
 import { TBookingStatus, TPaymentStatus } from "../../shared/types/booking.types";
 
-export interface IBookingEntity {
+export interface IBooking {
   _id: Types.ObjectId;
   userId: Types.ObjectId;
   vendorId: Types.ObjectId;
-
-  paymentId: Types.ObjectId;
+  paymentId: Types.ObjectId | null;
 
   isClientApproved: boolean;
   isVendorApproved: boolean;
@@ -28,10 +27,13 @@ export interface IBookingEntity {
     lat: number;
     lng: number;
   };
+  distance ?: number
+  
   totalPrice: number;
+  travelFee ?: number
   paymentStatus: TPaymentStatus;
   status: TBookingStatus;
-
+  customLocation ?: string
   createdAt?: Date;
   updatedAt?: Date;
 }

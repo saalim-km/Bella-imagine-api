@@ -18,7 +18,7 @@ export class GetVendorDetailsStrategy implements IGetUserDetailsStrategy<IVendor
         const vendor = await this._vendorRepository.findVendorDetailsById(input.id) 
         console.log('vendor details',vendor);
         if(!vendor){
-            throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND , HTTP_STATUS.BAD_REQUEST)
+            throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND , HTTP_STATUS.NOT_FOUND)
         }
 
         if(vendor.profileImage){
