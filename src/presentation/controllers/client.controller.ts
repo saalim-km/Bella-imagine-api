@@ -10,21 +10,23 @@ import {
 import { ResponseHandler } from "../../shared/utils/response-handler";
 import { SUCCESS_MESSAGES } from "../../shared/constants/constants";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
-import { ICategoryManagementUsecase } from "../../domain/interfaces/usecase/admin-usecase.interface";
-import { createBookingSchema, getVendorDetailsSchema, getVendorsSchema } from "../../shared/utils/zod-validations/presentation/client.schema";
-import { IBookingCommandUsecase, IVendorBrowsingUseCase } from "../../domain/interfaces/usecase/client-usecase.interface";
+import { ICategoryManagementUsecase, IGetUserDetailsUsecase } from "../../domain/interfaces/usecase/admin-usecase.interface";
+import { createBookingSchema, getVendorDetailsSchema, getVendorsSchema, updateClientProfile } from "../../shared/utils/zod-validations/presentation/client.schema";
+import { IBookingCommandUsecase, IClientProfileUsecase, IVendorBrowsingUseCase } from "../../domain/interfaces/usecase/client-usecase.interface";
 import { objectIdSchema } from "../../shared/utils/zod-validations/validators/validations";
 import { IStripeService } from "../../domain/interfaces/service/stripe-service.interface";
 
 @injectable()
 export class ClientController implements IClientController {
   constructor(
-    @inject("IRefreshTokenUsecase")
-    private _refreshTokenUsecase: IRefreshTokenUsecase,
+    @inject("IRefreshTokenUsecase") private _refreshTokenUsecase: IRefreshTokenUsecase,
     @inject('ICategoryManagementUsecase') private _categoryManagementUsecase : ICategoryManagementUsecase,
     @inject("IVendorBrowsingUseCase") private _vendorBrowsingUsecase : IVendorBrowsingUseCase,
     @inject('IBookingCommandUsecase') private _bookingCommandUsecase : IBookingCommandUsecase,
-    @inject('IStripeService') private _stripeService : IStripeService
+    @inject('IStripeService') private _stripeService : IStripeService,
+    @inject('IGetUserDetailsUsecase') private _getUserDetailsUsecase : IGetUserDetailsUsecase,
+    @inject('IClientProfileUsecase') private _clientProfileUsecase : IClientProfileUsecase
+
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -90,4 +92,21 @@ export class ClientController implements IClientController {
     const event : Stripe.Event = req.body
     await this._stripeService.handleWebhookEvent(event)
   }
+
+  async getClientDetails(req: Request, res: Response): Promise<void> {
+    const clientId = objectIdSchema.parse((req as CustomRequest).user._id)
+    const client = await this._getUserDetailsUsecase.getUserDetail({id : clientId , role : 'client'})
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,client)
+  }
+
+  async updateClientDetails(req: Request, res: Response): Promise<void> {
+    const {_id} = (req as CustomRequest).user
+    const parsed = updateClientProfile.parse({...req.body,clientId : _id , profileImage : req.file})
+    const client = await this._clientProfileUsecase.updateClientProfile(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS,client) 
+  }
 }
+
+
+
+

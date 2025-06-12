@@ -23,7 +23,8 @@ export const otpSchema = z
 export const phoneNumberSchema = z
   .string()
   .length(10, { message: "Phone number must be exactly 10 digits" })
-  .regex(/^\d{10}$/, { message: "Phone number must contain only digits" });
+  .regex(/^\d{10}$/, { message: "Phone number must contain only digits" })
+  .optional() 
 
 export const passwordSchema = z
   .string()
@@ -81,3 +82,26 @@ export const createdAtQuerySchema = z
   export const objectIdSchema = z
   .string()
   .transform((val) => new Types.ObjectId(val))
+
+
+export const ImageSchema = z
+  .preprocess((file) => {
+    // Normalize null, '' or missing fields to undefined
+    if (file === null || file === '' || typeof file === 'undefined') {
+      return undefined;
+    }
+    return file;
+  }, 
+  z
+    .custom<Express.Multer.File>((file) => {
+      return (
+        typeof file === 'object' &&
+        file !== null &&
+        'mimetype' in file &&
+        'originalname' in file
+      );
+    }, {
+      message: 'Invalid file upload',
+    })
+  ).optional();
+  

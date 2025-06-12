@@ -50,3 +50,17 @@ export interface CreatePaymentIntentInput {
   travelFee?: number;
   totalPrice: number;
 }
+
+
+export interface UpdateClientProfileInput{
+  clientId : Types.ObjectId;
+  name: string;
+  phoneNumber?: number;
+  location: {
+    address: string;
+    lat: string;
+    lng: string;
+  };
+  profileImage?: Express.Multer.File  
+  email: string;
+}

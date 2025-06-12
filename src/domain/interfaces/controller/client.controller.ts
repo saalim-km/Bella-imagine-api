@@ -9,4 +9,6 @@ export interface IClientController {
     getServiceDetails(req: Request, res: Response) : Promise<void>
     createPaymentIntent(req: Request, res: Response) : Promise<void>
     handleWebhook(req: Request, res: Response) : Promise<void>
+    getClientDetails(req: Request, res: Response) : Promise<void>
+    updateClientDetails(req: Request, res: Response) : Promise<void>
 }
