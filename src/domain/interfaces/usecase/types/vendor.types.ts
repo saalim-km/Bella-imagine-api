@@ -15,3 +15,8 @@ export interface UpdatevendorProfileInput {
   portfolioWebsite ?: string;
   profileDescription ?: string;
 }   
+
+export interface CreateCategoryRequestInput {
+  vendorId: Types.ObjectId;
+  categoryId: Types.ObjectId;
+}

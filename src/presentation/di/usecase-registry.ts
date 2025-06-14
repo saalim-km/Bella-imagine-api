@@ -38,12 +38,18 @@ import { RefreshTokenUsecase } from "../../application/common/refresh-token.usec
 import { EmailExistenceUsecase } from "../../application/common/email-existence.usecase";
 import { UserManagementUsecase } from "../../application/admin/user-management.usecase";
 import { CategoryManagementUsecase } from "../../application/admin/category-management.usecase";
-import { IBookingCommandUsecase, IClientProfileUsecase, IVendorBrowsingUseCase } from "../../domain/interfaces/usecase/client-usecase.interface";
+import { IClientProfileUsecase, IVendorBrowsingUseCase } from "../../domain/interfaces/usecase/client-usecase.interface";
 import { VendorBrowsingUsecase } from "../../application/client/vendor-browsing.usecase";
-import { BookingCommandUsecase } from "../../application/client/booking-command.usecase";
+import { BookingCommandUsecase } from "../../application/booking/booking-command.usecase";
 import { ClientProfileUsecase } from "../../application/client/client-profile.usecase";
 import { IVendorProfileUsecase } from "../../domain/interfaces/usecase/vendor-usecase.interface";
 import { VendorProfileUsecase } from "../../application/vendor/vendor-profile.usecase";
+import { BookingQueryUsecase } from "../../application/booking/booking-query.usecase";
+import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
+import { WalletUsecase } from "../../application/wallet/wallet.usecase";
+import { IBookingCommandUsecase, IBookingQueryUsecase } from "../../domain/interfaces/usecase/booking-usecase.interface";
+import { IPaymentUsecaase } from "../../domain/interfaces/usecase/payment.usecase";
+import { PaymentUsecase } from "../../application/payment/payment.usecase";
 
 export class UsecaseRegistry {
     // Static method to register all use cases and strategies
@@ -144,6 +150,18 @@ export class UsecaseRegistry {
 
         container.register<IVendorProfileUsecase>('IVendorProfileUsecase' , {
             useClass : VendorProfileUsecase
+        })
+
+        container.register<IBookingQueryUsecase>('IBookingQueryUsecase' , {
+            useClass : BookingQueryUsecase
+        })
+
+        container.register<IWalletUsecase>('IWalletUsecase' , {
+            useClass : WalletUsecase
+        })
+
+        container.register<IPaymentUsecaase>('IPaymentUsecaase' , {
+            useClass : PaymentUsecase
         })
     }
 }

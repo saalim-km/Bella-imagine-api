@@ -81,43 +81,6 @@ export const updateClientProfile = z.object({
   email: z.string().email('Invalid email address'),
 });
 
-//  {
-//   name: 'anilkk',
-//   phoneNumber: '9895012661',
-//   location: [Object: null prototype] {
-//     address: 'Maradu, Ernakulam, Kochi, Kerala, India',
-//     lat: '9.9367552',
-//     lng: '76.3180429'
-//   },
-//   profileDescription: 'professional photographer',
-//   portfolioWebsite: 'https://mywed.com',
-//   languages: [ 'Bengali' ]
-// } [Object: null prototype] {
-//   profileImage: [
-//     {
-//       fieldname: 'profileImage',
-//       originalname: 'unnamed (1).webp',
-//       encoding: '7bit',
-//       mimetype: 'image/webp',
-//       destination: 'uploads/',
-//       filename: '268d14db-fe4d-4abb-80cb-08adb559e80d-1749710167242.webp',
-//       path: 'uploads\\268d14db-fe4d-4abb-80cb-08adb559e80d-1749710167242.webp',
-//       size: 114300
-//     }
-//   ],
-//   verificationDocument: [
-//     {
-//       fieldname: 'verificationDocument',
-//       originalname: 'adhaar.png',
-//       encoding: '7bit',
-//       mimetype: 'image/png',
-//       destination: 'uploads/',
-//       filename: '65ad7995-bafb-46b7-a60b-f38045c89c6e-1749710167243.png',
-//       path: 'uploads\\65ad7995-bafb-46b7-a60b-f38045c89c6e-1749710167243.png',
-//       size: 101179
-//     }
-//   ]
-// }
 
 export const updateVendorProfileSchema = z.object({
   vendorId : objectIdSchema,
@@ -144,3 +107,92 @@ export const updateVendorProfileSchema = z.object({
   profileDescription: z.string().optional(),
   languages : z.array(z.string().min(1, 'Language name cannot be empty')).optional(),
 }) 
+
+
+
+const BookingStatusEnum = z.enum(["all", "pending", "confirmed", "cancelled", "completed"]);
+
+
+export const BookingQuerySchema = z.object({
+  page: z
+    .preprocess(
+      (val) => (typeof val === 'string' && val.trim() !== '' ? Number(val) : undefined),
+      z.number().int().nonnegative().optional())
+    .default(1)
+    .describe("Page number for pagination"),
+  limit: z
+    .preprocess(
+      (val) => (typeof val === 'string' && val.trim() !== '' ? Number(val) : undefined),
+      z.number().max(100).int().nonnegative().optional())
+    .default(3)
+    .describe("Number of bookings per page"),
+  sort: z
+    .string()
+    .optional()
+    .refine(
+      (value) =>
+        !value ||
+        [
+          "createdAt",
+          "-createdAt",
+          "bookingDate",
+          "-bookingDate",
+          "totalPrice",
+          "-totalPrice",
+          "serviceDetails.serviceTitle",
+          "-serviceDetails.serviceTitle",
+          "vendorId.name",
+          "-vendorId.name",
+          "status",
+          "-status",
+        ].includes(value),
+      {
+        message:
+          "Sort must be one of: createdAt, -createdAt, bookingDate, -bookingDate, totalPrice, -totalPrice, serviceDetails.serviceTitle, -serviceDetails.serviceTitle, vendorId.name, -vendorId.name, status, -status",
+      }
+    )
+    .describe("Field to sort by, with optional descending order prefix (-)"),
+  search: z
+    .string()
+    .max(100)
+    .optional()
+    .describe("Search term for booking title or vendor name"),
+  statusFilter: BookingStatusEnum.default("all").describe("Filter by booking status"),
+  dateFrom: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "dateFrom must be in YYYY-MM-DD format")
+    .optional()
+    .describe("Start date for booking date range filter"),
+  dateTo: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "dateTo must be in YYYY-MM-DD format")
+    .optional()
+    .describe("End date for booking date range filter"),
+  priceMin: z
+    .preprocess(
+      (val) => (typeof val === 'string' && val.trim() !== '' ? Number(val) : undefined),
+      z.number().max(100000)
+    )
+    .default(0)
+    .describe("Minimum price filter"),
+  priceMax: z
+    .preprocess(
+      (val) => (typeof val === 'string' && val.trim() !== '' ? Number(val) : undefined),
+      z.number().max(100000)
+    )
+    .default(100000)
+    .describe("Maximum price filter"),
+}).refine(
+  (data) => {
+    if (data.dateFrom && data.dateTo) {
+      return new Date(data.dateFrom) <= new Date(data.dateTo);
+    }
+    return true;
+  },
+  {
+    message: "dateFrom must be before or equal to dateTo",
+    path: ["dateTo"],
+  }
+);
+
+export type BookingQueryParams = z.infer<typeof BookingQuerySchema>;

@@ -23,7 +23,6 @@ export class BaseRepository<T> implements IBaseRepository<T> {
         return await this.model.countDocuments(filter)
     }
 
-
     async findOne(query: FilterQuery<T>): Promise<T | null> {
         return await this.model.findOne(query)
     }

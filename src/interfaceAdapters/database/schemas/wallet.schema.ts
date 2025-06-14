@@ -14,7 +14,7 @@ export const walletSchema = new Schema<IWallet>(
     balance: { type: Number, default: 0 },
     paymentId: [{ type: Schema.Types.ObjectId, ref: "Payment" }],
   },
-  { timestamps: true }
+  { timestamps: true }  
 );
 
 

@@ -1,5 +1,8 @@
 import { Types } from "mongoose";
 import { PaginationInput } from "./admin.types";
+import { TRole } from "../../../../shared/constants/constants";
+import { BookingQueryParams } from "../../../../shared/utils/zod-validations/presentation/client.schema";
+import { TBookingStatus, TPaymentStatus } from "../../../../shared/types/booking.types";
 
 export interface GetVendorsQueryInput
   extends Pick<PaginationInput, "limit" | "page"> {
@@ -16,17 +19,6 @@ export interface GetVendorDetailsInput {
   sampleLimit: number;
 }
 
-export interface CreatePaymentIntenServicetInput {
-  amount: number;
-  currency: string;
-  description: string;
-  receiptEmail: string;
-  metadata : {
-    bookingId : string;
-    vendorId : string;
-    clientId : string;
-  }
-}
 
 export interface CreatePaymentIntentInput {
   vendorId: Types.ObjectId;
@@ -42,8 +34,8 @@ export interface CreatePaymentIntentInput {
     lng?: number;
   };
   purpose: 'vendor-booking';
-  createrType: string;
-  receiverType: string;
+  createrType: "Client" | "Vendor";
+  receiverType: "Client" | "Vendor";
   distance?: number;
   customLocation?: string;
   travelTime?: string;
@@ -63,4 +55,16 @@ export interface UpdateClientProfileInput{
   };
   profileImage?: Express.Multer.File  
   email: string;
+}
+
+export interface GetAllBookingsInput {
+  userId : Types.ObjectId;
+  role : TRole;
+  query : BookingQueryParams
+}
+
+export interface updateBookingStatusInput {
+  bookingId: Types.ObjectId;
+  status: TBookingStatus;
+  userId : Types.ObjectId;
 }

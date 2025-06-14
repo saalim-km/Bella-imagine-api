@@ -1,18 +1,32 @@
 import { inject, injectable } from "tsyringe";
 import { IVendorController } from "../../domain/interfaces/controller/vendor.controller";
-import { IGetUserDetailsUsecase } from "../../domain/interfaces/usecase/admin-usecase.interface";
+import {
+  ICategoryManagementUsecase,
+  IGetUserDetailsUsecase,
+} from "../../domain/interfaces/usecase/admin-usecase.interface";
 import { Request, Response } from "express";
-import { objectIdSchema } from "../../shared/utils/zod-validations/validators/validations";
+import {
+  objectIdSchema,
+  updateBookingSchema,
+} from "../../shared/utils/zod-validations/validators/validations";
 import { CustomRequest } from "../middlewares/auth.middleware";
 import { ResponseHandler } from "../../shared/utils/response-handler";
-import { SUCCESS_MESSAGES } from "../../shared/constants/constants";
+import { SUCCESS_MESSAGES, TRole } from "../../shared/constants/constants";
 import {
   clearAuthCookies,
   updateCookieWithAccessToken,
 } from "../../shared/utils/cookie-helper";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
-import { updateVendorProfileSchema } from "../../shared/utils/zod-validations/presentation/client.schema";
+import {
+  BookingQuerySchema,
+  updateVendorProfileSchema,
+} from "../../shared/utils/zod-validations/presentation/client.schema";
 import { IVendorProfileUsecase } from "../../domain/interfaces/usecase/vendor-usecase.interface";
+import {
+  IBookingCommandUsecase,
+  IBookingQueryUsecase,
+} from "../../domain/interfaces/usecase/booking-usecase.interface";
+import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
 
 @injectable()
 export class VendorController implements IVendorController {
@@ -21,7 +35,15 @@ export class VendorController implements IVendorController {
     private _getUserDetailsUsecase: IGetUserDetailsUsecase,
     @inject("IRefreshTokenUsecase")
     private _refreshTokenUsecase: IRefreshTokenUsecase,
-    @inject('IVendorProfileUsecase') private _vendorProfileUsecase : IVendorProfileUsecase
+    @inject("IVendorProfileUsecase")
+    private _vendorProfileUsecase: IVendorProfileUsecase,
+    @inject("IBookingQueryUsecase")
+    private _bookingQueryUsecase: IBookingQueryUsecase,
+    @inject("ICategoryManagementUsecase")
+    private _categoryManagementUsecase: ICategoryManagementUsecase,
+    @inject("IBookingCommandUsecase")
+    private _bookingCommandUsecase: IBookingCommandUsecase,
+    @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -58,12 +80,14 @@ export class VendorController implements IVendorController {
   }
 
   async updateVendorDetails(req: Request, res: Response): Promise<void> {
-  const { _id } = (req as CustomRequest).user;
+    const { _id } = (req as CustomRequest).user;
 
-  // Safe extraction of files (may be undefined)
-  const files = req.files as { [key: string]: Express.Multer.File[] } | undefined;
-  const profileImage = files?.profileImage?.[0];
-  const verificationDocument = files?.verificationDocument?.[0];
+    // Safe extraction of files (may be undefined)
+    const files = req.files as
+      | { [key: string]: Express.Multer.File[] }
+      | undefined;
+    const profileImage = files?.profileImage?.[0];
+    const verificationDocument = files?.verificationDocument?.[0];
     const parsed = updateVendorProfileSchema.parse({
       ...req.body,
       vendorId: _id,
@@ -71,8 +95,53 @@ export class VendorController implements IVendorController {
       verificationDocument,
     });
 
-    console.log('parsed data:', parsed);
-    const vendor = await this._vendorProfileUsecase.updateVendorProfile(parsed)
-    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS,vendor)
+    console.log("parsed data:", parsed);
+    const vendor = await this._vendorProfileUsecase.updateVendorProfile(parsed);
+    ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS, vendor);
+  }
+
+  async getVendorBookings(req: Request, res: Response): Promise<void> {
+    const { _id, role } = (req as CustomRequest).user;
+    const parsedObjectId = objectIdSchema.parse(_id);
+    const parsed = BookingQuerySchema.parse(req.query);
+    const bookings = await this._bookingQueryUsecase.fetchAllBookings({
+      userId: parsedObjectId,
+      role: role as TRole,
+      query: parsed,
+    });
+    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, bookings);
+  }
+
+  async getCategories(req: Request, res: Response): Promise<void> {
+    const categories = await this._categoryManagementUsecase.getCategories({
+      limit: 100,
+      page: 1,
+    });
+    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, categories);
+  }
+
+  async joinCateoryRequest(req: Request, res: Response): Promise<void> {
+    const categoryId = objectIdSchema.parse(req.body.category);
+    const vendorId = objectIdSchema.parse((req as CustomRequest).user._id);
+    await this._vendorProfileUsecase.createCategoryJoinRequest({
+      categoryId,
+      vendorId,
+    });
+    ResponseHandler.success(
+      res,
+      SUCCESS_MESSAGES.CATEGORY_JOIN_REQUEST_SUCCESS
+    );
+  }
+
+  async fetchWallet(req: Request, res: Response): Promise<void> {
+    const vendorId = objectIdSchema.parse((req as CustomRequest).user._id);
+    const wallet = await this._walletUsecase.fetchWallet(vendorId);
+    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, wallet);
+  }
+
+  async updateBookingStatus(req: Request, res: Response): Promise<void> {
+    const userId = (req as CustomRequest).user._id;
+    const parsed = updateBookingSchema.parse({ ...req.query, userId });
+    await this._bookingCommandUsecase.updateBookingStatus(parsed);
   }
 }

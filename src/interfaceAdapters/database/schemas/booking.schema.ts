@@ -3,7 +3,7 @@ import { IBooking } from "../../../domain/models/booking";
 
 const bookingSchema = new mongoose.Schema<IBooking>(
   {
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    userId: { type: Schema.Types.ObjectId, ref: "Client", required: true },
     vendorId: { type: Schema.Types.ObjectId, ref: "Vendor", required: true },
     paymentId: { type: Schema.Types.ObjectId, ref: "Payment", default: null },
 
@@ -16,6 +16,11 @@ const bookingSchema = new mongoose.Schema<IBooking>(
       serviceDescription: { type: String, required: true },
       cancellationPolicies: { type: [String], default: [] },
       termsAndConditions: { type: [String], default: [] },
+      location : {
+        lat : { type: Number, required: true },
+        lng : { type: Number, required: true },
+        address: { type: String, required: true }
+      }
     },
 
     bookingDate: { type: String, required: true },
@@ -26,10 +31,10 @@ const bookingSchema = new mongoose.Schema<IBooking>(
     },
 
     location: {
-      lat: { type: Number, required: true },
+      lat: { type: Number, required: true },  
       lng: { type: Number, required: true },
     },
-
+    travelTime: { type: String, default: 0 }, // in minutes
     distance: { type: Number, default: 0 },
     travelFee: { type: Number, default: 0 },
 
@@ -38,6 +43,9 @@ const bookingSchema = new mongoose.Schema<IBooking>(
     status: { type: String, enum: ["pending", "confirmed", "cancelled", "completed"], required: true },
 
     customLocation: { type: String, default: "" },
+
+    createrType: { type: String, enum: ["Client", "Vendor"], default: "Client" },
+    receiverType: { type: String, enum: ["Client", "Vendor"], default: "Vendor" },
   },
   { timestamps: true }
 );

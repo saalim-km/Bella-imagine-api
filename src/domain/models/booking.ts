@@ -16,6 +16,11 @@ export interface IBooking {
     serviceDescription: string;
     cancellationPolicies: string[];
     termsAndConditions: string[];
+    location : {
+      lat : number;
+      lng : number;
+      address : string;
+    }
   };
 
   bookingDate: string;
@@ -28,12 +33,14 @@ export interface IBooking {
     lng: number;
   };
   distance ?: number
-  
+  travelTime ?: string
   totalPrice: number;
   travelFee ?: number
   paymentStatus: TPaymentStatus;
   status: TBookingStatus;
   customLocation ?: string
+  createrType?: "Client" | "Vendor";
+  receiverType?: "Client" | "Vendor";
   createdAt?: Date;
   updatedAt?: Date;
 }

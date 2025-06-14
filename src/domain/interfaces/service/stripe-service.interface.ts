@@ -1,6 +1,6 @@
 import { PaymentStatus } from "../../models/payment";
-import { CreatePaymentIntenServicetInput } from "../usecase/types/client.types";
 import {Stripe} from 'stripe'
+import { CreatePaymentIntenServicetInput } from "../usecase/types/payment.types";
 
 export interface IStripeService {
     createPaymentIntent(input : CreatePaymentIntenServicetInput): Promise<Stripe.PaymentIntent>

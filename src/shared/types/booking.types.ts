@@ -1,6 +1,6 @@
 export type TPaymentStatus = "pending" | "completed" | "failed" | "refunded";
 export type TBookingStatus =
-  | "pending"
+  "pending"
   | "confirmed"
   | "cancelled"
   | "completed";

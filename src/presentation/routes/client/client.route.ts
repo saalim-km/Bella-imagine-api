@@ -15,9 +15,15 @@ export class ClientRoute extends BaseRoute {
         .get('/client/service/:serviceId',verifyAuth,authorizeRole(['client']),asyncHandler(clientController.getServiceDetails.bind(clientController)))
         .post('/client/create-payment-intent',verifyAuth,authorizeRole(['client']),asyncHandler(clientController.createPaymentIntent.bind(clientController)))
         .post('/client/webhook',clientController.handleWebhook.bind(clientController))
+        .get('/client/wallet',verifyAuth,authorizeRole(['client']),asyncHandler(clientController.fetchWallet.bind(clientController)))
+        
 
         this.router.route('/client/details')
         .get(verifyAuth,authorizeRole(['client']),asyncHandler(clientController.getClientDetails.bind(clientController)))
         .put(verifyAuth,authorizeRole(['client']),upload.single("profileImage"),asyncHandler(clientController.updateClientDetails.bind(clientController)))
+
+        this.router.route('/client/client-bookings')
+        .get(verifyAuth,authorizeRole(['client']),asyncHandler(clientController.getallBookings.bind(clientController)))
+        .patch(verifyAuth,authorizeRole(['client']),asyncHandler(clientController.updateBookingStatus.bind(clientController)))
     }
 }

@@ -1,9 +1,10 @@
 import { Types } from "mongoose";
 import { IVendor } from "../../models/vendor";
-import { CreatePaymentIntentInput, GetVendorDetailsInput, GetVendorsQueryInput, UpdateClientProfileInput } from "./types/client.types";
+import { GetVendorDetailsInput, GetVendorsQueryInput, UpdateClientProfileInput } from "./types/client.types";
 import { PaginatedResponse } from "./types/common.types";
 import { IService } from "../../models/service";
 import { IClient } from "../../models/client";
+import { PopulatedWallet } from "../../models/wallet";
 
 export interface IVendorBrowsingUseCase {
     fetchAvailableVendors(input : GetVendorsQueryInput) : Promise<PaginatedResponse<IVendor>>
@@ -12,9 +13,7 @@ export interface IVendorBrowsingUseCase {
 }
 
 
-export interface IBookingCommandUsecase {
-    createPaymentIntentAndBooking(input : CreatePaymentIntentInput) : Promise<string>
-}
+
 
 export interface IClientProfileUsecase {
     updateClientProfile(input : UpdateClientProfileInput) : Promise<IClient>

@@ -16,6 +16,7 @@ export const HTTP_STATUS = {
 };
 
 export const SUCCESS_MESSAGES = {
+  CATEGORY_JOIN_REQUEST_SUCCESS: "Category join request sent successfully.",
   CLIENT_SECRET_SUCCESS: "Client secret generated successfully.",
   REFRESH_TOKEN_SUCCESS : "Access token created successfully",
   OTP_VERIFY_SUCCESS : 'OTP verified successfully',
@@ -36,6 +37,14 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  UNAUTHORIZED_USER: "Unauthorized user.",
+  INVALID_BOOKING_STATUS: "Invalid booking status provided.",
+  PAYMENT_INTENT_CREATION_FAILED: "Failed to create payment intent, please try again later.",
+  WALLET_NOT_FOUND: "Wallet not found",
+  BOOKING_ALREADY_COMPLETED_OR_CANCELLED: "Booking already completed or cancelled", 
+  CATEGORY_JOIN_REQUEST_LIMIT:' You can only join up to 3 categories',
+  CATEGORY_JOIN_REQUEST_EXISTS: "Category join request already exists",
+  FAILED_TO_CREATE_PAYMENT: "Failed to create payment, please try again later.",
   PAYMENT_FAILED : 'Failed to process payment, server is down please try again layer',
   SERVICE_NOT_FOUND : 'Service not found',
   USER_BLOCKED : "User blocked by admin",

@@ -105,3 +105,9 @@ export const ImageSchema = z
     })
   ).optional();
   
+
+export const  updateBookingSchema = z.object({
+  bookingId : objectIdSchema,
+  status: z.enum(["pending", "confirmed", "cancelled", "completed"]),
+  userId : objectIdSchema,
+})

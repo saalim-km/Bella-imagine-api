@@ -8,7 +8,7 @@ export type PaymentStatus =
   | "refunded"
   | "partially_refunded";
 
-export type Purpose = "vendor-booking"
+export type Purpose = "vendor-booking" | "refund-amount"
 export interface IPayment {
   _id?: Types.ObjectId
   userId: Types.ObjectId

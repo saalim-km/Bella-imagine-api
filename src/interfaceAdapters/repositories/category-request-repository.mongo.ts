@@ -5,6 +5,7 @@ import { CategoryRequest } from "../database/schemas/category-request.schema";
 import { ICategoryRequestRepository } from "../../domain/interfaces/repository/category-request.repository";
 import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";
 import { GetCatRequestInput } from "../../domain/types/admin.type";
+import { isCatRequestExistsInput } from "../../domain/types/vendor.types";
 
 @injectable()
 export class CategoryRequestRepository
@@ -44,5 +45,14 @@ export class CategoryRequestRepository
         data : requests,
         total : count
       }
+  }
+
+  async isCategoryJoinRequestExists(input: isCatRequestExistsInput): Promise<boolean> {
+    const { vendorId, categoryId } = input;
+    const exists = await this.model.exists({
+      vendorId: vendorId,
+      categoryId: categoryId,
+    });
+    return !!exists;
   }
 }
