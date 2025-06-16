@@ -22,7 +22,7 @@ export class CommunityCommandUsecase implements ICommunityCommandUsecase {
     async createNewCommunity(input: CreateCommunityInput): Promise<void> {
         const {iconImage , coverImage} = input;
 
-        const isCommunityExists = await this._communityRepository.findOne({name : input.name})
+        const isCommunityExists = await this._communityRepository.findOne({name : input.name.trim()})
         if(isCommunityExists){
             throw new CustomError(ERROR_MESSAGES.COMMUNIY_EXISTS,HTTP_STATUS.CONFLICT)
         }
