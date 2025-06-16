@@ -7,7 +7,7 @@ import { IBaseRepository } from "./base.repository";
 import { GetQueryInput } from "../../types/admin.type";
 import { PaginatedResponse } from "../usecase/types/common.types";
 import { IClient } from "../../models/client";
-import { ClientVendorQuery } from "../../types/client.type";
+import { ClientVendorQuery } from "../../types/client.types";
 import { IWorkSample } from "../../models/worksample";
 
 export interface IVendorRepository extends IBaseUserRepository<IVendor> , IBaseRepository<IVendor>{

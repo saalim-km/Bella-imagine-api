@@ -2,7 +2,6 @@ import express, { Application } from "express";
 import http from "http";
 import cors from 'cors'
 import cookieparser from 'cookie-parser';
-import rateLimit from "express-rate-limit";
 import { config } from "../../shared/config/config";
 import { AuthRoute } from "../routes/auth/auth.routes";
 import { PrivateRoute } from "../routes/common/private.route";

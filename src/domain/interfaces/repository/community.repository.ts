@@ -1,4 +1,8 @@
 import { ICommunity } from "../../models/community";
+import { FetchAllCommunityInput } from "../../types/community.types";
+import { PaginatedResponse } from "../usecase/types/common.types";
 import { IBaseRepository } from "./base.repository";
 
-export interface ICommunityRepository extends IBaseRepository<ICommunity> {}
+export interface ICommunityRepository extends IBaseRepository<ICommunity> {
+    fetchAllCommunity(input : FetchAllCommunityInput) : Promise<PaginatedResponse<ICommunity>>
+}

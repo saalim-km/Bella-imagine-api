@@ -17,6 +17,10 @@ import { IBookingRepository } from "../../domain/interfaces/repository/booking.r
 import { BookingRepository } from "../../interfaceAdapters/repositories/booking-repository.mongo";
 import { IPaymentRepository } from "../../domain/interfaces/repository/payment.repository";
 import { PaymentRepository } from "../../interfaceAdapters/repositories/payment-repository.mongo";
+import { ICommunityRepository } from "../../domain/interfaces/repository/community.repository";
+import { CommunityRepository } from "../../interfaceAdapters/repositories/community-repository.mongo";
+import { ICommunityMemberRepository } from "../../domain/interfaces/repository/community-member.repository";
+import { CommunityMemberRepository } from "../../interfaceAdapters/repositories/community-member-repository.mongo";
 
 export class RepositoryRegistry {
     static registerRepositories() : void {
@@ -55,6 +59,14 @@ export class RepositoryRegistry {
 
         container.register<IPaymentRepository>('IPaymentRepository' , {
             useClass : PaymentRepository
+        })
+
+        container.register<ICommunityRepository>('ICommunityRepository' , {
+            useClass : CommunityRepository
+        })
+
+        container.register<ICommunityMemberRepository>('ICommunityMemberRepository', {
+            useClass : CommunityMemberRepository
         })
     }
 }

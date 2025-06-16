@@ -3,6 +3,7 @@ import { AuthController } from "../controllers/auth.controller";
 import { AdminController } from "../controllers/admin.controller";
 import { ClientController } from "../controllers/client.controller";
 import { VendorController } from "../controllers/vendor.controller";
+import { CommunityController } from "../controllers/community.controller";
 
 export class ControllerRegistry {
     static registerControllers(): void {
@@ -10,5 +11,6 @@ export class ControllerRegistry {
         container.register('IAdminController' , {useClass : AdminController})
         container.register('IClientController' , {useClass: ClientController})
         container.register('IVendorController' , {useClass : VendorController})
+        container.register('ICommunityController' , {useClass : CommunityController})
     }
 }

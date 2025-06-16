@@ -19,6 +19,7 @@ import {
   createBookingSchema,
   getVendorDetailsSchema,
   getVendorsSchema,
+  updateBookingSchema,
   updateClientProfile,
 } from "../../shared/utils/zod-validations/presentation/client.schema";
 import {
@@ -27,7 +28,6 @@ import {
 } from "../../domain/interfaces/usecase/client-usecase.interface";
 import {
   objectIdSchema,
-  updateBookingSchema,
 } from "../../shared/utils/zod-validations/validators/validations";
 import { IStripeService } from "../../domain/interfaces/service/stripe-service.interface";
 import {

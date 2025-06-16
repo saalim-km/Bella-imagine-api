@@ -195,4 +195,10 @@ export const BookingQuerySchema = z.object({
   }
 );
 
+export const  updateBookingSchema = z.object({
+  bookingId : objectIdSchema,
+  status: z.enum(["pending", "confirmed", "cancelled", "completed"]),
+  userId : objectIdSchema,
+})
+
 export type BookingQueryParams = z.infer<typeof BookingQuerySchema>;

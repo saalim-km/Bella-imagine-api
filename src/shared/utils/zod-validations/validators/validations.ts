@@ -106,8 +106,7 @@ export const ImageSchema = z
   ).optional();
   
 
-export const  updateBookingSchema = z.object({
-  bookingId : objectIdSchema,
-  status: z.enum(["pending", "confirmed", "cancelled", "completed"]),
-  userId : objectIdSchema,
-})
+
+export const slugSchema = z.string().transform((val) => {
+  return val.startsWith("r/") ? val : `r/${val}`;
+});

@@ -6,7 +6,7 @@ import { IVendorRepository } from "../../domain/interfaces/repository/vendor.rep
 import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";
 import { GetQueryInput } from "../../domain/types/admin.type";
 import { FilterQuery, Types } from "mongoose";
-import { ClientVendorQuery } from "../../domain/types/client.type";
+import { ClientVendorQuery } from "../../domain/types/client.types";
 import { IService } from "../../domain/models/service";
 import { PaginatedResult } from "../../shared/types/pagination.types";
 import { IWorkSample } from "../../domain/models/worksample";

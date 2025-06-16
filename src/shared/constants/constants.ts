@@ -37,6 +37,8 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  INVALID_SLUG : 'Invalid slug',
+  COMMUNIY_EXISTS : 'Community already exists.',
   ADMIN_NOT_FOUND: "Admin not found",
   INVALID_AMOUNT: "Invalid amount provided.",
   UNAUTHORIZED_USER: "Unauthorized user.",
