@@ -4,5 +4,6 @@ import { creditAmountToWalletInput } from "./types/wallet.types";
 
 export interface IWalletUsecase {
     fetchWallet(userId: Types.ObjectId): Promise<PopulatedWallet>
-    creditAmountToWallet(input : creditAmountToWalletInput) : Promise<IWallet>
+    creditAmountToWallet(input : creditAmountToWalletInput) : Promise<void>
+    creditAdminCommissionToWallet(bookingId: Types.ObjectId): Promise<void>;
 }

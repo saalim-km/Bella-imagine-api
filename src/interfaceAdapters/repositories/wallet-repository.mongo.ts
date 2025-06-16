@@ -47,6 +47,7 @@ export class WalletRepository
       .populate({
         path: "paymentId",
         select: "userId bookingId transactionId paymentIntentId purpose amount currency status createdAt",
+        options: { sort: { createdAt: -1 } },
       })) as unknown as PopulatedWallet;
   }
 

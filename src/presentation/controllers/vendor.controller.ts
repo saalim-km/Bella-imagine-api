@@ -143,5 +143,6 @@ export class VendorController implements IVendorController {
     const userId = (req as CustomRequest).user._id;
     const parsed = updateBookingSchema.parse({ ...req.query, userId });
     await this._bookingCommandUsecase.updateBookingStatus(parsed);
+    ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
   }
 }

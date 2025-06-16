@@ -37,6 +37,8 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  ADMIN_NOT_FOUND: "Admin not found",
+  INVALID_AMOUNT: "Invalid amount provided.",
   UNAUTHORIZED_USER: "Unauthorized user.",
   INVALID_BOOKING_STATUS: "Invalid booking status provided.",
   PAYMENT_INTENT_CREATION_FAILED: "Failed to create payment intent, please try again later.",

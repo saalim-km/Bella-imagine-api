@@ -7,14 +7,14 @@ import { IBookingRepository } from "../../domain/interfaces/repository/booking.r
 import { IServiceRepository } from "../../domain/interfaces/repository/service.repository";
 import { CustomError } from "../../shared/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
-import { IStripeService } from "../../domain/interfaces/service/stripe-service.interface";
 import { IClientRepository } from "../../domain/interfaces/repository/client.repository";
-import { IPaymentRepository } from "../../domain/interfaces/repository/payment.repository";
 import { IWalletRepository } from "../../domain/interfaces/repository/wallet.repository";
 import { IBookingCommandUsecase } from "../../domain/interfaces/usecase/booking-usecase.interface";
 import { IPaymentUsecaase } from "../../domain/interfaces/usecase/payment.usecase";
 import { IPayment } from "../../domain/models/payment";
 import { IBooking } from "../../domain/models/booking";
+import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
+import { Types } from "mongoose";
 
 @injectable()
 export class BookingCommandUsecase implements IBookingCommandUsecase {
@@ -25,7 +25,8 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
     private _serviceRepository: IServiceRepository,
     @inject("IClientRepository") private _clientRepository: IClientRepository,
     @inject("IWalletRepository") private _walletRepository: IWalletRepository,
-    @inject('IPaymentUsecaase') private _paymentUsecase : IPaymentUsecaase
+    @inject("IPaymentUsecaase") private _paymentUsecase: IPaymentUsecaase,
+    @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
   ) {}
 
   async createPaymentIntentAndBooking(
@@ -49,13 +50,13 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
     } = input;
 
     const service = await this._serviceRepository.findById(serviceId);
-
     if (!service) {
       throw new CustomError(
         ERROR_MESSAGES.SERVICE_NOT_FOUND,
         HTTP_STATUS.NOT_FOUND
       );
     }
+
     const client = await this._clientRepository.findById(clientId);
     if (!client) {
       throw new CustomError(
@@ -69,7 +70,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       customLocation: customLocation || "",
       distance: distance || 0,
       travelFee: travelFee || 0,
-      travelTime : travelTime || "",
+      travelTime: travelTime || "",
       location:
         location &&
         typeof location.lat === "number" &&
@@ -104,24 +105,31 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
         clientId: clientId.toString(),
         vendorId: vendorId.toString(),
       },
-    }
-    const clientSecret = await this._paymentUsecase.createPaymentIntent(
+    };
+    const paymentIntent = await this._paymentUsecase.createPaymentIntent(
       paymentIntentData
     );
 
-    const paymentData : IPayment = {
+    if (!paymentIntent || !paymentIntent.client_secret) {
+      throw new CustomError(
+        ERROR_MESSAGES.PAYMENT_INTENT_CREATION_FAILED,
+        HTTP_STATUS.INTERNAL_SERVER_ERROR
+      );
+    }
+
+    const paymentData: IPayment = {
       userId: clientId,
       receiverId: vendorId,
       createrType: "Client",
       receiverType: "Vendor",
       transactionId: `TXN_${Date.now()}`,
       amount: totalPrice,
-      paymentIntentId: ,
+      paymentIntentId: paymentIntent.id,
       bookingId: newBooking._id,
       purpose: purpose,
-      currency: "inr",  
-      status : 'pending'    
-    }
+      currency: "inr",
+      status: "pending",
+    };
     const newPayment = await this._paymentUsecase.processPayment(paymentData);
 
     await Promise.all([
@@ -129,12 +137,14 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
         paymentId: newPayment._id,
       }),
       this._walletRepository.addPaymnetIdToWallet(clientId, newPayment._id!),
+      this._serviceRepository.updateSlotCount(newBooking,-1)
     ]);
 
-    return clientSecret
+    return paymentIntent.client_secret;
   }
 
   async updateBookingStatus(input: updateBookingStatusInput): Promise<void> {
+    console.log("updatebookingstatus called : ", input);
     const { bookingId, status, userId } = input;
     const booking = await this._bookingRepository.findById(bookingId);
     if (!booking) {
@@ -144,59 +154,97 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       );
     }
 
-    if(booking.status === "completed" || booking.status === "cancelled") {
+    if (booking.status === "completed" || booking.status === "cancelled") {
       throw new CustomError(
         ERROR_MESSAGES.BOOKING_ALREADY_COMPLETED_OR_CANCELLED,
         HTTP_STATUS.BAD_REQUEST
       );
     }
 
-    if(booking.status === 'confirmed') {
-      await this._bookingRepository.update(bookingId , {
-        status : 'confirmed',
-      })
+    if (status === "confirmed") {
+      console.log(" entering confirmed status update logic");
+      await this._bookingRepository.update(bookingId, {
+        status: "confirmed",
+      });
       return;
     }
 
-    if(status === 'completed') {
+    if (status === "cancelled") {
+      await this.cancelBooking(bookingId);
+      return;
+    }
+
+    if (status === "completed") {
+      console.log("entering completed status update logic");
       const isClient = booking.userId.toString() === userId.toString();
       const isVendor = booking.vendorId.toString() === userId.toString();
 
-      if(!isClient && !isVendor) {
+      if (!isClient && !isVendor) {
         throw new CustomError(
           ERROR_MESSAGES.UNAUTHORIZED_USER,
           HTTP_STATUS.UNAUTHORIZED
         );
       }
 
-      const updateFields : Partial<IBooking> = {}
-      if(isClient) {
+      const updateFields: Partial<IBooking> = {};
+      if (isClient) {
         updateFields.isClientApproved = true;
-      } else if(isVendor) {
+      } else if (isVendor) {
         updateFields.isVendorApproved = true;
       }
 
       const updatedBooking = await this._bookingRepository.update(bookingId, {
-        ...updateFields
+        ...updateFields,
       });
 
-      if(!updatedBooking) {
+      if (!updatedBooking) {
         throw new CustomError(
           ERROR_MESSAGES.BOOKING_NOT_FOUND,
           HTTP_STATUS.NOT_FOUND
         );
       }
 
-      if(updatedBooking.isClientApproved && updatedBooking.isVendorApproved) {
+      if (updatedBooking.isClientApproved && updatedBooking.isVendorApproved) {
         await this._bookingRepository.update(bookingId, {
-          status: 'completed',
+          status: "completed",
         });
 
-
+        await this._walletUsecase.creditAmountToWallet({
+          amount: updatedBooking.totalPrice,
+          purpose: "wallet-credit",
+          bookingId: bookingId,
+          userId,
+        });
       }
+      return;
     }
 
+    throw new CustomError(
+      ERROR_MESSAGES.INVALID_BOOKING_STATUS,
+      HTTP_STATUS.BAD_REQUEST
+    );
+  }
 
-    throw new CustomError(ERROR_MESSAGES.INVALID_BOOKING_STATUS, HTTP_STATUS.BAD_REQUEST);
-  } 
+  async cancelBooking(bookingId: Types.ObjectId): Promise<void> {
+    const booking = await this._bookingRepository.findById(bookingId);
+    if (!booking) {
+      throw new CustomError(
+        ERROR_MESSAGES.BOOKING_NOT_FOUND,
+        HTTP_STATUS.NOT_FOUND
+      );
+    }
+
+    await Promise.all([
+      this._walletUsecase.creditAmountToWallet({
+        amount: booking.totalPrice,
+        purpose: "refund-amount",
+        bookingId: bookingId,
+        userId: booking.userId,
+      }),
+      this._bookingRepository.update(bookingId, {
+        status: "cancelled",
+      }),
+      this._serviceRepository.updateSlotCount(booking, 1),
+    ]);
+  }
 }

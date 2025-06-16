@@ -2,11 +2,11 @@ import { inject, injectable } from "tsyringe";
 import { IStripeService } from "../../domain/interfaces/service/stripe-service.interface";
 import Stripe from "stripe";
 import { config } from "../../shared/config/config";
-import { CreatePaymentIntenServicetInput } from "../../domain/interfaces/usecase/types/client.types";
 import { PaymentStatus } from "../../domain/models/payment";
 import { TPaymentStatus } from "../../shared/types/booking.types";
 import { IBookingRepository } from "../../domain/interfaces/repository/booking.repository";
 import { IPaymentRepository } from "../../domain/interfaces/repository/payment.repository";
+import { CreatePaymentIntenServicetInput } from "../../domain/interfaces/usecase/types/payment.types";
 
 @injectable()
 export class StripeService implements IStripeService {
@@ -24,7 +24,7 @@ export class StripeService implements IStripeService {
 
     async createPaymentIntent(input: CreatePaymentIntenServicetInput): Promise<Stripe.PaymentIntent> {
         const {amount , currency ,description,receiptEmail , metadata } = input;
-        return await this._stripe.paymentIntents.create({
+        const paymentIntent =  await this._stripe.paymentIntents.create({
             amount : amount,
             currency : currency,
             automatic_payment_methods : {
@@ -34,9 +34,9 @@ export class StripeService implements IStripeService {
             receipt_email : receiptEmail,
             metadata : metadata
         })
+
+        return paymentIntent
     }
-
-
 
     async updatePaymentStatus(
     paymentIntentId: string,

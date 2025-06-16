@@ -5,7 +5,7 @@ import { IClient } from "../../domain/models/client";
 import { Client } from "../database/schemas/client.schema";
 import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";
 import { FilterQuery } from "mongoose";
-import { GetUsersInput } from "../../domain/types/admin.type";
+import { GetQueryInput } from "../../domain/types/admin.type";
 
 @injectable()
 export class ClientRepository extends BaseUserRepository<IClient> implements IClientRepository {
@@ -17,7 +17,7 @@ export class ClientRepository extends BaseUserRepository<IClient> implements ICl
         return await this.findOne({email : email , role : 'admin'})
     }
 
-    async findAllClients(input: GetUsersInput): Promise<PaginatedResponse<IClient>> {
+    async findAllClients(input: GetQueryInput): Promise<PaginatedResponse<IClient>> {
         const {filter , limit , skip , sort} = input;
         let query : FilterQuery<IClient> = {};
         if(filter.isblocked) {

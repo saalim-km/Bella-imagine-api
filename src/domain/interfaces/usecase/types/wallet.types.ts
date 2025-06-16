@@ -1,8 +1,9 @@
 import { Types } from "mongoose";
+import { Purpose } from "../../../models/payment";
 
 export interface creditAmountToWalletInput {
     userId: Types.ObjectId
     amount: number;
-    purpose : string;
+    purpose : Purpose;
     bookingId : Types.ObjectId;
 }

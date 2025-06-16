@@ -68,3 +68,4 @@ export interface updateBookingStatusInput {
   status: TBookingStatus;
   userId : Types.ObjectId;
 }
+

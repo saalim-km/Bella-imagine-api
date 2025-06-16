@@ -7,6 +7,7 @@ import { CreatePaymentIntenServicetInput } from "../../domain/interfaces/usecase
 import { CustomError } from "../../shared/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { IStripeService } from "../../domain/interfaces/service/stripe-service.interface";
+import Stripe from "stripe";
 
 @injectable()
 export class PaymentUsecase extends BaseRepository<IPayment> implements IPaymentUsecaase {
@@ -25,11 +26,12 @@ export class PaymentUsecase extends BaseRepository<IPayment> implements IPayment
         return payment;
     }
 
-    async createPaymentIntent(input: CreatePaymentIntenServicetInput): Promise<string> {
+    async createPaymentIntent(input: CreatePaymentIntenServicetInput): Promise<Stripe.PaymentIntent> {
         const paymentIntent = await this._stripeService.createPaymentIntent(input);
         if (!paymentIntent || !paymentIntent.client_secret) {
             throw new CustomError(ERROR_MESSAGES.PAYMENT_INTENT_CREATION_FAILED, HTTP_STATUS.BAD_REQUEST);
         }
-        return paymentIntent.client_secret
+        
+        return paymentIntent
     }
 }
