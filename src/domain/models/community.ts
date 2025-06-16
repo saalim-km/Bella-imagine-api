@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 
 export interface ICommunity {
   _id?: Types.ObjectId;
+  category : Types.ObjectId;
   slug: string;
   name: string;
   description: string;

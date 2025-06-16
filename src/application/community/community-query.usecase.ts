@@ -63,7 +63,7 @@ export class CommunityQueryUsecase implements ICommunityQueryUsecase {
       throw new CustomError(ERROR_MESSAGES.INVALID_SLUG,HTTP_STATUS.BAD_REQUEST)
     }
     const [community, isMember] = await Promise.all([
-      this._communityRepository.findOne({ slug: slug }),
+      this._communityRepository.findBySlug(slug),
       this._communityMemberRepo.findOne({ userId: userId })
     ]);
 
@@ -81,5 +81,4 @@ export class CommunityQueryUsecase implements ICommunityQueryUsecase {
       isMember: !!isMember
     };
   }
-
 }

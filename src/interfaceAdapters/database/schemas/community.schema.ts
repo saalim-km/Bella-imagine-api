@@ -11,6 +11,11 @@ const communitySchema = new Schema<ICommunity>({
         required : true,
         unique : true
     },
+    category : {
+        type : Schema.Types.ObjectId,
+        required : true,
+        ref : "Category"
+    },
     description: {
         type: String,
         required: true

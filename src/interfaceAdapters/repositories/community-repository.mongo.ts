@@ -21,19 +21,25 @@ export class CommunityRepository extends BaseRepository<ICommunity> implements I
             query = {
                 ...query,
                 $or : [{name : {$regex : filter.name , $options :'i' }},
-{slug : {$regex : filter.slug , $options : 'i'}}
+                    {slug : {$regex : filter.slug , $options : 'i'}}
                 ]
             }
         }
 
         const [community,count] = await Promise.all([
-            this.findAll(query,skip,limit),
+            this.model.find(query).populate({path : 'category',select : 'title'}).skip(skip).limit(limit),
             this.count(query)
         ])
 
+        console.log('got communities : ');
+        console.log(community);
         return {
             data : community,
             total : count
         }
+    }
+
+    async findBySlug(slug: string): Promise<ICommunity | null> {
+        return await this.model.findOne({slug}).populate({path : 'category' , select : 'title'})
     }
 }

@@ -11,17 +11,25 @@ import { generateSlug } from "../../shared/utils/slug-generator";
 import { unlinkSync } from "fs";
 import { UpdateQuery } from "mongoose";
 import { ICommunity } from "../../domain/models/community";
+import { ICategoryRepository } from "../../domain/interfaces/repository/category.repository";
 
 @injectable()
 export class CommunityCommandUsecase implements ICommunityCommandUsecase {
     constructor(
         @inject('ICommunityRepository') private _communityRepository : ICommunityRepository,
-        @inject('IAwsS3Service') private _awsS3Service : IAwsS3Service
+        @inject('IAwsS3Service') private _awsS3Service : IAwsS3Service,
+        @inject('ICategoryRepository') private _categoryRepository : ICategoryRepository
     ){}
 
     async createNewCommunity(input: CreateCommunityInput): Promise<void> {
-        const {iconImage , coverImage} = input;
+        const {iconImage , coverImage , category} = input;
 
+        // if cateogry not exits , community coulndt creat , cuz the community is based on some cateory
+        const isCategoryExists = await this._categoryRepository.findById(category)
+        if(!isCategoryExists){
+            throw new CustomError(ERROR_MESSAGES.CATEGORY_NOT_FOUND,HTTP_STATUS.NOT_FOUND)
+        }
+        // edge cases
         const isCommunityExists = await this._communityRepository.findOne({name : input.name.trim()})
         if(isCommunityExists){
             throw new CustomError(ERROR_MESSAGES.COMMUNIY_EXISTS,HTTP_STATUS.CONFLICT)
@@ -29,6 +37,7 @@ export class CommunityCommandUsecase implements ICommunityCommandUsecase {
 
         let newCommunity = {
             name : input.name,
+            category : category,
             description: input.description,
             rules: input.rules,
             isPrivate: input.isPrivate,
@@ -54,7 +63,7 @@ export class CommunityCommandUsecase implements ICommunityCommandUsecase {
     }
 
     async updateCommunity(input: UpdateCommunityInput): Promise<void> {
-        const {_id , description , isFeatured,isPrivate,name,rules,coverImage,iconImage} = input;
+        const {_id , description , isFeatured,isPrivate,name,rules,coverImage,iconImage , category} = input;
 
         let community = await this._communityRepository.findById(_id);
         if(!community) {
@@ -92,6 +101,7 @@ export class CommunityCommandUsecase implements ICommunityCommandUsecase {
             ...dataToUpdate,
             slug : slug,
             name : name,
+            category : category,
             description : description,
             rules : rules,
             isFeatured : isFeatured,

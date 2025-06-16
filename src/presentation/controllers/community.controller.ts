@@ -28,6 +28,7 @@ export class CommunityController implements ICommunityController {
     const files = req.files as
       | { [key: string]: Express.Multer.File[] }
       | undefined;
+
     const parsed = createCommunitySchema.parse({
       ...req.body,
       coverImage: files?.coverImage && files.coverImage.length > 0 ? files.coverImage[0] : undefined,
@@ -57,6 +58,7 @@ export class CommunityController implements ICommunityController {
         const files = req.files as
       | { [key: string]: Express.Multer.File[] }
       | undefined;
+      
     const parsed = updateCommuitySchema.parse({
       ...req.body,
       coverImage: files?.coverImage && files.coverImage.length > 0 ? files.coverImage[0] : undefined,

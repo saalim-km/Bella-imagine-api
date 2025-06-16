@@ -3,6 +3,7 @@ import { PaginationInput } from "./admin.types";
 
 export interface BaseCommunityInput {
   name: string;
+  category : Types.ObjectId;
   description: string;
   rules: string[];
   isPrivate: boolean;

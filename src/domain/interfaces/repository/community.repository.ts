@@ -5,4 +5,5 @@ import { IBaseRepository } from "./base.repository";
 
 export interface ICommunityRepository extends IBaseRepository<ICommunity> {
     fetchAllCommunity(input : FetchAllCommunityInput) : Promise<PaginatedResponse<ICommunity>>
+    findBySlug(slug : string) : Promise<ICommunity | null>
 }
