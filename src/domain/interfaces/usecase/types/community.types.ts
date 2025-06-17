@@ -25,3 +25,17 @@ export interface fetchCommBySlugInput {
 export interface UpdateCommunityInput extends BaseCommunityInput {
 _id : Types.ObjectId
 }
+
+export interface FetchAllCommunitiesInput extends Omit<PaginationInput,'createdAt'> {
+  sort ?: Record<string,number>
+  membership ?: 'member' | 'non-member'
+  category ?: Types.ObjectId
+  userId : Types.ObjectId
+}
+
+export interface JoinCommunityInput {
+  userId : Types.ObjectId,
+  communityId : Types.ObjectId
+}
+
+export interface LeaveCommunityInput extends JoinCommunityInput{}

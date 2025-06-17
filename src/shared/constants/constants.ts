@@ -16,6 +16,7 @@ export const HTTP_STATUS = {
 };
 
 export const SUCCESS_MESSAGES = {
+  LEAVE_SUCCESS : 'Community Leaved',
   CATEGORY_JOIN_REQUEST_SUCCESS: "Category join request sent successfully.",
   CLIENT_SECRET_SUCCESS: "Client secret generated successfully.",
   REFRESH_TOKEN_SUCCESS : "Access token created successfully",
@@ -37,6 +38,8 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  DIDNT_JOINED_COMMUNITY : "Didn't joined community yet",
+  ALREADY_MEMBER : 'Already a member of this community',
   INVALID_SLUG : 'Invalid slug',
   COMMUNIY_EXISTS : 'Community already exists.',
   ADMIN_NOT_FOUND: "Admin not found",

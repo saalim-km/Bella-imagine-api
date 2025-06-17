@@ -11,6 +11,7 @@ export interface ICommunityPost {
   voteDownCount: number;
   commentCount: number;
   tags: string[];
+  comments : [Types.ObjectId];
   createdAt: string;
   updatedAt: string;
 }

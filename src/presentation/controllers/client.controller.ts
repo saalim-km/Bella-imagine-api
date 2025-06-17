@@ -17,6 +17,7 @@ import {
 import {
   BookingQuerySchema,
   createBookingSchema,
+  FetchAllCommunitiesSchema,
   getVendorDetailsSchema,
   getVendorsSchema,
   updateBookingSchema,
@@ -35,6 +36,7 @@ import {
   IBookingQueryUsecase,
 } from "../../domain/interfaces/usecase/booking-usecase.interface";
 import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
+import { ICommunityRepository } from "../../domain/interfaces/repository/community.repository";
 
 @injectable()
 export class ClientController implements IClientController {
@@ -54,7 +56,7 @@ export class ClientController implements IClientController {
     private _clientProfileUsecase: IClientProfileUsecase,
     @inject("IBookingQueryUsecase")
     private _bookingQueryUsecase: IBookingQueryUsecase,
-    @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase
+    @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -72,7 +74,7 @@ export class ClientController implements IClientController {
       _id: user._id,
       email: user.email,
       role: user.role,
-      refreshToken: user.refreshToken,
+      refreshToken: user.refresh_token,
     });
 
     updateCookieWithAccessToken(res, accessToken, `${user.role}_access_token`);

@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { JwtPayload } from "jsonwebtoken";
 import { JwtService } from "../../interfaceAdapters/services/jwt.service";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
+import logger from "../../shared/logger/logger";
 
 const tokenService = new JwtService();
 
@@ -87,8 +88,9 @@ export const decodeToken = async (
   next: NextFunction
 ) => {
   try {
+    logger.info('access token expire triggered')
     const token = extractToken(req);
-
+console.log(token);
     if (!token) {
       res
         .status(HTTP_STATUS.UNAUTHORIZED)
@@ -97,6 +99,7 @@ export const decodeToken = async (
     }
 
     const user = tokenService.decodeRefreshToken(token?.access_token);
+    console.log('user from access token decode : ',user);
     (req as CustomRequest).user = {
       _id: user?._id,
       email: user?.email,

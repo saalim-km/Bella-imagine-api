@@ -202,3 +202,30 @@ export const  updateBookingSchema = z.object({
 })
 
 export type BookingQueryParams = z.infer<typeof BookingQuerySchema>;
+
+export const FetchAllCommunitiesSchema = z.object({
+  page: pageQuerySchema,
+  limit: limitQuerySchema,
+  search: searchQuerySchema.optional(),
+  category: objectIdSchema.optional(),
+  membership: z.enum(['member', 'non-member']).optional(),
+  sort: z
+    .string()
+    .optional()
+    .transform((val) => {
+      switch (val) {
+        case "newest":
+          return { createdAt: -1 } as Record<string, number>;
+        case "oldest":
+          return { createdAt: 1 } as Record<string, number>;
+        case "name":
+          return { name: 1 } as Record<string, number>;
+        case "members":
+          return { memberCount: -1 } as Record<string, number>;
+        default:
+          return undefined;
+      }
+    })
+    .describe("Sort communities by: newest, oldest, name, or members")
+    .optional(),
+});

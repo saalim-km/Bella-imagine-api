@@ -45,7 +45,6 @@ export class AuthController implements IAuthController {
 
   async sendOtp(req: Request, res: Response): Promise<void> {
     const payload = req.body as SendOtpEmailInputDto;
-    console.log(payload);
     await this._sendAuthEmailUsecase.sendAuthEmail(payload);
     ResponseHandler.success(res, SUCCESS_MESSAGES.OTP_SEND_SUCCESS);
   }
@@ -71,7 +70,6 @@ export class AuthController implements IAuthController {
     const payload = req.body as LoginInputDto;
     const validatedData = userLoginSchema.parse(payload);
 
-    console.log("validated data : ", validatedData);
     const user = await this._loginUserUsecase.loginUser(validatedData);
 
     const tokens = await this._generateToken.generateToken({
@@ -83,7 +81,6 @@ export class AuthController implements IAuthController {
     const accessTokenName = `${user.role}_access_token`;
     const refreshTokenName = `${user.role}_refresh_token`;
 
-    console.log('user logs in : ',user);
     setAuthCookies(
       res,
       tokens.accessToken,
@@ -92,20 +89,16 @@ export class AuthController implements IAuthController {
       refreshTokenName
     );
 
-    console.log("user logged in: ", user);
     ResponseHandler.success(res , SUCCESS_MESSAGES.LOGIN_SUCCESS,user)
   }
 
   async forgotPassword(req: Request, res: Response): Promise<void> {
-    console.log(req.body);
     const payload = req.body as SendOtpEmailInputDto;
     await this._forgotPassUsecase.forgotPassword(payload)
     ResponseHandler.success(res , SUCCESS_MESSAGES.OTP_SEND_SUCCESS)
   }
 
   async resetPassword(req: Request, res: Response): Promise<void> {
-    console.log('in password reset ');
-    console.log(req.body);
     const payload = req.body as ResetPasswordDto;
     const validatedData = resetPasswordSchema.parse(payload)
     await this._resetPasswordUsecase.resetPassword(validatedData)
