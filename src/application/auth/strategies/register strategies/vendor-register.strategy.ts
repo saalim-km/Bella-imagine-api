@@ -39,6 +39,7 @@ export class VendorRegisterStrategy implements IRegisterUserStrategy {
             data.name = input.name;
             data.email = input.email;
             data.googleId = input.googleId;
+            data.profileImage = input.profileImage
         }else{
             if(!input.password){
                 throw new CustomError(ERROR_MESSAGES.PASSWORD_REQUIRED,HTTP_STATUS.BAD_REQUEST)
@@ -46,6 +47,7 @@ export class VendorRegisterStrategy implements IRegisterUserStrategy {
             data.name = input.name;
             data.email = input.email;
             data.password = hashedNewPassword!
+            data.profileImage = ''
         }
 
         const newVendor = await this._vendorRepository.saveUser(data);

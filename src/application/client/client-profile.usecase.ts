@@ -22,8 +22,9 @@ export class ClientProfileUsecase implements IClientProfileUsecase {
   ) {}
 
   async updateClientProfile(input: UpdateClientProfileInput): Promise<IClient> {
-    const { name, clientId, email, location, phoneNumber, profileImage } =
-      input;
+    console.log('in the updateclient profie usecase');
+    console.log(input);
+    const { name, clientId, email, location, phoneNumber, profileImage } = input;
     const client = await this._clientRepository.findById(clientId);
     if (!client) {
       throw new CustomError(

@@ -1,5 +1,6 @@
+import {  } from "google-auth-library";
 import { JwtOutput, TJwtPayload } from "../../types/auth.types";
-import { LoginUserInput, LoginUserOuput, RegisterUserInput, ResetPasswordInput, SendOtpEmailInput, VerifyOtpInput } from "./types/auth.types";
+import { GoogleLoginInput, LoginUserInput, LoginUserOuput, RegisterUserInput, ResetPasswordInput, SendOtpEmailInput, VerifyOtpInput } from "./types/auth.types";
 
 export interface ISendAuthEmailUsecase {
     sendAuthEmail(input : SendOtpEmailInput): Promise<void>
@@ -39,4 +40,8 @@ export interface IResetPasswordUsecase {
 
 export interface IResetPasswordStrategy {
     resetPassword(input : ResetPasswordInput) : Promise<void>
+}
+
+export interface IGoogleLoginUsecase {
+    login(input : GoogleLoginInput) : Promise<LoginUserOuput>
 }

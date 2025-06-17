@@ -5,7 +5,7 @@ export interface IAuthController {
     register(req: Request, res: Response) : Promise<void>
     verifyOtp(req: Request, res: Response) : Promise<void>
     login(req: Request, res: Response) : Promise<void>
-    googleAuth?(req: Request, res: Response) : Promise<void>
-    forgotPassword?(req: Request, res: Response) : Promise<void>
-    resetPassword?(req: Request, res: Response) : Promise<void>
+    googleLogin(req: Request, res: Response) : Promise<void>
+    forgotPassword(req: Request, res: Response) : Promise<void>
+    resetPassword(req: Request, res: Response) : Promise<void>
 }

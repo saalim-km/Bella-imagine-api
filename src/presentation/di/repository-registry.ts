@@ -21,6 +21,10 @@ import { ICommunityRepository } from "../../domain/interfaces/repository/communi
 import { CommunityRepository } from "../../interfaceAdapters/repositories/community-repository.mongo";
 import { ICommunityMemberRepository } from "../../domain/interfaces/repository/community-member.repository";
 import { CommunityMemberRepository } from "../../interfaceAdapters/repositories/community-member-repository.mongo";
+import { IConversationRepository } from "../../domain/interfaces/repository/conversation.repository";
+import { ConversationRepository } from "../../interfaceAdapters/repositories/conversation-reposiory.mongo";
+import { IMessageRepository } from "../../domain/interfaces/repository/message.repository";
+import { MessageRepository } from "../../interfaceAdapters/repositories/message-repository.mongo";
 
 export class RepositoryRegistry {
     static registerRepositories() : void {
@@ -67,6 +71,14 @@ export class RepositoryRegistry {
 
         container.register<ICommunityMemberRepository>('ICommunityMemberRepository', {
             useClass : CommunityMemberRepository
+        })
+
+        container.register<IConversationRepository>('IConversationRepository',{
+            useClass : ConversationRepository
+        })
+
+        container.register<IMessageRepository>('IMessageRepository' , {
+            useClass : MessageRepository
         })
     }
 }

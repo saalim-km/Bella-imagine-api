@@ -9,7 +9,9 @@ export class AuthRoute extends BaseRoute {
         .post('/register',registrationRateLimit,asyncHandler(authController.register.bind(authController)))
         .post('/send-otp',registrationRateLimit,asyncHandler(authController.sendOtp.bind(authController)))
         .post('/verify-otp',registrationRateLimit,asyncHandler(authController.verifyOtp.bind(authController)))
-        .post('/login',authRateLimit,asyncHandler(authController.login.bind(authController)));
+        .post('/login',authRateLimit,asyncHandler(authController.login.bind(authController)))
+        .post('/google-auth',authRateLimit,asyncHandler(authController.googleLogin.bind(authController)))
+
 
         this.router.route('/forgot-password')
         .post(passwordResetRateLimit , asyncHandler(authController.forgotPassword.bind(authController)))

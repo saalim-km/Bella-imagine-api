@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import {
   IForgotPasswordUsecase,
   IGenerateTokenUsecase,
+  IGoogleLoginUsecase,
   IRegisterUserUsecase,
   IResetPasswordUsecase,
   ISendAuthEmailUsecase,
@@ -17,6 +18,7 @@ import {
   VerifyRegisterationDto,
 } from "../dto/auth.dto";
 import {
+  HTTP_STATUS,
   SUCCESS_MESSAGES,
 } from "../../shared/constants/constants";
 import { ResponseHandler } from "../../shared/utils/response-handler";
@@ -40,7 +42,8 @@ export class AuthController implements IAuthController {
     @inject("IUserLoginUsecase") private _loginUserUsecase: IUserLoginUsecase,
     @inject('IForgotPasswordUsecase') private _forgotPassUsecase : IForgotPasswordUsecase,
     @inject('IGenerateTokenUsecase') private _generateToken : IGenerateTokenUsecase,
-    @inject('IResetPasswordUsecase') private _resetPasswordUsecase : IResetPasswordUsecase
+    @inject('IResetPasswordUsecase') private _resetPasswordUsecase : IResetPasswordUsecase,
+    @inject('IGoogleLoginUsecase') private _googleLogin : IGoogleLoginUsecase
   ) {}
 
   async sendOtp(req: Request, res: Response): Promise<void> {
@@ -104,5 +107,43 @@ export class AuthController implements IAuthController {
     await this._resetPasswordUsecase.resetPassword(validatedData)
 
     ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
+  }
+
+  async googleLogin(req: Request, res: Response): Promise<void> {
+        console.log('in google login controller');
+      const { credential, role, client_id } = req.body; 
+      const user = await this._googleLogin.login({
+        client_id : client_id,
+        credential : credential,
+        role : role
+      }
+      );
+
+
+      if (!user._id || !user.email || !user.role) {
+        throw new Error("User ID, email, or role is missing");
+      }
+      
+      const userId = user._id?.toString();
+
+      const accessTokenName = `${user.role}_access_token`;
+      const refreshTokenName = `${user.role}_refresh_token`;
+
+      const tokens = await this._generateToken.generateToken({_id : userId , email : user.email , role : role});
+
+      setAuthCookies(res,tokens.accessToken,tokens.refreshToken,accessTokenName,refreshTokenName)
+
+      console.log('logged in user',user);
+      res.status(HTTP_STATUS.OK).json({
+        success: true,
+        message: 'User successfully authenticated',
+        user: {
+          _id: userId,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          avatar : user.avatar
+        },
+      });
   }
 }

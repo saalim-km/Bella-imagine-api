@@ -8,6 +8,7 @@ import { PrivateRoute } from "../routes/common/private.route";
 import { errorHandler } from "../middlewares/error.middleware";
 import logger from "../../shared/logger/logger";
 import { globalRateLimit } from "../middlewares/rate-limit.middleware";
+import { socketService } from "../di/resolver";
 
 
 export class Server {
@@ -18,7 +19,7 @@ export class Server {
     this._server = http.createServer(this._app);
 
     this.configureMiddleware();
-    // this.configureSocket();
+    this.configureSocket();
     this.configureRoutes();
     this.configureErrorHandler();
   }
@@ -48,9 +49,9 @@ export class Server {
     this._app.use(globalRateLimit);
   }
 
-  // private configureSocket(): void {
-  //   chatController.initialize(this._server);
-  // }
+  private configureSocket(): void {
+    socketService.initialize(this._server);
+  }
 
   private configureRoutes(): void {
     this._app.use("/api/v_1/auth", new AuthRoute().router);

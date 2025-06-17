@@ -41,6 +41,7 @@ export class ClientRegisterStrategy implements IRegisterUserStrategy {
             data.name = name;
             data.email = email;
             data.googleId = input.googleId;
+            data.profileImage = input.profileImage
         }else{
             if(!password){
                 throw new CustomError(ERROR_MESSAGES.PASSWORD_REQUIRED,HTTP_STATUS.BAD_REQUEST)
@@ -48,6 +49,7 @@ export class ClientRegisterStrategy implements IRegisterUserStrategy {
             data.name = name;
             data.email = email;
             data.password = hashedNewPassword!
+            data.profileImage = ''
         }
 
         const newClient = await this._clientRepository.saveUser(data);

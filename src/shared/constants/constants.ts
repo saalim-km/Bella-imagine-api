@@ -38,6 +38,8 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  REGISTERATION_FAILED : 'Registeration failed',
+  SOCKET_NOT_INITIAZIDE : 'Socket not initialized',
   DIDNT_JOINED_COMMUNITY : "Didn't joined community yet",
   ALREADY_MEMBER : 'Already a member of this community',
   INVALID_SLUG : 'Invalid slug',

@@ -15,6 +15,8 @@ import { IJwtservice } from "../../domain/interfaces/service/jwt-service.interfa
 import { JwtService } from "../../interfaceAdapters/services/jwt.service";
 import { IStripeService } from "../../domain/interfaces/service/stripe-service.interface";
 import { StripeService } from "../../interfaceAdapters/services/stripe.service";
+import { ISocketService } from "../../domain/interfaces/service/socket-service.interface";
+import { SocketService } from "../../interfaceAdapters/services/socket.service";
 
 export class ServiceRegistry {
   static registerServices(): void {
@@ -47,6 +49,10 @@ export class ServiceRegistry {
 
     container.register<IStripeService>('IStripeService' , {
       useClass : StripeService
+    })
+
+    container.register<ISocketService>('ISocketService',{
+      useClass : SocketService
     })
   }
 }

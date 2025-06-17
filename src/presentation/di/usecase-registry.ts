@@ -2,6 +2,7 @@ import { container } from "tsyringe";
 import {
     IForgotPasswordUsecase,
     IGenerateTokenUsecase,
+    IGoogleLoginUsecase,
     ILoginUserStrategy,
     IRegisterUserStrategy,
     IRegisterUserUsecase,
@@ -53,6 +54,9 @@ import { PaymentUsecase } from "../../application/payment/payment.usecase";
 import { ICommunityCommandUsecase, ICommunityQueryUsecase } from "../../domain/interfaces/usecase/community-usecase.interface";
 import { CommunityCommandUsecase } from "../../application/community/community-command.usecase";
 import { CommunityQueryUsecase } from "../../application/community/community-query.usecase";
+import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.interface";
+import { ChatUsecase } from "../../application/chat.usecase";
+import { GoogleLoginUsecase } from "../../application/auth/google-login.usecase";
 
 export class UsecaseRegistry {
     // Static method to register all use cases and strategies
@@ -173,6 +177,14 @@ export class UsecaseRegistry {
 
         container.register<ICommunityQueryUsecase>('ICommunityQueryUsecase',{
             useClass : CommunityQueryUsecase
+        })
+
+        container.register<IChatUsecase>('IChatUsecase' , {
+            useClass : ChatUsecase
+        })
+
+        container.register<IGoogleLoginUsecase>('IGoogleLoginUsecase', {
+            useClass : GoogleLoginUsecase
         })
     }
 }
