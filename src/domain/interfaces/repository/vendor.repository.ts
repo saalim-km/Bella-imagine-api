@@ -9,10 +9,11 @@ import { PaginatedResponse } from "../usecase/types/common.types";
 import { IClient } from "../../models/client";
 import { ClientVendorQuery } from "../../types/client.types";
 import { IWorkSample } from "../../models/worksample";
+import { GetVendorsOutput } from "../usecase/types/client.types";
 
 export interface IVendorRepository extends IBaseUserRepository<IVendor> , IBaseRepository<IVendor>{
     findAllVendors(input : GetQueryInput) : Promise<PaginatedResponse<IVendor>>
-    fetchVendorListingsForClients(input : ClientVendorQuery) : Promise<PaginatedResponse<IVendor>>
+    fetchVendorListingsForClients(input : ClientVendorQuery) : Promise<PaginatedResponse<GetVendorsOutput>>
     // findByIdAndUpdateVendorCategories(vendorId : Types.ObjectId , categories : Types.ObjectId[]) : Promise<void>
     getPaginatedServices(vendorId : Types.ObjectId , page : number , limit : number) : Promise<PaginatedResult<IService>>
     getPaginatedWorkSamples(vendorId : Types.ObjectId , page : number , limit : number) : Promise<PaginatedResult<IWorkSample>>

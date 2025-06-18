@@ -3,6 +3,9 @@ import { PaginationInput } from "./admin.types";
 import { TRole } from "../../../../shared/constants/constants";
 import { BookingQueryParams } from "../../../../shared/utils/zod-validations/presentation/client.schema";
 import { TBookingStatus, TPaymentStatus } from "../../../../shared/types/booking.types";
+import { IVendor } from "../../../models/vendor";
+import { IWorkSample } from "../../../models/worksample";
+import { IService } from "../../../models/service";
 
 export interface GetVendorsQueryInput
   extends Pick<PaginationInput, "limit" | "page"> {
@@ -69,3 +72,7 @@ export interface updateBookingStatusInput {
   userId : Types.ObjectId;
 }
 
+export interface GetVendorsOutput extends Omit<IVendor , 'workSamples' | 'services'>{
+  workSamples : IWorkSample[]
+  services : IService[]
+}

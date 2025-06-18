@@ -10,6 +10,7 @@ import { ClientVendorQuery } from "../../domain/types/client.types";
 import { IService } from "../../domain/models/service";
 import { PaginatedResult } from "../../shared/types/pagination.types";
 import { IWorkSample } from "../../domain/models/worksample";
+import { GetVendorsOutput } from "../../domain/interfaces/usecase/types/client.types";
 
 @injectable()
 export class VendorRepository
@@ -59,7 +60,7 @@ export class VendorRepository
 
   async fetchVendorListingsForClients(
     input: ClientVendorQuery
-  ): Promise<PaginatedResponse<IVendor>> {
+  ): Promise<PaginatedResponse<GetVendorsOutput>> {
     const { filter, limit, skip } = input;
 
     const query: FilterQuery<IVendor> = {};
@@ -71,7 +72,6 @@ export class VendorRepository
       query.languages = { $in: [filter.languages.trim()] };
     }
 
-    console.log(query);
     const [vendors, count] = await Promise.all([
       Vendor.find(query)
         .populate([
@@ -92,7 +92,7 @@ export class VendorRepository
     ]);
 
     return {
-      data: vendors,
+      data: vendors as unknown as GetVendorsOutput[],
       total: count,
     };
   }

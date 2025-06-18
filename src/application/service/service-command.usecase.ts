@@ -5,7 +5,6 @@ import { IService } from "../../domain/models/service";
 import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { IWorksampleRepository } from "../../domain/interfaces/repository/worksample.repository";
-import { IWorkSample } from "../../domain/models/worksample";
 import {
   CreateWorkSampleInput,
   UpdateWorkSampleInput,
@@ -13,12 +12,10 @@ import {
 import { IAwsS3Service } from "../../domain/interfaces/service/aws-service.interface";
 import { config } from "../../shared/config/config";
 import { generateS3FileKey } from "../../shared/utils/helper/s3FileKeyGenerator";
-import { string } from "zod";
-import { unlinkSync } from "fs";
 import { Types } from "mongoose";
-import { timeStamp } from "console";
 import logger from "../../shared/logger/logger";
 import { cleanUpLocalFiles } from "../../shared/utils/helper/clean-local-file.helper";
+import { IVendorRepository } from "../../domain/interfaces/repository/vendor.repository";
 
 @injectable()
 export class ServiceCommandUsecase implements IServiceCommandUsecase {
@@ -26,11 +23,18 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
     @inject("IServiceRepository") private _serviceRepo: IServiceRepository,
     @inject("IWorksampleRepository")
     private _workSampleRepo: IWorksampleRepository,
-    @inject("IAwsS3Service") private _awsS3Service: IAwsS3Service
+    @inject("IAwsS3Service") private _awsS3Service: IAwsS3Service,
+    @inject('IVendorRepository') private _vendorRepo : IVendorRepository
   ) {}
 
   async createService(input: IService): Promise<void> {
-    await this._serviceRepo.create(input);
+    const {vendor} = input;
+    if(!vendor){
+      throw new CustomError(ERROR_MESSAGES.ID_NOT_PROVIDED,HTTP_STATUS.BAD_REQUEST)
+    }
+
+    const service = await this._serviceRepo.create(input);
+    await this._vendorRepo.update(vendor,{$push : {services : service._id}})
   }
 
   async updateService(input: IService): Promise<void> {
@@ -75,7 +79,7 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
 
       await Promise.all(uploadPromises);
 
-      await this._workSampleRepo.create({
+      const workSample = await this._workSampleRepo.create({
         service,
         vendor,
         title,
@@ -84,6 +88,7 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
         media: filekeys,
         isPublished,
       });
+      await this._vendorRepo.update(vendor,{$push : {workSamples : workSample._id}})
     } catch (error) {
       if (uploadedkeys.length > 0) {
         logger.info(

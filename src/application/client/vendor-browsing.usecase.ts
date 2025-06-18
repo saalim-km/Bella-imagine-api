@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { IVendorBrowsingUseCase } from "../../domain/interfaces/usecase/client-usecase.interface";
 import {
   GetVendorDetailsInput,
+  GetVendorsOutput,
   GetVendorsQueryInput,
 } from "../../domain/interfaces/usecase/types/client.types";
 import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";
@@ -13,6 +14,7 @@ import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { IService } from "../../domain/models/service";
 import { IServiceRepository } from "../../domain/interfaces/repository/service.repository";
+import { count } from "console";
 
 @injectable()
 export class VendorBrowsingUsecase implements IVendorBrowsingUseCase {
@@ -20,12 +22,15 @@ export class VendorBrowsingUsecase implements IVendorBrowsingUseCase {
     @inject("IVendorRepository") private _vendorRepsitory: IVendorRepository,
     @inject("IGetPresignedUrlUsecase")
     private _presignedUrl: IGetPresignedUrlUsecase,
-    @inject('IServiceRepository') private _serviceRepository : IServiceRepository
+    @inject("IServiceRepository")
+    private _serviceRepository: IServiceRepository,
+    @inject("IGetPresignedUrlUsecase")
+    private _pregisnedUrl: IGetPresignedUrlUsecase
   ) {}
 
   async fetchAvailableVendors(
     input: GetVendorsQueryInput
-  ): Promise<PaginatedResponse<IVendor>> {
+  ): Promise<PaginatedResponse<GetVendorsOutput>> {
     const { limit, page, category, languages, location } = input;
     const skip = (page - 1) * limit;
 
@@ -39,11 +44,43 @@ export class VendorBrowsingUsecase implements IVendorBrowsingUseCase {
       filter.languages = languages;
     }
 
-    return await this._vendorRepsitory.fetchVendorListingsForClients({
-      filter: filter,
-      limit: limit,
-      skip,
-    });
+    let { data, total } =
+      await this._vendorRepsitory.fetchVendorListingsForClients({
+        filter: filter,
+        limit: limit,
+        skip,
+      });
+
+      data = await Promise.all(
+        data.map(async (vendor) => {
+        if (vendor.profileImage) {
+          vendor.profileImage = await this._pregisnedUrl.getPresignedUrl(
+            vendor.profileImage
+          );
+        }
+
+
+        vendor.workSamples = await Promise.all(vendor.workSamples.map(async (sample) => {
+          if (sample.media.length > 0) {
+            sample.media = await Promise.all(
+              sample.media.map((image) => {
+                return this._pregisnedUrl.getPresignedUrl(image);
+              })
+            );
+          }
+          return sample;
+        }))
+        
+        return vendor;
+      })
+    );
+
+    console.dir(data);
+
+    return {
+      data: data,
+      total : total
+    }
   }
 
   async fetchVendorProfileById(input: GetVendorDetailsInput): Promise<any> {
@@ -79,6 +116,17 @@ export class VendorBrowsingUsecase implements IVendorBrowsingUseCase {
         sampleLimit
       );
 
+    await Promise.all(
+      workSamples.map(async (sample) => {
+        const urls = await Promise.all(
+          sample.media.map((key) => {
+            return this._pregisnedUrl.getPresignedUrl(key);
+          })
+        );
+        sample.media = urls;
+      })
+    );
+
     return {
       ...vendor,
       services,
@@ -96,10 +144,15 @@ export class VendorBrowsingUsecase implements IVendorBrowsingUseCase {
     };
   }
 
-  async fetchVendorServiceForBooking(serviceId: Types.ObjectId): Promise<IService> {
-    const service =  await this._serviceRepository.findById(serviceId)
-    if(!service) {
-      throw new CustomError(ERROR_MESSAGES.SERVICE_NOT_FOUND,HTTP_STATUS.NOT_FOUND)
+  async fetchVendorServiceForBooking(
+    serviceId: Types.ObjectId
+  ): Promise<IService> {
+    const service = await this._serviceRepository.findById(serviceId);
+    if (!service) {
+      throw new CustomError(
+        ERROR_MESSAGES.SERVICE_NOT_FOUND,
+        HTTP_STATUS.NOT_FOUND
+      );
     }
 
     return service;
