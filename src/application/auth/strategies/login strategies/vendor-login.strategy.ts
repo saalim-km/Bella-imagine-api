@@ -3,9 +3,9 @@ import { ILoginUserStrategy } from "../../../../domain/interfaces/usecase/auth-u
 import { IEmailExistenceUsecase, IGetPresignedUrlUsecase } from "../../../../domain/interfaces/usecase/common-usecase.interfaces";
 import { IBcryptService } from "../../../../domain/interfaces/service/bcrypt-service.interface";
 import { LoginUserInput, LoginUserOuput } from "../../../../domain/interfaces/usecase/types/auth.types";
-import { CustomError } from "../../../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../../shared/constants/constants";
 import { IClient } from "../../../../domain/models/client";
+import { CustomError } from "../../../../shared/utils/helper/custom-error";
 
 @injectable()
 export class VendorLoginStrategy implements ILoginUserStrategy {
@@ -25,7 +25,7 @@ export class VendorLoginStrategy implements ILoginUserStrategy {
             throw new CustomError(ERROR_MESSAGES.USER_BLOCKED, HTTP_STATUS.FORBIDDEN)
         }
 
-        if(!vendor.data?.password){
+        if(!vendor.data?.password && vendor.data?.password !== ''){
             throw new CustomError(ERROR_MESSAGES.USER_LOGIN_WITHOUT_PASSWORD, HTTP_STATUS.BAD_REQUEST)
         }
 

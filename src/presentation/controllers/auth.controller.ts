@@ -97,6 +97,7 @@ export class AuthController implements IAuthController {
 
   async forgotPassword(req: Request, res: Response): Promise<void> {
     const payload = req.body as SendOtpEmailInputDto;
+    console.log('parsed data : ',payload);
     await this._forgotPassUsecase.forgotPassword(payload)
     ResponseHandler.success(res , SUCCESS_MESSAGES.OTP_SEND_SUCCESS)
   }

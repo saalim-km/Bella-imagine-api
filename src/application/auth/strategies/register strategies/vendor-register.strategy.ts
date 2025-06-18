@@ -40,6 +40,7 @@ export class VendorRegisterStrategy implements IRegisterUserStrategy {
             data.email = input.email;
             data.googleId = input.googleId;
             data.profileImage = input.profileImage
+            data.password = ''
         }else{
             if(!input.password){
                 throw new CustomError(ERROR_MESSAGES.PASSWORD_REQUIRED,HTTP_STATUS.BAD_REQUEST)

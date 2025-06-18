@@ -19,14 +19,13 @@ export class VendorResetPasswordStrategy implements IResetPasswordStrategy {
 
     async resetPassword(input: ResetPasswordInput): Promise<void> {
         const {email , role , password} = input;
-        const emailExists = await this._emailExistence.doesEmailExist(email , role)
+        const {data,success} = await this._emailExistence.doesEmailExist(email , role)
 
-        if(!emailExists.success){
+        if(!success || !data?._id){
             throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND , HTTP_STATUS.NOT_FOUND)
         }
 
         const newHashedPass = await this._bcryptService.hash(password);
-        const updatedVendor = {...emailExists.data , password : newHashedPass}
-        await this._vendorRepo.updateProfileById(emailExists.data?._id! , updatedVendor)
+        await this._vendorRepo.update(data._id,{password : newHashedPass})
     }
 }

@@ -19,10 +19,8 @@ import { Types } from "mongoose";
 @injectable()
 export class BookingCommandUsecase implements IBookingCommandUsecase {
   constructor(
-    @inject("IBookingRepository")
-    private _bookingRepository: IBookingRepository,
-    @inject("IServiceRepository")
-    private _serviceRepository: IServiceRepository,
+    @inject("IBookingRepository") private _bookingRepository: IBookingRepository,
+    @inject("IServiceRepository") private _serviceRepository: IServiceRepository,
     @inject("IClientRepository") private _clientRepository: IClientRepository,
     @inject("IWalletRepository") private _walletRepository: IWalletRepository,
     @inject("IPaymentUsecaase") private _paymentUsecase: IPaymentUsecaase,
@@ -247,4 +245,5 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       this._serviceRepository.updateSlotCount(booking, 1),
     ]);
   }
+
 }

@@ -48,7 +48,7 @@ export class GoogleLoginUsecase implements IGoogleLoginUsecase {
 
   async login(input: GoogleLoginInput): Promise<LoginUserOuput> {
     const {client_id,credential,role} = input;
-        const registerStrategy = this.registerStrategies[role];
+    const registerStrategy = this.registerStrategies[role];
     const loginStrategy = this.loginStrategies[role];
 
     if (!registerStrategy || !loginStrategy) {
@@ -83,9 +83,7 @@ export class GoogleLoginUsecase implements IGoogleLoginUsecase {
     }
 
     const oppositeRole = role === "client" ? "vendor" : "client";
-    console.log('opposite role for checking : ',oppositeRole);
-    const {data } = await this._userExistence.doesEmailExist(email , oppositeRole)
-    console.log('opposite role user : ',data);
+    const {data} = await this._userExistence.doesEmailExist(email , oppositeRole)
     if (data) {
       throw new CustomError(
         `This email is already registered as a ${oppositeRole}. Please log in using the correct role.`,
@@ -95,7 +93,7 @@ export class GoogleLoginUsecase implements IGoogleLoginUsecase {
 
     
     const {data : existingUser} = await this._userExistence.doesEmailExist(email,role);
-    console.log('got exisging user : ',existingUser);
+
     if (existingUser) {
       if (existingUser.googleId) {
         if (existingUser?.profileImage) {
@@ -122,8 +120,7 @@ export class GoogleLoginUsecase implements IGoogleLoginUsecase {
             }
           }
         }
-        logger.info('after checking exising user')
-        console.log(existingUser);
+
         return {
           email,
           role,
@@ -179,7 +176,6 @@ export class GoogleLoginUsecase implements IGoogleLoginUsecase {
       }
     }
 
-    console.log("", newUser);
     return {
       email,
       role,

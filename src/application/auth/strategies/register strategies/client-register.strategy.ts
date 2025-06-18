@@ -42,6 +42,7 @@ export class ClientRegisterStrategy implements IRegisterUserStrategy {
             data.email = email;
             data.googleId = input.googleId;
             data.profileImage = input.profileImage
+            data.password = ''
         }else{
             if(!password){
                 throw new CustomError(ERROR_MESSAGES.PASSWORD_REQUIRED,HTTP_STATUS.BAD_REQUEST)
