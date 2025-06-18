@@ -94,10 +94,9 @@ export class SocketService implements ISocketService {
             console.log("send_message trigger ✅💀");
             console.log('new message',message,recipentId,recipentName);
             const newMessage = await this._chatUsecase.sendMessage(message);
+            console.log('new message created and sended',newMessage);
             this.io?.to(recipentId.toString()).emit("new_message", newMessage);
-            // this.io
-            //   ?.to(message.senderId.toString())
-            //   .emit("new_message", newMessage);
+            this.io?.to(message.senderId.toString()).emit("new_message", newMessage);
             // const newNotification =
             //   // await this.notificationUsecase.sendNotification({
             //   //   message: `${recipentName} send a message`,
