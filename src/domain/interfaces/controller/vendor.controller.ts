@@ -12,4 +12,6 @@ export interface IVendorController {
     getServices(req: Request, res: Response) : Promise<void>
     updateService(req: Request, res: Response) : Promise<void>
     createWorkSample(req: Request, res: Response) : Promise<void>
+    getWorkSamples(req: Request, res: Response) : Promise<void>
+    deleteWorkSample(req: Request, res: Response) : Promise<void>
 }

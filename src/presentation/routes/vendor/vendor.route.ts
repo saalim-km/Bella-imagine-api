@@ -10,6 +10,8 @@ export class VendorRoute extends BaseRoute {
         .post('/vendor/logout', verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.logout.bind(vendorController)))
         .post('/vendor/refresh-token' , decodeToken,authorizeRole(['vendor']) , asyncHandler(vendorController.refreshToken.bind(vendorController)))
         .get('/vendor/wallet', verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.fetchWallet.bind(vendorController)))
+        .delete('/vendor/work-sample/:workSampleId',verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.deleteWorkSample.bind(vendorController)))
+
         this.router.route('/vendor/details')
         .get(verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.getVendorDetails.bind(vendorController)))
         .put(verifyAuth,authorizeRole(['vendor']),upload.fields([
@@ -34,5 +36,6 @@ export class VendorRoute extends BaseRoute {
         this
         .router.route('/vendor/work-sample')
         .post(verifyAuth,authorizeRole(['vendor']),upload.fields([{name : 'media' , maxCount : 10}]),asyncHandler(vendorController.createWorkSample.bind(vendorController)))
+        .get(verifyAuth,authorizeRole(['vendor']),upload.fields([{name : 'media' , maxCount : 10}]),asyncHandler(vendorController.getWorkSamples.bind(vendorController)))
     }
 }

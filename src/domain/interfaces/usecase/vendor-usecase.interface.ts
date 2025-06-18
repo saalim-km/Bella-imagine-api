@@ -1,8 +1,9 @@
 import { IVendor } from "../../models/vendor";
-import { CreateCategoryRequestInput, CreateWorkSampleInput, GetServiceInput, UpdatevendorProfileInput } from "./types/vendor.types";
+import { CreateCategoryRequestInput, CreateWorkSampleInput, GetServiceInput, GetWorkSampleInput, UpdatevendorProfileInput } from "./types/vendor.types";
 import { IService } from "../../models/service";
 import { PaginatedResponse } from "./types/common.types";
 import { IWorkSample } from "../../models/worksample";
+import { Types } from "mongoose";
 
 export interface IVendorProfileUsecase {
     updateVendorProfile(input : UpdatevendorProfileInput): Promise<IVendor>
@@ -13,8 +14,10 @@ export interface IServiceCommandUsecase {
     createService(input : IService) : Promise<void>
     updateService(input : IService) : Promise<void>
     createWorkSample(input : CreateWorkSampleInput) : Promise<void>
+    deleteWorkSmaple(workSampleId : Types.ObjectId) : Promise<void>
 }
 
 export interface IServiceQueryUsecase {
     getServices(input : GetServiceInput) : Promise<PaginatedResponse<IService>>
+    getWorkSmaples(input : GetWorkSampleInput) : Promise<PaginatedResponse<IWorkSample>>
 }

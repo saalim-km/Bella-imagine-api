@@ -2,14 +2,19 @@ import { inject, injectable } from "tsyringe";
 import { IServiceQueryUsecase } from "../../domain/interfaces/usecase/vendor-usecase.interface";
 import { IServiceRepository } from "../../domain/interfaces/repository/service.repository";
 import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";
-import { GetServiceInput } from "../../domain/interfaces/usecase/types/vendor.types";
+import { GetServiceInput, GetWorkSampleInput } from "../../domain/interfaces/usecase/types/vendor.types";
 import { IService } from "../../domain/models/service";
 import { FilterQuery } from "mongoose";
+import { IWorkSample } from "../../domain/models/worksample";
+import { IWorksampleRepository } from "../../domain/interfaces/repository/worksample.repository";
+import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 
 @injectable()
 export class ServiceQueryUsecase implements IServiceQueryUsecase {
     constructor(
-        @inject('IServiceRepository') private _serviceRepo : IServiceRepository
+        @inject('IServiceRepository') private _serviceRepo : IServiceRepository,
+        @inject('IWorksampleRepository') private _workSampleRepo : IWorksampleRepository,
+        @inject('IGetPresignedUrlUsecase') private _pregisnedUrl : IGetPresignedUrlUsecase
     ){}
 
     async getServices(input: GetServiceInput): Promise<PaginatedResponse<IService>> {
@@ -30,5 +35,34 @@ export class ServiceQueryUsecase implements IServiceQueryUsecase {
 
 
         return await this._serviceRepo.getServices(filter,skip,limit,-1)
+    }
+
+    async getWorkSmaples(input: GetWorkSampleInput): Promise<PaginatedResponse<IWorkSample>> {
+        const {limit,page,service,title} = input;
+        const skip = (page - 1) * limit;
+        let filter : FilterQuery<IWorkSample> = {}
+        if(service && service!== undefined) {
+            filter.service = service;
+        }
+        if(title && title.trim() !== '') {
+            filter = {
+                ...filter,
+                title : {$regex : title , $options : 'i'}
+            }
+        }
+
+        const {data , total} =  await this._workSampleRepo.getWorkSamples(filter,skip,limit)
+        await Promise.all(
+        data.map(async (sample) => {
+            const urls = await Promise.all(
+            sample.media.map((image) => this._pregisnedUrl.getPresignedUrl(image))
+            );
+            sample.media = urls;
+        })
+        );
+        return {
+            data : data,
+            total : total
+        }
     }
 }

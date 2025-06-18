@@ -27,7 +27,7 @@ import {
   IBookingQueryUsecase,
 } from "../../domain/interfaces/usecase/booking-usecase.interface";
 import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
-import { CreateServiceSchema, createWorkSampleSchema, getSeviceSchema, updateServiceSchema } from "../../shared/utils/zod-validations/presentation/vendor.schema";
+import { CreateServiceSchema, createWorkSampleSchema, getSeviceSchema, getWorkSamplesSchema, updateServiceSchema } from "../../shared/utils/zod-validations/presentation/vendor.schema";
 
 @injectable()
 export class VendorController implements IVendorController {
@@ -175,5 +175,18 @@ export class VendorController implements IVendorController {
     console.log('parsed data',parsed);
     await this._serviceCommandUsecase.createWorkSample(parsed)
     ResponseHandler.success(res,SUCCESS_MESSAGES.CREATED);
+  }
+
+  async getWorkSamples(req: Request, res: Response): Promise<void> {
+    const vendorId = objectIdSchema.parse((req as CustomRequest).user._id);
+    const parsed = getWorkSamplesSchema.parse(req.query);
+    const workSamples = await this._serviceQuery.getWorkSmaples({...parsed,vendor : vendorId})
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,workSamples)
+  }
+
+  async deleteWorkSample(req: Request, res: Response): Promise<void> {
+    const workSmapleId = objectIdSchema.parse(req.params.workSampleId)
+    await this._serviceCommandUsecase.deleteWorkSmaple(workSmapleId)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DELETE_SUCCESS)
   }
 }

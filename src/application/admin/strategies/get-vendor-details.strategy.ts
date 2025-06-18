@@ -17,7 +17,6 @@ export class GetVendorDetailsStrategy implements IGetUserDetailsStrategy<IVendor
 
     async getDetails(input: UserDetailsInput): Promise<IVendor> {
         const vendor = await this._vendorRepository.findVendorDetailsById(input.id) 
-        console.log('vendor details',vendor);
         if(!vendor){
             throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND , HTTP_STATUS.NOT_FOUND)
         }
@@ -26,7 +25,6 @@ export class GetVendorDetailsStrategy implements IGetUserDetailsStrategy<IVendor
             vendor.profileImage = await this._getSigned.getPresignedUrl(vendor.profileImage)
         }
 
-        console.log('venor data for login after checking url : ',vendor);
         if(!vendor.profileImage && vendor.googleId){
             logger.info('google profie hit')
             vendor.profileImage = vendor.profileImage

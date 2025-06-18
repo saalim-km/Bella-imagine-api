@@ -148,3 +148,19 @@ export const createWorkSampleSchema = z.object({
     z.array(z.custom<Express.Multer.File>()).min(1, "At least one media file is required")
   ),
 });
+
+export const getWorkSamplesSchema = z.object({
+  limit : limitQuerySchema,
+  title : searchQuerySchema,
+  service :  z
+    .string()
+    .transform((val) => (val ? new Types.ObjectId(val) : undefined))
+    .refine(
+      (val) => val === undefined || Types.ObjectId.isValid(val.toString()),
+      {
+        message: "Invalid ObjectId",
+      }
+    )
+    .optional(),
+  page : pageQuerySchema
+})

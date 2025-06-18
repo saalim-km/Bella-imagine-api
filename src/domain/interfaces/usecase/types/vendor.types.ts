@@ -38,3 +38,11 @@ export interface CreateWorkSampleInput {
   tags?: string[];
   isPublished : boolean
 }
+
+export interface GetWorkSampleInput {
+  vendor : Types.ObjectId
+  page : number;
+  limit : number;
+  title ?: string;
+  service ?: Types.ObjectId
+}

@@ -12,6 +12,7 @@ import { config } from "../../shared/config/config";
 import { generateS3FileKey } from "../../shared/utils/s3FileKeyGenerator";
 import { string } from "zod";
 import { unlinkSync } from "fs";
+import { Types } from "mongoose";
 
 @injectable()
 export class ServiceCommandUsecase implements IServiceCommandUsecase {
@@ -80,5 +81,23 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
         }
       });
     }
+  }
+
+  async deleteWorkSmaple(workSampleId: Types.ObjectId): Promise<void> {
+    const isWorkSampleExists = await this._workSampleRepo.findById(workSampleId);
+    if(!isWorkSampleExists) {
+      throw new CustomError(ERROR_MESSAGES.WORKSMAPLE_NOT_FOUND,HTTP_STATUS.NOT_FOUND)
+    }
+
+    await Promise.all(
+      isWorkSampleExists.media.map(async (image)=> {
+        const isFileExists = await this._awsS3Service.isFileAvailableInAwsBucket(image);
+        if(isFileExists){
+          return this._awsS3Service.deleteFileFromAws(image)
+        }
+      })
+    )
+
+    await this._workSampleRepo.delete(workSampleId)
   }
 }
