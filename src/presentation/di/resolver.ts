@@ -6,6 +6,7 @@ import { ClientController } from "../controllers/client.controller";
 import { VendorController } from "../controllers/vendor.controller";
 import { CommunityController } from "../controllers/community.controller";
 import { SocketService } from "../../interfaceAdapters/services/socket.service";
+import { ChatController } from "../controllers/chat.controller";
 
 DependencyInjection.registerAll()
 
@@ -20,3 +21,5 @@ export const vendorController = container.resolve(VendorController)
 export const communityController = container.resolve(CommunityController)
 
 export const socketService = container.resolve(SocketService)
+
+export const chatController = container.resolve(ChatController)

@@ -58,6 +58,7 @@ export const config = {
     privateChatMedia : 'private-chat-media',
     vendorDocuments : 'vendor-documents',
     workSample : 'worksample',
+    chatMedia : 'private-chat-media'
   },
 
   redis : {

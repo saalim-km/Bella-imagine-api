@@ -229,3 +229,14 @@ export const FetchAllCommunitiesSchema = z.object({
     .describe("Sort communities by: newest, oldest, name, or members")
     .optional(),
 });
+
+
+export const uploadMediaChat = z.object({
+  media: z
+    .any()
+    .refine((file) => file && typeof file === "object" && "fieldname" in file && "originalname" in file, {
+      message: "Media file is required and must be a valid file",
+    })
+    .transform((file) => file as Express.Multer.File),
+  conversationId: z.string(),
+});

@@ -9,6 +9,7 @@ import { errorHandler } from "../middlewares/error.middleware";
 import logger from "../../shared/logger/logger";
 import { globalRateLimit } from "../middlewares/rate-limit.middleware";
 import { socketService } from "../di/resolver";
+import { ChatRoute } from "../routes/chat/chat.route";
 
 
 export class Server {
@@ -56,6 +57,7 @@ export class Server {
   private configureRoutes(): void {
     this._app.use("/api/v_1/auth", new AuthRoute().router);
     this._app.use("/api/v_1/_pvt", new PrivateRoute().router);
+    this._app.use('/api/v_1/_chat', new ChatRoute().router)
   }
 
   private configureErrorHandler(): void {
