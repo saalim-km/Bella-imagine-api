@@ -23,3 +23,4 @@ export interface IBookingRepository extends IBaseRepository<IBooking> {
     findBookings(input: FindBookingsInput): Promise<PaginatedResponse<IBooking>>
     findUsersForChat(input :FindUsersForChat ) : Promise<IVendor[] | IClient[]>
 }
+

@@ -6,7 +6,7 @@ import { IConversationRepository } from "../../domain/interfaces/repository/conv
 import { IMessageRepository } from "../../domain/interfaces/repository/message.repository";
 import { FindUsersForChat, IBookingRepository } from "../../domain/interfaces/repository/booking.repository";
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
-import { UpdateLastSeenInput, UpdateOnlineStatusInput } from "../../domain/interfaces/usecase/types/chat.types";
+import { CreateConversationInput, UpdateLastSeenInput, UpdateOnlineStatusInput } from "../../domain/interfaces/usecase/types/chat.types";
 import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { IConversation, IMessage } from "../../domain/models/chat";
@@ -119,5 +119,42 @@ export class ChatUsecase implements IChatUsecase {
     );
 
     return enrichedMessages
+  }
+
+  async createConversation(input: CreateConversationInput): Promise<void> {
+    const {bookingId,clientId,vendorId} = input;
+
+    const [client, vendor] = await Promise.all([
+      this._clientRepo.findById(clientId),
+      this._vendorRepo.findById(vendorId)
+    ]);
+
+    if (!client || !vendor) {
+      throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND, HTTP_STATUS.NOT_FOUND);
+    }
+
+
+
+    await this._conversationRepo.create({
+      bookingId : bookingId,
+      client : {
+        _id : clientId,
+        avatar : client.profileImage,
+        email : client.email,
+        isOnline : client.isOnline,
+        lastSeen : client.lastSeen.toDateString(),
+        name: client.name,
+        role : "client",
+      },
+      vendor : {
+        _id: vendorId,
+        avatar: vendor.profileImage,
+        email: vendor.email,
+        isOnline: vendor.isOnline,
+        lastSeen: vendor.lastSeen.toDateString(),
+        name: vendor.name,
+        role: "vendor",
+      },
+    })
   }
 }

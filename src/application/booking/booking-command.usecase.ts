@@ -15,6 +15,8 @@ import { IPayment } from "../../domain/models/payment";
 import { IBooking } from "../../domain/models/booking";
 import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
 import { Types } from "mongoose";
+import { IConversationRepository } from "../../domain/interfaces/repository/conversation.repository";
+import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.interface";
 
 @injectable()
 export class BookingCommandUsecase implements IBookingCommandUsecase {
@@ -25,6 +27,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
     @inject("IWalletRepository") private _walletRepository: IWalletRepository,
     @inject("IPaymentUsecaase") private _paymentUsecase: IPaymentUsecaase,
     @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
+    @inject('IChatUsecase') private _chatUsecase : IChatUsecase
   ) {}
 
   async createPaymentIntentAndBooking(
@@ -135,7 +138,8 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
         paymentId: newPayment._id,
       }),
       this._walletRepository.addPaymnetIdToWallet(clientId, newPayment._id!),
-      this._serviceRepository.updateSlotCount(newBooking,-1)
+      this._serviceRepository.updateSlotCount(newBooking,-1),
+      this._chatUsecase.createConversation({clientId:clientId,vendorId:vendorId,bookingId:newBooking._id})
     ]);
 
     return paymentIntent.client_secret;

@@ -8,7 +8,7 @@ export interface Reaction {
 }
 
 export interface IUserEntityForChat {
-  _id: string;
+  _id: Types.ObjectId;
   name: string;
   email: string;
   role: TRole;

@@ -12,3 +12,9 @@ export interface UpdateOnlineStatusInput extends BaseUserInput {
 export interface UpdateLastSeenInput extends BaseUserInput {
     lastSeen : string
 }
+
+export interface CreateConversationInput {
+    clientId: Types.ObjectId;
+    vendorId: Types.ObjectId;
+    bookingId: Types.ObjectId
+}
