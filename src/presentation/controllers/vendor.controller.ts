@@ -7,7 +7,6 @@ import {
 import { Request, Response } from "express";
 import {
   objectIdSchema,
-  updateBookingSchema,
 } from "../../shared/utils/zod-validations/validators/validations";
 import { CustomRequest } from "../middlewares/auth.middleware";
 import { ResponseHandler } from "../../shared/utils/response-handler";
@@ -19,14 +18,16 @@ import {
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import {
   BookingQuerySchema,
+  updateBookingSchema,
   updateVendorProfileSchema,
 } from "../../shared/utils/zod-validations/presentation/client.schema";
-import { IVendorProfileUsecase } from "../../domain/interfaces/usecase/vendor-usecase.interface";
+import { IServiceCommandUsecase, IServiceQueryUsecase, IVendorProfileUsecase } from "../../domain/interfaces/usecase/vendor-usecase.interface";
 import {
   IBookingCommandUsecase,
   IBookingQueryUsecase,
 } from "../../domain/interfaces/usecase/booking-usecase.interface";
 import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
+import { CreateServiceSchema, createWorkSampleSchema, getSeviceSchema, updateServiceSchema } from "../../shared/utils/zod-validations/presentation/vendor.schema";
 
 @injectable()
 export class VendorController implements IVendorController {
@@ -43,7 +44,9 @@ export class VendorController implements IVendorController {
     private _categoryManagementUsecase: ICategoryManagementUsecase,
     @inject("IBookingCommandUsecase")
     private _bookingCommandUsecase: IBookingCommandUsecase,
-    @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase
+    @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
+    @inject('IServiceCommandUsecase') private _serviceCommandUsecase : IServiceCommandUsecase,
+    @inject('IServiceQueryUsecase') private _serviceQuery : IServiceQueryUsecase
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -61,7 +64,7 @@ export class VendorController implements IVendorController {
       _id: user._id,
       email: user.email,
       role: user.role,
-      refreshToken: user.refreshToken,
+      refreshToken: user.refresh_token,
     });
 
     updateCookieWithAccessToken(res, accessToken, `${user.role}_access_token`);
@@ -113,10 +116,7 @@ export class VendorController implements IVendorController {
   }
 
   async getCategories(req: Request, res: Response): Promise<void> {
-    const categories = await this._categoryManagementUsecase.getCategories({
-      limit: 100,
-      page: 1,
-    });
+    const categories = await this._categoryManagementUsecase.getCatForUsers()
     ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, categories);
   }
 
@@ -144,5 +144,36 @@ export class VendorController implements IVendorController {
     const parsed = updateBookingSchema.parse({ ...req.query, userId });
     await this._bookingCommandUsecase.updateBookingStatus(parsed);
     ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
+  }
+
+  async createService(req: Request, res: Response): Promise<void> {
+    const vendorId = objectIdSchema.parse((req as CustomRequest).user._id);
+    const parsed = CreateServiceSchema.parse(req.body)
+    console.log('parsed data : ');
+    console.dir(parsed);
+    await this._serviceCommandUsecase.createService({...parsed,vendor : vendorId})
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED)
+  }
+
+  async getServices(req: Request, res: Response): Promise<void> {
+    const parsed = getSeviceSchema.parse(req.query)
+    const services = await this._serviceQuery.getServices(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,services)
+  }
+
+  async updateService(req: Request, res: Response): Promise<void> {
+    const vendorId = objectIdSchema.parse((req as CustomRequest).user._id);
+    const parsed =  updateServiceSchema.parse(req.body)
+    await this._serviceCommandUsecase.updateService({...parsed,vendor : vendorId})
+    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
+  }
+
+  async createWorkSample(req: Request, res: Response): Promise<void> {
+    console.log(req.body);
+    console.log(req.files);
+    const parsed = createWorkSampleSchema.parse({ ...req.body, media: (req.files as { [fieldname: string]: Express.Multer.File[] } | undefined)?.media })
+    console.log('parsed data',parsed);
+    await this._serviceCommandUsecase.createWorkSample(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.CREATED);
   }
 }

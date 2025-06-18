@@ -56,7 +56,8 @@ export const config = {
     communityPost : 'community-post',
     groupChatMedia: 'group-chat-media',
     privateChatMedia : 'private-chat-media',
-    vendorDocuments : 'vendor-documents'
+    vendorDocuments : 'vendor-documents',
+    workSample : 'worksample',
   },
 
   redis : {

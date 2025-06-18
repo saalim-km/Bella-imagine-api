@@ -39,4 +39,5 @@ export interface ICategoryManagementUsecase {
   updateCategoryStatus(categoryId : Types.ObjectId) : Promise<void> 
   getCatJoinRequest(input : getCatJoinRequestInput) : Promise<PaginatedResponse<ICategoryRequest>>
   updateCatJoinRequest(input : UupdateCatReqInput) : Promise<void> 
+  getCatForUsers() : Promise<PaginatedResponse<ICategory>>
 }

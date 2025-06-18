@@ -43,7 +43,7 @@ import { IClientProfileUsecase, IVendorBrowsingUseCase } from "../../domain/inte
 import { VendorBrowsingUsecase } from "../../application/client/vendor-browsing.usecase";
 import { BookingCommandUsecase } from "../../application/booking/booking-command.usecase";
 import { ClientProfileUsecase } from "../../application/client/client-profile.usecase";
-import { IVendorProfileUsecase } from "../../domain/interfaces/usecase/vendor-usecase.interface";
+import { IServiceCommandUsecase, IServiceQueryUsecase, IVendorProfileUsecase } from "../../domain/interfaces/usecase/vendor-usecase.interface";
 import { VendorProfileUsecase } from "../../application/vendor/vendor-profile.usecase";
 import { BookingQueryUsecase } from "../../application/booking/booking-query.usecase";
 import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
@@ -57,6 +57,8 @@ import { CommunityQueryUsecase } from "../../application/community/community-que
 import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.interface";
 import { ChatUsecase } from "../../application/chat.usecase";
 import { GoogleLoginUsecase } from "../../application/auth/google-login.usecase";
+import { ServiceCommandUsecase } from "../../application/service/service-command.usecase";
+import { ServiceQueryUsecase } from "../../application/service/service-query.usecase";
 
 export class UsecaseRegistry {
     // Static method to register all use cases and strategies
@@ -185,6 +187,14 @@ export class UsecaseRegistry {
 
         container.register<IGoogleLoginUsecase>('IGoogleLoginUsecase', {
             useClass : GoogleLoginUsecase
+        })
+
+        container.register<IServiceCommandUsecase>('IServiceCommandUsecase',{
+            useClass : ServiceCommandUsecase
+        })
+
+        container.register<IServiceQueryUsecase>('IServiceQueryUsecase' ,{
+            useClass : ServiceQueryUsecase
         })
     }
 }

@@ -12,6 +12,7 @@ import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { config } from "../../shared/config/config";
 import { IAwsS3Service } from "../../domain/interfaces/service/aws-service.interface";
 import { IRedisService } from "../../domain/interfaces/service/redis-service.interface";
+import logger from "../../shared/logger/logger";
 
 @injectable()
 export class GoogleLoginUsecase implements IGoogleLoginUsecase {
@@ -98,6 +99,7 @@ export class GoogleLoginUsecase implements IGoogleLoginUsecase {
     if (existingUser) {
       if (existingUser.googleId) {
         if (existingUser?.profileImage) {
+          logger.warn('google profile hit in googel login auth : ')
           const cachedUrl = await this._pregisnedUrl.getPresignedUrl(`${config.s3.profile}:${existingUser._id}`)
           if (cachedUrl) {
             existingUser.profileImage = cachedUrl;
@@ -120,6 +122,8 @@ export class GoogleLoginUsecase implements IGoogleLoginUsecase {
             }
           }
         }
+        logger.info('after checking exising user')
+        console.log(existingUser);
         return {
           email,
           role,

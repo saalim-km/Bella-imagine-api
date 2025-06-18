@@ -127,4 +127,8 @@ export class CategoryManagementUsecase implements ICategoryManagementUsecase {
       status: status,
     });
   }
+
+  async getCatForUsers(): Promise<PaginatedResponse<ICategory>> {
+     return  await this._categoryRepository.getCatForUsers()
+  }
 }

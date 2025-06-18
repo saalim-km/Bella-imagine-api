@@ -37,4 +37,12 @@ export class CategoryRepository extends BaseRepository<ICategory> implements ICa
             total : count
         }
     }
+
+    async getCatForUsers(): Promise<PaginatedResult<ICategory>> {
+        const categories = await this.model.find({status : true})
+        return {
+            data : categories,
+            total : 0
+        }
+    }
 }

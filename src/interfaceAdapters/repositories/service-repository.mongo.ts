@@ -4,6 +4,8 @@ import { IService } from "../../domain/models/service";
 import { IServiceRepository } from "../../domain/interfaces/repository/service.repository";
 import { Service } from "../database/schemas/service.schema";
 import { IBooking } from "../../domain/models/booking";
+import { FilterQuery } from "mongoose";
+import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";
 
 @injectable()
 export class ServiceRepository extends BaseRepository<IService> implements IServiceRepository {
@@ -26,5 +28,17 @@ export class ServiceRepository extends BaseRepository<IService> implements IServ
                 ]
             }
         )
+    }
+
+    async getServices(filter: FilterQuery<IService>, skip: number, limit: number, sort: any = -1) : Promise<PaginatedResponse<IService>> {
+        const [services,count] = await Promise.all([
+            this.model.find(filter).populate({path : 'category' , select : 'title'}).skip(skip).limit(limit).sort({createdAt : sort}),
+            this.model.countDocuments(filter)
+        ]) 
+
+        return {
+            data  :services,
+            total : count
+        }
     }
 }

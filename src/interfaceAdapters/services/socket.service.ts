@@ -35,13 +35,13 @@ export class SocketService implements ISocketService {
     console.log("socketio events initialized ❤️");
 
     this.io.on("connection", async (socket) => {
+      console.log('socket data from frontend : ',socket.data);
       const { userId, userType } = socket.data;
       console.log(`User Connected ✅ userId => ${userId} role => ${userType}`);
 
       // connection event
       socket.on("join", async ({ userId, userType }) => {
         console.log("join event triggered 😘", userId,userType);
-        socket.join(userId);
         await this._chatUsecase.updateOnlineStatus({
           userId: userId,
           role: userType,

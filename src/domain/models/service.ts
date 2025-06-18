@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 import { DateSlot, Location, SessionDuration } from "../../shared/types/service.types";
 
 export interface IService {
-  _id: Types.ObjectId
+  _id?: Types.ObjectId
   vendor: Types.ObjectId
   serviceTitle: string;
   category: Types.ObjectId

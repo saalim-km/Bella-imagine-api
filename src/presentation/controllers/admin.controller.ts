@@ -49,7 +49,7 @@ export class AdminController implements IAdminController {
       _id: user._id,
       email: user.email,
       role: user.role,
-      refreshToken: user.refreshToken,
+      refreshToken: user.refresh_token,
     });
 
     updateCookieWithAccessToken(res, accessToken, `${user.role}_access_token`);

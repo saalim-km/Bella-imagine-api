@@ -6,6 +6,7 @@ import { IGetPresignedUrlUsecase } from "../../../domain/interfaces/usecase/comm
 import { CustomError } from "../../../shared/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants/constants";
 import { IVendor } from "../../../domain/models/vendor";
+import logger from "../../../shared/logger/logger";
 
 @injectable()
 export class GetVendorDetailsStrategy implements IGetUserDetailsStrategy<IVendor> {
@@ -24,6 +25,13 @@ export class GetVendorDetailsStrategy implements IGetUserDetailsStrategy<IVendor
         if(vendor.profileImage){
             vendor.profileImage = await this._getSigned.getPresignedUrl(vendor.profileImage)
         }
+
+        console.log('venor data for login after checking url : ',vendor);
+        if(!vendor.profileImage && vendor.googleId){
+            logger.info('google profie hit')
+            vendor.profileImage = vendor.profileImage
+        }
+
 
         if(vendor.verificationDocument){
             vendor.verificationDocument = await this._getSigned.getPresignedUrl(vendor.verificationDocument)

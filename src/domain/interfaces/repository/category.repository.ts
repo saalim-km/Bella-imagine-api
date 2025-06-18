@@ -5,4 +5,5 @@ import { IBaseRepository } from "./base.repository";
 
 export interface ICategoryRepository extends IBaseRepository<ICategory> {
     getAllCategories(input : GetCategoryInput) : Promise<PaginatedResult<ICategory>>
+    getCatForUsers() : Promise<PaginatedResult<ICategory>>
 }

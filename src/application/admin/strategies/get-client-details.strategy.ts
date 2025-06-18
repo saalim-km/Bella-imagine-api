@@ -6,6 +6,7 @@ import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants/constants
 import { CustomError } from "../../../shared/utils/custom-error";
 import { IGetPresignedUrlUsecase } from "../../../domain/interfaces/usecase/common-usecase.interfaces";
 import { IClient } from "../../../domain/models/client";
+import logger from "../../../shared/logger/logger";
 
 @injectable()
 export class GetClientDetailsStrategy implements IGetUserDetailsStrategy<IClient> {
@@ -25,6 +26,11 @@ export class GetClientDetailsStrategy implements IGetUserDetailsStrategy<IClient
 
         if(client.profileImage){
             client.profileImage = await this._getSigned.getPresignedUrl(client.profileImage)
+        }
+
+        if(!client.profileImage && client.googleId){
+            logger.info('google profie hit')
+            client.profileImage = client.profileImage
         }
 
         return client;

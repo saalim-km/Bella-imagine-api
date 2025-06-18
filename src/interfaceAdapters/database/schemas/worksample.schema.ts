@@ -19,12 +19,7 @@ export const workSampleSchema = new mongoose.Schema<IWorkSample>({
   description: {
     type: String,
   },
-  media: [
-    {
-      url: { type: String, required: true },
-      type: { type: String, enum: ["image", "video"], required: true },
-    },
-  ],
+  media: [String],
   tags: [
     {
       type: String,

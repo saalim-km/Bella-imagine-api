@@ -8,4 +8,8 @@ export interface IVendorController {
     joinCateoryRequest(req: Request, res: Response) : Promise<void>
     fetchWallet(req: Request, res: Response) : Promise<void>
     updateBookingStatus(req: Request, res: Response) : Promise<void>
+    createService(req: Request, res: Response) : Promise<void>
+    getServices(req: Request, res: Response) : Promise<void>
+    updateService(req: Request, res: Response) : Promise<void>
+    createWorkSample(req: Request, res: Response) : Promise<void>
 }

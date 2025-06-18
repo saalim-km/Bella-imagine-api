@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { TComment, TMedia } from "../../shared/types/service.types";
+import { TComment } from "../../shared/types/service.types";
 
 export interface IWorkSample {
   _id?: Types.ObjectId;
@@ -7,12 +7,11 @@ export interface IWorkSample {
   vendor: Types.ObjectId;
   title: string;
   description?: string;
-  media: TMedia[];
-  tags: string[];
-  likes: string[];
-  comments: TComment;
+  media: string[];
+  tags?: string[];
+  likes?: string[];
+  comments?: TComment;
   isPublished: boolean;
   createdAt?: Date;
   updatedAt ?: string;
-  __v?: number;
 }
