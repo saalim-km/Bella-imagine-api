@@ -10,7 +10,7 @@ import {
 import { ICommunity } from "../../domain/models/community";
 import { FilterQuery } from "mongoose";
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
-import { CustomError } from "../../shared/utils/custom-error";
+import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { FetchCommunityBySlugOutput } from "../../domain/types/community.types";
 import { ICommunityMemberRepository } from "../../domain/interfaces/repository/community-member.repository";

@@ -1,21 +1,19 @@
 import { inject, injectable } from "tsyringe";
-import { IChatUsecase } from "../domain/interfaces/usecase/chat-usecase.interface";
-import { IClientRepository } from "../domain/interfaces/repository/client.repository";
-import { IVendorRepository } from "../domain/interfaces/repository/vendor.repository";
-import {
-  UpdateLastSeenInput,
-  UpdateOnlineStatusInput,
-} from "../domain/interfaces/usecase/types/chat.types";
-import { CustomError } from "../shared/utils/custom-error";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../shared/constants/constants";
+import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.interface";
+import { IClientRepository } from "../../domain/interfaces/repository/client.repository";
+import { IVendorRepository } from "../../domain/interfaces/repository/vendor.repository";
+import { IConversationRepository } from "../../domain/interfaces/repository/conversation.repository";
+import { IMessageRepository } from "../../domain/interfaces/repository/message.repository";
+import { FindUsersForChat, IBookingRepository } from "../../domain/interfaces/repository/booking.repository";
+import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
+import { UpdateLastSeenInput, UpdateOnlineStatusInput } from "../../domain/interfaces/usecase/types/chat.types";
+import { CustomError } from "../../shared/utils/helper/custom-error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
+import { IConversation, IMessage } from "../../domain/models/chat";
+import { IClient } from "../../domain/models/client";
+import { IVendor } from "../../domain/models/vendor";
 import { Types } from "mongoose";
-import { IConversation, IMessage } from "../domain/models/chat";
-import { IConversationRepository } from "../domain/interfaces/repository/conversation.repository";
-import { IMessageRepository } from "../domain/interfaces/repository/message.repository";
-import { FindUsersForChat, IBookingRepository } from "../domain/interfaces/repository/booking.repository";
-import { IClient } from "../domain/models/client";
-import { IVendor } from "../domain/models/vendor";
-import { IGetPresignedUrlUsecase } from "../domain/interfaces/usecase/common-usecase.interfaces";
+
 
 @injectable()
 export class ChatUsecase implements IChatUsecase {

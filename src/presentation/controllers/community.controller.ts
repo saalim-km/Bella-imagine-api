@@ -11,7 +11,7 @@ import {
   fetchCommunitySchema,
   updateCommuitySchema,
 } from "../../shared/utils/zod-validations/presentation/community.schema";
-import { ResponseHandler } from "../../shared/utils/response-handler";
+import { ResponseHandler } from "../../shared/utils/helper/response-handler";
 import { SUCCESS_MESSAGES } from "../../shared/constants/constants";
 import { CustomRequest } from "../middlewares/auth.middleware";
 import { FetchAllCommunitiesSchema } from "../../shared/utils/zod-validations/presentation/client.schema";

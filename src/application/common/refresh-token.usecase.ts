@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IJwtservice } from "../../domain/interfaces/service/jwt-service.interface";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
-import { CustomError } from "../../shared/utils/custom-error";
+import { CustomError } from "../../shared/utils/helper/custom-error";
 import { HTTP_STATUS } from "../../shared/constants/constants";
 
 

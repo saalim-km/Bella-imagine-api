@@ -8,7 +8,7 @@ import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.
 import { IVendor } from "../../domain/models/vendor";
 import { FilterQuery, Types } from "mongoose";
 import { IVendorRepository } from "../../domain/interfaces/repository/vendor.repository";
-import { CustomError } from "../../shared/utils/custom-error";
+import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { IService } from "../../domain/models/service";

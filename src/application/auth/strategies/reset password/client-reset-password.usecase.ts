@@ -4,7 +4,7 @@ import { IBcryptService } from "../../../../domain/interfaces/service/bcrypt-ser
 import { IEmailExistenceUsecase } from "../../../../domain/interfaces/usecase/common-usecase.interfaces";
 import { IClient } from "../../../../domain/models/client";
 import { ResetPasswordInput } from "../../../../domain/interfaces/usecase/types/auth.types";
-import { CustomError } from "../../../../shared/utils/custom-error";
+import { CustomError } from "../../../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../../shared/constants/constants";
 import { IClientRepository } from "../../../../domain/interfaces/repository/client.repository";
 

@@ -5,7 +5,7 @@ import {
 } from "../../domain/interfaces/usecase/types/client.types";
 import { IBookingRepository } from "../../domain/interfaces/repository/booking.repository";
 import { IServiceRepository } from "../../domain/interfaces/repository/service.repository";
-import { CustomError } from "../../shared/utils/custom-error";
+import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { IClientRepository } from "../../domain/interfaces/repository/client.repository";
 import { IWalletRepository } from "../../domain/interfaces/repository/wallet.repository";

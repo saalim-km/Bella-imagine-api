@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IGetUserDetailsStrategy, IGetUserDetailsUsecase } from "../../domain/interfaces/usecase/admin-usecase.interface";
 import { UserDetailsInput } from "../../domain/interfaces/usecase/types/admin.types";
-import { CustomError } from "../../shared/utils/custom-error";
+import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { IUser } from "../../domain/models/user-base";
 

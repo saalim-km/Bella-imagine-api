@@ -1,4 +1,4 @@
-import { asyncHandler } from "../../../shared/utils/async-handler";
+import { asyncHandler } from "../../../shared/utils/helper/async-handler";
 import { authController } from "../../di/resolver";
 import { registrationRateLimit , authRateLimit , passwordResetRateLimit} from "../../middlewares/rate-limit.middleware";
 import { BaseRoute } from "../base.route";

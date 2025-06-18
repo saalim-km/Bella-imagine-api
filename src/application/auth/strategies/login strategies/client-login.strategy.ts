@@ -3,7 +3,7 @@ import { ILoginUserStrategy } from "../../../../domain/interfaces/usecase/auth-u
 import { IEmailExistenceUsecase, IGetPresignedUrlUsecase } from "../../../../domain/interfaces/usecase/common-usecase.interfaces";
 import { IBcryptService } from "../../../../domain/interfaces/service/bcrypt-service.interface";
 import { LoginUserInput, LoginUserOuput } from "../../../../domain/interfaces/usecase/types/auth.types";
-import { CustomError } from "../../../../shared/utils/custom-error";
+import { CustomError } from "../../../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../../shared/constants/constants";
 import { IClient } from "../../../../domain/models/client";
 

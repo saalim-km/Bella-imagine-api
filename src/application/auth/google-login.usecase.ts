@@ -6,7 +6,7 @@ import {
 } from "../../domain/interfaces/usecase/auth-usecase.interfaces";
 import { IEmailExistenceUsecase, IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { GoogleLoginInput, LoginUserOuput } from "../../domain/interfaces/usecase/types/auth.types";
-import { CustomError } from "../../shared/utils/custom-error";
+import { CustomError } from "../../shared/utils/helper/custom-error";
 import { OAuth2Client } from "google-auth-library";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { config } from "../../shared/config/config";

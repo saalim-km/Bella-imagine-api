@@ -4,7 +4,7 @@ import { Payment } from "../../interfaceAdapters/database/schemas/payment.schema
 import { BaseRepository } from "../../interfaceAdapters/repositories/base-repository.mongo";
 import { IPayment } from "../../domain/models/payment";
 import { CreatePaymentIntenServicetInput } from "../../domain/interfaces/usecase/types/payment.types";
-import { CustomError } from "../../shared/utils/custom-error";
+import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { IStripeService } from "../../domain/interfaces/service/stripe-service.interface";
 import Stripe from "stripe";

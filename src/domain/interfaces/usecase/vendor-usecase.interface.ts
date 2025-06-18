@@ -1,5 +1,5 @@
 import { IVendor } from "../../models/vendor";
-import { CreateCategoryRequestInput, CreateWorkSampleInput, GetServiceInput, GetWorkSampleInput, UpdatevendorProfileInput } from "./types/vendor.types";
+import { CreateCategoryRequestInput, CreateWorkSampleInput, GetServiceInput, GetWorkSampleInput, UpdatevendorProfileInput, UpdateWorkSampleInput } from "./types/vendor.types";
 import { IService } from "../../models/service";
 import { PaginatedResponse } from "./types/common.types";
 import { IWorkSample } from "../../models/worksample";
@@ -15,6 +15,7 @@ export interface IServiceCommandUsecase {
     updateService(input : IService) : Promise<void>
     createWorkSample(input : CreateWorkSampleInput) : Promise<void>
     deleteWorkSmaple(workSampleId : Types.ObjectId) : Promise<void>
+    updateWorkSample(input : UpdateWorkSampleInput): Promise<void>
 }
 
 export interface IServiceQueryUsecase {

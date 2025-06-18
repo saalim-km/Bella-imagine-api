@@ -3,7 +3,7 @@ import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.i
 import { IWalletRepository } from "../../domain/interfaces/repository/wallet.repository";
 import { Types } from "mongoose";
 import { IWallet, PopulatedWallet } from "../../domain/models/wallet";
-import { CustomError } from "../../shared/utils/custom-error";
+import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { creditAmountToWalletInput } from "../../domain/interfaces/usecase/types/wallet.types";
 import { IBookingRepository } from "../../domain/interfaces/repository/booking.repository";

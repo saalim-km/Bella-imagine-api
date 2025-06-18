@@ -1,4 +1,4 @@
-import { asyncHandler } from "../../../shared/utils/async-handler";
+import { asyncHandler } from "../../../shared/utils/helper/async-handler";
 import { adminController, communityController } from "../../di/resolver";
 import { authorizeRole, decodeToken, verifyAuth } from "../../middlewares/auth.middleware";
 import { upload } from "../../middlewares/multer.middleware";

@@ -6,7 +6,7 @@ import {
   UpdatevendorProfileInput,
 } from "../../domain/interfaces/usecase/types/vendor.types";
 import { IVendor } from "../../domain/models/vendor";
-import { CustomError } from "../../shared/utils/custom-error";
+import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { Types, UpdateQuery } from "mongoose";
 import { IAwsS3Service } from "../../domain/interfaces/service/aws-service.interface";

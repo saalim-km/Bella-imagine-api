@@ -149,6 +149,19 @@ export const createWorkSampleSchema = z.object({
   ),
 });
 
+export const updateWorkSampleSchema = createWorkSampleSchema
+  .omit({ media: true }) // omit old media field
+  .extend({
+    _id: objectIdSchema,
+    existingImageKeys: z.array(z.string()).default([]),
+    deletedImageKeys: z.array(z.string()).default([]),
+    newImages: z.preprocess(
+      (val) => (Array.isArray(val) ? val : val ? [val] : []),
+      z.array(z.custom<Express.Multer.File>()).optional()
+    ),
+  });
+
+
 export const getWorkSamplesSchema = z.object({
   limit : limitQuerySchema,
   title : searchQuerySchema,

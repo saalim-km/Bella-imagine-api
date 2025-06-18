@@ -11,9 +11,9 @@ import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.
 import { ICategory } from "../../domain/models/category";
 import { FilterQuery, Types } from "mongoose";
 import { ICategoryRepository } from "../../domain/interfaces/repository/category.repository";
-import { CustomError } from "../../shared/utils/custom-error";
+import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
-import { generateCategoryId } from "../../shared/utils/id-generator";
+import { generateCategoryId } from "../../shared/utils/helper/id-generator";
 import { ICategoryRequest } from "../../domain/models/category-request";
 import { ICategoryRequestRepository } from "../../domain/interfaces/repository/category-request.repository";
 import { IVendorRepository } from "../../domain/interfaces/repository/vendor.repository";

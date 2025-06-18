@@ -46,3 +46,18 @@ export interface GetWorkSampleInput {
   title ?: string;
   service ?: Types.ObjectId
 }
+
+
+
+export interface UpdateWorkSampleInput {
+  _id : Types.ObjectId,
+  service : Types.ObjectId
+  vendor : Types.ObjectId
+  title : string;
+  description : string;
+  tags : string[];
+  isPublished : boolean;
+  existingImageKeys ?: string[];
+  deletedImageKeys ?: string[];
+  newImages ?: Express.Multer.File[]
+}

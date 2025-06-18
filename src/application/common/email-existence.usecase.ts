@@ -3,7 +3,7 @@ import {
   IEmailExistenceUsecase,
 } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { ERROR_MESSAGES, TRole } from "../../shared/constants/constants";
-import { CustomError } from "../../shared/utils/custom-error";
+import { CustomError } from "../../shared/utils/helper/custom-error";
 import { IClientRepository } from "../../domain/interfaces/repository/client.repository";
 import { IVendorRepository } from "../../domain/interfaces/repository/vendor.repository";
 import { IUser } from "../../domain/models/user-base";

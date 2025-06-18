@@ -21,7 +21,7 @@ import {
   HTTP_STATUS,
   SUCCESS_MESSAGES,
 } from "../../shared/constants/constants";
-import { ResponseHandler } from "../../shared/utils/response-handler";
+import { ResponseHandler } from "../../shared/utils/helper/response-handler";
 import { IAuthController } from "../../domain/interfaces/controller/auth-controller.interface";
 import {
   resetPasswordSchema,
@@ -29,7 +29,7 @@ import {
   userRegisterSchema,
   verifyOtpSchema,
 } from "../../shared/utils/zod-validations/presentation/auth.schema";
-    import { setAuthCookies } from "../../shared/utils/cookie-helper";
+    import { setAuthCookies } from "../../shared/utils/helper/cookie-helper";
 
 @injectable()
 export class AuthController implements IAuthController {

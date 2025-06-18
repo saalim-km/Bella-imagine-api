@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CustomError } from "../../custom-error";
+import { CustomError } from "../../helper/custom-error";
 import { HTTP_STATUS } from "../../../constants/constants";
 import { Types } from "mongoose";
 

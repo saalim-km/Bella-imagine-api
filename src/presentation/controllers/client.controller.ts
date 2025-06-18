@@ -6,8 +6,8 @@ import { Stripe } from "stripe";
 import {
   clearAuthCookies,
   updateCookieWithAccessToken,
-} from "../../shared/utils/cookie-helper";
-import { ResponseHandler } from "../../shared/utils/response-handler";
+} from "../../shared/utils/helper/cookie-helper";
+import { ResponseHandler } from "../../shared/utils/helper/response-handler";
 import { SUCCESS_MESSAGES, TRole } from "../../shared/constants/constants";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import {

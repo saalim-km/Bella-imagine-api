@@ -9,12 +9,12 @@ import {
   objectIdSchema,
 } from "../../shared/utils/zod-validations/validators/validations";
 import { CustomRequest } from "../middlewares/auth.middleware";
-import { ResponseHandler } from "../../shared/utils/response-handler";
+import { ResponseHandler } from "../../shared/utils/helper/response-handler";
 import { SUCCESS_MESSAGES, TRole } from "../../shared/constants/constants";
 import {
   clearAuthCookies,
   updateCookieWithAccessToken,
-} from "../../shared/utils/cookie-helper";
+} from "../../shared/utils/helper/cookie-helper";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import {
   BookingQuerySchema,
@@ -27,7 +27,7 @@ import {
   IBookingQueryUsecase,
 } from "../../domain/interfaces/usecase/booking-usecase.interface";
 import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
-import { CreateServiceSchema, createWorkSampleSchema, getSeviceSchema, getWorkSamplesSchema, updateServiceSchema } from "../../shared/utils/zod-validations/presentation/vendor.schema";
+import { CreateServiceSchema, createWorkSampleSchema, getSeviceSchema, getWorkSamplesSchema, updateServiceSchema, updateWorkSampleSchema } from "../../shared/utils/zod-validations/presentation/vendor.schema";
 
 @injectable()
 export class VendorController implements IVendorController {
@@ -188,5 +188,13 @@ export class VendorController implements IVendorController {
     const workSmapleId = objectIdSchema.parse(req.params.workSampleId)
     await this._serviceCommandUsecase.deleteWorkSmaple(workSmapleId)
     ResponseHandler.success(res,SUCCESS_MESSAGES.DELETE_SUCCESS)
+  }
+  
+  async updateWorkSample(req: Request, res: Response): Promise<void> {
+    console.log(req.body);
+    console.log(req.files);
+    const parsed = updateWorkSampleSchema.parse({...req.body,newImages : (req.files as { [fieldname: string]: Express.Multer.File[] } | undefined)?.newImages});
+    await this._serviceCommandUsecase.updateWorkSample(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
   }
 }

@@ -7,12 +7,12 @@ import {
   UpdateCommunityInput,
 } from "../../domain/interfaces/usecase/types/community.types";
 import { ICommunityRepository } from "../../domain/interfaces/repository/community.repository";
-import { CustomError } from "../../shared/utils/custom-error";
+import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { config } from "../../shared/config/config";
 import { IAwsS3Service } from "../../domain/interfaces/service/aws-service.interface";
 import path from "path";
-import { generateSlug } from "../../shared/utils/slug-generator";
+import { generateSlug } from "../../shared/utils/helper/slug-generator";
 import { unlinkSync } from "fs";
 import { UpdateQuery } from "mongoose";
 import { ICommunity } from "../../domain/models/community";

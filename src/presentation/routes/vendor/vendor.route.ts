@@ -1,4 +1,4 @@
-import { asyncHandler } from "../../../shared/utils/async-handler";
+import { asyncHandler } from "../../../shared/utils/helper/async-handler";
 import { vendorController } from "../../di/resolver";
 import { authorizeRole, decodeToken, verifyAuth } from "../../middlewares/auth.middleware";
 import { upload } from "../../middlewares/multer.middleware";
@@ -37,5 +37,6 @@ export class VendorRoute extends BaseRoute {
         .router.route('/vendor/work-sample')
         .post(verifyAuth,authorizeRole(['vendor']),upload.fields([{name : 'media' , maxCount : 10}]),asyncHandler(vendorController.createWorkSample.bind(vendorController)))
         .get(verifyAuth,authorizeRole(['vendor']),upload.fields([{name : 'media' , maxCount : 10}]),asyncHandler(vendorController.getWorkSamples.bind(vendorController)))
+        .put(verifyAuth,authorizeRole(['vendor']),upload.fields([{name : 'newImages' , maxCount : 10}]),asyncHandler(vendorController.updateWorkSample.bind(vendorController)))
     }
 }

@@ -3,7 +3,7 @@ import { IGetUserDetailsStrategy } from "../../../domain/interfaces/usecase/admi
 import { UserDetailsInput } from "../../../domain/interfaces/usecase/types/admin.types";
 import { IClientRepository } from "../../../domain/interfaces/repository/client.repository";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants/constants";
-import { CustomError } from "../../../shared/utils/custom-error";
+import { CustomError } from "../../../shared/utils/helper/custom-error";
 import { IGetPresignedUrlUsecase } from "../../../domain/interfaces/usecase/common-usecase.interfaces";
 import { IClient } from "../../../domain/models/client";
 import logger from "../../../shared/logger/logger";

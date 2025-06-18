@@ -5,7 +5,7 @@ import { IClient } from "../../domain/models/client";
 import { IClientRepository } from "../../domain/interfaces/repository/client.repository";
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { IAwsS3Service } from "../../domain/interfaces/service/aws-service.interface";
-import { CustomError } from "../../shared/utils/custom-error";
+import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { Types, UpdateQuery } from "mongoose";
 import { config } from "../../shared/config/config";

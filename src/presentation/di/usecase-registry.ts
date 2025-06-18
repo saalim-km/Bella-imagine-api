@@ -55,10 +55,10 @@ import { ICommunityCommandUsecase, ICommunityQueryUsecase } from "../../domain/i
 import { CommunityCommandUsecase } from "../../application/community/community-command.usecase";
 import { CommunityQueryUsecase } from "../../application/community/community-query.usecase";
 import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.interface";
-import { ChatUsecase } from "../../application/chat.usecase";
 import { GoogleLoginUsecase } from "../../application/auth/google-login.usecase";
 import { ServiceCommandUsecase } from "../../application/service/service-command.usecase";
 import { ServiceQueryUsecase } from "../../application/service/service-query.usecase";
+import { ChatUsecase } from "../../application/chat/chat.usecase";
 
 export class UsecaseRegistry {
     // Static method to register all use cases and strategies

@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IResetPasswordStrategy, IResetPasswordUsecase } from "../../domain/interfaces/usecase/auth-usecase.interfaces";
 import { ResetPasswordInput } from "../../domain/interfaces/usecase/types/auth.types";
-import { CustomError } from "../../shared/utils/custom-error";
+import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 
 @injectable()
