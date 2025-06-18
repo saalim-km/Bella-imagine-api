@@ -50,7 +50,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
     } = input;
 
     const service = await this._serviceRepository.findById(serviceId);
-    if (!service) {
+    if (!service || !service._id) {
       throw new CustomError(
         ERROR_MESSAGES.SERVICE_NOT_FOUND,
         HTTP_STATUS.NOT_FOUND
