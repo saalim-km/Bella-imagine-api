@@ -42,6 +42,7 @@ export class SocketService implements ISocketService {
       // connection event
       socket.on("join", async ({ userId, userType }) => {
         console.log("join event triggered 😘", userId,userType);
+        socket.join(userId)
         await this._chatUsecase.updateOnlineStatus({
           userId: userId,
           role: userType,
@@ -95,8 +96,9 @@ export class SocketService implements ISocketService {
             console.log('new message',message,recipentId,recipentName);
             const newMessage = await this._chatUsecase.sendMessage(message);
             console.log('new message created and sended',newMessage);
+            console.log(`recipent id ${recipentId} , senderId : ${message.senderId}`);
             this.io?.to(recipentId.toString()).emit("new_message", newMessage);
-            this.io?.to(message.senderId.toString()).emit("new_message", newMessage);
+            this.io?.to(message.senderId.toString()).emit('new_message',newMessage);
             // const newNotification =
             //   // await this.notificationUsecase.sendNotification({
             //   //   message: `${recipentName} send a message`,

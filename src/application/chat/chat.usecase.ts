@@ -85,13 +85,13 @@ export class ChatUsecase implements IChatUsecase {
     }
 
     conversation.lastMessage = message;
-    const [] = await Promise.all([
+    const [newMessage] = await Promise.all([
         this._messageRepo.create(message),
         this._conversationRepo.update(conversation._id,{lastMessage : message}),
         this._conversationRepo.incrementUnreadCount({role : input.userType , conversationId : conversation._id})
     ])
 
-    return message;
+    return newMessage
   }
 
   async fetchUsersForChat(input: FindUsersForChat): Promise<IClient[] | IVendor[]> {
