@@ -32,6 +32,7 @@ export interface IBooking {
     lat: number;
     lng: number;
   };
+  adminCommision ?: number;
   distance ?: number
   travelTime ?: string
   totalPrice: number;

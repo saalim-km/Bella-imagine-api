@@ -24,7 +24,10 @@ const bookingSchema = new mongoose.Schema<IBooking>(
     },
 
     bookingDate: { type: String, required: true },
-
+    adminCommision : {
+      type : Number,
+      required: true
+    },
     timeSlot: {
       startTime: { type: String, required: true },
       endTime: { type: String, required: true },

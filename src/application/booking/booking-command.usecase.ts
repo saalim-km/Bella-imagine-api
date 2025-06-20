@@ -68,6 +68,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       );
     }
 
+    const adminCommission = ( totalPrice / 100 ) * 2;
     const newBooking = await this._bookingRepository.create({
       bookingDate: bookingDate,
       customLocation: customLocation || "",
@@ -90,6 +91,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
         termsAndConditions: service.termsAndConditions,
         location: service.location,
       },
+      adminCommision : adminCommission,
       timeSlot: timeSlot,
       totalPrice: totalPrice,
       paymentStatus: "pending",
@@ -212,16 +214,22 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       }
 
       if (updatedBooking.isClientApproved && updatedBooking.isVendorApproved) {
-        await this._bookingRepository.update(bookingId, {
-          status: "completed",
-        });
+        const amountForVendor = updatedBooking.totalPrice - (updatedBooking.totalPrice / 100) * 2
 
-        await this._walletUsecase.creditAmountToWallet({
-          amount: updatedBooking.totalPrice,
+          await this._bookingRepository.update(bookingId, {
+            status: "completed",
+          }),
+
+        await Promise.all([
+        this._walletUsecase.creditAdminCommissionToWallet(bookingId),
+        this._walletUsecase.creditAmountToWallet({
+          amount : amountForVendor,
           purpose: "wallet-credit",
           bookingId: bookingId,
-          userId,
-        });
+          userId : updatedBooking.vendorId,
+        })
+        ])
+         
       }
       return;
     }

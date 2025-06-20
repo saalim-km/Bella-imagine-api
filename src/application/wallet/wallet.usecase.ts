@@ -92,9 +92,9 @@ export class WalletUsecase implements IWalletUsecase {
       );
     }
 
-    const adminCommission = (booking.totalPrice * 2) / 100; //  2% commission
+    const adminCommission = (booking.totalPrice / 100) * 2; //  2% commission
 
-    const admin = await this._clientRepository.findAdmin("admin@gmail.com");
+    const admin = await this._clientRepository.findOne({role : 'admin'});
     if (!admin || !admin._id) {
       throw new CustomError(
         ERROR_MESSAGES.ADMIN_NOT_FOUND,

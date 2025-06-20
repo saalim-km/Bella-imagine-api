@@ -70,3 +70,8 @@ export const getCatJoinRequestsSchema = z.object({
 export const updateCategorySchema = z.object({
   id : objectIdSchema,
 })
+
+export const getCommunityMemberSchema = z.object({
+  limit : limitQuerySchema,
+  page : pageQuerySchema
+})

@@ -16,6 +16,7 @@ import { SUCCESS_MESSAGES } from "../../shared/constants/constants";
 import { CustomRequest } from "../middlewares/auth.middleware";
 import { FetchAllCommunitiesSchema } from "../../shared/utils/zod-validations/presentation/client.schema";
 import { objectIdSchema } from "../../shared/utils/zod-validations/validators/validations";
+import { getCommunityMemberSchema } from "../../shared/utils/zod-validations/presentation/admin.schema";
 
 @injectable()
 export class CommunityController implements ICommunityController {
@@ -106,5 +107,12 @@ export class CommunityController implements ICommunityController {
     const communityId = objectIdSchema.parse(req.params.communityId)
     await this._communityCommand.leaveCommunity({userId,communityId})
     ResponseHandler.success(res,SUCCESS_MESSAGES.LEAVE_SUCCESS)
+  }
+
+  async getCommunityMembers(req: Request, res: Response): Promise<void> {
+    console.log(req.params);
+    const communityId = objectIdSchema.parse(req.params.communityId)
+    const parsed = getCommunityMemberSchema.parse(req.query)
+    const members = await this._communityQuery.fetchCommuityMembers({...parsed,communityId : communityId})
   }
 }

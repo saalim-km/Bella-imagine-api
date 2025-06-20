@@ -6,15 +6,17 @@ import {
   FetchAllCommunitiesInput,
   fetchCommBySlugInput,
   FetchCommuityInput,
+  GetCommunityMemberInput,
 } from "../../domain/interfaces/usecase/types/community.types";
 import { ICommunity } from "../../domain/models/community";
-import { FilterQuery } from "mongoose";
+import { FilterQuery, Types } from "mongoose";
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { FetchCommunityBySlugOutput } from "../../domain/types/community.types";
 import { ICommunityMemberRepository } from "../../domain/interfaces/repository/community-member.repository";
 import { skip } from "node:test";
+import { ICommunityMember } from "../../domain/models/community-member";
 
 @injectable()
 export class CommunityQueryUsecase implements ICommunityQueryUsecase {
@@ -151,6 +153,18 @@ export class CommunityQueryUsecase implements ICommunityQueryUsecase {
     return {
       data : communities,
       total: total
+    }
+  }
+
+  async fetchCommuityMembers(input : GetCommunityMemberInput): Promise<PaginatedResponse<ICommunityMember>> {
+    const {communityId,limit,page} = input;
+    const skip = (page - 1) * limit;
+    const members = await this._communityMemberRepo.findAll({},skip,limit,-1)
+
+    console.log('got the members : ',members);
+    return {
+      data : members,
+      total : 0
     }
   }
 }

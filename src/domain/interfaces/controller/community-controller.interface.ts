@@ -8,4 +8,5 @@ export interface ICommunityController {
   fetchAllCommunitiesForUser(req: Request, res: Response): Promise<void>;
   joinCommunity(req: Request, res: Response): Promise<void>;
   leaveCommunity(req: Request, res: Response): Promise<void>;
+  getCommunityMembers(req: Request, res: Response): Promise<void>;
 }
