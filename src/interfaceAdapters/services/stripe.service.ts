@@ -1,140 +1,58 @@
-import Stripe from "stripe";
 import { inject, injectable } from "tsyringe";
-import { IPaymentRepository } from "../../entities/repositoryInterfaces/payment/payment-repository.interface";
-import { PaymentStatus } from "../../entities/models/payment.entity";
-import { config } from "../../shared/config";
-import { CustomError } from "../../entities/utils/custom-error";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
-import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface";
-import { IPaymentService } from "../../entities/services/stripe-service.interface";
-import { TPaymentStatus } from "../../entities/models/booking.entity";
+import { IStripeService } from "../../domain/interfaces/service/stripe-service.interface";
+import Stripe from "stripe";
+import { config } from "../../shared/config/config";
+import { PaymentStatus } from "../../domain/models/payment";
+import { TPaymentStatus } from "../../shared/types/booking.types";
+import { IBookingRepository } from "../../domain/interfaces/repository/booking.repository";
+import { IPaymentRepository } from "../../domain/interfaces/repository/payment.repository";
+import { CreatePaymentIntenServicetInput } from "../../domain/interfaces/usecase/types/payment.types";
 
 @injectable()
-export class StripeService implements IPaymentService {
-  private stripe: Stripe;
-  private apiKey: string;
-
-  constructor(
-    @inject("IPaymentRepository") private paymentRepository: IPaymentRepository,
-    @inject("IBookingRepository") private bookingRepository: IBookingRepository
-  ) {
-    this.apiKey = config.stripe.STRIPE_SECRET_KEY;
-    this.stripe = new Stripe(this.apiKey, {
-      apiVersion: "2025-03-31.basil",
-    });
-  }
-
-  async createPaymentIntent(
-    amount: number,
-    currency: string
-  ): Promise<{
-    paymentIntent: string;
-    clientSecret: string;
-  }> {
-    try {
-      const paymentIntent = await this.stripe.paymentIntents.create({
-        amount,
-        currency,
-        automatic_payment_methods: {
-          enabled: true,
-        },
-      });
-
-      return {
-        paymentIntent: paymentIntent.id!,
-        clientSecret: paymentIntent.client_secret!,
-      };
-    } catch (error) {
-      console.error("Error creating payment intent:", error);
-      throw new CustomError(
-        "Failed to create payment intent",
-        HTTP_STATUS.INTERNAL_SERVER_ERROR
-      );
+export class StripeService implements IStripeService {
+    private _stripe : Stripe
+    private _apiKey : string;
+    constructor(
+        @inject('IBookingRepository') private _bookingRepository : IBookingRepository,
+        @inject('IPaymentRepository') private _paymentRepository : IPaymentRepository
+    ){
+        this._apiKey = config.stripe.STRIPE_SECRET_KEY,
+        this._stripe = new Stripe(this._apiKey , {
+            apiVersion : '2025-03-31.basil'
+        })
     }
-  }
 
-  async confirmPayment(paymentIntentId: string): Promise<boolean> {
-    try {
-      const paymentIntent = await this.stripe.paymentIntents.retrieve(
-        paymentIntentId
-      );
-      return paymentIntent.status === "succeeded";
-    } catch (error) {
-      console.error("Error confirming payment:", error);
-      throw new CustomError(
-        ERROR_MESSAGES.CONFIRM_PAYMENT_FAILED,
-        HTTP_STATUS.INTERNAL_SERVER_ERROR
-      );
+    async createPaymentIntent(input: CreatePaymentIntenServicetInput): Promise<Stripe.PaymentIntent> {
+        const {amount , currency ,description,receiptEmail , metadata } = input;
+        const paymentIntent =  await this._stripe.paymentIntents.create({
+            amount : amount,
+            currency : currency,
+            automatic_payment_methods : {
+                enabled : true
+            },
+            description : description,
+            receipt_email : receiptEmail,
+            metadata : metadata
+        })
+
+        return paymentIntent
     }
-  }
 
-  async refundPayment(
-    paymentIntentId: string,
-    amount?: number
-  ): Promise<boolean> {
-    try {
-      const paymentIntent = await this.stripe.paymentIntents.retrieve(
-        paymentIntentId
-      );
-
-      if (!paymentIntent.latest_charge) {
-        throw new CustomError(
-          ERROR_MESSAGES.NO_CHARGE_FOUND,
-          HTTP_STATUS.BAD_REQUEST
-        );
-      }
-
-      const chargeId =
-        typeof paymentIntent.latest_charge === "string"
-          ? paymentIntent.latest_charge
-          : paymentIntent.latest_charge.id;
-
-      const refundParams: Stripe.RefundCreateParams = {
-        charge: chargeId,
-        ...(amount && { amount }),
-      };
-
-      const refund = await this.stripe.refunds.create(refundParams);
-
-      const refundStatus: PaymentStatus =
-        amount && amount < paymentIntent.amount
-          ? "partially_refunded"
-          : "refunded";
-
-      await this.updatePaymentStatus(paymentIntentId, refundStatus);
-
-      return refund.status === "succeeded";
-    } catch (error) {
-      console.error("Error processing refund:", error);
-      throw new CustomError(
-        ERROR_MESSAGES.FAILED_TO_PROCESS_REFUND,
-        HTTP_STATUS.INTERNAL_SERVER_ERROR
-      );
-    }
-  }
-
-  async updatePaymentStatus(
+    async updatePaymentStatus(
     paymentIntentId: string,
     status: PaymentStatus
   ): Promise<void> {
     const payment =
-      await this.paymentRepository.findByPaymentIntentIdAndUpdateStatus(
+      await this._paymentRepository.findByIntentIdAndUpdateStatus(
         paymentIntentId,
         status
       );
 
     if (payment) {
-      this.bookingRepository.findByIdAndUpdatePaymentStatus(
-        payment.bookingId,
-        status as TPaymentStatus
-      );
-
-      if (status === "refunded") {
-        this.bookingRepository.findByIdAndUpdateBookingStatus(
-          payment.bookingId,
-          "cancelled"
-        );
-      }
+      this._bookingRepository.findByIdAndUpdatePaymentStatus(
+        payment.bookingId!,
+        status
+      );    
     }
   }
 
@@ -181,4 +99,5 @@ export class StripeService implements IPaymentService {
         break;
     }
   }
+
 }

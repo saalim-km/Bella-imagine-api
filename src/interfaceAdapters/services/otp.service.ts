@@ -1,50 +1,55 @@
 import { inject, injectable } from "tsyringe";
-import { IOtpService } from "../../entities/services/otp-service.interface";
-import crypto from 'crypto'
-import { IOTPRepository } from "../../entities/repositoryInterfaces/auth/otp-repository.interface";
-import { IBcrypt } from "../../frameworks/security/bcrypt.interface";
-import { resultOtpVerify } from "../../useCases/auth/verfiy-otp.usecase";
-import { SUCCESS_MESSAGES } from "../../shared/constants";
-import { OtpBcrypt } from "../../frameworks/security/otp.bcrypt.";
+import crypto from 'crypto';
+import { IOtpService } from "../../domain/interfaces/service/otp-service.interface";
+import { IRedisService } from "../../domain/interfaces/service/redis-service.interface";
+import { IBcryptService } from "../../domain/interfaces/service/bcrypt-service.interface";
+import { VerifyOtpResultOutput } from "../../domain/interfaces/usecase/types/auth.types";
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../../shared/constants/constants";
 
 @injectable()
 export class OtpService implements IOtpService {
     constructor(
-        @inject("IOTPRepository") private otpRepository : IOTPRepository,
-        @inject("OtpBcrypt") private otpBcrypt : IBcrypt
+        @inject('IRedisService') private redisService: IRedisService,
+        @inject('IBcryptService') private _bcryptService : IBcryptService
     ) {}
 
     generateOtp(): string {
-        return (crypto.randomInt(100000, 999999)).toString();
+        return crypto.randomInt(100000, 999999).toString();
     }
 
-    async storeOtp(email: string, otp: string): Promise<void> {
-        const expiresAt = new Date(Date.now() + 1 * 60 * 1000);
-        await this.otpRepository.saveOTP(email, otp , expiresAt);
+    private getRedisKey(email: string): string {
+        return `otp-${email}`;
     }
 
-    async verifyOtp({ email, otp }: { email: string, otp: string }): Promise<resultOtpVerify> {
-        const otpEntry = await this.otpRepository.findOTP({email});
-
-        if(!otpEntry) {
-            return {success : false , message : 'Invalid Otp'}
-        }
-
-        if(! (await this.otpBcrypt.compare(otp , otpEntry.otp))){
-            return {success : false , message : 'Invalid Otp'}
-        }
-
-        if(
-            new Date() > otpEntry.expiresAt
-        ) {
-            console.log("in otp verify ==>");
-            await this.otpRepository.deleteOTP(email , otp);
-            return  { success : false , message : 'Otp Expired'}
-        }
-
-
-        await this.otpRepository.deleteOTP(email , otp);
-        return {success : true , message : SUCCESS_MESSAGES.VERIFICATION_SUCCESS}
+    async storeOtp(otp: string, email: string): Promise<void> {
+        const newOtp = this.generateOtp()
+        const hashedOtp = await this._bcryptService.hash(otp);
+        const key = this.getRedisKey(email);
+        await this.redisService.set(key, hashedOtp, 60);
     }
 
+    async verifyOtp(email: string, otp: string): Promise<VerifyOtpResultOutput> {
+        const key = this.getRedisKey(email);
+        const storedHashedOtp = await this.redisService.get(key);
+        if (!storedHashedOtp) {
+            return {
+                success: false,
+                message: ERROR_MESSAGES.OTP_EXPIRED
+            }
+        }
+
+        const isMatch = await this._bcryptService.compare(otp, storedHashedOtp)
+
+        if(!isMatch){
+            return {
+                success: false,
+                message: ERROR_MESSAGES.INVALID_OTP
+            }
+        }
+
+        return {
+            success : true,
+            message : SUCCESS_MESSAGES.OTP_VERIFY_SUCCESS
+        }
+    }
 }

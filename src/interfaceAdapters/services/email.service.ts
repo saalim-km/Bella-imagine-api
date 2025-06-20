@@ -1,7 +1,7 @@
 import { injectable } from "tsyringe";
 import nodemailer from "nodemailer";
-import { IEmailService } from "../../entities/services/email-service.interface";
-import { config } from "../../shared/config";
+import { IEmailService } from "../../domain/interfaces/service/email-service.interface";
+import { config } from "../../shared/config/config";
 
 @injectable()
 export class EmailService implements IEmailService {
@@ -17,7 +17,7 @@ export class EmailService implements IEmailService {
     });
   }
 
-  async sendEmail(to: string, subject: string, html: string): Promise<void> {
+  async send(to: string, subject: string, html: string): Promise<void> {
     const mailOptions = {
       from: `"Bella Imagine" <${config.nodemailer.USER}>`,
       to,
