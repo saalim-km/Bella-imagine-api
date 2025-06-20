@@ -11,6 +11,7 @@ import { Types, UpdateQuery } from "mongoose";
 import { config } from "../../shared/config/config";
 import path from "path";
 import { unlinkSync } from "fs";
+import { GeoLocation } from "../../domain/models/user-base";
 
 @injectable()
 export class ClientProfileUsecase implements IClientProfileUsecase {
@@ -18,13 +19,14 @@ export class ClientProfileUsecase implements IClientProfileUsecase {
     @inject("IClientRepository") private _clientRepository: IClientRepository,
     @inject("IAwsS3Service") private _awsService: IAwsS3Service,
     @inject("IGetPresignedUrlUsecase")
-    private _presignedUrl: IGetPresignedUrlUsecase,
+    private _presignedUrl: IGetPresignedUrlUsecase
   ) {}
 
   async updateClientProfile(input: UpdateClientProfileInput): Promise<IClient> {
-    console.log('in the updateclient profie usecase');
+    console.log("in the updateclient profie usecase");
     console.log(input);
-    const { name, clientId, email, location, phoneNumber, profileImage } = input;
+    const { name, clientId, email, location, phoneNumber, profileImage } =
+      input;
     const client = await this._clientRepository.findById(clientId);
     if (!client) {
       throw new CustomError(
@@ -33,9 +35,15 @@ export class ClientProfileUsecase implements IClientProfileUsecase {
       );
     }
 
+    const geoLocation: GeoLocation = {
+      type: "Point",
+      coordinates: [location.lng, location.lat],
+    };
+
     const dataToUpdate: UpdateQuery<IClient> = {
       name: name,
       location: location,
+      geoLocation: geoLocation,
     };
 
     if (profileImage) {

@@ -21,13 +21,15 @@ import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.inter
 @injectable()
 export class BookingCommandUsecase implements IBookingCommandUsecase {
   constructor(
-    @inject("IBookingRepository") private _bookingRepository: IBookingRepository,
-    @inject("IServiceRepository") private _serviceRepository: IServiceRepository,
+    @inject("IBookingRepository")
+    private _bookingRepository: IBookingRepository,
+    @inject("IServiceRepository")
+    private _serviceRepository: IServiceRepository,
     @inject("IClientRepository") private _clientRepository: IClientRepository,
     @inject("IWalletRepository") private _walletRepository: IWalletRepository,
     @inject("IPaymentUsecaase") private _paymentUsecase: IPaymentUsecaase,
     @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
-    @inject('IChatUsecase') private _chatUsecase : IChatUsecase
+    @inject("IChatUsecase") private _chatUsecase: IChatUsecase
   ) {}
 
   async createPaymentIntentAndBooking(
@@ -138,15 +140,18 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
         paymentId: newPayment._id,
       }),
       this._walletRepository.addPaymnetIdToWallet(clientId, newPayment._id!),
-      this._serviceRepository.updateSlotCount(newBooking,-1),
-      this._chatUsecase.createConversation({clientId:clientId,vendorId:vendorId,bookingId:newBooking._id})
+      this._serviceRepository.updateSlotCount(newBooking, -1),
+      this._chatUsecase.createConversation({
+        clientId: clientId,
+        vendorId: vendorId,
+        bookingId: newBooking._id,
+      }),
     ]);
 
     return paymentIntent.client_secret;
   }
 
   async updateBookingStatus(input: updateBookingStatusInput): Promise<void> {
-    console.log("updatebookingstatus called : ", input);
     const { bookingId, status, userId } = input;
     const booking = await this._bookingRepository.findById(bookingId);
     if (!booking) {
@@ -235,6 +240,17 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
         HTTP_STATUS.NOT_FOUND
       );
     }
+    const bookingDate = new Date(booking.bookingDate);
+    const now = new Date();
+
+    const hoursDiff =
+      (bookingDate.getTime() - now.getTime()) / (1000 * 60 * 60);
+    if (hoursDiff < 24) {
+      throw new CustomError(
+        "Cancellations must be made at least 24 hours in advance.",
+        HTTP_STATUS.BAD_REQUEST
+      );
+    }
 
     await Promise.all([
       this._walletUsecase.creditAmountToWallet({
@@ -249,5 +265,4 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       this._serviceRepository.updateSlotCount(booking, 1),
     ]);
   }
-
 }

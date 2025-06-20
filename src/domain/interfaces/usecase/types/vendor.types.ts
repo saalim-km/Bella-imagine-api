@@ -1,5 +1,6 @@
 import { Types } from "mongoose";
 import { number } from "zod";
+import { IService } from "../../../models/service";
 
 export interface UpdatevendorProfileInput {
   vendorId: Types.ObjectId;
@@ -23,12 +24,21 @@ export interface CreateCategoryRequestInput {
 }
 
 export interface GetServiceInput {
+  vendor : Types.ObjectId
   serviceTitle?: string;
   category?: Types.ObjectId;
   page: number;
   limit: number;
 }
 
+
+export interface CreateServiceInput extends Omit<IService , 'location'> {
+  location : {
+    lat : number,
+    lng : number,
+    address : string
+  }
+}
 export interface CreateWorkSampleInput {
   service: Types.ObjectId;
   vendor: Types.ObjectId;

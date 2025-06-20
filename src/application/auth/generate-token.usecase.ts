@@ -11,10 +11,6 @@ export class GenerateTokenUsecase implements IGenerateTokenUsecase {
     async generateToken(input: TJwtPayload): Promise<JwtOutput> {
         const accessToken = await this.jwtService.generateAccessToken(input);
         const refreshToken = await this.jwtService.generateRefreshToken(input);  
-        
-        console.log(`token generated access : ${accessToken} \n
-                refresh : ${refreshToken}
-            `);
             
         return {
             accessToken,

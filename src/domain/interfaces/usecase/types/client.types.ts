@@ -9,9 +9,14 @@ import { IService } from "../../../models/service";
 
 export interface GetVendorsQueryInput
   extends Pick<PaginationInput, "limit" | "page"> {
-  location?: string;
-  languages?: string;
-  category?: Types.ObjectId;
+  location?: {lat : number , lng : number};
+  languages?: string[];
+  categories?: Types.ObjectId[];
+  minCharge?: number;
+  maxCharge?: number;
+  tags?: string[];
+  services?: Types.ObjectId[];
+  sortBy?: Record<string,number>
 }
 
 export interface GetVendorDetailsInput {
@@ -53,8 +58,8 @@ export interface UpdateClientProfileInput{
   phoneNumber?: number;
   location: {
     address: string;
-    lat: string;
-    lng: string;
+    lat: number;
+    lng: number;
   };
   profileImage?: Express.Multer.File  
   email: string;

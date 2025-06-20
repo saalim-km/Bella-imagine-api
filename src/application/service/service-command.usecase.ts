@@ -16,6 +16,7 @@ import { Types } from "mongoose";
 import logger from "../../shared/logger/logger";
 import { cleanUpLocalFiles } from "../../shared/utils/helper/clean-local-file.helper";
 import { IVendorRepository } from "../../domain/interfaces/repository/vendor.repository";
+import { GeoLocation } from "../../domain/models/user-base";
 
 @injectable()
 export class ServiceCommandUsecase implements IServiceCommandUsecase {
@@ -28,12 +29,17 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
   ) {}
 
   async createService(input: IService): Promise<void> {
-    const {vendor} = input;
+    const {vendor,location} = input;
     if(!vendor){
       throw new CustomError(ERROR_MESSAGES.ID_NOT_PROVIDED,HTTP_STATUS.BAD_REQUEST)
     }
 
-    const service = await this._serviceRepo.create(input);
+    const geolocation : GeoLocation = {
+      type : 'Point',
+      coordinates : [location.lng,location.lat]
+    }
+
+    const service = await this._serviceRepo.create({...input,geoLocation : geolocation});
     await this._vendorRepo.update(vendor,{$push : {services : service._id}})
   }
 

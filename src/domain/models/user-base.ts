@@ -4,6 +4,10 @@ import { IClient } from "./client";
 import { IVendor } from "./vendor";
 import { IAdmin } from "./admin";
 
+export interface GeoLocation {
+  type: "Point";
+  coordinates: number[];
+}
 export interface IUserBase {
   _id: Types.ObjectId;
   name: string;
@@ -17,7 +21,8 @@ export interface IUserBase {
     lat: number;
     lng: number;
   };
-  role: TRole
+  geoLocation?: GeoLocation;
+  role: TRole;
   isblocked: boolean;
   isOnline: boolean;
   lastSeen: Date;
@@ -25,4 +30,4 @@ export interface IUserBase {
   createdAt?: Date;
 }
 
-export type IUser = IClient | IVendor | IAdmin
+export type IUser = IClient | IVendor | IAdmin;

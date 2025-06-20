@@ -18,10 +18,10 @@ export class ServiceQueryUsecase implements IServiceQueryUsecase {
     ){}
 
     async getServices(input: GetServiceInput): Promise<PaginatedResponse<IService>> {
-        const {limit,page,category,serviceTitle} = input;
+        const {limit,page,category,serviceTitle,vendor} = input;
         const skip = (page - 1) * limit;
 
-        let filter : FilterQuery<IService> ={}
+        let filter : FilterQuery<IService> ={vendor : vendor}
         if(category && category!== undefined) {
             filter.category = category
         }
@@ -38,9 +38,9 @@ export class ServiceQueryUsecase implements IServiceQueryUsecase {
     }
 
     async getWorkSmaples(input: GetWorkSampleInput): Promise<PaginatedResponse<IWorkSample>> {
-        const {limit,page,service,title} = input;
+        const {limit,page,service,title,vendor} = input;
         const skip = (page - 1) * limit;
-        let filter : FilterQuery<IWorkSample> = {}
+        let filter : FilterQuery<IWorkSample> = {vendor : vendor}
         if(service && service!== undefined) {
             filter.service = service;
         }

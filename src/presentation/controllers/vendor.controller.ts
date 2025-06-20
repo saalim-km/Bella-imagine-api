@@ -156,8 +156,9 @@ export class VendorController implements IVendorController {
   }
 
   async getServices(req: Request, res: Response): Promise<void> {
+    const vendorId = objectIdSchema.parse((req as CustomRequest).user._id);
     const parsed = getSeviceSchema.parse(req.query)
-    const services = await this._serviceQuery.getServices(parsed)
+    const services = await this._serviceQuery.getServices({...parsed,vendor : vendorId})
     ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,services)
   }
 

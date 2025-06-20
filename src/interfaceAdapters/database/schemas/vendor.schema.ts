@@ -1,7 +1,6 @@
 import { model, Schema } from "mongoose";
 import { IVendor } from "../../../domain/models/vendor";
 
-
 export const vendorSchema = new Schema<IVendor>(
   {
     vendorId: {
@@ -36,21 +35,32 @@ export const vendorSchema = new Schema<IVendor>(
         type: Number,
       },
     },
+    geoLocation: {
+      type: {
+        type: String,
+        enum: ["Point"],
+        required: true,
+      },
+      coordinates: {
+        type: [Number],
+        required: true,
+      },
+    },
     languages: {
       type: [String],
       default: [],
     },
-    services : [
+    services: [
       {
-        type : Schema.Types.ObjectId,
-        ref : "Service"
-      }
+        type: Schema.Types.ObjectId,
+        ref: "Service",
+      },
     ],
-    workSamples : [
+    workSamples: [
       {
-        type : Schema.Types.ObjectId,
-        ref : "WorkSample"
-      }
+        type: Schema.Types.ObjectId,
+        ref: "WorkSample",
+      },
     ],
     role: {
       type: String,
@@ -69,7 +79,7 @@ export const vendorSchema = new Schema<IVendor>(
     categories: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Category", 
+        ref: "Category",
       },
     ],
     isblocked: {
@@ -78,11 +88,11 @@ export const vendorSchema = new Schema<IVendor>(
       default: false,
     },
     verificationDocument: {
-      type : String,
+      type: String,
     },
     isOnline: {
       type: Boolean,
-      default : false
+      default: false,
     },
     lastSeen: { type: Date, default: Date.now },
     isVerified: {
@@ -93,5 +103,7 @@ export const vendorSchema = new Schema<IVendor>(
   },
   { timestamps: true }
 );
+
+vendorSchema.index({geoLocation : '2dsphere'});
 
 export const Vendor = model<IVendor>("Vendor", vendorSchema);

@@ -14,7 +14,6 @@ import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { IService } from "../../domain/models/service";
 import { IServiceRepository } from "../../domain/interfaces/repository/service.repository";
-import { count } from "console";
 
 @injectable()
 export class VendorBrowsingUsecase implements IVendorBrowsingUseCase {
@@ -31,55 +30,85 @@ export class VendorBrowsingUsecase implements IVendorBrowsingUseCase {
   async fetchAvailableVendors(
     input: GetVendorsQueryInput
   ): Promise<PaginatedResponse<GetVendorsOutput>> {
-    const { limit, page, category, languages, location } = input;
+    const {
+      limit,
+      page,
+      languages,
+      location,
+      categories,
+      maxCharge,
+      minCharge,
+      services,
+      sortBy,
+      tags,
+    } = input;
     const skip = (page - 1) * limit;
 
     let filter: FilterQuery<IVendor> = {};
 
-    if (category && category !== undefined) {
-      filter.categories = category;
+    if (location && location.lat !== 0 && location.lng !== 0) {
+      filter.geoLocation = {
+        type: "Point",
+        coordinates: [location.lng, location.lat],
+      };
     }
 
-    if (languages && languages !== undefined) {
+    if (languages && languages.length > 0 && languages !== undefined) {
       filter.languages = languages;
     }
 
-    let { data, total } =
-      await this._vendorRepsitory.fetchVendorListingsForClients({
-        filter: filter,
-        limit: limit,
-        skip,
-      });
+    if (categories && categories.length > 0 && categories !== undefined) {
+      filter.categories = categories;
+    }
 
-      data = await Promise.all(
-        data.map(async (vendor) => {
-        if (vendor.profileImage) {
-          vendor.profileImage = await this._pregisnedUrl.getPresignedUrl(
-            vendor.profileImage
-          );
+    if (minCharge && minCharge > 0 && minCharge !== undefined) {
+      filter.minCharge = minCharge;
+    }
+
+    if (maxCharge && maxCharge > 0 && maxCharge !== undefined) {
+      filter.maxCharge = maxCharge;
+    }
+
+    if (services && services.length > 0 && services !== undefined) {
+      filter.services = services;
+    }
+
+    if (tags && tags.length > 0 && tags !== undefined) {
+      filter.tags = tags;
+    }
+
+    let {data,total} = await this._vendorRepsitory.fetchVendorListingsForClients({
+      filter: filter,
+      limit: limit,
+      skip: skip,
+      sort: sortBy ? sortBy : { createdAt: -1 },
+    });
+
+    data = await Promise.all(
+      data.map(async(vendor) => {
+        if(vendor.profileImage) {
+          vendor.profileImage = await this._pregisnedUrl.getPresignedUrl(vendor.profileImage);
         }
 
+        if(vendor.workSamples.length > 0){
+          vendor.workSamples = await Promise.all(vendor.workSamples.map(async(sample)=> {
+            if(sample.media.length > 0){
+              sample.media = await Promise.all(sample.media.map(async (image)=> {
+                return this._pregisnedUrl.getPresignedUrl(image)
+              }))
+            }
+            return sample
+          }))
+        }
 
-        vendor.workSamples = await Promise.all(vendor.workSamples.map(async (sample) => {
-          if (sample.media.length > 0) {
-            sample.media = await Promise.all(
-              sample.media.map((image) => {
-                return this._pregisnedUrl.getPresignedUrl(image);
-              })
-            );
-          }
-          return sample;
-        }))
-        
-        return vendor;
+        return vendor
       })
-    );
+    )
 
-    console.dir(data);
 
     return {
       data: data,
-      total : total
+      total: total
     }
   }
 

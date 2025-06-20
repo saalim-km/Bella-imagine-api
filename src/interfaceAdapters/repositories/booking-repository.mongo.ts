@@ -43,14 +43,19 @@ export class BookingRepository
       priceMin,
       priceMax,
       userId,
+      vendorId
     } = input;
 
     // Build MongoDB query
     const query: any = {};
 
     // Role-based filtering
-    if (userId) {
+    if (userId && userId !== undefined) {
       query.userId = userId;
+    }
+
+    if(vendorId && vendorId !== undefined) {
+      query.vendorId = vendorId
     }
 
     // Status filter

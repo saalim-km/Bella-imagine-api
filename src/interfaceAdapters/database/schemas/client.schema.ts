@@ -1,4 +1,4 @@
-import { Schema , model } from "mongoose";
+import { Schema, model } from "mongoose";
 import { IClient } from "../../../domain/models/client";
 
 export const clientSchema = new Schema<IClient>(
@@ -16,7 +16,7 @@ export const clientSchema = new Schema<IClient>(
       type: String,
     },
     password: {
-      type: String, 
+      type: String,
     },
     phoneNumber: {
       type: Number,
@@ -32,18 +32,29 @@ export const clientSchema = new Schema<IClient>(
         type: Number,
       },
     },
-    googleId : {
-      type : String
+    geoLocation: {
+      type: {
+        type: String,
+        enum: ["Point"],
+        required: true,
+      },
+      coordinates: {
+        type: [Number],
+        required: true,
+      },
+    },
+    googleId: {
+      type: String,
     },
     role: {
       type: String,
       enum: ["client", "vendor", "admin"],
       default: "client",
     },
-    isblocked : {
-      type : Boolean,
-      required : true,
-      default : false
+    isblocked: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
     savedPhotographers: [
       {
@@ -65,5 +76,7 @@ export const clientSchema = new Schema<IClient>(
   },
   { timestamps: true }
 );
+
+clientSchema.index({geoLocation : '2dsphere'})
 
 export const Client = model<IClient>("Client", clientSchema);

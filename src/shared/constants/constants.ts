@@ -38,6 +38,7 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  CATEGORY_ALREADY_ADDED_IN_PROFILE : 'Category already added in profile',
   WORKSMAPLE_NOT_FOUND : 'Worksample not found',
   REGISTERATION_FAILED : 'Registeration failed',
   SOCKET_NOT_INITIAZIDE : 'Socket not initialized',

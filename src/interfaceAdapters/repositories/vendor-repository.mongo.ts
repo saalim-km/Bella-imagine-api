@@ -11,6 +11,7 @@ import { IService } from "../../domain/models/service";
 import { PaginatedResult } from "../../shared/types/pagination.types";
 import { IWorkSample } from "../../domain/models/worksample";
 import { GetVendorsOutput } from "../../domain/interfaces/usecase/types/client.types";
+import { json } from "stream/consumers";
 
 @injectable()
 export class VendorRepository
@@ -21,15 +22,15 @@ export class VendorRepository
     super(Vendor);
   }
 
-  async findVendorDetailsById(vendorId: Types.ObjectId): Promise<IVendor | null> {
+  async findVendorDetailsById(
+    vendorId: Types.ObjectId
+  ): Promise<IVendor | null> {
     return await Vendor.findById(vendorId)
-    .populate(
-      {
-        path : 'categories',
-        select : 'title'
-      }
-    )
-    .lean()
+      .populate({
+        path: "categories",
+        select: "title",
+      })
+      .lean();
   }
 
   async findAllVendors(
@@ -61,38 +62,279 @@ export class VendorRepository
   async fetchVendorListingsForClients(
     input: ClientVendorQuery
   ): Promise<PaginatedResponse<GetVendorsOutput>> {
-    const { filter, limit, skip } = input;
+    console.log(JSON.stringify(input, null, 2));
 
-    const query: FilterQuery<IVendor> = {};
-    if (filter.categories) {
-      query.categories = { $in: [filter.categories] };
+    const { limit = 10, skip, sort = { createdAt: -1 }, filter } = input;
+
+    const {
+      categories,
+      tags,
+      services,
+      languages,
+      minCharge,
+      maxCharge,
+      geoLocation,
+    } = filter;
+
+    console.log(minCharge, maxCharge);
+    console.log("location triggered : ", geoLocation);
+
+    // Build the initial match conditions (excluding geoLocation)
+    const matchStage: any = {
+      isblocked: false,
+      role: "vendor",
+    };
+
+    // Filter by languages
+    if (languages && languages.length > 0) {
+      matchStage.languages = { $in: languages };
     }
 
-    if (filter.languages && filter.languages !== "Any Language") {
-      query.languages = { $in: [filter.languages.trim()] };
+    // Filter by categories
+    if (categories && categories.length > 0) {
+      matchStage.categories = { $in: categories };
     }
 
-    const [vendors, count] = await Promise.all([
-      Vendor.find(query)
-        .populate([
-          {
-            path: "services",
-            populate: {
-              path: "category",
+    // Filter by services
+    if (services && services.length > 0) {
+      matchStage.services = { $in: services };
+    }
+
+    // Build the aggregation pipeline
+    const pipeline: any[] = [];
+
+    // Add $geoNear as the first stage if geoLocation is provided
+    if (geoLocation && geoLocation.coordinates.length > 0) {
+      pipeline.push({
+        $geoNear: {
+          near: {
+            type: geoLocation.type,
+            coordinates: geoLocation.coordinates,
+          },
+          distanceField: "distance", // Store calculated distance in 'distance' field
+          minDistance: 0, // 1km minimum
+          maxDistance: 10000, // 10km maximum
+          spherical: true, // Use spherical geometry for 2dsphere index
+          query: matchStage, // Apply initial filters (isblocked, role, etc.)
+        },
+      });
+    } else {
+      // If no geoLocation, start with a regular $match
+      pipeline.push({ $match: matchStage });
+    }
+
+    // Continue building the pipeline
+    pipeline.push(
+      // Lookup services to get sessionDurations
+      {
+        $lookup: {
+          from: "services",
+          localField: "_id",
+          foreignField: "vendor",
+          as: "services",
+        },
+      },
+
+      // Lookup workSamples
+      {
+        $lookup: {
+          from: "worksamples",
+          localField: "_id",
+          foreignField: "vendor",
+          as: "workSamples",
+        },
+      },
+
+      // Lookup categories
+      {
+        $lookup: {
+          from: "categories",
+          localField: "categories",
+          foreignField: "_id",
+          as: "categories",
+        },
+      },
+
+      // Unwind services to filter by sessionDurations.price
+      { $unwind: { path: "$services", preserveNullAndEmptyArrays: true } },
+
+      // Unwind sessionDurations to apply price filters
+      {
+        $unwind: {
+          path: "$services.sessionDurations",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+
+      // Filter by minCharge and maxCharge
+      {
+        $match: {
+          ...(minCharge !== undefined &&
+          minCharge > 0 &&
+          maxCharge !== undefined &&
+          maxCharge > 0
+            ? {
+                "services.sessionDurations.price": {
+                  $gte: minCharge,
+                  $lte: maxCharge,
+                },
+              }
+            : {}),
+        },
+      },
+
+      // Unwind workSamples to filter by tags
+      { $unwind: { path: "$workSamples", preserveNullAndEmptyArrays: true } },
+
+      // Filter by tags (from WorkSample model)
+      ...(tags && tags.length > 0
+        ? [
+            {
+              $match: {
+                "workSamples.tags": { $in: tags },
+              },
+            },
+          ]
+        : []),
+
+      // Group back to reconstruct the vendor document
+      {
+        $group: {
+          _id: "$_id",
+          name: { $first: "$name" },
+          email: { $first: "$email" },
+          profileImage: { $first: "$profileImage" },
+          description: { $first: "$description" },
+          geoLocation: { $first: "$geoLocation" },
+          location: { $first: "$location" },
+          languages: { $first: "$languages" },
+          services: { $push: "$services" },
+          workSamples: { $push: "$workSamples" },
+          categories: { $first: "$categories" },
+          minCharge: { $min: "$services.sessionDurations.price" },
+          maxCharge: { $max: "$services.sessionDurations.price" },
+          distance: { $first: "$distance" }, // Include distance if $geoNear was used
+        },
+      },
+
+      // Filter out vendors with no valid services after price filtering
+      {
+        $match: {
+          services: { $ne: [] }, // Ensure vendors have at least one matching service
+        },
+      },
+
+      // Sort
+      {
+        $sort: sort, // Apply user-specified sort (e.g., { minCharge: 1 })
+      },
+
+      // Pagination
+      { $skip: skip },
+      { $limit: limit },
+
+      // Project final fields
+      {
+        $project: {
+          name: 1,
+          email: 1,
+          profileImage: 1,
+          description: 1,
+          geoLocation: 1,
+          languages: 1,
+          location: 1,
+          services: 1,
+          workSamples: 1,
+          categories: 1,
+          minCharge: 1,
+          maxCharge: 1,
+          distance: 1, // Include distance in output
+        },
+      }
+    );
+
+    // Count pipeline
+    const countPipeline: any[] = [];
+
+    // Add geospatial filter for count if geoLocation is provided
+    if (geoLocation && geoLocation.coordinates.length > 0) {
+      countPipeline.push({
+        $match: {
+          ...matchStage,
+          geoLocation: {
+            $geoWithin: {
+              $centerSphere: [
+                [geoLocation.coordinates[0], geoLocation.coordinates[1]],
+                10000 / 6378137, // 10km radius in radians (Earth radius ~6378.137km)
+              ],
             },
           },
-          { path: "workSamples" },
-          { path: "categories" },
-        ])
-        .sort({ createdAt: -1 })
-        .skip(skip)
-        .limit(limit)
-        .lean(),
-      this.count(query),
+        },
+      });
+    } else {
+      countPipeline.push({ $match: matchStage });
+    }
+
+    // Continue building count pipeline
+    countPipeline.push(
+      {
+        $lookup: {
+          from: "services",
+          localField: "_id",
+          foreignField: "vendor",
+          as: "services",
+        },
+      },
+      { $unwind: { path: "$services", preserveNullAndEmptyArrays: true } },
+      {
+        $unwind: {
+          path: "$services.sessionDurations",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $match: {
+          ...(minCharge !== undefined && minCharge > 0
+            ? { "services.sessionDurations.price": { $gte: minCharge } }
+            : {}),
+          ...(maxCharge !== undefined && maxCharge > 0
+            ? { "services.sessionDurations.price": { $lte: maxCharge } }
+            : {}),
+        },
+      },
+      {
+        $lookup: {
+          from: "worksamples",
+          localField: "_id",
+          foreignField: "vendor",
+          as: "workSamples",
+        },
+      },
+      { $unwind: { path: "$workSamples", preserveNullAndEmptyArrays: true } },
+      ...(tags && tags.length > 0
+        ? [
+            {
+              $match: {
+                "workSamples.tags": { $in: tags },
+              },
+            },
+          ]
+        : []),
+      { $group: { _id: "$_id" } },
+      { $count: "total" }
+    );
+
+    console.log(JSON.stringify(pipeline, null, 2));
+    // Execute aggregation and count
+    const [vendors, count] = await Promise.all([
+      this.model.aggregate(pipeline),
+      this.model
+        .aggregate(countPipeline)
+        .then((result) => result[0]?.total || 0),
     ]);
 
     return {
-      data: vendors as unknown as GetVendorsOutput[],
+      data: vendors,
       total: count,
     };
   }
@@ -126,22 +368,24 @@ export class VendorRepository
       },
     ];
 
-    const aggregatedData = await Vendor.aggregate(pipeline).exec()
+    const aggregatedData = await Vendor.aggregate(pipeline).exec();
     const result: {
       _id: string;
       services: IService[];
       totalServices: number;
     } = aggregatedData[0];
-    console.log("service result from aggregate", result);
     return {
       data: result.services,
       total: result.totalServices,
     };
   }
 
-
-  async getPaginatedWorkSamples(vendorId: Types.ObjectId, page: number, limit: number): Promise<PaginatedResult<IWorkSample>> {
-       const pipeline = [
+  async getPaginatedWorkSamples(
+    vendorId: Types.ObjectId,
+    page: number,
+    limit: number
+  ): Promise<PaginatedResult<IWorkSample>> {
+    const pipeline = [
       { $match: { _id: new Types.ObjectId(vendorId) } },
       {
         $lookup: {
@@ -171,7 +415,6 @@ export class VendorRepository
       samples: IWorkSample[];
       totalSamples: number;
     } = aggregatedData[0];
-    console.log("worksample result from aggregate", result);
     return {
       data: result.samples,
       total: result.totalSamples,

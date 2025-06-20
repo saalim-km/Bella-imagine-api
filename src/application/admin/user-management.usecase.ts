@@ -26,11 +26,9 @@ export class UserManagementUsecase implements IUserManagementUsecase {
         });
         break;
       case "vendor":
-        console.log("in vendor switch case ", input);
         const vendor = await this._vendorRepository.update(input.id, {
           isblocked: input.isblocked,
         });
-        console.log(vendor);
         break;
       default:
         throw new CustomError(

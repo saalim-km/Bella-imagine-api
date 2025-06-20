@@ -17,6 +17,7 @@ import { unlinkSync } from "fs";
 import { ICategoryRepository } from "../../domain/interfaces/repository/category.repository";
 import { ICategoryRequestRepository } from "../../domain/interfaces/repository/category-request.repository";
 import { IWalletRepository } from "../../domain/interfaces/repository/wallet.repository";
+import { GeoLocation } from "../../domain/models/user-base";
 
 @injectable()
 export class VendorProfileUsecase implements IVendorProfileUsecase {
@@ -28,7 +29,7 @@ export class VendorProfileUsecase implements IVendorProfileUsecase {
     @inject("ICategoryRequestRepository")
     private _catRequestRepository: ICategoryRequestRepository,
     @inject("ICategoryRepository")
-    private _categoryRepository: ICategoryRepository,
+    private _categoryRepository: ICategoryRepository
   ) {}
 
   async updateVendorProfile(input: UpdatevendorProfileInput): Promise<IVendor> {
@@ -51,9 +52,15 @@ export class VendorProfileUsecase implements IVendorProfileUsecase {
       );
     }
 
+    const geoLocation: GeoLocation = {
+      type: "Point",
+      coordinates: [location.lng, location.lat],
+    };
+
     const dataToUpdate: UpdateQuery<IVendor> = {
       name: name,
       location: location,
+      geoLocation: geoLocation,
     };
 
     if (profileImage) {

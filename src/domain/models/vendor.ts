@@ -11,4 +11,7 @@ export interface IVendor extends IUserBase {
   categories: Types.ObjectId[];
   verificationDocument: string;
   isVerified: "pending" | "accept" | "reject";
+  minCharge ?: number;
+  maxCharge ?: number;
+  tags ?: string[]
 }

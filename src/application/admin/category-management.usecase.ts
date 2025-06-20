@@ -92,22 +92,30 @@ export class CategoryManagementUsecase implements ICategoryManagementUsecase {
       );
     }
 
-    const isCatExists = await this._categoryRepository.findById(categoryId);
-    if (!isCatExists) {
-      throw new CustomError(
-        ERROR_MESSAGES.CATEGORY_NOT_FOUND,
-        HTTP_STATUS.BAD_REQUEST
-      );
-    }
+    console.log('got the vendor',vendor);
+
+    // const isCatExists = await this._categoryRepository.findById(categoryId);
+    // if (!isCatExists) {
+    //   throw new CustomError(
+    //     ERROR_MESSAGES.CATEGORY_NOT_FOUND,
+    //     HTTP_STATUS.BAD_REQUEST
+    //   );
+    // }
 
     const request = await this._categoryRequestRepository.findOne({
       categoryId: categoryId,
+      vendorId : vendorId
     });
     if (!request) {
       throw new CustomError(
         ERROR_MESSAGES.REQUEST_NOT_FOUND,
         HTTP_STATUS.NOT_FOUND
       );
+    }
+
+    const isCatAlreadyExistInVendorProfile = await this._categoryRequestRepository.findOne({vendorId : vendorId , categoryId : categoryId})
+    if(isCatAlreadyExistInVendorProfile?.status === 'approved'){
+      throw new CustomError(ERROR_MESSAGES.CATEGORY_ALREADY_ADDED_IN_PROFILE,HTTP_STATUS.CONFLICT)
     }
 
     if (status === "approved") {

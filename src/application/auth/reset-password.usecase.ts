@@ -18,7 +18,6 @@ export class ResetPasswordUsecase implements IResetPasswordUsecase {
     }
 
     async resetPassword(input: ResetPasswordInput): Promise<void> {
-        console.log('reset password usecase',input);
         const {role} = input;
         const strategy = this._strategies[role]
         if(!strategy){

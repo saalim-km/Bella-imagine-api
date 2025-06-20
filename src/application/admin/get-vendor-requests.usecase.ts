@@ -19,7 +19,6 @@ export class GetVendorRequestUsecase implements IGetVendorRequestUsecase {
     let sort: number = -1;
     const skip = (input.page - 1) * input.limit;
 
-    console.log('limit number :',input.limit);
     if (input.createdAt) {
       sort = input.createdAt;
     }

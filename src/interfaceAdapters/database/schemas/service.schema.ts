@@ -12,9 +12,9 @@ export const serviceSchema = new mongoose.Schema<IService>({
     ref: "Category",
     required: true,
   },
-  yearsOfExperience : {
-    type : Number,
-    required : true
+  yearsOfExperience: {
+    type: Number,
+    required: true,
   },
   serviceTitle: {
     type: String,
@@ -38,38 +38,49 @@ export const serviceSchema = new mongoose.Schema<IService>({
   ],
   features: [String],
   location: {
-    address : {
-      type : String,
-      required: true
+    address: {
+      type: String,
+      required: true,
     },
     travelFee: {
       type: Number,
     },
-    lat : {
+    lat: {
       type: Number,
-      required: true
+      required: true,
     },
-    lng : {
+    lng: {
       type: Number,
-      required: true
+      required: true,
+    },
+  },
+  geoLocation: {
+    type: {
+      type: String,
+      enum: ["Point"],
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
     },
   },
   equipment: [String],
   cancellationPolicies: {
-    type : [String],
+    type: [String],
   },
-  termsAndConditions : {
-    type : [String]
+  termsAndConditions: {
+    type: [String],
   },
   availableDates: [
     {
       date: { type: String },
       timeSlots: [
         {
-          startTime: { type: String  },
-          endTime: { type: String  },
-          capacity: { type: Number  },
-          isBooked: {type : Boolean , default : false}
+          startTime: { type: String },
+          endTime: { type: String },
+          capacity: { type: Number },
+          isBooked: { type: Boolean, default: false },
         },
       ],
     },
@@ -78,7 +89,9 @@ export const serviceSchema = new mongoose.Schema<IService>({
   isPublished: {
     type: Boolean,
     default: false,
-  }
-})
+  },
+});
 
-export const Service = model('Service',serviceSchema)
+serviceSchema.index({geoLocation : '2dsphere'})
+
+export const Service = model("Service", serviceSchema);

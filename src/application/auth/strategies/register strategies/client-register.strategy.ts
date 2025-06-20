@@ -42,7 +42,11 @@ export class ClientRegisterStrategy implements IRegisterUserStrategy {
             data.email = email;
             data.googleId = input.googleId;
             data.profileImage = input.profileImage
-            data.password = ''
+            data.password = '',
+            data.geoLocation = {
+                type : 'Point',
+                coordinates : [0,0]
+            }
         }else{
             if(!password){
                 throw new CustomError(ERROR_MESSAGES.PASSWORD_REQUIRED,HTTP_STATUS.BAD_REQUEST)
@@ -50,7 +54,11 @@ export class ClientRegisterStrategy implements IRegisterUserStrategy {
             data.name = name;
             data.email = email;
             data.password = hashedNewPassword!
-            data.profileImage = ''
+            data.profileImage = '',
+            data.geoLocation = {
+                type : 'Point',
+                coordinates : [0,0]
+            }
         }
 
         const newClient = await this._clientRepository.saveUser(data);
