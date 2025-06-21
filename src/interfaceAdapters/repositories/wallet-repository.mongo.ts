@@ -46,23 +46,42 @@ export class WalletRepository
       })
       .populate({
         path: "paymentId",
-        select: "userId bookingId transactionId paymentIntentId purpose amount currency status createdAt",
+        select:
+          "userId bookingId transactionId paymentIntentId purpose amount currency status createdAt",
         options: { sort: { createdAt: -1 } },
       })) as unknown as PopulatedWallet;
   }
 
-  async addPaymnetIdToWallet(userId: Types.ObjectId, paymentId: Types.ObjectId): Promise<void> {
+  async addPaymnetIdToWallet(
+    userId: Types.ObjectId,
+    paymentId: Types.ObjectId
+  ): Promise<void> {
     await this.model.findOneAndUpdate(
       { userId: userId },
       { $push: { paymentId: paymentId } }
     );
   }
 
-  async updateWalletBalanceAndAddPaymentId(input: UpdateWalletBalanceInput): Promise<void> {
+  async updateWalletBalanceAndAddPaymentId(
+    input: UpdateWalletBalanceInput
+  ): Promise<void> {
     const { balanceAmount, paymentId, userId } = input;
     await this.model.findOneAndUpdate(
       { userId: userId },
       { $push: { paymentId: paymentId }, $inc: { balance: balanceAmount } }
     );
+  }
+
+  async fetchAdminWallet(): Promise<PopulatedWallet> {
+    const wallet = await this.model
+      .findOne({ userType: "Admin" })
+      .populate({
+        path: "paymentId",
+        select:
+          "userId bookingId transactionId paymentIntentId purpose amount currency status createdAt",
+        options: { sort: { createdAt: -1 } },
+      }) as unknown as PopulatedWallet
+
+      return wallet
   }
 }

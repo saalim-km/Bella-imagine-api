@@ -15,4 +15,5 @@ export interface IWalletRepository extends IBaseRepository<IWallet> {
     updateWalletBalanceAndAddPaymentId(
         input: UpdateWalletBalanceInput
     ): Promise<void>;
+    fetchAdminWallet() : Promise<PopulatedWallet>
 }

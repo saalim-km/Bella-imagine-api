@@ -13,7 +13,8 @@ export class AdminRoute extends BaseRoute {
         .get('/admin/user',verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.getUserDetails.bind(adminController)))
         .patch('/admin/user-status',verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.updateBlockStatus.bind(adminController)))
         .get('/admin/community/:slug',verifyAuth,authorizeRole(['admin']),asyncHandler(communityController.fetchCommunityDetais.bind(communityController)))
-.get('/admin/community/members/:communityId',verifyAuth,authorizeRole(['admin']),asyncHandler(communityController.getCommunityMembers.bind(communityController)))
+        .get('/admin/community/members/:communityId',verifyAuth,authorizeRole(['admin']),asyncHandler(communityController.getCommunityMembers.bind(communityController)))
+        .get('/admin/wallet',verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.getWallet.bind(adminController)))
 
 
         this.router.route('/admin/vendor-request')

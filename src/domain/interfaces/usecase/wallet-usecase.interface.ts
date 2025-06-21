@@ -6,4 +6,5 @@ export interface IWalletUsecase {
     fetchWallet(userId: Types.ObjectId): Promise<PopulatedWallet>
     creditAmountToWallet(input : creditAmountToWalletInput) : Promise<void>
     creditAdminCommissionToWallet(bookingId: Types.ObjectId): Promise<void>;
+    fetchAdminWallet() : Promise<PopulatedWallet>
 }

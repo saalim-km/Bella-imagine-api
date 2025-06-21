@@ -104,7 +104,7 @@ export class WalletUsecase implements IWalletUsecase {
 
     const transaction = await this._paymentRepository.create({
       amount: adminCommission,
-      purpose: "wallet-credit",
+      purpose: "commission-credit", 
       userId: admin._id,
       bookingId: bookingId,
       createrType: "Client",
@@ -126,5 +126,9 @@ export class WalletUsecase implements IWalletUsecase {
       balanceAmount: adminCommission,
       paymentId: transaction._id,
     });
+  }
+
+  async fetchAdminWallet(): Promise<PopulatedWallet> {
+    return await this._walletRepository.fetchAdminWallet()
   }
 }
