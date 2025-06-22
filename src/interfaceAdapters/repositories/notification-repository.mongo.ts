@@ -12,6 +12,6 @@ export class NotificationRepository extends BaseRepository<INotification> implem
     }
 
     async readAllNotifications(userId: Types.ObjectId): Promise<void> {
-        await this.model.updateMany({receiverId : userId , isRead : {$neq : true}} , {$set : {isRead : true}})
+        await this.model.updateMany({receiverId : userId } , {$set : {isRead : true}})
     }
 }

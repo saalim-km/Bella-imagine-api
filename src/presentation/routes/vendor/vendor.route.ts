@@ -20,6 +20,10 @@ export class VendorRoute extends BaseRoute {
         ]),asyncHandler(vendorController.updateVendorDetails.bind(vendorController)))
 
 
+        this.router.route('/vendor/notification')
+        .patch(verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.readAllNotifications.bind(vendorController)))
+        .get(verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.getAllNotifications.bind(vendorController)))
+
         this.router.route('/vendor/vendor-bookings')
         .get(verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.getVendorBookings.bind(vendorController)))
         .patch(verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.updateBookingStatus.bind(vendorController)))

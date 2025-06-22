@@ -1,12 +1,11 @@
 import { inject, injectable } from "tsyringe";
 import { INotificationUsecase } from "../../domain/interfaces/usecase/notification-usecase.interface";
-import { CreateNotificationInput, GetAllNotificationsInput } from "../../domain/interfaces/usecase/types/notification.types";
+import { CreateNotificationInput, GetAllNotificationsInput, NotificationPaginatedResponse } from "../../domain/interfaces/usecase/types/notification.types";
 import { INotification } from "../../domain/models/notification";
 import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { INotificationRepository } from "../../domain/interfaces/repository/notification.repository";
 import { FilterQuery, Types } from "mongoose";
-import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";
 
 @injectable()
 export class NotifiactionUsecase implements INotificationUsecase {
@@ -35,19 +34,21 @@ export class NotifiactionUsecase implements INotificationUsecase {
         await this._notificationRepo.readAllNotifications(userId)
     }
 
-    async getAllNotifications(input: GetAllNotificationsInput): Promise<PaginatedResponse<INotification>> {
+    async getAllNotifications(input: GetAllNotificationsInput): Promise<NotificationPaginatedResponse> {
         const {limit,page,userId} = input;
         const skip = 0; // dont skip for scrolling pagination 
-        const filter : FilterQuery<INotification> = {receiverId : userId }
+        const filter : FilterQuery<INotification> = {receiverId : userId}
 
-        const [notifications,count] = await Promise.all([
+        const [notifications,count,unReadCount] = await Promise.all([
             this._notificationRepo.findAll(filter,skip,limit,-1),
-            this._notificationRepo.count(filter)
+            this._notificationRepo.count(filter),
+            this._notificationRepo.count({...filter,isRead : false})
         ])
 
         return {
             data : notifications,
-            total : count
+            total : count,
+            unReadTotal : unReadCount
         }
     }
     

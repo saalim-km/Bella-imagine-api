@@ -18,6 +18,7 @@ import {
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import {
   BookingQuerySchema,
+  getAllNotificationtSchema,
   updateBookingSchema,
   updateVendorProfileSchema,
 } from "../../shared/utils/zod-validations/presentation/client.schema";
@@ -28,6 +29,7 @@ import {
 } from "../../domain/interfaces/usecase/booking-usecase.interface";
 import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
 import { CreateServiceSchema, createWorkSampleSchema, getSeviceSchema, getWorkSamplesSchema, updateServiceSchema, updateWorkSampleSchema } from "../../shared/utils/zod-validations/presentation/vendor.schema";
+import { INotificationUsecase } from "../../domain/interfaces/usecase/notification-usecase.interface";
 
 @injectable()
 export class VendorController implements IVendorController {
@@ -46,7 +48,9 @@ export class VendorController implements IVendorController {
     private _bookingCommandUsecase: IBookingCommandUsecase,
     @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
     @inject('IServiceCommandUsecase') private _serviceCommandUsecase : IServiceCommandUsecase,
-    @inject('IServiceQueryUsecase') private _serviceQuery : IServiceQueryUsecase
+    @inject('IServiceQueryUsecase') private _serviceQuery : IServiceQueryUsecase,
+    @inject('INotificationUsecase') private _notificationUsecase : INotificationUsecase
+    
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -192,10 +196,21 @@ export class VendorController implements IVendorController {
   }
   
   async updateWorkSample(req: Request, res: Response): Promise<void> {
-    console.log(req.body);
-    console.log(req.files);
     const parsed = updateWorkSampleSchema.parse({...req.body,newImages : (req.files as { [fieldname: string]: Express.Multer.File[] } | undefined)?.newImages});
     await this._serviceCommandUsecase.updateWorkSample(parsed)
     ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
+  }
+
+  async readAllNotifications(req: Request, res: Response): Promise<void> {
+    const userId = objectIdSchema.parse((req as CustomRequest).user._id)
+    await this._notificationUsecase.readAllNotifications(userId)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
+  }
+  
+  async getAllNotifications(req: Request, res: Response): Promise<void> {
+    const userId = (req as CustomRequest).user._id
+    const parsed = getAllNotificationtSchema.parse({...req.query,userId : userId})
+    const notifications = await this._notificationUsecase.getAllNotifications(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,notifications)
   }
 }
