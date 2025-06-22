@@ -59,6 +59,8 @@ import { GoogleLoginUsecase } from "../../application/auth/google-login.usecase"
 import { ServiceCommandUsecase } from "../../application/service/service-command.usecase";
 import { ServiceQueryUsecase } from "../../application/service/service-query.usecase";
 import { ChatUsecase } from "../../application/chat/chat.usecase";
+import { INotificationUsecase } from "../../domain/interfaces/usecase/notification-usecase.interface";
+import { NotifiactionUsecase } from "../../application/common/notification.usecase";
 
 export class UsecaseRegistry {
     // Static method to register all use cases and strategies
@@ -195,6 +197,10 @@ export class UsecaseRegistry {
 
         container.register<IServiceQueryUsecase>('IServiceQueryUsecase' ,{
             useClass : ServiceQueryUsecase
+        })
+
+        container.register<INotificationUsecase>('INotificationUsecase' , {
+            useClass : NotifiactionUsecase
         })
     }
 }

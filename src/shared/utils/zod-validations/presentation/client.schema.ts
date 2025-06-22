@@ -322,3 +322,9 @@ export const uploadMediaChat = z.object({
     .transform((file) => file as Express.Multer.File),
   conversationId: z.string(),
 });
+
+export const getAllNotificationtSchema = z.object({
+  page : pageQuerySchema,
+  limit : limitQuerySchema,
+  userId : objectIdSchema
+})

@@ -38,6 +38,7 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  ENOUGH_DATA_TO_CREATE_NOTIFICATION:'No enough data to create notification',
   CATEGORY_ALREADY_ADDED_IN_PROFILE : 'Category already added in profile',
   WORKSMAPLE_NOT_FOUND : 'Worksample not found',
   REGISTERATION_FAILED : 'Registeration failed',
@@ -149,4 +150,25 @@ export const RESET_PASSWORD_MAIL_CONTENT = (otp: string) =>
     </div>
     <p style="font-size: 16px; line-height: 1.6;">This code is valid for a limited time. If you didn’t request this, simply ignore the message.</p>
     <p style="margin-top: 24px; font-size: 16px;">Stay safe,<br /><strong>The Bella Imagine Team</strong></p>
+`);
+
+export const BOOKING_CONFIRMATION_MAIL_CONTENT = (bookingDetails: {
+  eventName: string;
+  date: string;
+  time: string;
+  stripeReceipt : string
+}) =>
+  EMAIL_WRAPPER(`
+    <h1 style="color: #1F2122; font-size: 24px; margin-bottom: 16px;">Your Booking is Confirmed 🎉</h1>
+    <p style="font-size: 16px; line-height: 1.6;">
+      Thank you for booking with <strong>Bella Imagine</strong>! Here are your event details:
+    </p>
+    <div style="margin: 24px 0; padding: 20px; background-color: #f9f9f9; border-radius: 8px;">
+      <p style="font-size: 16px; margin: 8px 0;"><strong>Event:</strong> ${bookingDetails.eventName}</p>
+      <p style="font-size: 16px; margin: 8px 0;"><strong>Date:</strong> ${bookingDetails.date}</p>
+      <p style="font-size: 16px; margin: 8px 0;"><strong>Time:</strong> ${bookingDetails.time}</p>
+    </div>
+    <p style="font-size: 16px; line-height: 1.6;">We can't wait to see you there! Make sure to arrive a little early and bring your confirmation details with you.</p>
+    <p style="font-size: 16px; line-height: 1.6;">If you have any questions or need to make changes, please contact our support team anytime.</p>
+    <p style="margin-top: 24px; font-size: 16px;">Cheers,<br /><strong>The Bella Imagine Team</strong></p>
 `);

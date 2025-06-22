@@ -4,12 +4,17 @@ import { ISocketService } from "../../domain/interfaces/service/socket-service.i
 import { Server } from "http";
 import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.interface";
 import { IMessage } from "../../domain/models/chat";
+import { INotificationUsecase } from "../../domain/interfaces/usecase/notification-usecase.interface";
+import { objectIdSchema } from "../../shared/utils/zod-validations/validators/validations";
 
 @injectable()
 export class SocketService implements ISocketService {
   public io?: SocketIoServer;
 
-  constructor(@inject("IChatUsecase") private _chatUsecase: IChatUsecase) {}
+  constructor(
+    @inject("IChatUsecase") private _chatUsecase: IChatUsecase,
+    @inject('INotificationUsecase') private _notificationUsecase : INotificationUsecase
+  ) {}
 
   initialize(server: Server): void {
     (this.io = new SocketIoServer(server, {
@@ -94,19 +99,22 @@ export class SocketService implements ISocketService {
           try {
             console.log("send_message trigger ✅💀");
             console.log('new message',message,recipentId,recipentName);
+
             const newMessage = await this._chatUsecase.sendMessage(message);
-            console.log('new message created and sended',newMessage);
-            console.log(`recipent id ${recipentId} , senderId : ${message.senderId}`);
             this.io?.to(recipentId.toString()).emit("new_message", newMessage);
             this.io?.to(message.senderId.toString()).emit('new_message',newMessage);
-            // const newNotification =
-            //   // await this.notificationUsecase.sendNotification({
-            //   //   message: `${recipentName} send a message`,
-            //   //   receiverId: recipentId,
-            //   // });
-            // this.io
-            //   ?.to(recipentId.toString())
-            //   .emit("new_message_notification", newNotification);
+            const newNotification = await this._notificationUsecase.createNotification({
+                message: `${recipentName} send a message`,
+                receiverId: objectIdSchema.parse(recipentId),
+                senderId: objectIdSchema.parse(message.senderId),
+                receiverModel : userType  === 'client' ? 'Vendor' : 'Client',
+                senderModel : userType  === 'client' ? 'Client' : 'Vendor',
+                type : 'chat'
+              });
+              console.log('new notification created : ',newNotification);
+            this.io
+              ?.to(recipentId.toString())
+              .emit("new_message_notification", newNotification);
           } catch (error) {
             console.log(error);
           }
@@ -116,12 +124,10 @@ export class SocketService implements ISocketService {
       // get contacts event
       socket.on("get_contacts", async ({ userId, userType }) => {
         try {
-          console.log("getcontacts triggered 😘");
           const contacts = await this._chatUsecase.fetchUsersForChat({
             userId: userId,
             userType: userType,
           });
-          console.log("got contacts", contacts);
           socket.emit("contacts", contacts);
         } catch (error) {
           console.log(error);
@@ -131,8 +137,6 @@ export class SocketService implements ISocketService {
       // get conversations event
       socket.on("get_conversations", async ({ userId, userType }) => {
         try {
-          console.log("get_conversations triggered");
-          console.log(userId, userType);
           const conversations = await this._chatUsecase.fetchConversations({
             userId: userId,
             userType: userType,
@@ -146,11 +150,9 @@ export class SocketService implements ISocketService {
       // get message event
       socket.on("get_messages", async ({ conversationId }) => {
         try {
-          console.log("fetch message event trigger ✅", conversationId);
           const messages = await this._chatUsecase.fetchMessages(
             conversationId
           );
-          console.log("user messages : ", messages);
           socket.emit("messages", messages);
         } catch (error) {
           console.log(error);

@@ -54,7 +54,7 @@ export class StripeService implements IStripeService {
         status
       );    
     }
-  }
+    }
 
   async handleWebhookEvent(event: Stripe.Event): Promise<void> {
     switch (event.type) {

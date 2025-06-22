@@ -25,6 +25,8 @@ import { IConversationRepository } from "../../domain/interfaces/repository/conv
 import { ConversationRepository } from "../../interfaceAdapters/repositories/conversation-reposiory.mongo";
 import { IMessageRepository } from "../../domain/interfaces/repository/message.repository";
 import { MessageRepository } from "../../interfaceAdapters/repositories/message-repository.mongo";
+import { INotificationRepository } from "../../domain/interfaces/repository/notification.repository";
+import { NotificationRepository } from "../../interfaceAdapters/repositories/notification-repository.mongo";
 
 export class RepositoryRegistry {
     static registerRepositories() : void {
@@ -79,6 +81,10 @@ export class RepositoryRegistry {
 
         container.register<IMessageRepository>('IMessageRepository' , {
             useClass : MessageRepository
+        })
+
+        container.register<INotificationRepository>('INotificationRepository' , {
+            useClass : NotificationRepository
         })
     }
 }

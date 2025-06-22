@@ -6,7 +6,7 @@ import {
 import { IBookingRepository } from "../../domain/interfaces/repository/booking.repository";
 import { IServiceRepository } from "../../domain/interfaces/repository/service.repository";
 import { CustomError } from "../../shared/utils/helper/custom-error";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
+import { BOOKING_CONFIRMATION_MAIL_CONTENT, ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { IClientRepository } from "../../domain/interfaces/repository/client.repository";
 import { IWalletRepository } from "../../domain/interfaces/repository/wallet.repository";
 import { IBookingCommandUsecase } from "../../domain/interfaces/usecase/booking-usecase.interface";
@@ -17,6 +17,7 @@ import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.i
 import { Types } from "mongoose";
 import { IConversationRepository } from "../../domain/interfaces/repository/conversation.repository";
 import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.interface";
+import { IEmailService } from "../../domain/interfaces/service/email-service.interface";
 
 @injectable()
 export class BookingCommandUsecase implements IBookingCommandUsecase {
@@ -29,7 +30,8 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
     @inject("IWalletRepository") private _walletRepository: IWalletRepository,
     @inject("IPaymentUsecaase") private _paymentUsecase: IPaymentUsecaase,
     @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
-    @inject("IChatUsecase") private _chatUsecase: IChatUsecase
+    @inject("IChatUsecase") private _chatUsecase: IChatUsecase,
+    @inject('IEmailService') private _emailService : IEmailService
   ) {}
 
   async createPaymentIntentAndBooking(
@@ -115,6 +117,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       paymentIntentData
     );
 
+
     if (!paymentIntent || !paymentIntent.client_secret) {
       throw new CustomError(
         ERROR_MESSAGES.PAYMENT_INTENT_CREATION_FAILED,
@@ -137,7 +140,9 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
     };
     const newPayment = await this._paymentUsecase.processPayment(paymentData);
 
+      
     await Promise.all([
+      this._emailService.send(client.email,'Your Bella Imagine Booking is Confirmed 🎟️',BOOKING_CONFIRMATION_MAIL_CONTENT({date : bookingDate , eventName : service.serviceTitle ,time : `${timeSlot.startTime} - ${timeSlot.endTime}` , stripeReceipt : 'nice'})),
       this._bookingRepository.update(newBooking._id, {
         paymentId: newPayment._id,
       }),

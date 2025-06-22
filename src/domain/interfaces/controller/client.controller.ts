@@ -14,4 +14,6 @@ export interface IClientController {
     getallBookings(req: Request, res: Response) : Promise<void>
     fetchWallet(req: Request, res: Response) : Promise<void>
     updateBookingStatus(req: Request, res: Response) : Promise<void>
+    readAllNotifications(req: Request, res: Response) : Promise<void>
+    getAllNotifications(req: Request, res: Response) : Promise<void>
 }

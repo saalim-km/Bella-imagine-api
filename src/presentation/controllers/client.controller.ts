@@ -18,6 +18,7 @@ import {
   BookingQuerySchema,
   createBookingSchema,
   FetchAllCommunitiesSchema,
+  getAllNotificationtSchema,
   getVendorDetailsSchema,
   getVendorsSchema,
   updateBookingSchema,
@@ -37,6 +38,7 @@ import {
 } from "../../domain/interfaces/usecase/booking-usecase.interface";
 import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
 import { ICommunityRepository } from "../../domain/interfaces/repository/community.repository";
+import { INotificationUsecase } from "../../domain/interfaces/usecase/notification-usecase.interface";
 
 @injectable()
 export class ClientController implements IClientController {
@@ -57,6 +59,7 @@ export class ClientController implements IClientController {
     @inject("IBookingQueryUsecase")
     private _bookingQueryUsecase: IBookingQueryUsecase,
     @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
+    @inject('INotificationUsecase') private _notificationUsecase : INotificationUsecase
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -181,5 +184,18 @@ export class ClientController implements IClientController {
     const parsed = updateBookingSchema.parse({ ...req.query, userId });
     await this._bookingCommandUsecase.updateBookingStatus(parsed);
     ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
+  }
+
+  async readAllNotifications(req: Request, res: Response): Promise<void> {
+    const userId = objectIdSchema.parse((req as CustomRequest).user._id)
+    await this._notificationUsecase.readAllNotifications(userId)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
+  }
+
+  async getAllNotifications(req: Request, res: Response): Promise<void> {
+    const userId = (req as CustomRequest).user._id
+    const parsed = getAllNotificationtSchema.parse({...req.query,userId : userId})
+    const notifications = await this._notificationUsecase.getAllNotifications(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,notifications)
   }
 }
