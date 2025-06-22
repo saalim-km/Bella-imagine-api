@@ -32,7 +32,7 @@ export class ConversationRepository
     if (userType === "client") {
       return await this.model.find({
         "client._id": userId,
-      });
+      }).sort({updatedAt : -1})
     } else {
       return await this.model.find({
         "vendor._id": userId,

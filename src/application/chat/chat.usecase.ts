@@ -77,47 +77,50 @@ export class ChatUsecase implements IChatUsecase {
     await strategy.update(userId, { lastSeen: lastSeen });
   }
 
-async sendMessage(input: IMessage): Promise<IMessage> {
-  const message: IMessage = {
-    conversationId: input.conversationId,
-    senderId: input.senderId,
-    text: input.text || "",
-    type: input.type,
-    mediaKey: input.mediaKey || "",
-    timestamp: new Date(),
-    isDeleted: false,
-    userType: input.userType,
-  };
+  async sendMessage(input: IMessage): Promise<IMessage> {
+    const message: IMessage = {
+      conversationId: input.conversationId,
+      senderId: input.senderId,
+      text: input.text || "",
+      type: input.type,
+      mediaKey: input.mediaKey || "",
+      timestamp: new Date(),
+      isDeleted: false,
+      userType: input.userType,
+    };
 
-  // ✅ Check if conversation exists
-  const conversation = await this._conversationRepo.findById(input.conversationId);
-  if (!conversation?._id) {
-    throw new CustomError("No conversation found", HTTP_STATUS.NOT_FOUND);
+    // ✅ Check if conversation exists
+    const conversation = await this._conversationRepo.findById(
+      input.conversationId
+    );
+    if (!conversation?._id) {
+      throw new CustomError("No conversation found", HTTP_STATUS.NOT_FOUND);
+    }
+
+    // ✅ Set last message (avoid race condition by cloning)
+    const lastMessage = { ...message };
+    conversation.lastMessage = lastMessage;
+
+    // ✅ Perform all DB actions in parallel
+    const [newMessage] = await Promise.all([
+      this._messageRepo.create(message),
+      this._conversationRepo.update(conversation._id, { lastMessage }),
+      this._conversationRepo.incrementUnreadCount({
+        role: input.userType,
+        conversationId: conversation._id,
+      }),
+    ]);
+
+    // ✅ Get presigned URL if media exists
+    if (newMessage.mediaKey) {
+      newMessage.mediaKey = await this._pregisnedUrl.getPresignedUrl(
+        newMessage.mediaKey
+      );
+    }
+
+    console.log("new message with media:", newMessage);
+    return newMessage;
   }
-
-  // ✅ Set last message (avoid race condition by cloning)
-  const lastMessage = { ...message };
-  conversation.lastMessage = lastMessage;
-
-  // ✅ Perform all DB actions in parallel
-  const [newMessage] = await Promise.all([
-    this._messageRepo.create(message),
-    this._conversationRepo.update(conversation._id, { lastMessage }),
-    this._conversationRepo.incrementUnreadCount({
-      role: input.userType,
-      conversationId: conversation._id,
-    }),
-  ]);
-
-  // ✅ Get presigned URL if media exists
-  if (newMessage.mediaKey) {
-    newMessage.mediaKey = await this._pregisnedUrl.getPresignedUrl(newMessage.mediaKey);
-  }
-
-  console.log("new message with media:", newMessage);
-  return newMessage;
-}
-
 
   async fetchUsersForChat(
     input: FindUsersForChat
@@ -166,6 +169,14 @@ async sendMessage(input: IMessage): Promise<IMessage> {
         ERROR_MESSAGES.USER_NOT_FOUND,
         HTTP_STATUS.NOT_FOUND
       );
+    }
+
+    const isConvExists = await this._conversationRepo.findOne({
+      "client._id": clientId,
+      "vendor._id": vendorId,
+    });
+    if (isConvExists) {
+      return;
     }
 
     await this._conversationRepo.create({
