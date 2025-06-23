@@ -158,6 +158,19 @@ export class SocketService implements ISocketService {
           console.log(error);
         }
       });
+
+      socket.on('new_booking',async({receiverId})=> {
+        const newNotification = await this._notificationUsecase.createNotification({
+          message : 'New Booking Scheduled',
+          receiverId : receiverId,
+          senderId : userId,
+          receiverModel : 'Vendor',
+          senderModel : 'Client',
+          type : 'booking'
+        })
+        console.log('new notificaion for booking is beign created : ',newNotification);
+        this?.io?.to(receiverId).emit('new_message_notification',newNotification)
+      })
     });
   }
 }
