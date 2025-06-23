@@ -1,17 +1,23 @@
 import { Types } from "mongoose";
 
 export interface ICommunityPost {
-  _id: string;
+  _id ?: Types.ObjectId;
   communityId: Types.ObjectId;
   userId: Types.ObjectId;
+
   title: string;
-  content: string;
+  content: string;    
   media: string[];
-  voteUpCount: number;
-  voteDownCount: number;
+  mediaType?: 'image' | 'video' | 'mixed' | 'text' | 'none';
+
+  isEdited ?: boolean;
+
+  likeCount : number;
   commentCount: number;
   tags: string[];
+  likes : [Types.ObjectId];
   comments : [Types.ObjectId];
-  createdAt: string;
-  updatedAt: string;
+
+  createdAt ?: string;
+  updatedAt ?: string;
 }
