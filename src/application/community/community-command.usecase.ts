@@ -17,7 +17,7 @@ import { unlinkSync } from "fs";
 import { UpdateQuery } from "mongoose";
 import { ICommunity } from "../../domain/models/community";
 import { ICategoryRepository } from "../../domain/interfaces/repository/category.repository";
-import { ICommunityMemberRepository } from "../../domain/interfaces/repository/community-member.repository";
+import { ICommunityMemberRepository } from "../../domain/interfaces/repository/community.repository";
 
 @injectable()
 export class CommunityCommandUsecase implements ICommunityCommandUsecase {

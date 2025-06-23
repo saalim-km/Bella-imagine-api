@@ -1,5 +1,5 @@
 import { model, Schema, Types } from "mongoose";
-import { ICommunityPost } from "../../../domain/models/community-post";
+import { ICommunityPost } from "../../../domain/models/community";
 
 const communityPostSchema = new Schema<ICommunityPost>(
   {
@@ -15,7 +15,7 @@ const communityPostSchema = new Schema<ICommunityPost>(
     media: [{ type: String }],
     mediaType: {
       type: String,
-      enum: ["image", "video", "mixed", "text", "none"],
+      enum: ["image", "video", "mixed", "none"],
       default: "none",
     },
 
@@ -24,7 +24,6 @@ const communityPostSchema = new Schema<ICommunityPost>(
     likeCount: { type: Number, default: 0 },
     commentCount: { type: Number, default: 0 },
     tags: [{ type: String }],
-    likes: [{ type: Types.ObjectId, ref: "User" }],
     comments: [{ type: Types.ObjectId, ref: "Comment" }],
   },
   {

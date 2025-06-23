@@ -17,9 +17,8 @@ import { IBookingRepository } from "../../domain/interfaces/repository/booking.r
 import { BookingRepository } from "../../interfaceAdapters/repositories/booking-repository.mongo";
 import { IPaymentRepository } from "../../domain/interfaces/repository/payment.repository";
 import { PaymentRepository } from "../../interfaceAdapters/repositories/payment-repository.mongo";
-import { ICommunityRepository } from "../../domain/interfaces/repository/community.repository";
+import { ICommentRepository, ICommunityMemberRepository, ICommunityPostRepository, ICommunityRepository } from "../../domain/interfaces/repository/community.repository";
 import { CommunityRepository } from "../../interfaceAdapters/repositories/community-repository.mongo";
-import { ICommunityMemberRepository } from "../../domain/interfaces/repository/community-member.repository";
 import { CommunityMemberRepository } from "../../interfaceAdapters/repositories/community-member-repository.mongo";
 import { IConversationRepository } from "../../domain/interfaces/repository/conversation.repository";
 import { ConversationRepository } from "../../interfaceAdapters/repositories/conversation-reposiory.mongo";
@@ -27,6 +26,9 @@ import { IMessageRepository } from "../../domain/interfaces/repository/message.r
 import { MessageRepository } from "../../interfaceAdapters/repositories/message-repository.mongo";
 import { INotificationRepository } from "../../domain/interfaces/repository/notification.repository";
 import { NotificationRepository } from "../../interfaceAdapters/repositories/notification-repository.mongo";
+import { CommunityPostRepository } from "../../interfaceAdapters/repositories/community-post-repository.mongo";
+import { IComment } from "../../domain/models/community";
+import { CommentRepository } from "../../interfaceAdapters/repositories/comment-reposiory.mongo";
 
 export class RepositoryRegistry {
     static registerRepositories() : void {
@@ -85,6 +87,14 @@ export class RepositoryRegistry {
 
         container.register<INotificationRepository>('INotificationRepository' , {
             useClass : NotificationRepository
+        })
+
+        container.register<ICommunityPostRepository>('ICommunityPostRepository' , {
+            useClass : CommunityPostRepository
+        })
+
+        container.register<ICommentRepository>('ICommentRepository' , {
+            useClass : CommentRepository
         })
     }
 }

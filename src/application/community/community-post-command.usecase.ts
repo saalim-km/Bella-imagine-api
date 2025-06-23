@@ -1,0 +1,134 @@
+import { inject, injectable } from "tsyringe";
+import {
+  ICommunityCommandUsecase,
+  ICommunityPostCommandUsecase,
+} from "../../domain/interfaces/usecase/community-usecase.interface";
+import {
+  ICommentRepository,
+  ICommunityPostRepository,
+  ICommunityRepository,
+} from "../../domain/interfaces/repository/community.repository";
+import {
+  CreateCommunityInput,
+  CreatePostInput,
+  EditPostInput,
+} from "../../domain/interfaces/usecase/types/community.types";
+import { ICommunityPost } from "../../domain/models/community";
+import { CustomError } from "../../shared/utils/helper/custom-error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
+import { IClientRepository } from "../../domain/interfaces/repository/client.repository";
+import { IAwsS3Service } from "../../domain/interfaces/service/aws-service.interface";
+import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
+import { string } from "zod";
+import { generateS3FileKey } from "../../shared/utils/helper/s3FileKeyGenerator";
+import { config } from "../../shared/config/config";
+import { cleanUpLocalFiles } from "../../shared/utils/helper/clean-local-file.helper";
+import logger from "../../shared/logger/logger";
+
+@injectable()
+export class CommunityPostCommandUsecase
+  implements ICommunityPostCommandUsecase
+{
+  constructor(
+    @inject("ICommunityRepository")
+    private _communityRepo: ICommunityRepository,
+    @inject("ICommunityPostRepository")
+    private _communityPostRepo: ICommunityPostRepository,
+    @inject("ICommentRepository") private _commentRepo: ICommentRepository,
+    @inject("IClientRepository") private _clientRepo: IClientRepository,
+    @inject("IAwsS3Service") private _awsS3Service: IAwsS3Service,
+    @inject("IGetPresignedUrlUsecase")
+    private presignedUrl: IGetPresignedUrlUsecase
+  ) {}
+
+  async createPost(input: CreatePostInput): Promise<ICommunityPost> {
+    const { communityId, content, tags, title, userId, media, mediaType } =
+      input;
+
+    const commnity = await this._communityRepo.findById(communityId);
+    if (!communityId) {
+      throw new CustomError(
+        ERROR_MESSAGES.COMMUNITY_NO_EXIST,
+        HTTP_STATUS.NOT_FOUND
+      );
+    }
+
+    const user = await this._clientRepo.findById(userId);
+    if (!user) {
+      throw new CustomError(
+        ERROR_MESSAGES.USER_NOT_FOUND,
+        HTTP_STATUS.NOT_FOUND
+      );
+    }
+
+    let fileKeys: string[] = [];
+    let uploadedKeys: string[] = [];
+
+    if (media && media.length > 0) {
+      try {
+        fileKeys = media.map((media, indx) => {
+          return generateS3FileKey(config.s3.communityPost, media.originalname);
+        });
+
+        const uploadedPromises = media.map(async (media, indx) => {
+          const filekey = fileKeys[indx];
+          try {
+            await this._awsS3Service.uploadFileToAws(filekey, media.path);
+          } catch (error) {
+            console.error(`Failed to upload ${media.originalname}:`, error);
+            throw error;
+          }
+        });
+      } catch (error) {
+        if (uploadedKeys.length > 0) {
+          logger.info(
+            `Cleaning up ${uploadedKeys.length} uploaded files from S3`
+          );
+          await Promise.allSettled(
+            uploadedKeys.map((key) => {
+              return this._awsS3Service
+                .deleteFileFromAws(key)
+                .catch((err) => console.log(err));
+            })
+          );
+        }
+
+        throw error;
+      } finally {
+        cleanUpLocalFiles(media);
+      }
+    }
+
+    let newPost = await this._communityPostRepo.create({
+        communityId :  communityId,
+        media : fileKeys || [],
+        mediaType : mediaType,
+        title : title,
+        content : content,
+        tags : tags || [],
+        userId : userId,
+    })
+
+    if(!newPost) {
+        throw new CustomError(ERROR_MESSAGES.POST_CREATION_FAILED,HTTP_STATUS.INTERNAL_SERVER_ERROR)
+    }
+
+    if(newPost.media && newPost.media.length > 0) {
+        newPost.media = await Promise.all(newPost.media.map(async(media)=> {
+            return await this.presignedUrl.getPresignedUrl(media)
+        }))
+    }
+    return newPost;
+  }
+
+//   async editPost(input: EditPostInput): Promise<void> {
+//       const {_id,communityId,content,tags,title,userId,media,mediaType} = input;
+
+//       const isPostExists = await this._communityPostRepo.findById(_id);
+//       if(!isPostExists){
+//         throw new CustomError(ERROR_MESSAGES.POST_NOT_EXISTS,HTTP_STATUS.NOT_FOUND)
+//       }
+
+
+//   }
+}

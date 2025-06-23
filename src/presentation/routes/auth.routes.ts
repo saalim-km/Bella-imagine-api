@@ -1,7 +1,7 @@
-import { asyncHandler } from "../../../shared/utils/helper/async-handler";
-import { authController } from "../../di/resolver";
-import { registrationRateLimit , authRateLimit , passwordResetRateLimit} from "../../middlewares/rate-limit.middleware";
-import { BaseRoute } from "../base.route";
+import { asyncHandler } from "../../shared/utils/helper/async-handler"
+import { authController } from "../di/resolver"
+import { authRateLimit, passwordResetRateLimit, registrationRateLimit } from "../middlewares/rate-limit.middleware"
+import { BaseRoute } from "./base.route"
 
 export class AuthRoute extends BaseRoute {
     protected initializeRoutes(): void {

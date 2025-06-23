@@ -14,9 +14,9 @@ import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-
 import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { FetchCommunityBySlugOutput } from "../../domain/types/community.types";
-import { ICommunityMemberRepository } from "../../domain/interfaces/repository/community-member.repository";
+import { ICommunityMemberRepository } from "../../domain/interfaces/repository/community.repository";
 import { skip } from "node:test";
-import { ICommunityMember } from "../../domain/models/community-member";
+import { ICommunityMember } from "../../domain/models/community";
 
 @injectable()
 export class CommunityQueryUsecase implements ICommunityQueryUsecase {

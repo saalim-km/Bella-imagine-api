@@ -51,7 +51,7 @@ import { WalletUsecase } from "../../application/wallet/wallet.usecase";
 import { IBookingCommandUsecase, IBookingQueryUsecase } from "../../domain/interfaces/usecase/booking-usecase.interface";
 import { IPaymentUsecaase } from "../../domain/interfaces/usecase/payment.usecase";
 import { PaymentUsecase } from "../../application/payment/payment.usecase";
-import { ICommunityCommandUsecase, ICommunityQueryUsecase } from "../../domain/interfaces/usecase/community-usecase.interface";
+import { ICommunityCommandUsecase, ICommunityPostCommandUsecase, ICommunityQueryUsecase } from "../../domain/interfaces/usecase/community-usecase.interface";
 import { CommunityCommandUsecase } from "../../application/community/community-command.usecase";
 import { CommunityQueryUsecase } from "../../application/community/community-query.usecase";
 import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.interface";
@@ -61,6 +61,7 @@ import { ServiceQueryUsecase } from "../../application/service/service-query.use
 import { ChatUsecase } from "../../application/chat/chat.usecase";
 import { INotificationUsecase } from "../../domain/interfaces/usecase/notification-usecase.interface";
 import { NotifiactionUsecase } from "../../application/common/notification.usecase";
+import { CommunityPostCommandUsecase } from "../../application/community/community-post-command.usecase";
 
 export class UsecaseRegistry {
     // Static method to register all use cases and strategies
@@ -201,6 +202,10 @@ export class UsecaseRegistry {
 
         container.register<INotificationUsecase>('INotificationUsecase' , {
             useClass : NotifiactionUsecase
+        })
+
+        container.register<ICommunityPostCommandUsecase>('ICommunityPostCommandUsecase',{
+            useClass : CommunityPostCommandUsecase
         })
     }
 }

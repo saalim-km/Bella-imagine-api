@@ -1,8 +1,8 @@
-import { asyncHandler } from "../../../shared/utils/helper/async-handler";
-import { adminController, communityController } from "../../di/resolver";
-import { authorizeRole, decodeToken, verifyAuth } from "../../middlewares/auth.middleware";
-import { upload } from "../../middlewares/multer.middleware";
-import { BaseRoute } from "../base.route";
+import { asyncHandler } from "../../shared/utils/helper/async-handler";
+import { adminController, communityController } from "../di/resolver";
+import { authorizeRole, decodeToken, verifyAuth } from "../middlewares/auth.middleware";
+import { upload } from "../middlewares/multer.middleware";
+import { BaseRoute } from "./base.route";
 
 export class AdminRoute extends BaseRoute {
     protected initializeRoutes(): void {

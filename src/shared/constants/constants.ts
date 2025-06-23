@@ -1,5 +1,3 @@
-import { INVALID } from "zod";
-
 export type TRole = "client" | "vendor" | "admin";
 
 export type TStatus = "blocked" | "unblocked";
@@ -38,6 +36,8 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  POST_NOT_EXISTS : 'Post not exists',
+  POST_CREATION_FAILED : 'Failed to create post please try again later',
   ENOUGH_DATA_TO_CREATE_NOTIFICATION:'No enough data to create notification',
   CATEGORY_ALREADY_ADDED_IN_PROFILE : 'Category already added in profile',
   WORKSMAPLE_NOT_FOUND : 'Worksample not found',

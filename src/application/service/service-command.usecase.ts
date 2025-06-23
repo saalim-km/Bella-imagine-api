@@ -76,7 +76,6 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
         try {
           await this._awsS3Service.uploadFileToAws(fileKey, image.path);
           uploadedkeys.push(fileKey);
-          return filekeys;
         } catch (error) {
           console.error(`Failed to upload ${image.originalname}:`, error);
           throw error;

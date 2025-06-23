@@ -43,3 +43,38 @@ export interface JoinCommunityInput {
 }
 
 export interface LeaveCommunityInput extends JoinCommunityInput{}
+
+export interface CreatePostInput {
+  communityId: Types.ObjectId;
+  userId: Types.ObjectId;
+  title: string;
+  content: string;    
+  media ?: Express.Multer.File[];
+  mediaType ?: 'image' | 'video' | 'mixed' | 'none';
+  tags: string[];
+}
+
+export interface GetAllPostInput extends Omit<PaginationInput , 'search'> {
+}
+
+export interface EditPostInput {
+  _id : Types.ObjectId
+  communityId: Types.ObjectId;
+  userId: Types.ObjectId;
+  title: string;
+  content: string;    
+  media ?: string[];
+  mediaType?: 'image' | 'video' | 'mixed' | 'none';
+  tags: string[];
+}
+
+export interface DeletePostInput {
+  postId : Types.ObjectId;
+  userId : Types.ObjectId;
+}
+
+export interface AddCommentInput {
+  postId : Types.ObjectId
+  userId : Types.ObjectId;
+  content : string
+}
