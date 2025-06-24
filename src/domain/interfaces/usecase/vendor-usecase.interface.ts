@@ -13,6 +13,7 @@ export interface IVendorProfileUsecase {
 export interface IServiceCommandUsecase {
     createService(input : IService) : Promise<void>
     updateService(input : IService) : Promise<void>
+    deleteService(serviceId : Types.ObjectId) : Promise<void>
     createWorkSample(input : CreateWorkSampleInput) : Promise<void>
     deleteWorkSmaple(workSampleId : Types.ObjectId) : Promise<void>
     updateWorkSample(input : UpdateWorkSampleInput): Promise<void>

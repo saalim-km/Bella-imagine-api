@@ -152,9 +152,12 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
       newImages,
     } = input;
 
+    console.log('updatrworksampe input : ',input);
+
     let uploadedKeys: string[] = [];
     let fileKeys: string[] = existingImageKeys || [];
 
+    console.log('existing file keys : ',fileKeys);
     try {
       if (deletedImageKeys && deletedImageKeys.length > 0) {
         let deletedPromises = deletedImageKeys.map(async (key) => {
@@ -200,5 +203,19 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
         await cleanUpLocalFiles(newImages);
       }
     }
+  }
+
+  async deleteService(serviceId: Types.ObjectId): Promise<void> {
+    const service = await this._serviceRepo.findById(serviceId);
+    if(!service) {
+      throw new CustomError(ERROR_MESSAGES.SERVICE_NOT_FOUND,HTTP_STATUS.NOT_FOUND)
+    }
+
+    const isWorkSamplesLinked = await this._workSampleRepo.findOne({service : serviceId});
+    if(isWorkSamplesLinked) {
+      throw new CustomError(ERROR_MESSAGES.WORKSMAPLE_LINKED , HTTP_STATUS.BAD_REQUEST)
+    }
+
+    await this._serviceRepo.delete(serviceId)
   }
 }

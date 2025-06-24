@@ -46,7 +46,7 @@ export class CommunityPostCommandUsecase
       input;
 
     const commnity = await this._communityRepo.findById(communityId);
-    if (!communityId) {
+    if (!commnity) {
       throw new CustomError(
         ERROR_MESSAGES.COMMUNITY_NO_EXIST,
         HTTP_STATUS.NOT_FOUND
@@ -79,6 +79,7 @@ export class CommunityPostCommandUsecase
             throw error;
           }
         });
+        await Promise.all(uploadedPromises)
       } catch (error) {
         if (uploadedKeys.length > 0) {
           logger.info(

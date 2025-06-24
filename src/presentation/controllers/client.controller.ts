@@ -198,4 +198,10 @@ export class ClientController implements IClientController {
     const notifications = await this._notificationUsecase.getAllNotifications(parsed)
     ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,notifications)
   }
+
+  async deleteNotifications(req: Request, res: Response): Promise<void> {
+    const userId = objectIdSchema.parse((req as CustomRequest).user._id)
+    await this._notificationUsecase.clearNotifications(userId)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
+  }
 }

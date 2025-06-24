@@ -7,4 +7,5 @@ export interface INotificationUsecase {
     createNotification(input : CreateNotificationInput) : Promise<INotification>
     readAllNotifications(userId : Types.ObjectId): Promise<void>
     getAllNotifications(input : GetAllNotificationsInput) : Promise<NotificationPaginatedResponse> 
+    clearNotifications(receiverId : Types.ObjectId) : Promise<void> 
 }

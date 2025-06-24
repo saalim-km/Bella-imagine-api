@@ -16,4 +16,5 @@ export interface IClientController {
     updateBookingStatus(req: Request, res: Response) : Promise<void>
     readAllNotifications(req: Request, res: Response) : Promise<void>
     getAllNotifications(req: Request, res: Response) : Promise<void>
+    deleteNotifications(req: Request, res: Response) : Promise<void>
 }

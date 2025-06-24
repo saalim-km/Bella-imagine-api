@@ -113,7 +113,7 @@ export class CommunityQueryUsecase implements ICommunityQueryUsecase {
   ): Promise<PaginatedResponse<ICommunity>> {
     const { category, membership, search, sort, limit, page } = input;
     const skip = (page - 1) * limit;
-    const filter: FilterQuery<ICommunity> = {};
+    const filter: FilterQuery<ICommunity> = {isPrivate : false};
     if (category && category !== undefined) {
       filter.category = category;
     }

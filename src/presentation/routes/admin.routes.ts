@@ -8,7 +8,7 @@ export class AdminRoute extends BaseRoute {
     protected initializeRoutes(): void {
         this.router
         .post('/admin/logout',verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.logout.bind(adminController)))
-        .post('/admin/refresh-token',decodeToken,authorizeRole(['admin']),asyncHandler(adminController.refreshToken.bind(adminController)))
+        .post('/admin/refresh-token',decodeToken,asyncHandler(adminController.refreshToken.bind(adminController)))
         .get('/admin/users',verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.getUsers.bind(adminController)))
         .get('/admin/user',verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.getUserDetails.bind(adminController)))
         .patch('/admin/user-status',verifyAuth,authorizeRole(['admin']),asyncHandler(adminController.updateBlockStatus.bind(adminController)))

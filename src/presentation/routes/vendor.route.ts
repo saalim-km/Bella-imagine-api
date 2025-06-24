@@ -8,7 +8,7 @@ export class VendorRoute extends BaseRoute {
     protected initializeRoutes(): void {
         this.router
         .post('/vendor/logout', verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.logout.bind(vendorController)))
-        .post('/vendor/refresh-token' , decodeToken,authorizeRole(['vendor']) , asyncHandler(vendorController.refreshToken.bind(vendorController)))
+        .post('/vendor/refresh-token' , decodeToken,authorizeRole(['vendor']),asyncHandler(vendorController.refreshToken.bind(vendorController)))
         .get('/vendor/wallet', verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.fetchWallet.bind(vendorController)))
         .delete('/vendor/work-sample/:workSampleId',verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.deleteWorkSample.bind(vendorController)))
 
@@ -23,6 +23,7 @@ export class VendorRoute extends BaseRoute {
         this.router.route('/vendor/notification')
         .patch(verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.readAllNotifications.bind(vendorController)))
         .get(verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.getAllNotifications.bind(vendorController)))
+        .delete(verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.deleteNotifications.bind(vendorController)))
 
         this.router.route('/vendor/vendor-bookings')
         .get(verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.getVendorBookings.bind(vendorController)))
@@ -36,6 +37,8 @@ export class VendorRoute extends BaseRoute {
         .post(verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.createService.bind(vendorController)))
         .get(verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.getServices.bind(vendorController)))
         .put(verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.updateService.bind(vendorController)))
+
+        this.router.route('/vendor/service/:serviceId').delete(verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.deleteService.bind(vendorController)))
 
         this
         .router.route('/vendor/work-sample')

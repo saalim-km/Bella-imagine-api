@@ -90,7 +90,8 @@ export const decodeToken = async (
   try {
     logger.info('access token expire triggered')
     const token = extractToken(req);
-console.log(token);
+    console.log('extracted token for decoding : ',token);
+    
     if (!token) {
       res
         .status(HTTP_STATUS.UNAUTHORIZED)

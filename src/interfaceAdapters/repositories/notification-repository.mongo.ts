@@ -14,4 +14,8 @@ export class NotificationRepository extends BaseRepository<INotification> implem
     async readAllNotifications(userId: Types.ObjectId): Promise<void> {
         await this.model.updateMany({receiverId : userId } , {$set : {isRead : true}})
     }
+
+    async deleteAllNotifications(receiverId: Types.ObjectId): Promise<void> {
+        await this.model.deleteMany({receiverId : receiverId})
+    }
 }

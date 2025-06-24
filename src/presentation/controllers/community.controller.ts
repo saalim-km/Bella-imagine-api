@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { ICommunityController } from "../../domain/interfaces/controller/community-controller.interface";
 import {
   ICommunityCommandUsecase,
+  ICommunityPostCommandUsecase,
   ICommunityQueryUsecase,
 } from "../../domain/interfaces/usecase/community-usecase.interface";
 import { Request, Response } from "express";
@@ -17,6 +18,7 @@ import { CustomRequest } from "../middlewares/auth.middleware";
 import { FetchAllCommunitiesSchema } from "../../shared/utils/zod-validations/presentation/client.schema";
 import { objectIdSchema } from "../../shared/utils/zod-validations/validators/validations";
 import { getCommunityMemberSchema } from "../../shared/utils/zod-validations/presentation/admin.schema";
+import { createPostSchema } from "../../shared/utils/zod-validations/presentation/community.schema";
 
 @injectable()
 export class CommunityController implements ICommunityController {
@@ -24,7 +26,8 @@ export class CommunityController implements ICommunityController {
     @inject("ICommunityCommandUsecase")
     private _communityCommand: ICommunityCommandUsecase,
     @inject("ICommunityQueryUsecase")
-    private _communityQuery: ICommunityQueryUsecase
+    private _communityQuery: ICommunityQueryUsecase,
+    @inject('ICommunityPostCommandUsecase') private _communityPostUsecase : ICommunityPostCommandUsecase
   ) {}
 
   async createCommunity(req: Request, res: Response): Promise<void> {
@@ -89,30 +92,46 @@ export class CommunityController implements ICommunityController {
   }
 
   async fetchAllCommunitiesForUser(req: Request, res: Response): Promise<void> {
-    const userId = objectIdSchema.parse((req as CustomRequest).user._id)
+    const userId = objectIdSchema.parse((req as CustomRequest).user._id);
     const parsed = FetchAllCommunitiesSchema.parse(req.query);
-    const communities = await this._communityQuery.fetchAllCommunities({...parsed,userId : userId})
-    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,communities)
+    const communities = await this._communityQuery.fetchAllCommunities({
+      ...parsed,
+      userId: userId,
+    });
+    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, communities);
   }
 
   async joinCommunity(req: Request, res: Response): Promise<void> {
-    const userId = objectIdSchema.parse((req as CustomRequest).user._id)
-    const communityId = objectIdSchema.parse(req.body.communityId)
-    await this._communityCommand.joinCommunity({userId,communityId})
-    ResponseHandler.success(res,SUCCESS_MESSAGES.JOINED_SUCESS)
+    const userId = objectIdSchema.parse((req as CustomRequest).user._id);
+    const communityId = objectIdSchema.parse(req.body.communityId);
+    await this._communityCommand.joinCommunity({ userId, communityId });
+    ResponseHandler.success(res, SUCCESS_MESSAGES.JOINED_SUCESS);
   }
 
   async leaveCommunity(req: Request, res: Response): Promise<void> {
-    const userId = objectIdSchema.parse((req as CustomRequest).user._id)
-    const communityId = objectIdSchema.parse(req.params.communityId)
-    await this._communityCommand.leaveCommunity({userId,communityId})
-    ResponseHandler.success(res,SUCCESS_MESSAGES.LEAVE_SUCCESS)
+    const userId = objectIdSchema.parse((req as CustomRequest).user._id);
+    const communityId = objectIdSchema.parse(req.params.communityId);
+    await this._communityCommand.leaveCommunity({ userId, communityId });
+    ResponseHandler.success(res, SUCCESS_MESSAGES.LEAVE_SUCCESS);
   }
 
   async getCommunityMembers(req: Request, res: Response): Promise<void> {
     console.log(req.params);
-    const communityId = objectIdSchema.parse(req.params.communityId)
-    const parsed = getCommunityMemberSchema.parse(req.query)
-    const members = await this._communityQuery.fetchCommuityMembers({...parsed,communityId : communityId})
+    const communityId = objectIdSchema.parse(req.params.communityId);
+    const parsed = getCommunityMemberSchema.parse(req.query);
+    const members = await this._communityQuery.fetchCommuityMembers({
+      ...parsed,
+      communityId: communityId,
+    });
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,members)
+  }
+
+  async createPost(req: Request, res: Response): Promise<void> {
+    console.log('in createpost controller');
+    console.log(req.body,req.files);
+    const userId = objectIdSchema.parse((req as CustomRequest).user._id);
+    const parsed = createPostSchema.parse({...req.body , media : (req.files as { [fieldname: string]: Express.Multer.File[]} | undefined)?.media});
+    const newPost = await this._communityPostUsecase.createPost({...parsed,userId : userId})
+    ResponseHandler.success(res,SUCCESS_MESSAGES.CREATED,newPost)
   }
 }

@@ -8,7 +8,7 @@ export class ClientRoute extends BaseRoute {
     protected initializeRoutes(): void {
         this.router
         .post('/client/logout',verifyAuth,authorizeRole(['client']),asyncHandler(clientController.logout.bind(clientController)))
-        .post('/client/refresh-token',decodeToken,authorizeRole(['client']),asyncHandler(clientController.refreshToken.bind(clientController)))
+        .post('/client/refresh-token',decodeToken,asyncHandler(clientController.refreshToken.bind(clientController)))
         .get('/client/vendors',verifyAuth,authorizeRole(['client']),asyncHandler(clientController.getVendors.bind(clientController)))
         .get('/client/categories',verifyAuth,authorizeRole(['client']),asyncHandler(clientController.getCategories.bind(clientController)))
         .get('/client/photographer/:vendorId',verifyAuth,authorizeRole(['client']),asyncHandler(clientController.getVendorDetails.bind(clientController)))
@@ -23,6 +23,7 @@ export class ClientRoute extends BaseRoute {
         this.router.route('/client/notification')
         .patch(verifyAuth,authorizeRole(['client']),asyncHandler(clientController.readAllNotifications.bind(clientController)))
         .get(verifyAuth,authorizeRole(['client']),asyncHandler(clientController.getAllNotifications.bind(clientController)))
+        .delete(verifyAuth,authorizeRole(['client']),asyncHandler(clientController.deleteNotifications.bind(clientController)))
         
         this.router.route('/client/details')
         .get(verifyAuth,authorizeRole(['client']),asyncHandler(clientController.getClientDetails.bind(clientController)))
@@ -34,5 +35,6 @@ export class ClientRoute extends BaseRoute {
 
         this.router.route('/client/community')
         .get(verifyAuth,authorizeRole(['client']),asyncHandler(communityController.fetchAllCommunitiesForUser.bind(communityController)))
+        .post(verifyAuth,authorizeRole(['client']),upload.fields([{name : 'media' , maxCount : 4}]),asyncHandler(communityController.createPost.bind(communityController)))
     }
 }

@@ -125,10 +125,21 @@ export class ChatUsecase implements IChatUsecase {
   async fetchUsersForChat(
     input: FindUsersForChat
   ): Promise<IClient[] | IVendor[]> {
-    return await this._bookingRepo.findUsersForChat({
+    let users : any = await this._bookingRepo.findUsersForChat({
       userId: input.userId,
       userType: input.userType,
     });
+
+    users = await Promise.all(
+      users.map(async(user : any)=> {
+        if(user.avatar){
+          user.avatar = await this._pregisnedUrl.getPresignedUrl(user.avatar);
+        }
+        return user;
+      })
+    )
+
+    return users
   }
 
   async fetchConversations(input: FindUsersForChat): Promise<IConversation[]> {

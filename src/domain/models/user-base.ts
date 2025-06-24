@@ -21,6 +21,7 @@ export interface IUserBase {
     lat: number;
     lng: number;
   };
+  avatar ?: string;
   geoLocation?: GeoLocation;
   role: TRole;
   isblocked: boolean;

@@ -47,3 +47,22 @@ export const updateCommuitySchema = z.object({
         z.boolean()
     ),
 })
+
+export const createPostSchema = z.object({
+    title : z.string(),
+    content : z.string().optional(),
+    communityId : objectIdSchema,
+    tags : z.preprocess(
+        (val) => {
+            if (Array.isArray(val)) return val;
+            if (typeof val === 'string' && val.trim() !== '') return [val];
+            return [];
+        },
+        z.array(z.string()).optional()
+    ),
+    mediaType : z.enum(['image','video','mixed','none']),
+    media: z.preprocess(
+        (val) => (Array.isArray(val) ? val : val ? [val] : []),
+        z.array(z.custom<Express.Multer.File>()).optional()
+    )
+})

@@ -51,5 +51,9 @@ export class NotifiactionUsecase implements INotificationUsecase {
             unReadTotal : unReadCount
         }
     }
+
+    async clearNotifications(receiverId: Types.ObjectId): Promise<void> {
+        await this._notificationRepo.deleteAllNotifications(receiverId)
+    }
     
 }

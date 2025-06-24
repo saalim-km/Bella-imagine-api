@@ -213,4 +213,18 @@ export class VendorController implements IVendorController {
     const notifications = await this._notificationUsecase.getAllNotifications(parsed)
     ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,notifications)
   }
+
+  async deleteNotifications(req: Request, res: Response): Promise<void> {
+    const userId = objectIdSchema.parse((req as CustomRequest).user._id)
+    await this._notificationUsecase.clearNotifications(userId)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
+  }
+
+  async deleteService(req: Request, res: Response): Promise<void> {
+    console.log(req.params);
+    const serviceId = objectIdSchema.parse(req.params.serviceId)
+    console.log('parsed serviceid : ',serviceId);
+    await this._serviceCommandUsecase.deleteService(serviceId)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DELETE_SUCCESS)
+  }
 }

@@ -9,4 +9,5 @@ export interface ICommunityController {
   joinCommunity(req: Request, res: Response): Promise<void>;
   leaveCommunity(req: Request, res: Response): Promise<void>;
   getCommunityMembers(req: Request, res: Response): Promise<void>;
+  createPost(req: Request, res: Response) : Promise<void>
 }

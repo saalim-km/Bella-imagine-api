@@ -48,10 +48,10 @@ export interface CreatePostInput {
   communityId: Types.ObjectId;
   userId: Types.ObjectId;
   title: string;
-  content: string;    
+  content?: string;    
   media ?: Express.Multer.File[];
   mediaType ?: 'image' | 'video' | 'mixed' | 'none';
-  tags: string[];
+  tags?: string[];
 }
 
 export interface GetAllPostInput extends Omit<PaginationInput , 'search'> {

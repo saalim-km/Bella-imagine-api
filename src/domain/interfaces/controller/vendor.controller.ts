@@ -11,10 +11,12 @@ export interface IVendorController {
   createService(req: Request, res: Response): Promise<void>;
   getServices(req: Request, res: Response): Promise<void>;
   updateService(req: Request, res: Response): Promise<void>;
+  deleteService(req: Request, res: Response): Promise<void>;
   createWorkSample(req: Request, res: Response): Promise<void>;
   getWorkSamples(req: Request, res: Response): Promise<void>;
   deleteWorkSample(req: Request, res: Response): Promise<void>;
   updateWorkSample(req: Request, res: Response): Promise<void>;
   readAllNotifications(req: Request, res: Response): Promise<void>;
   getAllNotifications(req: Request, res: Response): Promise<void>;
+  deleteNotifications(req: Request, res: Response): Promise<void>
 }
