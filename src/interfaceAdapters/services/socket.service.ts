@@ -175,30 +175,60 @@ export class SocketService implements ISocketService {
         this?.io?.to(receiverId).emit('new_message_notification',newNotification)
       })
 
-      socket.on('like_post',async({postId})=> {
-        logger.info('like post trigger 🤞')
-        console.log(postId,userId);
+socket.on("like_post", async ({ postId }) => {
+  logger.info("Like post trigger 🤞")
+  console.log(postId, userId)
 
-        const {success} = await this._communityPostUsecase.likePost({
-          postId : postId,
-          userId : userId,
-          role : userType
-        })
-        socket.emit('like_confirm',{success : success})
-      })
+  try {
+    const { success } = await this._communityPostUsecase.likePost({
+      postId: postId,
+      userId: userId,
+      role: userType,
+    })
 
-      socket.on('unLike_post',async({postId})=> {
-        logger.info('unLike post trigger ✅')
-        console.log(postId,userId);
+    socket.emit("like_confirm", {
+      success: success,
+      postId: postId,
+      action: "like",
+    })
+  } catch (error) {
+    logger.error("Error in like_post handler:", error)
+    socket.emit("like_confirm", {
+      success: false,
+      postId: postId,
+      action: "like",
+      error: "Failed to like post",
+    })
+  }
+})
 
-        const {success} = await this._communityPostUsecase.unLikePost({
-          postId : postId,
-          userId : userId,
-          role: userType
-        })
+socket.on("unLike_post", async ({ postId }) => {
+  logger.info("Unlike post trigger ✅")
+  console.log(postId, userId)
 
-        socket.emit('like_confirm',{success : success})
-      })
+  try {
+    const { success } = await this._communityPostUsecase.unLikePost({
+      postId: postId,
+      userId: userId,
+      role: userType,
+    })
+
+    socket.emit("like_confirm", {
+      success: success,
+      postId: postId,
+      action: "unlike",
+    })
+  } catch (error) {
+    logger.error("Error in unLike_post handler:", error)
+    socket.emit("like_confirm", {
+      success: false,
+      postId: postId,
+      action: "unlike",
+      error: "Failed to unlike post",
+    })
+  }
+})
+
     });
   }
 }

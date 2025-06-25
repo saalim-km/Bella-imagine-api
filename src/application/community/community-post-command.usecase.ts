@@ -128,63 +128,95 @@ export class CommunityPostCommandUsecase
   }
 
 
-  async likePost(input: LikePostInput): Promise<{success : boolean}> {
-    const {postId,userId,role} = input;
+  async likePost(input: LikePostInput): Promise<{ success: boolean }> {
+    const { postId, userId, role } = input
 
-
-    const post = await this._communityPostRepo.findById(postId)
-    if(!post) {
-      throw new CustomError(ERROR_MESSAGES.POST_NOT_EXISTS , HTTP_STATUS.NOT_FOUND)
-    }
-    
-    const userType = role == 'client' ? 'Client' : 'Vendor';
-
-    const like = await this._likeRepo.create({
-      postId : postId,
-      userId : userId,
-      userType: userType as UserType,
-    })
-    if(!like) {
-      logger.error("failed to create like document")
-      return {
-        success : false
+    try {
+      const post = await this._communityPostRepo.findById(postId)
+      if (!post) {
+        throw new CustomError(ERROR_MESSAGES.POST_NOT_EXISTS, HTTP_STATUS.NOT_FOUND)
       }
-    }
 
-    return {
-      success : true
+      const userType = role === "client" ? "Client" : "Vendor"
+
+      // Check if user already liked this post
+      const existingLike = await this._likeRepo.findOne({
+        userId: userId,
+        postId: postId,
+      })
+
+      if (existingLike) {
+        logger.warn(`User ${userId} already liked post ${postId}`)
+        return { success: false }
+      }
+
+      // Create like document
+      const like = await this._likeRepo.create({
+        postId: postId,
+        userId: userId,
+        userType: userType as UserType,
+      })
+
+      if (!like) {
+        logger.error("Failed to create like document")
+        return { success: false }
+      }
+
+      // Update post like count
+      await this._communityPostRepo.update(postId, {
+        $inc: { likeCount: 1 },
+      })
+
+      logger.info(`User ${userId} successfully liked post ${postId}`)
+      return { success: true }
+    } catch (error) {
+      logger.error(`Error liking post: ${error}`)
+      return { success: false }
     }
   }
 
-  async unLikePost(input: LikePostInput): Promise<{success : boolean}> {
-    const {postId,role,userId} = input;
+  async unLikePost(input: LikePostInput): Promise<{ success: boolean }> {
+    const { postId, role, userId } = input
 
-    console.log('in unlike post usecase');
-    const [post,like] = await Promise.all([
-      this._communityPostRepo.findById(postId),
-      this._likeRepo.findOne({userId : userId , postId : postId})
-    ])
+    try {
+      console.log("In unlike post usecase")
 
+      const [post, like] = await Promise.all([
+        this._communityPostRepo.findById(postId),
+        this._likeRepo.findOne({ userId: userId, postId: postId }),
+      ])
 
-    if(!post || !like || !like._id) {
-      logger.error('not post or like found for , please try agian later')
-      return {
-        success : false
+      if (!post) {
+        logger.error("Post not found")
+        return { success: false }
       }
-    }
 
-    console.log('got the post and like',post,like);
-
-
-    const isDeleted = await this._likeRepo.delete(like._id)
-    if(isDeleted) {
-      return {
-        success:false
+      if (!like || !like._id) {
+        logger.error("Like not found for user and post")
+        return { success: false }
       }
-    }
 
-    return {
-      success : true
+      console.log("Got the post and like", post, like)
+
+      // Delete the like document
+      const isDeleted = await this._likeRepo.delete(like._id)
+
+      // Fix: The logic was inverted - if deletion succeeded, return success: true
+      if (!isDeleted) {
+        logger.error("Failed to delete like document")
+        return { success: false }
+      }
+
+      // Update post like count
+      await this._communityPostRepo.update(postId, {
+        $inc: { likeCount: -1 },
+      })
+
+      logger.info(`User ${userId} successfully unliked post ${postId}`)
+      return { success: true }
+    } catch (error) {
+      logger.error(`Error unliking post: ${error}`)
+      return { success: false }
     }
   }
 //   async editPost(input: EditPostInput): Promise<void> {

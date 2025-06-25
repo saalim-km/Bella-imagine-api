@@ -62,7 +62,6 @@ export class VendorRepository
   async fetchVendorListingsForClients(
     input: ClientVendorQuery
   ): Promise<PaginatedResponse<GetVendorsOutput>> {
-    console.log(JSON.stringify(input, null, 2));
 
     const { limit = 10, skip, sort = { createdAt: -1 }, filter } = input;
 
@@ -75,9 +74,6 @@ export class VendorRepository
       maxCharge,
       geoLocation,
     } = filter;
-
-    console.log(minCharge, maxCharge);
-    console.log("location triggered : ", geoLocation);
 
     // Build the initial match conditions (excluding geoLocation)
     const matchStage: any = {
@@ -325,7 +321,6 @@ export class VendorRepository
       { $count: "total" }
     );
 
-    console.log(JSON.stringify(pipeline, null, 2));
     // Execute aggregation and count
     const [vendors, count] = await Promise.all([
       this.model.aggregate(pipeline),
