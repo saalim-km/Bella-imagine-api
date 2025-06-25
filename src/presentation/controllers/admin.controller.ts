@@ -7,7 +7,7 @@ import {
   updateCookieWithAccessToken,
 } from "../../shared/utils/helper/cookie-helper";
 import { ResponseHandler } from "../../shared/utils/helper/response-handler";
-import { SUCCESS_MESSAGES } from "../../shared/constants/constants";
+import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../shared/constants/constants";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import {
   ICategoryManagementUsecase,
@@ -65,10 +65,17 @@ export class AdminController implements IAdminController {
       refreshToken: user.refresh_token,
     });
 
-    updateCookieWithAccessToken(res, accessToken, `${user.role}_access_token`);
-    ResponseHandler.success(res, SUCCESS_MESSAGES.REFRESH_TOKEN_SUCCESS, {
-      accessToken,
-    });
+    if (!user.role && user.role !== undefined) {
+      updateCookieWithAccessToken(
+        res,
+        accessToken,
+        `${user.role}_access_token`
+      );
+      ResponseHandler.success(res, SUCCESS_MESSAGES.REFRESH_TOKEN_SUCCESS);
+      return;
+    }
+
+    ResponseHandler.error(res,ERROR_MESSAGES.UNAUTHORIZED_ACCESS,{},HTTP_STATUS.UNAUTHORIZED)
   }
 
   async getUsers(req: Request, res: Response): Promise<void> {

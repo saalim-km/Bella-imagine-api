@@ -12,6 +12,7 @@ export class GenerateTokenUsecase implements IGenerateTokenUsecase {
         const accessToken = await this.jwtService.generateAccessToken(input);
         const refreshToken = await this.jwtService.generateRefreshToken(input);  
             
+        console.log('got two tokens in generatetoken usecase : ',accessToken,refreshToken);
         return {
             accessToken,
             refreshToken

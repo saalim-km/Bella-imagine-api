@@ -10,7 +10,7 @@ import {
 } from "../../shared/utils/zod-validations/validators/validations";
 import { CustomRequest } from "../middlewares/auth.middleware";
 import { ResponseHandler } from "../../shared/utils/helper/response-handler";
-import { SUCCESS_MESSAGES, TRole } from "../../shared/constants/constants";
+import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES, TRole } from "../../shared/constants/constants";
 import {
   clearAuthCookies,
   updateCookieWithAccessToken,
@@ -71,10 +71,17 @@ export class VendorController implements IVendorController {
       refreshToken: user.refresh_token,
     });
 
-    updateCookieWithAccessToken(res, accessToken, `${user.role}_access_token`);
-    ResponseHandler.success(res, SUCCESS_MESSAGES.REFRESH_TOKEN_SUCCESS, {
-      accessToken,
-    });
+    if (!user.role && user.role !== undefined) {
+      updateCookieWithAccessToken(
+        res,
+        accessToken,
+        `${user.role}_access_token`
+      );
+      ResponseHandler.success(res, SUCCESS_MESSAGES.REFRESH_TOKEN_SUCCESS);
+      return;
+    }
+
+    ResponseHandler.error(res,ERROR_MESSAGES.UNAUTHORIZED_ACCESS,{},HTTP_STATUS.UNAUTHORIZED)
   }
 
   async getVendorDetails(req: Request, res: Response): Promise<void> {

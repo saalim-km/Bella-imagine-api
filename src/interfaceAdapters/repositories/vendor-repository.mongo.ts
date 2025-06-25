@@ -83,6 +83,7 @@ export class VendorRepository
     const matchStage: any = {
       isblocked: false,
       role: "vendor",
+      isVerified : 'accept'
     };
 
     // Filter by languages

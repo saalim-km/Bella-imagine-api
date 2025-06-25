@@ -1,4 +1,3 @@
-import { Types } from "mongoose";
 import {
   ICommunity,
   ICommunityMember,
@@ -19,6 +18,7 @@ import {
   GetCommunityMemberInput,
   JoinCommunityInput,
   LeaveCommunityInput,
+  LikePostInput,
   UpdateCommunityInput,
 } from "./types/community.types";
 
@@ -46,6 +46,8 @@ export interface ICommunityCommandUsecase {
 
 export interface ICommunityPostCommandUsecase {
   createPost(input: CreatePostInput): Promise<ICommunityPost>;
+  likePost(input : LikePostInput):  Promise<{success : boolean}>
+  unLikePost(input : LikePostInput): Promise<{success : boolean}>
   // editPost(input: EditPostInput): Promise<void>;
   // deletePost(input: DeletePostInput): Promise<void>;
   // addComment(input: AddCommentInput): Promise<void>;
@@ -54,5 +56,5 @@ export interface ICommunityPostCommandUsecase {
 export interface ICommunityPostQueryUsecase {
   getAllPost(
     input: GetAllPostInput
-  ): Promise<PaginatedResponse<ICommunityPost>>;
+  ): Promise<PaginatedResponse<any>>;
 }

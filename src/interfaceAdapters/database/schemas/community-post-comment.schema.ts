@@ -1,27 +1,35 @@
 import { model, Schema } from "mongoose";
 import { IComment } from "../../../domain/models/community";
 
-const communityCommentSchema = new Schema<IComment>({
-    postId : {
-        type : Schema.Types.ObjectId,
-        required : true,
-        ref : 'CommunityPost'
+const communityCommentSchema = new Schema<IComment>(
+  {
+    postId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "CommunityPost",
     },
-    userId : {
-        type : Schema.Types.ObjectId,
-        required : true,
-        ref : 'Client'
+    userId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      refPath: "userType",
     },
-    content : {
-        type : String,
-        required : true
+    userType: {
+      type: String,
+      enum: ["Client", "Vendor"],
+      required: true,
     },
-    likesCount : {
-        type : Number,
-        default : 0
+    content: {
+      type: String,
+      required: true,
     },
-},{
-    timestamps : true
-})
+    likesCount: {
+      type: Number,
+      default: 0,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-export const Comment = model<IComment>('Comment',communityCommentSchema)
+export const Comment = model<IComment>("Comment", communityCommentSchema);

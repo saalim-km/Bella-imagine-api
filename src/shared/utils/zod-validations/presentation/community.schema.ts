@@ -49,10 +49,19 @@ export const updateCommuitySchema = z.object({
 })
 
 export const createPostSchema = z.object({
-    title : z.string(),
-    content : z.string().optional(),
-    communityId : objectIdSchema,
-    tags : z.preprocess(
+    userId: objectIdSchema,
+    role: z.preprocess(
+        (val) => {
+            if (val === 'client') return 'Client';
+            if (val === 'vendor') return 'Vendor';
+            return val;
+        },
+        z.enum(['Client', 'Vendor'])
+    ),
+    title: z.string(),
+    content: z.string().optional(),
+    communityId: objectIdSchema,
+    tags: z.preprocess(
         (val) => {
             if (Array.isArray(val)) return val;
             if (typeof val === 'string' && val.trim() !== '') return [val];
@@ -60,9 +69,14 @@ export const createPostSchema = z.object({
         },
         z.array(z.string()).optional()
     ),
-    mediaType : z.enum(['image','video','mixed','none']),
+    mediaType: z.enum(['image', 'video', 'mixed', 'none']),
     media: z.preprocess(
         (val) => (Array.isArray(val) ? val : val ? [val] : []),
         z.array(z.custom<Express.Multer.File>()).optional()
     )
+})
+
+export const getAllPostSchema = z.object({
+    page : pageQuerySchema,
+    limit : limitQuerySchema
 })

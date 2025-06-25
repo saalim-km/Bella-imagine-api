@@ -7,13 +7,15 @@ import {
   ICommentRepository,
   ICommunityPostRepository,
   ICommunityRepository,
+  ILikeRepository,
 } from "../../domain/interfaces/repository/community.repository";
 import {
   CreateCommunityInput,
   CreatePostInput,
   EditPostInput,
+  LikePostInput,
 } from "../../domain/interfaces/usecase/types/community.types";
-import { ICommunityPost } from "../../domain/models/community";
+import { ICommunityPost, UserType } from "../../domain/models/community";
 import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { IClientRepository } from "../../domain/interfaces/repository/client.repository";
@@ -38,12 +40,14 @@ export class CommunityPostCommandUsecase
     @inject("IClientRepository") private _clientRepo: IClientRepository,
     @inject("IAwsS3Service") private _awsS3Service: IAwsS3Service,
     @inject("IGetPresignedUrlUsecase")
-    private presignedUrl: IGetPresignedUrlUsecase
+    private presignedUrl: IGetPresignedUrlUsecase,
+    @inject('ILikeRepository') private _likeRepo : ILikeRepository,
   ) {}
 
   async createPost(input: CreatePostInput): Promise<ICommunityPost> {
-    const { communityId, content, tags, title, userId, media, mediaType } =
+    const { communityId, content, tags, title, userId, media, mediaType , role } =
       input;
+    // const userType = 
 
     const commnity = await this._communityRepo.findById(communityId);
     if (!commnity) {
@@ -108,6 +112,7 @@ export class CommunityPostCommandUsecase
         content : content,
         tags : tags || [],
         userId : userId,
+        userType : role as UserType
     })
 
     if(!newPost) {
@@ -122,6 +127,66 @@ export class CommunityPostCommandUsecase
     return newPost;
   }
 
+
+  async likePost(input: LikePostInput): Promise<{success : boolean}> {
+    const {postId,userId,role} = input;
+
+
+    const post = await this._communityPostRepo.findById(postId)
+    if(!post) {
+      throw new CustomError(ERROR_MESSAGES.POST_NOT_EXISTS , HTTP_STATUS.NOT_FOUND)
+    }
+    
+    const userType = role == 'client' ? 'Client' : 'Vendor';
+
+    const like = await this._likeRepo.create({
+      postId : postId,
+      userId : userId,
+      userType: userType as UserType,
+    })
+    if(!like) {
+      logger.error("failed to create like document")
+      return {
+        success : false
+      }
+    }
+
+    return {
+      success : true
+    }
+  }
+
+  async unLikePost(input: LikePostInput): Promise<{success : boolean}> {
+    const {postId,role,userId} = input;
+
+    console.log('in unlike post usecase');
+    const [post,like] = await Promise.all([
+      this._communityPostRepo.findById(postId),
+      this._likeRepo.findOne({userId : userId , postId : postId})
+    ])
+
+
+    if(!post || !like || !like._id) {
+      logger.error('not post or like found for , please try agian later')
+      return {
+        success : false
+      }
+    }
+
+    console.log('got the post and like',post,like);
+
+
+    const isDeleted = await this._likeRepo.delete(like._id)
+    if(isDeleted) {
+      return {
+        success:false
+      }
+    }
+
+    return {
+      success : true
+    }
+  }
 //   async editPost(input: EditPostInput): Promise<void> {
 //       const {_id,communityId,content,tags,title,userId,media,mediaType} = input;
 

@@ -8,7 +8,12 @@ import {
   updateCookieWithAccessToken,
 } from "../../shared/utils/helper/cookie-helper";
 import { ResponseHandler } from "../../shared/utils/helper/response-handler";
-import { SUCCESS_MESSAGES, TRole } from "../../shared/constants/constants";
+import {
+  ERROR_MESSAGES,
+  HTTP_STATUS,
+  SUCCESS_MESSAGES,
+  TRole,
+} from "../../shared/constants/constants";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import {
   ICategoryManagementUsecase,
@@ -28,9 +33,7 @@ import {
   IClientProfileUsecase,
   IVendorBrowsingUseCase,
 } from "../../domain/interfaces/usecase/client-usecase.interface";
-import {
-  objectIdSchema,
-} from "../../shared/utils/zod-validations/validators/validations";
+import { objectIdSchema } from "../../shared/utils/zod-validations/validators/validations";
 import { IStripeService } from "../../domain/interfaces/service/stripe-service.interface";
 import {
   IBookingCommandUsecase,
@@ -59,7 +62,8 @@ export class ClientController implements IClientController {
     @inject("IBookingQueryUsecase")
     private _bookingQueryUsecase: IBookingQueryUsecase,
     @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
-    @inject('INotificationUsecase') private _notificationUsecase : INotificationUsecase
+    @inject("INotificationUsecase")
+    private _notificationUsecase: INotificationUsecase
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -72,20 +76,44 @@ export class ClientController implements IClientController {
   }
 
   async refreshToken(req: Request, res: Response): Promise<void> {
-    const user = (req as CustomRequest).user;
-    const accessToken = await this._refreshTokenUsecase.execute({
-      _id: user._id,
-      email: user.email,
-      role: user.role,
-      refreshToken: user.refresh_token,
-    });
+    try {
+      const user = (req as CustomRequest).user;
 
-    updateCookieWithAccessToken(res, accessToken, `${user.role}_access_token`);
-    ResponseHandler.success(res, SUCCESS_MESSAGES.REFRESH_TOKEN_SUCCESS, {
-      accessToken,
-    });
+      const accessToken = await this._refreshTokenUsecase.execute({
+        _id: user._id,
+        email: user.email,
+        role: user.role,
+        refreshToken: user.refresh_token,
+      });
+
+      // FIX: Correct the logic condition
+      if (user.role && user.role !== undefined) {
+        updateCookieWithAccessToken(
+          res,
+          accessToken,
+          `${user.role}_access_token`
+        );
+        ResponseHandler.success(res, SUCCESS_MESSAGES.REFRESH_TOKEN_SUCCESS);
+        return;
+      }
+
+      ResponseHandler.error(
+        res,
+        ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
+        {},
+        HTTP_STATUS.UNAUTHORIZED
+      );
+    } catch (error) {
+      console.error("Refresh token error:", error);
+      ResponseHandler.error(
+        res,
+        ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
+        {},
+        HTTP_STATUS.UNAUTHORIZED
+      );
+    }
   }
-
+  
   async getVendors(req: Request, res: Response): Promise<void> {
     const parsed = getVendorsSchema.parse(req.query);
     const vendors = await this._vendorBrowsingUsecase.fetchAvailableVendors(
@@ -187,21 +215,30 @@ export class ClientController implements IClientController {
   }
 
   async readAllNotifications(req: Request, res: Response): Promise<void> {
-    const userId = objectIdSchema.parse((req as CustomRequest).user._id)
-    await this._notificationUsecase.readAllNotifications(userId)
-    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
+    const userId = objectIdSchema.parse((req as CustomRequest).user._id);
+    await this._notificationUsecase.readAllNotifications(userId);
+    ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
   }
 
   async getAllNotifications(req: Request, res: Response): Promise<void> {
-    const userId = (req as CustomRequest).user._id
-    const parsed = getAllNotificationtSchema.parse({...req.query,userId : userId})
-    const notifications = await this._notificationUsecase.getAllNotifications(parsed)
-    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,notifications)
+    const userId = (req as CustomRequest).user._id;
+    const parsed = getAllNotificationtSchema.parse({
+      ...req.query,
+      userId: userId,
+    });
+    const notifications = await this._notificationUsecase.getAllNotifications(
+      parsed
+    );
+    ResponseHandler.success(
+      res,
+      SUCCESS_MESSAGES.DATA_RETRIEVED,
+      notifications
+    );
   }
 
   async deleteNotifications(req: Request, res: Response): Promise<void> {
-    const userId = objectIdSchema.parse((req as CustomRequest).user._id)
-    await this._notificationUsecase.clearNotifications(userId)
-    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
+    const userId = objectIdSchema.parse((req as CustomRequest).user._id);
+    await this._notificationUsecase.clearNotifications(userId);
+    ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
   }
 }

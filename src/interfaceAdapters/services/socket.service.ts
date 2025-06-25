@@ -6,6 +6,8 @@ import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.inter
 import { IMessage } from "../../domain/models/chat";
 import { INotificationUsecase } from "../../domain/interfaces/usecase/notification-usecase.interface";
 import { objectIdSchema } from "../../shared/utils/zod-validations/validators/validations";
+import logger from "../../shared/logger/logger";
+import { ICommunityPostCommandUsecase } from "../../domain/interfaces/usecase/community-usecase.interface";
 
 @injectable()
 export class SocketService implements ISocketService {
@@ -13,7 +15,8 @@ export class SocketService implements ISocketService {
 
   constructor(
     @inject("IChatUsecase") private _chatUsecase: IChatUsecase,
-    @inject('INotificationUsecase') private _notificationUsecase : INotificationUsecase
+    @inject('INotificationUsecase') private _notificationUsecase : INotificationUsecase,
+    @inject('ICommunityPostCommandUsecase') private _communityPostUsecase : ICommunityPostCommandUsecase
   ) {}
 
   initialize(server: Server): void {
@@ -104,13 +107,13 @@ export class SocketService implements ISocketService {
             this.io?.to(recipentId.toString()).emit("new_message", newMessage);
             this.io?.to(message.senderId.toString()).emit('new_message',newMessage);
             const newNotification = await this._notificationUsecase.createNotification({
-                message: `${recipentName} send a message`,
+                message: `${recipentName} send you a message`,
                 receiverId: objectIdSchema.parse(recipentId),
                 senderId: objectIdSchema.parse(message.senderId),
                 receiverModel : userType  === 'client' ? 'Vendor' : 'Client',
                 senderModel : userType  === 'client' ? 'Client' : 'Vendor',
                 type : 'chat'
-              });
+            });
               console.log('new notification created : ',newNotification);
             this.io
               ?.to(recipentId.toString())
@@ -170,6 +173,31 @@ export class SocketService implements ISocketService {
         })
         console.log('new notificaion for booking is beign created : ',newNotification);
         this?.io?.to(receiverId).emit('new_message_notification',newNotification)
+      })
+
+      socket.on('like_post',async({postId})=> {
+        logger.info('like post trigger 🤞')
+        console.log(postId,userId);
+
+        const {success} = await this._communityPostUsecase.likePost({
+          postId : postId,
+          userId : userId,
+          role : userType
+        })
+        socket.emit('like_confirm',{success : success})
+      })
+
+      socket.on('unLike_post',async({postId})=> {
+        logger.info('unLike post trigger ✅')
+        console.log(postId,userId);
+
+        const {success} = await this._communityPostUsecase.unLikePost({
+          postId : postId,
+          userId : userId,
+          role: userType
+        })
+
+        socket.emit('like_confirm',{success : success})
       })
     });
   }

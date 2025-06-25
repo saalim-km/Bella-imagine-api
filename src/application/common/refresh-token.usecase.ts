@@ -12,15 +12,21 @@ export class RefreshTokenUsecase implements IRefreshTokenUsecase {
         @inject("IJwtservice") private jwtService : IJwtservice
     ){}
     execute(decoded : any ): string {
+        console.log('usecase for creating the accesstoken' , decoded);
         const {_id , email , role , refreshToken} = decoded;
 
-        const payload = this.jwtService.verifyRefreshToken(refreshToken);
+        try {
+            const payload = this.jwtService.verifyRefreshToken(refreshToken);
+            
+            if(!payload) {
+                throw new CustomError("Invalid refresh token" , HTTP_STATUS.UNAUTHORIZED)
+            }
 
-
-        if(!payload) {
-            throw new CustomError("Invalid refresh token" , HTTP_STATUS.BAD_REQUEST)
+            console.log('refresh token verified : ',payload);
+            return this.jwtService.generateAccessToken({_id , email , role})
+        } catch (error) {
+            console.error('Refresh token verification failed:', error);
+            throw new CustomError("Refresh token expired or invalid" , HTTP_STATUS.UNAUTHORIZED)
         }
-
-        return this.jwtService.generateAccessToken({_id , email , role})
     }
 }

@@ -35,6 +35,9 @@ export class ClientRoute extends BaseRoute {
 
         this.router.route('/client/community')
         .get(verifyAuth,authorizeRole(['client']),asyncHandler(communityController.fetchAllCommunitiesForUser.bind(communityController)))
+
+        this.router.route('/client/community-post')
         .post(verifyAuth,authorizeRole(['client']),upload.fields([{name : 'media' , maxCount : 4}]),asyncHandler(communityController.createPost.bind(communityController)))
+        .get(verifyAuth,authorizeRole(['client']),asyncHandler(communityController.getAllPosts.bind(communityController)))
     }
 }

@@ -8,7 +8,13 @@ const communityPostSchema = new Schema<ICommunityPost>(
       required: true,
       ref: "Community",
     },
-    userId: { type: Schema.Types.ObjectId, required: true, ref: "Client" },
+
+    userId: { type: Schema.Types.ObjectId, required: true, refPath : "userType" },
+    userType : {
+      type : String,
+      enum : ['Client','Vendor'],
+      required : true
+    },
 
     title: { type: String, required: true },
     content: { type: String, required: true },

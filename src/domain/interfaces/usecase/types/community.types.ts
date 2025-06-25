@@ -1,5 +1,7 @@
 import { Types } from "mongoose";
 import { PaginationInput } from "./admin.types";
+import { TRole } from "../../../../shared/constants/constants";
+import { UserType } from "../../../models/community";
 
 export interface BaseCommunityInput {
   name: string;
@@ -52,9 +54,10 @@ export interface CreatePostInput {
   media ?: Express.Multer.File[];
   mediaType ?: 'image' | 'video' | 'mixed' | 'none';
   tags?: string[];
+  role : 'Client' | 'Vendor'
 }
 
-export interface GetAllPostInput extends Omit<PaginationInput , 'search'> {
+export interface GetAllPostInput extends Omit<PaginationInput , 'search' | 'createdAt'> {
 }
 
 export interface EditPostInput {
@@ -77,4 +80,10 @@ export interface AddCommentInput {
   postId : Types.ObjectId
   userId : Types.ObjectId;
   content : string
+}
+
+export interface LikePostInput {
+  postId : Types.ObjectId;
+  userId : Types.ObjectId;
+  role : TRole
 }

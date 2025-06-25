@@ -17,7 +17,7 @@ import { IBookingRepository } from "../../domain/interfaces/repository/booking.r
 import { BookingRepository } from "../../interfaceAdapters/repositories/booking-repository.mongo";
 import { IPaymentRepository } from "../../domain/interfaces/repository/payment.repository";
 import { PaymentRepository } from "../../interfaceAdapters/repositories/payment-repository.mongo";
-import { ICommentRepository, ICommunityMemberRepository, ICommunityPostRepository, ICommunityRepository } from "../../domain/interfaces/repository/community.repository";
+import { ICommentRepository, ICommunityMemberRepository, ICommunityPostRepository, ICommunityRepository, ILikeRepository } from "../../domain/interfaces/repository/community.repository";
 import { CommunityRepository } from "../../interfaceAdapters/repositories/community-repository.mongo";
 import { CommunityMemberRepository } from "../../interfaceAdapters/repositories/community-member-repository.mongo";
 import { IConversationRepository } from "../../domain/interfaces/repository/conversation.repository";
@@ -29,6 +29,7 @@ import { NotificationRepository } from "../../interfaceAdapters/repositories/not
 import { CommunityPostRepository } from "../../interfaceAdapters/repositories/community-post-repository.mongo";
 import { IComment } from "../../domain/models/community";
 import { CommentRepository } from "../../interfaceAdapters/repositories/comment-reposiory.mongo";
+import { LikeRepository } from "../../interfaceAdapters/repositories/like-respository.mongo";
 
 export class RepositoryRegistry {
     static registerRepositories() : void {
@@ -95,6 +96,10 @@ export class RepositoryRegistry {
 
         container.register<ICommentRepository>('ICommentRepository' , {
             useClass : CommentRepository
+        })
+
+        container.register<ILikeRepository>('ILikeRepository', {
+            useClass : LikeRepository
         })
     }
 }

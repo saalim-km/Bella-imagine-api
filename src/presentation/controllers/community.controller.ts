@@ -3,6 +3,7 @@ import { ICommunityController } from "../../domain/interfaces/controller/communi
 import {
   ICommunityCommandUsecase,
   ICommunityPostCommandUsecase,
+  ICommunityPostQueryUsecase,
   ICommunityQueryUsecase,
 } from "../../domain/interfaces/usecase/community-usecase.interface";
 import { Request, Response } from "express";
@@ -10,6 +11,7 @@ import {
   createCommunitySchema,
   fetchCommBySlugSchema,
   fetchCommunitySchema,
+  getAllPostSchema,
   updateCommuitySchema,
 } from "../../shared/utils/zod-validations/presentation/community.schema";
 import { ResponseHandler } from "../../shared/utils/helper/response-handler";
@@ -27,7 +29,8 @@ export class CommunityController implements ICommunityController {
     private _communityCommand: ICommunityCommandUsecase,
     @inject("ICommunityQueryUsecase")
     private _communityQuery: ICommunityQueryUsecase,
-    @inject('ICommunityPostCommandUsecase') private _communityPostUsecase : ICommunityPostCommandUsecase
+    @inject('ICommunityPostCommandUsecase') private _communityPostUsecase : ICommunityPostCommandUsecase,
+    @inject('ICommunityPostQueryUsecase') private _communityPostQueryUsecase : ICommunityPostQueryUsecase
   ) {}
 
   async createCommunity(req: Request, res: Response): Promise<void> {
@@ -127,11 +130,15 @@ export class CommunityController implements ICommunityController {
   }
 
   async createPost(req: Request, res: Response): Promise<void> {
-    console.log('in createpost controller');
-    console.log(req.body,req.files);
-    const userId = objectIdSchema.parse((req as CustomRequest).user._id);
-    const parsed = createPostSchema.parse({...req.body , media : (req.files as { [fieldname: string]: Express.Multer.File[]} | undefined)?.media});
-    const newPost = await this._communityPostUsecase.createPost({...parsed,userId : userId})
+    const {_id , role} = (req as CustomRequest).user
+    const parsed = createPostSchema.parse({...req.body , userId : _id , role : role ,media : (req.files as { [fieldname: string]: Express.Multer.File[]} | undefined)?.media});
+    const newPost = await this._communityPostUsecase.createPost(parsed)
     ResponseHandler.success(res,SUCCESS_MESSAGES.CREATED,newPost)
+  }
+
+  async getAllPosts(req: Request, res: Response): Promise<void> {
+    const parsed = getAllPostSchema.parse(req.query)
+    const posts = await this._communityPostQueryUsecase.getAllPost(parsed);
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,posts)
   }
 }
