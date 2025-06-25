@@ -77,6 +77,10 @@ export const createPostSchema = z.object({
 })
 
 export const getAllPostSchema = z.object({
-    page : pageQuerySchema,
-    limit : limitQuerySchema
+    page: pageQuerySchema,
+    limit: limitQuerySchema,
+    communityId: z.preprocess(
+        (val) => (val ? val : undefined),
+        objectIdSchema.optional()
+    )
 })

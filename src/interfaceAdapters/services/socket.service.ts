@@ -15,8 +15,10 @@ export class SocketService implements ISocketService {
 
   constructor(
     @inject("IChatUsecase") private _chatUsecase: IChatUsecase,
-    @inject('INotificationUsecase') private _notificationUsecase : INotificationUsecase,
-    @inject('ICommunityPostCommandUsecase') private _communityPostUsecase : ICommunityPostCommandUsecase
+    @inject("INotificationUsecase")
+    private _notificationUsecase: INotificationUsecase,
+    @inject("ICommunityPostCommandUsecase")
+    private _communityPostUsecase: ICommunityPostCommandUsecase
   ) {}
 
   initialize(server: Server): void {
@@ -43,14 +45,14 @@ export class SocketService implements ISocketService {
     console.log("socketio events initialized ❤️");
 
     this.io.on("connection", async (socket) => {
-      console.log('socket data from frontend : ',socket.data);
+      console.log("socket data from frontend : ", socket.data);
       const { userId, userType } = socket.data;
       console.log(`User Connected ✅ userId => ${userId} role => ${userType}`);
 
       // connection event
       socket.on("join", async ({ userId, userType }) => {
-        console.log("join event triggered 😘", userId,userType);
-        socket.join(userId)
+        console.log("join event triggered 😘", userId, userType);
+        socket.join(userId);
         await this._chatUsecase.updateOnlineStatus({
           userId: userId,
           role: userType,
@@ -65,7 +67,7 @@ export class SocketService implements ISocketService {
 
       // disconnect event
       socket.on("disconnect", async () => {
-        console.log("user disconnected ❌ triggered", userId,userType);
+        console.log("user disconnected ❌ triggered", userId, userType);
 
         const lastSeen = new Date().toString();
         await this._chatUsecase.updateOnlineStatus({
@@ -101,20 +103,23 @@ export class SocketService implements ISocketService {
         }) => {
           try {
             console.log("send_message trigger ✅💀");
-            console.log('new message',message,recipentId,recipentName);
+            console.log("new message", message, recipentId, recipentName);
 
             const newMessage = await this._chatUsecase.sendMessage(message);
             this.io?.to(recipentId.toString()).emit("new_message", newMessage);
-            this.io?.to(message.senderId.toString()).emit('new_message',newMessage);
-            const newNotification = await this._notificationUsecase.createNotification({
+            this.io
+              ?.to(message.senderId.toString())
+              .emit("new_message", newMessage);
+            const newNotification =
+              await this._notificationUsecase.createNotification({
                 message: `${recipentName} send you a message`,
                 receiverId: objectIdSchema.parse(recipentId),
                 senderId: objectIdSchema.parse(message.senderId),
-                receiverModel : userType  === 'client' ? 'Vendor' : 'Client',
-                senderModel : userType  === 'client' ? 'Client' : 'Vendor',
-                type : 'chat'
-            });
-              console.log('new notification created : ',newNotification);
+                receiverModel: userType === "client" ? "Vendor" : "Client",
+                senderModel: userType === "client" ? "Client" : "Vendor",
+                type: "chat",
+              });
+            console.log("new notification created : ", newNotification);
             this.io
               ?.to(recipentId.toString())
               .emit("new_message_notification", newNotification);
@@ -162,73 +167,78 @@ export class SocketService implements ISocketService {
         }
       });
 
-      socket.on('new_booking',async({receiverId})=> {
-        const newNotification = await this._notificationUsecase.createNotification({
-          message : 'New Booking Scheduled',
-          receiverId : receiverId,
-          senderId : userId,
-          receiverModel : 'Vendor',
-          senderModel : 'Client',
-          type : 'booking'
-        })
-        console.log('new notificaion for booking is beign created : ',newNotification);
-        this?.io?.to(receiverId).emit('new_message_notification',newNotification)
-      })
+      socket.on("new_booking", async ({ receiverId }) => {
+        const newNotification =
+          await this._notificationUsecase.createNotification({
+            message: "New Booking Scheduled",
+            receiverId: receiverId,
+            senderId: userId,
+            receiverModel: "Vendor",
+            senderModel: "Client",
+            type: "booking",
+          });
+        console.log(
+          "new notificaion for booking is beign created : ",
+          newNotification
+        );
+        this?.io
+          ?.to(receiverId)
+          .emit("new_message_notification", newNotification);
+      });
 
-socket.on("like_post", async ({ postId }) => {
-  logger.info("Like post trigger 🤞")
-  console.log(postId, userId)
+      socket.on("like_post", async ({ postId }) => {
+        logger.info("Like post trigger 🤞");
+        console.log(postId, userId);
 
-  try {
-    const { success } = await this._communityPostUsecase.likePost({
-      postId: postId,
-      userId: userId,
-      role: userType,
-    })
+        try {
+          const { success } = await this._communityPostUsecase.likePost({
+            postId: postId,
+            userId: userId,
+            role: userType,
+          });
 
-    socket.emit("like_confirm", {
-      success: success,
-      postId: postId,
-      action: "like",
-    })
-  } catch (error) {
-    logger.error("Error in like_post handler:", error)
-    socket.emit("like_confirm", {
-      success: false,
-      postId: postId,
-      action: "like",
-      error: "Failed to like post",
-    })
-  }
-})
+          socket.emit("like_confirm", {
+            success: success,
+            postId: postId,
+            action: "like",
+          });
+        } catch (error) {
+          logger.error("Error in like_post handler:", error);
+          socket.emit("like_confirm", {
+            success: false,
+            postId: postId,
+            action: "like",
+            error: "Failed to like post",
+          });
+        }
+      });
 
-socket.on("unLike_post", async ({ postId }) => {
-  logger.info("Unlike post trigger ✅")
-  console.log(postId, userId)
+      socket.on("unLike_post", async ({ postId }) => {
+        logger.info("Unlike post trigger ✅");
+        console.log(postId, userId);
 
-  try {
-    const { success } = await this._communityPostUsecase.unLikePost({
-      postId: postId,
-      userId: userId,
-      role: userType,
-    })
+        try {
+          const { success } = await this._communityPostUsecase.unLikePost({
+            postId: postId,
+            userId: userId,
+            role: userType,
+          });
 
-    socket.emit("like_confirm", {
-      success: success,
-      postId: postId,
-      action: "unlike",
-    })
-  } catch (error) {
-    logger.error("Error in unLike_post handler:", error)
-    socket.emit("like_confirm", {
-      success: false,
-      postId: postId,
-      action: "unlike",
-      error: "Failed to unlike post",
-    })
-  }
-})
-
+          socket.emit("like_confirm", {
+            success: success,
+            postId: postId,
+            action: "unlike",
+          });
+        } catch (error) {
+          logger.error("Error in unLike_post handler:", error);
+          socket.emit("like_confirm", {
+            success: false,
+            postId: postId,
+            action: "unlike",
+            error: "Failed to unlike post",
+          });
+        }
+      });
     });
   }
 }

@@ -51,7 +51,6 @@ export class CommunityPostRepository
         }
       }
 
-      console.log('got post by users : ',posts);
       // Get all post IDs
       const postIds = posts.map((post) => post._id)
 
@@ -87,8 +86,6 @@ export class CommunityPostRepository
         ]),
       ])
 
-      console.log("Got the likes by user:", userLikes)
-      console.log("Got like counts:", likeCounts)
 
       // Create a Set of liked post IDs for efficient lookup
       const likedPostIds = new Set(userLikes.map((like) => like.postId.toString()))
@@ -102,8 +99,6 @@ export class CommunityPostRepository
         isLiked: likedPostIds.has(post._id.toString()),
         likeCount: likeCountMap.get(post._id.toString()) || 0,
       }))
-
-      console.log("Got the posts with likes:", postsWithLikes, count)
 
       return {
         data: postsWithLikes,

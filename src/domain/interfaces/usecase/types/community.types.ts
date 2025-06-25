@@ -58,6 +58,7 @@ export interface CreatePostInput {
 }
 
 export interface GetAllPostInput extends Omit<PaginationInput , 'search' | 'createdAt'> {
+  communityId ?: Types.ObjectId
 }
 
 export interface EditPostInput {

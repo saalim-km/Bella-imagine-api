@@ -41,13 +41,21 @@ export class CommunityPostCommandUsecase
     @inject("IAwsS3Service") private _awsS3Service: IAwsS3Service,
     @inject("IGetPresignedUrlUsecase")
     private presignedUrl: IGetPresignedUrlUsecase,
-    @inject('ILikeRepository') private _likeRepo : ILikeRepository,
+    @inject("ILikeRepository") private _likeRepo: ILikeRepository
   ) {}
 
   async createPost(input: CreatePostInput): Promise<ICommunityPost> {
-    const { communityId, content, tags, title, userId, media, mediaType , role } =
-      input;
-    // const userType = 
+    const {
+      communityId,
+      content,
+      tags,
+      title,
+      userId,
+      media,
+      mediaType,
+      role,
+    } = input;
+    // const userType =
 
     const commnity = await this._communityRepo.findById(communityId);
     if (!commnity) {
@@ -83,7 +91,7 @@ export class CommunityPostCommandUsecase
             throw error;
           }
         });
-        await Promise.all(uploadedPromises)
+        await Promise.all(uploadedPromises);
       } catch (error) {
         if (uploadedKeys.length > 0) {
           logger.info(
@@ -105,49 +113,69 @@ export class CommunityPostCommandUsecase
     }
 
     let newPost = await this._communityPostRepo.create({
-        communityId :  communityId,
-        media : fileKeys || [],
-        mediaType : mediaType,
-        title : title,
-        content : content,
-        tags : tags || [],
-        userId : userId,
-        userType : role as UserType
-    })
+      communityId: communityId,
+      media: fileKeys || [],
+      mediaType: mediaType,
+      title: title,
+      content: content,
+      tags: tags || [],
+      userId: userId,
+      userType: role as UserType,
+    });
 
-    if(!newPost) {
-        throw new CustomError(ERROR_MESSAGES.POST_CREATION_FAILED,HTTP_STATUS.INTERNAL_SERVER_ERROR)
+    if (!newPost || !newPost._id) {
+      throw new CustomError(
+        ERROR_MESSAGES.POST_CREATION_FAILED,
+        HTTP_STATUS.INTERNAL_SERVER_ERROR
+      );
     }
 
-    if(newPost.media && newPost.media.length > 0) {
-        newPost.media = await Promise.all(newPost.media.map(async(media)=> {
-            return await this.presignedUrl.getPresignedUrl(media)
-        }))
+    const post : any = await this._communityPostRepo.findById(newPost._id, [
+      "userId",
+    ]);
+
+    if(!post){
+      throw new CustomError('failed to create new post please try again later',HTTP_STATUS.BAD_REQUEST)
     }
-    return newPost;
+
+    if (post.media && post.media.length > 0) {
+      post.media = await Promise.all(
+        post.media.map(async (media : any) => {
+          return await this.presignedUrl.getPresignedUrl(media);
+        }),
+      );
+    }
+
+    if(post.userId.profileImage){
+      post.userId.profileImage = await this.presignedUrl.getPresignedUrl(post.profileImage)
+    }
+
+    return post;
   }
 
-
   async likePost(input: LikePostInput): Promise<{ success: boolean }> {
-    const { postId, userId, role } = input
+    const { postId, userId, role } = input;
 
     try {
-      const post = await this._communityPostRepo.findById(postId)
+      const post = await this._communityPostRepo.findById(postId);
       if (!post) {
-        throw new CustomError(ERROR_MESSAGES.POST_NOT_EXISTS, HTTP_STATUS.NOT_FOUND)
+        throw new CustomError(
+          ERROR_MESSAGES.POST_NOT_EXISTS,
+          HTTP_STATUS.NOT_FOUND
+        );
       }
 
-      const userType = role === "client" ? "Client" : "Vendor"
+      const userType = role === "client" ? "Client" : "Vendor";
 
       // Check if user already liked this post
       const existingLike = await this._likeRepo.findOne({
         userId: userId,
         postId: postId,
-      })
+      });
 
       if (existingLike) {
-        logger.warn(`User ${userId} already liked post ${postId}`)
-        return { success: false }
+        logger.warn(`User ${userId} already liked post ${postId}`);
+        return { success: false };
       }
 
       // Create like document
@@ -155,78 +183,77 @@ export class CommunityPostCommandUsecase
         postId: postId,
         userId: userId,
         userType: userType as UserType,
-      })
+      });
 
       if (!like) {
-        logger.error("Failed to create like document")
-        return { success: false }
+        logger.error("Failed to create like document");
+        return { success: false };
       }
 
       // Update post like count
       await this._communityPostRepo.update(postId, {
         $inc: { likeCount: 1 },
-      })
+      });
 
-      logger.info(`User ${userId} successfully liked post ${postId}`)
-      return { success: true }
+      logger.info(`User ${userId} successfully liked post ${postId}`);
+      return { success: true };
     } catch (error) {
-      logger.error(`Error liking post: ${error}`)
-      return { success: false }
+      logger.error(`Error liking post: ${error}`);
+      return { success: false };
     }
   }
 
   async unLikePost(input: LikePostInput): Promise<{ success: boolean }> {
-    const { postId, role, userId } = input
+    const { postId, role, userId } = input;
 
     try {
-      console.log("In unlike post usecase")
+      console.log("In unlike post usecase");
 
       const [post, like] = await Promise.all([
         this._communityPostRepo.findById(postId),
         this._likeRepo.findOne({ userId: userId, postId: postId }),
-      ])
+      ]);
 
       if (!post) {
-        logger.error("Post not found")
-        return { success: false }
+        logger.error("Post not found");
+        return { success: false };
       }
 
       if (!like || !like._id) {
-        logger.error("Like not found for user and post")
-        return { success: false }
+        logger.error("Like not found for user and post");
+        return { success: false };
       }
 
-      console.log("Got the post and like", post, like)
+      console.log("Got the post and like", post, like);
 
       // Delete the like document
-      const isDeleted = await this._likeRepo.delete(like._id)
+      const isDeleted = await this._likeRepo.delete(like._id);
 
       // Fix: The logic was inverted - if deletion succeeded, return success: true
       if (!isDeleted) {
-        logger.error("Failed to delete like document")
-        return { success: false }
+        logger.error("Failed to delete like document");
+        return { success: false };
       }
 
       // Update post like count
       await this._communityPostRepo.update(postId, {
         $inc: { likeCount: -1 },
-      })
+      });
 
-      logger.info(`User ${userId} successfully unliked post ${postId}`)
-      return { success: true }
+      logger.info(`User ${userId} successfully unliked post ${postId}`);
+      return { success: true };
     } catch (error) {
-      logger.error(`Error unliking post: ${error}`)
-      return { success: false }
+      logger.error(`Error unliking post: ${error}`);
+      return { success: false };
     }
   }
-//   async editPost(input: EditPostInput): Promise<void> {
-//       const {_id,communityId,content,tags,title,userId,media,mediaType} = input;
+  //   async editPost(input: EditPostInput): Promise<void> {
+  //       const {_id,communityId,content,tags,title,userId,media,mediaType} = input;
 
-//       const isPostExists = await this._communityPostRepo.findById(_id);
-//       if(!isPostExists){
-//         throw new CustomError(ERROR_MESSAGES.POST_NOT_EXISTS,HTTP_STATUS.NOT_FOUND)
-//       }
+  //       const isPostExists = await this._communityPostRepo.findById(_id);
+  //       if(!isPostExists){
+  //         throw new CustomError(ERROR_MESSAGES.POST_NOT_EXISTS,HTTP_STATUS.NOT_FOUND)
+  //       }
 
-
-//   }
+  //   }
 }

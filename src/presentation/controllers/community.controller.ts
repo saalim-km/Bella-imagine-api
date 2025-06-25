@@ -138,6 +138,7 @@ export class CommunityController implements ICommunityController {
 
   async getAllPosts(req: Request, res: Response): Promise<void> {
     const parsed = getAllPostSchema.parse(req.query)
+    console.log('parsed ',parsed);
     const posts = await this._communityPostQueryUsecase.getAllPost(parsed);
     ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,posts)
   }

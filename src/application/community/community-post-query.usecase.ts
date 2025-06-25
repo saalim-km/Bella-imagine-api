@@ -5,6 +5,8 @@ import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.
 import { GetAllPostInput } from "../../domain/interfaces/usecase/types/community.types";
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { IAwsS3Service } from "../../domain/interfaces/service/aws-service.interface";
+import { FilterQuery } from "mongoose";
+import { ICommunityPost } from "../../domain/models/community";
 
 @injectable()
 export class CommunityPostQueryUsecase implements ICommunityPostQueryUsecase {
@@ -16,10 +18,16 @@ export class CommunityPostQueryUsecase implements ICommunityPostQueryUsecase {
     ){}
 
     async getAllPost(input: GetAllPostInput): Promise<PaginatedResponse<any>> {
-        const {limit,page} = input;
+        const {limit,page,communityId} = input;
         const skip = (page - 1) * limit;
 
-        let {data, total} = await this._communityPostRepo.fetchAllPost({},skip,limit,-1);
+        let filter : FilterQuery<ICommunityPost> = {}
+        
+        if(communityId && communityId !== undefined){
+            filter.communityId = communityId;
+        }
+
+        let {data, total} = await this._communityPostRepo.fetchAllPost(filter,skip,limit,-1);
         
 
         data = await Promise.all(
