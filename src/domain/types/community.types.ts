@@ -39,3 +39,8 @@ export interface ICommunityPostResponse {
   createdAt ?: string;
   updatedAt ?: string;
 }
+
+export interface GetPostDetailsInput {
+  postId : Types.ObjectId;
+  userId : Types.ObjectId;
+}

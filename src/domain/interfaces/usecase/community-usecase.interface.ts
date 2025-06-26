@@ -4,7 +4,7 @@ import {
   ICommunityMember,
   ICommunityPost,
 } from "../../models/community";
-import { FetchCommunityBySlugOutput } from "../../types/community.types";
+import { FetchCommunityBySlugOutput, GetPostDetailsInput } from "../../types/community.types";
 import { PaginatedResponse } from "./types/common.types";
 import {
   AddCommentInput,
@@ -58,5 +58,5 @@ export interface ICommunityPostQueryUsecase {
   getAllPost(
     input: GetAllPostInput
   ): Promise<PaginatedResponse<any>>;
-  getPostDetails(postId : Types.ObjectId) : Promise<any>
+  getPostDetails(input : GetPostDetailsInput) : Promise<any>
 }

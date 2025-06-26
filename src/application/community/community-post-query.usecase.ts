@@ -12,6 +12,7 @@ import { FilterQuery, Types } from "mongoose";
 import { ICommunityPost } from "../../domain/models/community";
 import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
+import { GetPostDetailsInput } from "../../domain/types/community.types";
 
 @injectable()
 export class CommunityPostQueryUsecase implements ICommunityPostQueryUsecase {
@@ -76,37 +77,7 @@ export class CommunityPostQueryUsecase implements ICommunityPostQueryUsecase {
     };
   }
 
-  async getPostDetails(postId: Types.ObjectId): Promise<any> {
-    const [post, comment] = await Promise.all([
-      this._communityPostRepo.findById(postId),
-      this._commentRepo.findAll({ postId: postId }, 0, 5, 1),
-    ]);
-
-    if (!post) {
-      throw new CustomError(
-        ERROR_MESSAGES.POST_NOT_EXISTS,
-        HTTP_STATUS.NOT_FOUND
-      );
-    }
-
-    if (post.media && post.media.length > 0) {
-      post.media = await Promise.all(
-        post.media.map(async (media) => {
-          const isFileExists = await this._s3Service.isFileAvailableInAwsBucket(
-            media
-          );
-          if (isFileExists) {
-            return await this._presignedUrl.getPresignedUrl(media);
-          }
-
-          return media;
-        })
-      );
-    }
-    
-    return {
-      post: post,
-      comments: comment,
-    };
+  async getPostDetails(input : GetPostDetailsInput): Promise<any> {
+    return await this._communityPostRepo.fetchPostDetails(input)
   }
 }

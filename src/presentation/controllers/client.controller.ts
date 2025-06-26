@@ -126,6 +126,7 @@ export class ClientController implements IClientController {
     const categories = await this._categoryManagementUsecase.getCategories({
       limit: 10,
       page: 1,
+      status : true
     });
     ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, categories);
   }

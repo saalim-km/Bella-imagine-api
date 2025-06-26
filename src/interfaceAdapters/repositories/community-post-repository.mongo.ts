@@ -3,7 +3,7 @@ import { BaseRepository } from "./base-repository.mongo";
 import { CommunityPost } from "../database/schemas/community-post.schema";
 import { ICommunityPost } from "../../domain/models/community";
 import { ICommunityPostRepository } from "../../domain/interfaces/repository/community.repository";
-import { ICommunityPostResponse } from "../../domain/types/community.types";
+import { GetPostDetailsInput, ICommunityPostResponse } from "../../domain/types/community.types";
 import logger from "../../shared/logger/logger";
 import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";
 import { FilterQuery, Types } from "mongoose";
@@ -122,5 +122,58 @@ export class CommunityPostRepository
       console.error("Error in fetchAllPost:", error);
       throw new Error(`Failed to fetch posts: ${error.message}`);
     }
+  }
+
+  async fetchPostDetails(input: GetPostDetailsInput): Promise<any> {
+    const {postId,userId} = input;
+
+    console.log('post id',postId);
+    console.log('user id',userId);
+    const post = await this.model.aggregate([
+      {
+        $match : {
+          _id : postId,
+        },
+      },
+      {
+        $lookup : {
+          from : 'comments',
+          localField : '_id',
+          foreignField : 'postId',
+          as : 'comments'
+        },
+      },
+      {
+        $lookup : {
+          from  : 'likes',
+          localField : '_id',
+          foreignField : 'postId',
+          as : 'likes'
+        }
+      },
+      {
+        $addFields : {
+          isLiked : {
+            $gt : [
+              { 
+                $size : {
+                  $filter : {
+                    input : '$likes',
+                    as : 'like',
+                    cond:  {
+                      $eq : ['$$like.userId', userId]
+                    }
+                  }
+                }
+              },
+              0
+            ]
+          }
+        }
+      }
+    ])
+
+    console.log('post details : ',post );
+    return post[0]
   }
 }
