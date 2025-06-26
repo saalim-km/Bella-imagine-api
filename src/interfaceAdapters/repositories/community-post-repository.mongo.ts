@@ -152,6 +152,17 @@ export class CommunityPostRepository
         }
       },
       {
+        $lookup : {
+          from  : 'clients',
+          localField : 'userId',
+          foreignField : '_id',
+          as : 'userId'
+        }
+      },
+      {
+        $unwind : { path: "$userId" }
+      },
+      {
         $addFields : {
           isLiked : {
             $gt : [
@@ -169,6 +180,25 @@ export class CommunityPostRepository
               0
             ]
           }
+        }
+      },
+      {
+        $project : {
+          'userId.name' : 1,
+          'userId.profileImage' : 1,
+          'media' : 1,
+          'title' : 1,
+           "content": "New member from football community",
+          "mediaType": 1,
+          "isEdited": 1,
+          "likeCount": 1,
+          "commentCount": 1,
+          "tags": 1,
+          "comments": 1,
+          "createdAt": 1,
+          "updatedAt": 1,
+          "likes": 1,
+          "isLiked": 1
         }
       }
     ])

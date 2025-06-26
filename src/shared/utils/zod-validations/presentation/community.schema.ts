@@ -1,4 +1,4 @@
-import z from 'zod'
+import z, { string } from 'zod'
 import { ImageSchema, limitQuerySchema, nameSchema, objectIdSchema, pageQuerySchema, searchQuerySchema, slugSchema } from '../validators/validations'
 
 export const createCommunitySchema = z.object({
@@ -83,4 +83,10 @@ export const getAllPostSchema = z.object({
         (val) => (val ? val : undefined),
         objectIdSchema.optional()
     )
+})
+
+export const addCommentSchema = z.object({
+    postId : objectIdSchema,
+    content : z.string(),
+    userId : objectIdSchema
 })

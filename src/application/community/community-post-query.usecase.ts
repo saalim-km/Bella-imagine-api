@@ -78,6 +78,26 @@ export class CommunityPostQueryUsecase implements ICommunityPostQueryUsecase {
   }
 
   async getPostDetails(input : GetPostDetailsInput): Promise<any> {
-    return await this._communityPostRepo.fetchPostDetails(input)
+    const post = await this._communityPostRepo.fetchPostDetails(input);
+
+    // Replace user profile image with presigned URL if exists
+    if (post?.userId?.profileImage) {
+      post.userId.profileImage = await this._presignedUrl.getPresignedUrl(post.userId.profileImage);
+    }
+
+    // Replace each media item with presigned URL if file exists
+    if (post?.media && Array.isArray(post.media)) {
+      post.media = await Promise.all(
+      post.media.map(async (media: string) => {
+        const isFileExists = await this._s3Service.isFileAvailableInAwsBucket(media);
+        if (isFileExists) {
+        return await this._presignedUrl.getPresignedUrl(media);
+        }
+        return media;
+      })
+      );
+    }
+
+    return post;
   }
 }

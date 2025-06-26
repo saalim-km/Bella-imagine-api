@@ -139,7 +139,6 @@ export class CommunityController implements ICommunityController {
   async getAllPosts(req: Request, res: Response): Promise<void> {
     const parsed = getAllPostSchema.parse(req.query)
     const userId = objectIdSchema.parse((req as CustomRequest).user._id)
-    console.log('userid parsed : ',userId);
     const posts = await this._communityPostQueryUsecase.getAllPost({...parsed,userId: userId});
     ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,posts)
   }
@@ -147,7 +146,6 @@ export class CommunityController implements ICommunityController {
   async getPostDetails(req: Request, res: Response): Promise<void> {
     const postId = objectIdSchema.parse(req.params.postId)
     const userId = objectIdSchema.parse((req as CustomRequest).user._id)
-
     const postDetails = await this._communityPostQueryUsecase.getPostDetails({postId : postId , userId: userId});
     ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,postDetails)
   }
