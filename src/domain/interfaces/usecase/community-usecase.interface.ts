@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import {
   ICommunity,
   ICommunityMember,
@@ -57,4 +58,5 @@ export interface ICommunityPostQueryUsecase {
   getAllPost(
     input: GetAllPostInput
   ): Promise<PaginatedResponse<any>>;
+  getPostDetails(postId : Types.ObjectId) : Promise<any>
 }

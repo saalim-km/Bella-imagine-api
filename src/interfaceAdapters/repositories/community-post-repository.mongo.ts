@@ -20,15 +20,13 @@ export class CommunityPostRepository
 
   async fetchAllPost(
     filter: FilterQuery<ICommunityPost>,
+    userId: Types.ObjectId,
     skip: number,
     limit: number,
-    userId: string,
-    sort: any = -1,
+    sort: any = -1
   ): Promise<PaginatedResponse<any>> {
     try {
-      // Convert userId to ObjectId for proper comparison
-      const userObjectId = new Types.ObjectId(userId)
-
+      console.log("user id is here :", userId);
       const [posts, count] = await Promise.all([
         this.model
           .find(filter)
@@ -42,32 +40,34 @@ export class CommunityPostRepository
           .lean()
           .exec(),
         this.model.countDocuments(filter),
-      ])
+      ]);
 
       if (posts.length === 0) {
         return {
           data: [],
           total: count,
-        }
+        };
       }
 
       // Get all post IDs
-      const postIds = posts.map((post) => post._id)
+      const postIds = posts.map((post) => post._id);
 
       // Get likes and like counts in parallel
       const [userLikes, likeCounts] = await Promise.all([
         // Find all likes for these posts by the current user
         Like.aggregate([
-            {
-                $match : {
-                    postId : {$in : postIds}
-                },
+          {
+            $match: {
+              postId: { $in: postIds },
+              userId: userId, // Add userId filter here to get only current user's likes
             },
-            {
-                $project : {
-                    postId : 1
-                }
-            }
+          },
+          {
+            $project: {
+              postId: 1,
+              userId: 1,
+            },
+          },
         ]),
 
         // Get like counts for all posts
@@ -84,29 +84,43 @@ export class CommunityPostRepository
             },
           },
         ]),
-      ])
+      ]);
 
+      const parsedUserId = String(userId);
+      console.log("string user id :", parsedUserId);
+      console.log("userLikes:", userLikes);
+      console.log("postIds:", postIds);
 
       // Create a Set of liked post IDs for efficient lookup
-      const likedPostIds = new Set(userLikes.map((like) => like.postId.toString()))
+      // Since we already filtered by userId in the aggregation, we only need to check postIds
+      const likedPostIds = new Set(
+        userLikes.map((like) => String(like.postId))
+      );
+
+      console.log("liked post ids:", likedPostIds);
 
       // Create a Map of like counts for efficient lookup
-      const likeCountMap = new Map(likeCounts.map((item) => [item._id.toString(), item.count]))
+      const likeCountMap = new Map(
+        likeCounts.map((item) => [item._id.toString(), item.count])
+      );
 
       // Map posts to include isLiked flag and like count
-      const postsWithLikes = posts.map((post) => ({
-        ...post,
-        isLiked: likedPostIds.has(post._id.toString()),
-        likeCount: likeCountMap.get(post._id.toString()) || 0,
-      }))
+      const postsWithLikes = posts.map((post) => {
+        const postIdStr = String(post._id);
+        return {
+          ...post,
+          isLiked: likedPostIds.has(postIdStr), // Simplified logic
+          likeCount: likeCountMap.get(postIdStr) || 0,
+        };
+      });
 
       return {
         data: postsWithLikes,
         total: count,
-      }
-    } catch (error : any) {
-      console.error("Error in fetchAllPost:", error)
-      throw new Error(`Failed to fetch posts: ${error.message}`)
+      };
+    } catch (error: any) {
+      console.error("Error in fetchAllPost:", error);
+      throw new Error(`Failed to fetch posts: ${error.message}`);
     }
   }
 }

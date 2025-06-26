@@ -147,7 +147,7 @@ export class CommunityPostCommandUsecase
     }
 
     if(post.userId.profileImage){
-      post.userId.profileImage = await this.presignedUrl.getPresignedUrl(post.profileImage)
+      post.userId.profileImage = await this.presignedUrl.getPresignedUrl(post.userId.profileImage)
     }
 
     return post;

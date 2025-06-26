@@ -19,6 +19,7 @@ export class ClientRoute extends BaseRoute {
         .get('/client/community/:slug',verifyAuth,authorizeRole(['client']),asyncHandler(communityController.fetchCommunityDetais.bind(communityController)))
         .post('/client/community-join',verifyAuth,authorizeRole(['client']),asyncHandler(communityController.joinCommunity.bind(communityController)))
         .delete('/client/community-leave/:communityId',verifyAuth,authorizeRole(['client']),asyncHandler(communityController.leaveCommunity.bind(communityController)))
+        .get('/client/post/:postId',verifyAuth,authorizeRole(['client']),asyncHandler(communityController.getPostDetails.bind(communityController)))
 
         this.router.route('/client/notification')
         .patch(verifyAuth,authorizeRole(['client']),asyncHandler(clientController.readAllNotifications.bind(clientController)))
