@@ -81,7 +81,8 @@ export interface DeletePostInput {
 export interface AddCommentInput {
   postId : Types.ObjectId
   userId : Types.ObjectId;
-  content : string
+  content : string;
+  role : TRole
 }
 
 export interface LikePostInput {

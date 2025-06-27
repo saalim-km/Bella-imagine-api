@@ -14,27 +14,27 @@ export const HTTP_STATUS = {
 };
 
 export const SUCCESS_MESSAGES = {
-  LEAVE_SUCCESS: "Successfully left the community.",
-  CATEGORY_JOIN_REQUEST_SUCCESS: "Category join request submitted successfully.",
+  COMMENT_CREATED: "Your comment has been added.",
+  LEAVE_SUCCESS: "You have left the community successfully.",
+  CATEGORY_JOIN_REQUEST_SUCCESS: "Your request to join the category has been submitted.",
   CLIENT_SECRET_SUCCESS: "Client secret generated successfully.",
-  REFRESH_TOKEN_SUCCESS: "Access token refreshed successfully.",
+  REFRESH_TOKEN_SUCCESS: "Session refreshed. You're all set.",
   OTP_VERIFY_SUCCESS: "OTP verified successfully.",
-  JOINED_SUCESS: "Successfully joined.",
-  BOOKING_SUCCESS: "Booking completed successfully.",
-  CREATED: "Created successfully.",
-  LOGIN_SUCCESS: "Logged in successfully.",
-  REGISTRATION_SUCCESS: "Registered successfully.",
-  OTP_SEND_SUCCESS: "OTP sent successfully.",
-  LOGOUT_SUCCESS: "Logged out successfully.",
-  UPDATE_SUCCESS: "Updated successfully.",
-  DELETE_SUCCESS: "Deleted successfully.",
-  OPERATION_SUCCESS: "Operation completed successfully.",
-  PASSWORD_RESET_SUCCESS: "Password reset successfully.",
-  VERIFICATION_SUCCESS: "Verification completed successfully.",
+  JOINED_SUCESS: "You've joined successfully.",
+  BOOKING_SUCCESS: "Your booking is confirmed.",
+  CREATED: "Successfully created.",
+  LOGIN_SUCCESS: "You’re signed in.",
+  REGISTRATION_SUCCESS: "Account registered successfully.",
+  OTP_SEND_SUCCESS: "OTP has been sent to your email.",
+  LOGOUT_SUCCESS: "You’ve been logged out.",
+  UPDATE_SUCCESS: "Changes saved successfully.",
+  DELETE_SUCCESS: "Item deleted successfully.",
+  OPERATION_SUCCESS: "The operation was completed successfully.",
+  PASSWORD_RESET_SUCCESS: "Your password has been reset.",
+  VERIFICATION_SUCCESS: "Verification completed.",
   DATA_RETRIEVED: "Data retrieved successfully.",
   ACTION_SUCCESS: "Action completed successfully.",
 };
-
 
 export const ERROR_MESSAGES = {
   WORKSMAPLE_LINKED: 'Some work samples are linked to this service and it cannot be deleted.',

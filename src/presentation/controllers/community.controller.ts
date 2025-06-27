@@ -8,6 +8,7 @@ import {
 } from "../../domain/interfaces/usecase/community-usecase.interface";
 import { Request, Response } from "express";
 import {
+  addCommentSchema,
   createCommunitySchema,
   fetchCommBySlugSchema,
   fetchCommunitySchema,
@@ -15,7 +16,7 @@ import {
   updateCommuitySchema,
 } from "../../shared/utils/zod-validations/presentation/community.schema";
 import { ResponseHandler } from "../../shared/utils/helper/response-handler";
-import { SUCCESS_MESSAGES } from "../../shared/constants/constants";
+import { SUCCESS_MESSAGES, TRole } from "../../shared/constants/constants";
 import { CustomRequest } from "../middlewares/auth.middleware";
 import { FetchAllCommunitiesSchema } from "../../shared/utils/zod-validations/presentation/client.schema";
 import { objectIdSchema } from "../../shared/utils/zod-validations/validators/validations";
@@ -149,4 +150,12 @@ export class CommunityController implements ICommunityController {
     const postDetails = await this._communityPostQueryUsecase.getPostDetails({postId : postId , userId: userId});
     ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,postDetails)
   }
+
+  async addComment(req: Request, res: Response): Promise<void> {
+    console.log('add comment controller');
+    console.log(req.body);
+    const parsed = addCommentSchema.parse({...req.body,userId : (req as CustomRequest).user._id})
+    await this._communityPostUsecase.addComment({...parsed,role : (req as CustomRequest).user.role as TRole})
+    ResponseHandler.success(res,SUCCESS_MESSAGES.COMMENT_CREATED)
+  } 
 }

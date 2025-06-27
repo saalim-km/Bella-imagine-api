@@ -137,7 +137,7 @@ export class AuthController implements IAuthController {
       console.log('logged in user',user);
       res.status(HTTP_STATUS.OK).json({
         success: true,
-        message: 'User successfully authenticated',
+        message: 'Welcome back! You’re now signed in.',
         user: {
           _id: userId,
           name: user.name,

@@ -10,6 +10,7 @@ import {
   ILikeRepository,
 } from "../../domain/interfaces/repository/community.repository";
 import {
+  AddCommentInput,
   CreateCommunityInput,
   CreatePostInput,
   EditPostInput,
@@ -130,24 +131,29 @@ export class CommunityPostCommandUsecase
       );
     }
 
-    const post : any = await this._communityPostRepo.findById(newPost._id, [
+    const post: any = await this._communityPostRepo.findById(newPost._id, [
       "userId",
     ]);
 
-    if(!post){
-      throw new CustomError('failed to create new post please try again later',HTTP_STATUS.BAD_REQUEST)
+    if (!post) {
+      throw new CustomError(
+        "failed to create new post please try again later",
+        HTTP_STATUS.BAD_REQUEST
+      );
     }
 
     if (post.media && post.media.length > 0) {
       post.media = await Promise.all(
-        post.media.map(async (media : any) => {
+        post.media.map(async (media: any) => {
           return await this.presignedUrl.getPresignedUrl(media);
-        }),
+        })
       );
     }
 
-    if(post.userId.profileImage){
-      post.userId.profileImage = await this.presignedUrl.getPresignedUrl(post.userId.profileImage)
+    if (post.userId.profileImage) {
+      post.userId.profileImage = await this.presignedUrl.getPresignedUrl(
+        post.userId.profileImage
+      );
     }
 
     return post;
@@ -247,6 +253,27 @@ export class CommunityPostCommandUsecase
       return { success: false };
     }
   }
+
+  async addComment(input: AddCommentInput): Promise<void> {
+    const { content, postId, userId,role } = input;
+
+    const post = await this._communityPostRepo.findById(postId);
+    if (!post) {
+      throw new CustomError(
+        ERROR_MESSAGES.POST_NOT_EXISTS,
+        HTTP_STATUS.NOT_FOUND
+      );
+    }
+
+    const userType = role === 'client' ? 'Client' : 'Vendor'
+    await this._commentRepo.create({
+      content : content,
+      userType : userType as UserType,
+      postId : postId,
+      userId : userId
+    })
+  }
+
   //   async editPost(input: EditPostInput): Promise<void> {
   //       const {_id,communityId,content,tags,title,userId,media,mediaType} = input;
 

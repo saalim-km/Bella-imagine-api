@@ -14,4 +14,5 @@ export interface IAdminController {
     getCatJoinRequests(req: Request, res: Response) : Promise<void>
     updateCatRequest(req: Request, res: Response) : Promise<void>
     getWallet(req: Request, res: Response) : Promise<void>
+    fetchDashBoard(req: Request, res: Response) : Promise<void>
 }

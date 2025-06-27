@@ -41,3 +41,7 @@ export interface ICategoryManagementUsecase {
   updateCatJoinRequest(input : UupdateCatReqInput) : Promise<void> 
   getCatForUsers() : Promise<PaginatedResponse<ICategory>>
 }
+
+export interface IDashboardUsecase {
+  fetchDashBoardStats() : Promise<any>
+}

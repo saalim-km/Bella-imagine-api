@@ -11,6 +11,7 @@ import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from "../../shared/cons
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import {
   ICategoryManagementUsecase,
+  IDashboardUsecase,
   IGetUserDetailsUsecase,
   IGetUsersUsecase,
   IGetVendorRequestUsecase,
@@ -44,7 +45,8 @@ export class AdminController implements IAdminController {
     private _userManagmentUsecase: IUserManagementUsecase,
     @inject("ICategoryManagementUsecase")
     private _categoryManagmentUsecase: ICategoryManagementUsecase,
-    @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase
+    @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
+    @inject('IDashboardUsecase') private _dashboardUsecase : IDashboardUsecase
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -152,5 +154,10 @@ export class AdminController implements IAdminController {
     const wallet = await this._walletUsecase.fetchAdminWallet();
     console.log('got admin wallet',wallet);
     ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,wallet) 
+  }
+
+  async fetchDashBoard(req: Request, res: Response): Promise<void> {
+    const data = await this._dashboardUsecase.fetchDashBoardStats()
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,data)
   }
 }

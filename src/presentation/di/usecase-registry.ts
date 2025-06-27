@@ -27,7 +27,7 @@ import { ClientResetPasswordStrategy } from "../../application/auth/strategies/r
 import { VendorResetPasswordStrategy } from "../../application/auth/strategies/reset password/vendor-reset-password.usecase";
 import { ResetPasswordUsecase } from "../../application/auth/reset-password.usecase";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
-import { ICategoryManagementUsecase, IGetUserDetailsStrategy, IGetUserDetailsUsecase, IGetUsersStrategy, IGetUsersUsecase, IGetVendorRequestUsecase, IUserManagementUsecase } from "../../domain/interfaces/usecase/admin-usecase.interface";
+import { ICategoryManagementUsecase, IDashboardUsecase, IGetUserDetailsStrategy, IGetUserDetailsUsecase, IGetUsersStrategy, IGetUsersUsecase, IGetVendorRequestUsecase, IUserManagementUsecase } from "../../domain/interfaces/usecase/admin-usecase.interface";
 import { GetUsersUsecase } from "../../application/admin/get-users.usecase";
 import { GetClientsUsecase } from "../../application/admin/strategies/get-clients.strategy";
 import { GetVendorsUsecase } from "../../application/admin/strategies/get-vendors.strategy";
@@ -63,6 +63,7 @@ import { INotificationUsecase } from "../../domain/interfaces/usecase/notificati
 import { NotifiactionUsecase } from "../../application/common/notification.usecase";
 import { CommunityPostCommandUsecase } from "../../application/community/community-post-command.usecase";
 import { CommunityPostQueryUsecase } from "../../application/community/community-post-query.usecase";
+import { DashBoardUsecase } from "../../application/admin/dashboard.usecase";
 
 export class UsecaseRegistry {
     // Static method to register all use cases and strategies
@@ -211,6 +212,10 @@ export class UsecaseRegistry {
 
         container.register<ICommunityPostQueryUsecase>('ICommunityPostQueryUsecase' , {
             useClass : CommunityPostQueryUsecase
+        })
+
+        container.register<IDashboardUsecase>('IDashboardUsecase' , {
+            useClass : DashBoardUsecase
         })
     }
 }

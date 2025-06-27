@@ -30,6 +30,8 @@ import { CommunityPostRepository } from "../../interfaceAdapters/repositories/co
 import { IComment } from "../../domain/models/community";
 import { CommentRepository } from "../../interfaceAdapters/repositories/comment-reposiory.mongo";
 import { LikeRepository } from "../../interfaceAdapters/repositories/like-respository.mongo";
+import { IAdminRepository } from "../../domain/interfaces/repository/admin-repository";
+import { AdminRepository } from "../../interfaceAdapters/repositories/admin-repository.mongo";
 
 export class RepositoryRegistry {
     static registerRepositories() : void {
@@ -100,6 +102,10 @@ export class RepositoryRegistry {
 
         container.register<ILikeRepository>('ILikeRepository', {
             useClass : LikeRepository
+        })
+
+        container.register<IAdminRepository>('IAdminRepository' , {
+            useClass : AdminRepository
         })
     }
 }
