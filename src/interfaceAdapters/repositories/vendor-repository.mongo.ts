@@ -63,8 +63,10 @@ export class VendorRepository
     input: ClientVendorQuery
   ): Promise<PaginatedResponse<GetVendorsOutput>> {
 
+
     const { limit = 10, skip, sort = { createdAt: -1 }, filter } = input;
 
+    console.log(JSON.stringify(input, null, 2));
     const {
       categories,
       tags,
@@ -110,7 +112,7 @@ export class VendorRepository
           },
           distanceField: "distance", // Store calculated distance in 'distance' field
           minDistance: 0, // 1km minimum
-          maxDistance: 10000, // 10km maximum
+          maxDistance: 20000, // 20km maximum
           spherical: true, // Use spherical geometry for 2dsphere index
           query: matchStage, // Apply initial filters (isblocked, role, etc.)
         },

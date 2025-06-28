@@ -255,7 +255,7 @@ export class CommunityPostCommandUsecase
   }
 
   async addComment(input: AddCommentInput): Promise<void> {
-    const { content, postId, userId,role } = input;
+    const { content, postId, userId, role } = input;
 
     const post = await this._communityPostRepo.findById(postId);
     if (!post) {
@@ -265,13 +265,18 @@ export class CommunityPostCommandUsecase
       );
     }
 
-    const userType = role === 'client' ? 'Client' : 'Vendor'
-    await this._commentRepo.create({
-      content : content,
-      userType : userType as UserType,
-      postId : postId,
-      userId : userId
-    })
+    const userType = role === "client" ? "Client" : "Vendor";
+    await Promise.all([
+      this._communityPostRepo.update(postId, {
+        $inc: { commentCount: 1 },
+      }),
+      this._commentRepo.create({
+        content: content,
+        userType: userType as UserType,
+        postId: postId,
+        userId: userId,
+      }),
+    ]);
   }
 
   //   async editPost(input: EditPostInput): Promise<void> {
