@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
-import { ICommunity, UserType } from "../models/community";
+import { IComment, ICommunity, ILike, UserType } from "../models/community";
 import { PaginationQuery } from "./admin.type";
+import { IClient } from "../models/client";
 
 export interface FetchAllCommunityInput extends Omit<PaginationQuery<ICommunity> , 'sort'> {}
 
@@ -43,4 +44,12 @@ export interface ICommunityPostResponse {
 export interface GetPostDetailsInput {
   postId : Types.ObjectId;
   userId : Types.ObjectId;
+  limit : number;
+  page : number
+}
+
+export interface PostDetailsResponse extends Pick<IClient,'name' | 'profileImage'> , Omit<ICommunityPostResponse,'comments'> {
+  likes : ILike;
+  comments : IComment[];
+  totalComments : number
 }

@@ -85,6 +85,13 @@ export const getAllPostSchema = z.object({
     )
 })
 
+export const getPostDetailsSchema = z.object({
+    userId : objectIdSchema,
+    postId: objectIdSchema,
+    page : pageQuerySchema,
+    limit : limitQuerySchema
+})
+
 export const addCommentSchema = z.object({
     postId : objectIdSchema,
     content : z.string(),

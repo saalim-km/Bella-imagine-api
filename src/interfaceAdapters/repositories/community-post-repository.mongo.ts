@@ -3,11 +3,15 @@ import { BaseRepository } from "./base-repository.mongo";
 import { CommunityPost } from "../database/schemas/community-post.schema";
 import { ICommunityPost } from "../../domain/models/community";
 import { ICommunityPostRepository } from "../../domain/interfaces/repository/community.repository";
-import { GetPostDetailsInput, ICommunityPostResponse } from "../../domain/types/community.types";
-import logger from "../../shared/logger/logger";
+import {
+  GetPostDetailsInput,
+  ICommunityPostResponse,
+  PostDetailsResponse,
+} from "../../domain/types/community.types";
 import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";
 import { FilterQuery, Types } from "mongoose";
 import { Like } from "../database/schemas/like.schema";
+import { Comment } from "../database/schemas/community-post-comment.schema";
 
 @injectable()
 export class CommunityPostRepository
@@ -124,86 +128,136 @@ export class CommunityPostRepository
     }
   }
 
-  async fetchPostDetails(input: GetPostDetailsInput): Promise<any> {
-    const {postId,userId} = input;
+  async fetchPostDetails(
+    input: GetPostDetailsInput
+  ): Promise<PostDetailsResponse> {
+    const { postId, userId, limit, page } = input;
+    const skip = (page - 1) * limit;
 
-    console.log('post id',postId);
-    console.log('user id',userId);
-    const post = await this.model.aggregate([
-      {
-        $match : {
-          _id : postId,
+    const [post, totalComments] = await Promise.all([
+      this.model.aggregate([
+        {
+          $match: {
+            _id: postId,
+          },
         },
-      },
-      {
-        $lookup : {
-          from : 'comments',
-          localField : '_id',
-          foreignField : 'postId',
-          as : 'comments'
-        },
-      },
-      {
-        $lookup : {
-          from  : 'likes',
-          localField : '_id',
-          foreignField : 'postId',
-          as : 'likes'
-        }
-      },
-      {
-        $lookup : {
-          from  : 'clients',
-          localField : 'userId',
-          foreignField : '_id',
-          as : 'userId'
-        }
-      },
-      {
-        $unwind : { path: "$userId" }
-      },
-      {
-        $addFields : {
-          isLiked : {
-            $gt : [
-              { 
-                $size : {
-                  $filter : {
-                    input : '$likes',
-                    as : 'like',
-                    cond:  {
-                      $eq : ['$$like.userId', userId]
-                    }
-                  }
-                }
+        {
+          $lookup: {
+            from: "comments",
+            let: { postId: "$_id" },
+            pipeline: [
+              {
+                $match: {
+                  $expr: { $eq: ["$postId", "$$postId"] },
+                },
               },
-              0
-            ]
-          }
-        }
-      },
-      {
-        $project : {
-          'userId.name' : 1,
-          'userId.profileImage' : 1,
-          'media' : 1,
-          'title' : 1,
-           "content": "New member from football community",
-          "mediaType": 1,
-          "isEdited": 1,
-          "likeCount": 1,
-          "commentCount": 1,
-          "tags": 1,
-          "comments": 1,
-          "createdAt": 1,
-          "updatedAt": 1,
-          "likes": 1,
-          "isLiked": 1
-        }
-      }
-    ])
+              {
+                $sort: { createdAt: -1 },
+              },
+              {
+                $skip: skip,
+              },
+              {
+                $limit: limit,
+              },
+              {
+                $lookup: {
+                  from: "clients",
+                  localField: "userId",
+                  foreignField: "_id",
+                  as: "user",
+                },
+              },
+              {
+                $unwind: { path: "$user", preserveNullAndEmptyArrays: true },
+              },
+              {
+                $addFields: {
+                  userName: "$user.name",
+                  avatar: "$user.profileImage",
+                },
+              },
+              {
+                $project: {
+                  user: 0,
+                },
+              },
+            ],
+            as: "comments",
+          },
+        },
+        {
+          $lookup: {
+            from: "likes",
+            localField: "_id",
+            foreignField: "postId",
+            as: "likes",
+          },
+        },
+        {
+          $lookup: {
+            from: "clients",
+            localField: "userId",
+            foreignField: "_id",
+            as: "userId",
+          },
+        },
+        {
+          $unwind: {
+            path: "$userId",
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $addFields: {
+            userName: "$userId.name",
+            avatar: "$userId.profileImage",
+          },
+        },
+        {
+          $addFields: {
+            isLiked: {
+              $gt: [
+                {
+                  $size: {
+                    $filter: {
+                      input: "$likes",
+                      as: "like",
+                      cond: {
+                        $eq: ["$$like.userId", userId],
+                      },
+                    },
+                  },
+                },
+                0,
+              ],
+            },
+          },
+        },
+        {
+          $project: {
+            media: 1,
+            title: 1,
+            content: 1,
+            userId: 1,
+            mediaType: 1,
+            isEdited: 1,
+            likeCount: 1,
+            tags: 1,
+            comments: 1,
+            createdAt: 1,
+            updatedAt: 1,
+            isLiked: 1,
+          },
+        },
+      ]),
+      Comment.countDocuments({ postId: postId }),
+    ]);
 
-    console.log('post details : ',post );
-    return post[0]
+    console.log("post details : ", { ...post[0], totalComments });
+    return {
+      ...post[0],
+      totalComments: totalComments,
+    };
   }
 }

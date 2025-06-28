@@ -13,6 +13,7 @@ import {
   fetchCommBySlugSchema,
   fetchCommunitySchema,
   getAllPostSchema,
+  getPostDetailsSchema,
   updateCommuitySchema,
 } from "../../shared/utils/zod-validations/presentation/community.schema";
 import { ResponseHandler } from "../../shared/utils/helper/response-handler";
@@ -145,9 +146,10 @@ export class CommunityController implements ICommunityController {
   }
   
   async getPostDetails(req: Request, res: Response): Promise<void> {
-    const postId = objectIdSchema.parse(req.params.postId)
-    const userId = objectIdSchema.parse((req as CustomRequest).user._id)
-    const postDetails = await this._communityPostQueryUsecase.getPostDetails({postId : postId , userId: userId});
+    const {postId} = req.params;
+    const userId = (req as CustomRequest).user._id
+    const parsed = getPostDetailsSchema.parse({...req.query,userId : userId , postId })
+    const postDetails = await this._communityPostQueryUsecase.getPostDetails(parsed);
     ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,postDetails)
   }
 

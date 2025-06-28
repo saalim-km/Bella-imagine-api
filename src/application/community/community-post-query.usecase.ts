@@ -98,6 +98,20 @@ export class CommunityPostQueryUsecase implements ICommunityPostQueryUsecase {
       );
     }
 
+    if(post.comments && post.comments.length > 0){
+      post.comments = await Promise.all(post.comments.map(async(comment)=> {
+
+        if(comment.avatar) {
+          const isImageExists = await this._s3Service.isFileAvailableInAwsBucket(comment.avatar)
+          if(isImageExists){
+            comment.avatar =  await this._presignedUrl.getPresignedUrl(comment.avatar)
+          }
+        }
+
+        return comment
+      }))
+    }
+
     return post;
   }
 }

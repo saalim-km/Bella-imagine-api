@@ -58,6 +58,8 @@ export interface IComment {
   userType : UserType
   content: string;
   likesCount: number;
+  userName ?: string;
+  avatar ?: string;
   createdAt?: string;
   updatedAt?: string;
 }
