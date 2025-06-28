@@ -18,6 +18,7 @@ import { Types } from "mongoose";
 import { IConversationRepository } from "../../domain/interfaces/repository/conversation.repository";
 import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.interface";
 import { IEmailService } from "../../domain/interfaces/service/email-service.interface";
+import { TimeSlot } from "../../shared/types/service.types";
 
 @injectable()
 export class BookingCommandUsecase implements IBookingCommandUsecase {
@@ -69,6 +70,11 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
         HTTP_STATUS.NOT_FOUND
       );
     }
+
+    const isSlotAvailable = await this._serviceRepository.checkCapacityExeeds({
+       date : bookingDate,
+       timeSlot : timeSlot as TimeSlot
+    })
 
     const adminCommission = ( totalPrice / 100 ) * 2;
     const newBooking = await this._bookingRepository.create({
