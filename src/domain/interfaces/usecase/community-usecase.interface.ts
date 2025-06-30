@@ -4,7 +4,7 @@ import {
   ICommunityMember,
   ICommunityPost,
 } from "../../models/community";
-import { FetchCommunityBySlugOutput, GetPostDetailsInput } from "../../types/community.types";
+import { CommunityMembersOutput, FetchCommunityBySlugOutput, GetPostDetailsInput } from "../../types/community.types";
 import { PaginatedResponse } from "./types/common.types";
 import {
   AddCommentInput,
@@ -35,7 +35,7 @@ export interface ICommunityQueryUsecase {
   ): Promise<PaginatedResponse<ICommunity>>;
   fetchCommuityMembers(
     input: GetCommunityMemberInput
-  ): Promise<PaginatedResponse<ICommunityMember>>;
+  ): Promise<PaginatedResponse<CommunityMembersOutput>>;
 }
 
 export interface ICommunityCommandUsecase {

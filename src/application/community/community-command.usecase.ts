@@ -162,25 +162,26 @@ export class CommunityCommandUsecase implements ICommunityCommandUsecase {
   }
 
   async joinCommunity(input: JoinCommunityInput): Promise<void> {
-    const { communityId, userId } = input;
-    const isCommunityExists = await this._communityRepository.findById(
-      communityId
-    );
+    const { communityId, userId , role } = input;
+
+    const [isCommunityExists, isAlreadyMember] = await Promise.all([
+      this._communityRepository.findById(communityId),
+      this._communityMemberRepo.findOne({
+      userId: userId,
+      communityId: communityId,
+      }),
+    ]);
     if (!isCommunityExists) {
       throw new CustomError(
-        ERROR_MESSAGES.COMMUNITY_NO_EXIST,
-        HTTP_STATUS.NOT_FOUND
+      ERROR_MESSAGES.COMMUNITY_NO_EXIST,
+      HTTP_STATUS.NOT_FOUND
       );
     }
 
-    const isAlreadyMember = await this._communityMemberRepo.findOne({
-      userId: userId,
-      communityId: communityId,
-    });
     if (isAlreadyMember) {
       throw new CustomError(
-        ERROR_MESSAGES.ALREADY_MEMBER,
-        HTTP_STATUS.CONFLICT
+      ERROR_MESSAGES.ALREADY_MEMBER,
+      HTTP_STATUS.CONFLICT
       );
     }
 
@@ -188,6 +189,7 @@ export class CommunityCommandUsecase implements ICommunityCommandUsecase {
       this._communityMemberRepo.create({
         communityId: communityId,
         userId: userId,
+        userType : role === 'client' ? 'Client' : 'Vendor'
       }),
       this._communityRepository.update(communityId, {
         $inc: { memberCount: 1 },

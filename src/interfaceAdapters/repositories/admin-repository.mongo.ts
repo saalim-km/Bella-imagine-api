@@ -6,10 +6,11 @@ import { Client } from "../database/schemas/client.schema";
 import { Vendor } from "../database/schemas/vendor.schema";
 import { Booking } from "../database/schemas/booking.schema";
 import { CommunityPost } from "../database/schemas/community-post.schema";
+import { DashBoardStatsOuput } from "../../domain/types/admin.type";
 
 @injectable()
 export class AdminRepository implements IAdminRepository {
-  async getDashboardStats(): Promise<any> {
+  async getDashboardStats(): Promise<DashBoardStatsOuput> {
     // Get total counts
     const [totalClients, totalVendors, totalBookings, totalPosts] =
       await Promise.all([
@@ -210,18 +211,18 @@ export class AdminRepository implements IAdminRepository {
 
 
 
-    console.log("Dashboard Stats:");
-    console.log("Total Clients:", totalClients);
-    console.log("Total Vendors:", totalVendors);
-    console.log("Total Bookings:", totalBookings);
-    console.log("Total Posts:", totalPosts);
-    console.log("Booking Trends (last 12 months):", bookingTrends);
-    console.log("Top 5 Photographers by Booking Count:", topPhotographers);
-    console.log("New Users Trend (Clients + Vendors, last 12 months):", newUsersTrend);
-    console.log("Recent Users (last 10):", recentUsers);
-    console.log("Recent Bookings (last 10):", recentBookings);
-    console.log("Recent Posts (last 10):", recentPosts);
-    console.log("Post Distribution by Media Type:", postDistribution);
+    // console.log("Dashboard Stats:");
+    // console.log("Total Clients:", totalClients);
+    // console.log("Total Vendors:", totalVendors);
+    // console.log("Total Bookings:", totalBookings);
+    // console.log("Total Posts:", totalPosts);
+    // console.log("Booking Trends (last 12 months):", bookingTrends);
+    // console.log("Top 5 Photographers by Booking Count:", topPhotographers);
+    // console.log("New Users Trend (Clients + Vendors, last 12 months):", newUsersTrend);
+    // console.log("Recent Users (last 10):", recentUsers);
+    // console.log("Recent Bookings (last 10):", recentBookings);
+    // console.log("Recent Posts (last 10):", recentPosts);
+    // console.log("Post Distribution by Media Type:", postDistribution);
 
     const response = {
       totalClients,
@@ -237,6 +238,6 @@ export class AdminRepository implements IAdminRepository {
       postDistribution,
     };
 
-    return response;
+    return response as unknown as DashBoardStatsOuput;
   }
 }

@@ -1,6 +1,6 @@
 import { FilterQuery, Types } from "mongoose";
 import { IComment, ICommunity, ICommunityMember, ICommunityPost, ILike } from "../../models/community";
-import { FetchAllCommunitiesForUsersInput, FetchAllCommunityInput, GetPostDetailsInput, ICommunityPostResponse, PostDetailsResponse } from "../../types/community.types";
+import { CommunityMembersOutput, FetchAllCommunitiesForUsersInput, FetchAllCommunityInput, GetPostDetailsInput, ICommunityPostResponse, PostDetailsResponse } from "../../types/community.types";
 import { PaginatedResponse } from "../usecase/types/common.types";
 import { IBaseRepository } from "./base.repository";
 
@@ -16,6 +16,7 @@ export interface ICommunityPostRepository extends IBaseRepository<ICommunityPost
 }
 
 export interface ICommunityMemberRepository extends IBaseRepository<ICommunityMember>  {
+    findMembers(filter : FilterQuery<ICommunityMember> , skip : number , sort : number , limit : number) : Promise<PaginatedResponse<CommunityMembersOutput>>
 }
 
 export interface ICommentRepository extends IBaseRepository<IComment> {

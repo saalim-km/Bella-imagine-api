@@ -6,6 +6,7 @@ import {
   objectIdSchema,
   pageQuerySchema,
   searchQuerySchema,
+  slugSchema,
 } from "../validators/validations";
 import { Types } from "mongoose";
 
@@ -327,4 +328,10 @@ export const getAllNotificationtSchema = z.object({
   page : pageQuerySchema,
   limit : limitQuerySchema,
   userId : objectIdSchema
+})
+
+export const getCommunityMemberSchema = z.object({
+  page : pageQuerySchema,
+  limit : limitQuerySchema,
+  slug : slugSchema
 })

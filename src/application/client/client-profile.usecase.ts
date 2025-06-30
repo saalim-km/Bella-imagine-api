@@ -23,8 +23,6 @@ export class ClientProfileUsecase implements IClientProfileUsecase {
   ) {}
 
   async updateClientProfile(input: UpdateClientProfileInput): Promise<IClient> {
-    console.log("in the updateclient profie usecase");
-    console.log(input);
     const { name, clientId, email, location, phoneNumber, profileImage } =
       input;
     const client = await this._clientRepository.findById(clientId);
@@ -44,6 +42,7 @@ export class ClientProfileUsecase implements IClientProfileUsecase {
       name: name,
       location: location,
       geoLocation: geoLocation,
+      phoneNumber: phoneNumber || ''
     };
 
     if (profileImage) {
@@ -62,10 +61,6 @@ export class ClientProfileUsecase implements IClientProfileUsecase {
       unlinkSync(profileImage.path);
       client.profileImage = fileKey;
       dataToUpdate.profileImage = fileKey;
-    }
-
-    if (phoneNumber && phoneNumber !== undefined) {
-      dataToUpdate.phoneNumber = phoneNumber;
     }
 
     const updatedClient = await this._clientRepository.update(

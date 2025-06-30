@@ -9,8 +9,12 @@ export const communityMember = new Schema<ICommunityMember>({
     },
     userId : {
         type : Schema.Types.ObjectId,
-        ref : 'User',
+        refPath : 'userType',
         required : true
+    },
+    userType : {
+        type : String,
+        enum : ['Client','Vendor']
     },
     postCount : {
         type : Number,

@@ -36,12 +36,13 @@ export interface FetchAllCommunitiesInput extends Omit<PaginationInput,'createdA
 }
 
 export interface GetCommunityMemberInput extends Omit<PaginationInput , 'search' | 'createdAt'> {
-  communityId : Types.ObjectId
+  slug : string
 }
 
 export interface JoinCommunityInput {
   userId : Types.ObjectId,
-  communityId : Types.ObjectId
+  communityId : Types.ObjectId,
+  role : TRole
 }
 
 export interface LeaveCommunityInput extends JoinCommunityInput{}

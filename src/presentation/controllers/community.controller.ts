@@ -75,8 +75,6 @@ export class CommunityController implements ICommunityController {
   }
 
   async updateCommunity(req: Request, res: Response): Promise<void> {
-    console.log("updatecommunity controller");
-    console.log(req.body);
     const files = req.files as
       | { [key: string]: Express.Multer.File[] }
       | undefined;
@@ -109,7 +107,7 @@ export class CommunityController implements ICommunityController {
   async joinCommunity(req: Request, res: Response): Promise<void> {
     const userId = objectIdSchema.parse((req as CustomRequest).user._id);
     const communityId = objectIdSchema.parse(req.body.communityId);
-    await this._communityCommand.joinCommunity({ userId, communityId });
+    await this._communityCommand.joinCommunity({ userId, communityId,role :  (req as CustomRequest).user.role as TRole});
     ResponseHandler.success(res, SUCCESS_MESSAGES.JOINED_SUCESS);
   }
 
@@ -121,14 +119,8 @@ export class CommunityController implements ICommunityController {
   }
 
   async getCommunityMembers(req: Request, res: Response): Promise<void> {
-    console.log(req.params);
-    const communityId = objectIdSchema.parse(req.params.communityId);
-    const parsed = getCommunityMemberSchema.parse(req.query);
-    const members = await this._communityQuery.fetchCommuityMembers({
-      ...parsed,
-      communityId: communityId,
-    });
-    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,members)
+    const parsed = getCommunityMemberSchema.parse({...req.query,slug : req.params.slug})
+    const members = await this._communityQuery.fetchCommuityMembers(parsed)
   }
 
   async createPost(req: Request, res: Response): Promise<void> {
@@ -154,10 +146,8 @@ export class CommunityController implements ICommunityController {
   }
 
   async addComment(req: Request, res: Response): Promise<void> {
-    console.log('add comment controller');
-    console.log(req.body);
     const parsed = addCommentSchema.parse({...req.body,userId : (req as CustomRequest).user._id})
     await this._communityPostUsecase.addComment({...parsed,role : (req as CustomRequest).user.role as TRole})
     ResponseHandler.success(res,SUCCESS_MESSAGES.COMMENT_CREATED)
-  } 
+  }
 }

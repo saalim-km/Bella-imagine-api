@@ -109,7 +109,6 @@ export class VendorController implements IVendorController {
       verificationDocument,
     });
 
-    console.log("parsed data:", parsed);
     const vendor = await this._vendorProfileUsecase.updateVendorProfile(parsed);
     ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS, vendor);
   }
@@ -228,10 +227,8 @@ export class VendorController implements IVendorController {
   }
 
   async deleteService(req: Request, res: Response): Promise<void> {
-    console.log(req.params);
     const serviceId = objectIdSchema.parse(req.params.serviceId)
-    console.log('parsed serviceid : ',serviceId);
     await this._serviceCommandUsecase.deleteService(serviceId)
-    ResponseHandler.success(res,SUCCESS_MESSAGES.DELETE_SUCCESS)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.SERVICE_DELETED)
   }
 }

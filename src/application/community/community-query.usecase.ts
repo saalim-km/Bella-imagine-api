@@ -13,7 +13,7 @@ import { FilterQuery, Types } from "mongoose";
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
-import { FetchCommunityBySlugOutput } from "../../domain/types/community.types";
+import { CommunityMembersOutput, FetchCommunityBySlugOutput } from "../../domain/types/community.types";
 import { ICommunityMemberRepository } from "../../domain/interfaces/repository/community.repository";
 import { skip } from "node:test";
 import { ICommunityMember } from "../../domain/models/community";
@@ -156,15 +156,21 @@ export class CommunityQueryUsecase implements ICommunityQueryUsecase {
     }
   }
 
-  async fetchCommuityMembers(input : GetCommunityMemberInput): Promise<PaginatedResponse<ICommunityMember>> {
-    const {communityId,limit,page} = input;
-    const skip = (page - 1) * limit;
-    const members = await this._communityMemberRepo.findAll({},skip,limit,-1)
-
-    console.log('got the members : ',members);
-    return {
-      data : members,
-      total : 0
+  async fetchCommuityMembers(input : GetCommunityMemberInput): Promise<PaginatedResponse<CommunityMembersOutput>> {
+    const {slug,limit,page} = input;
+    
+    const isCommunityExists = await this._communityRepository.findBySlug(slug)
+    if(!isCommunityExists){
+      throw new CustomError(ERROR_MESSAGES.COMMUNITY_NO_EXIST,HTTP_STATUS.NOT_FOUND)
     }
+
+    const skip = (page - 1) * limit;
+
+    const filter : FilterQuery<ICommunityMember> = {
+      communityId : isCommunityExists._id
+    }
+
+    return await this._communityMemberRepo.findMembers(filter,skip,-1,limit)
   }
+
 }

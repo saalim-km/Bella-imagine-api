@@ -10,6 +10,7 @@ import {
   parseBooleanSchema,
   statusQuerySchema,
   objectIdSchema,
+  slugSchema,
 } from "../validators/validations";
 
 export const getUsersQuerySchema = z.object({
@@ -73,5 +74,6 @@ export const updateCategorySchema = z.object({
 
 export const getCommunityMemberSchema = z.object({
   limit : limitQuerySchema,
-  page : pageQuerySchema
+  page : pageQuerySchema,
+  slug : slugSchema
 })

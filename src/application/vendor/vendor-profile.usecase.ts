@@ -61,6 +61,10 @@ export class VendorProfileUsecase implements IVendorProfileUsecase {
       name: name,
       location: location,
       geoLocation: geoLocation,
+      portfolioWebsite : portfolioWebsite || "",
+      phoneNumber : phoneNumber || "",
+      description : profileDescription || "",
+      languages : languages || []
     };
 
     if (profileImage) {
@@ -98,19 +102,6 @@ export class VendorProfileUsecase implements IVendorProfileUsecase {
       );
       unlinkSync(verificationDocument.path);
       dataToUpdate.verificationDocument = fileKey;
-    }
-
-    if (languages && languages.length > 0) {
-      dataToUpdate.languages = languages;
-    }
-    if (phoneNumber && phoneNumber !== undefined) {
-      dataToUpdate.phoneNumber = phoneNumber;
-    }
-    if (portfolioWebsite && portfolioWebsite !== undefined) {
-      dataToUpdate.portfolioWebsite = portfolioWebsite;
-    }
-    if (profileDescription && profileDescription !== undefined) {
-      dataToUpdate.description = profileDescription;
     }
 
     const updatedVendor = await this._vendorRepository.update(

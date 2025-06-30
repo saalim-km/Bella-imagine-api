@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { IComment, ICommunity, ILike, UserType } from "../models/community";
+import { IComment, ICommunity, ICommunityMember, ILike, UserType } from "../models/community";
 import { PaginationQuery } from "./admin.type";
 import { IClient } from "../models/client";
 
@@ -52,4 +52,12 @@ export interface PostDetailsResponse extends Pick<IClient,'name' | 'profileImage
   likes : ILike;
   comments : IComment[];
   totalComments : number
+}
+
+export interface CommunityMembersOutput extends Omit<ICommunityMember , 'userId'> {
+  userId : {
+    _id : string;
+    name : string;
+    profileImage : string
+  }
 }

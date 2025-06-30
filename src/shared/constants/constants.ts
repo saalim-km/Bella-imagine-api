@@ -14,6 +14,8 @@ export const HTTP_STATUS = {
 };
 
 export const SUCCESS_MESSAGES = {
+  SERVICE_DELETED : 'Service has been successfully deleted',
+  WORKSAMPLE_DELETED : 'WorkSample has been successfully deleted',
   COMMENT_CREATED: "Your comment has been added.",
   LEAVE_SUCCESS: "You have left the community successfully.",
   CATEGORY_JOIN_REQUEST_SUCCESS: "Your request to join the category has been submitted.",

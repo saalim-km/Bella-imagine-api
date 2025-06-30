@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export type UserType= 'Client' | 'vendor'
+export type UserType= 'Client' | 'Vendor'
 
 export interface ICommunity {
   _id?: Types.ObjectId;
