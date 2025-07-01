@@ -154,38 +154,59 @@ export class CommunityPostRepository
               {
                 $sort: { createdAt: -1 },
               },
-              {
-                $skip: skip,
-              },
-              {
-                $limit: limit,
-              },
+              { $skip: skip },
+              { $limit: limit },
+
+              // Lookup from clients
               {
                 $lookup: {
                   from: "clients",
                   localField: "userId",
                   foreignField: "_id",
-                  as: "user",
+                  as: "clientUser",
                 },
               },
+              // Lookup from vendors
               {
-                $unwind: { path: "$user", preserveNullAndEmptyArrays: true },
+                $lookup: {
+                  from: "vendors",
+                  localField: "userId",
+                  foreignField: "_id",
+                  as: "vendorUser",
+                },
               },
+              // Merge users
               {
                 $addFields: {
-                  userName: "$user.name",
-                  avatar: "$user.profileImage",
+                  mergedUser: {
+                    $cond: [
+                      { $gt: [{ $size: "$clientUser" }, 0] },
+                      { $arrayElemAt: ["$clientUser", 0] },
+                      { $arrayElemAt: ["$vendorUser", 0] },
+                    ],
+                  },
+                },
+              },
+              // Extract user fields
+              {
+                $addFields: {
+                  userName: "$mergedUser.name",
+                  avatar: "$mergedUser.profileImage",
                 },
               },
               {
                 $project: {
-                  user: 0,
+                  clientUser: 0,
+                  vendorUser: 0,
+                  mergedUser: 0,
                 },
               },
             ],
             as: "comments",
           },
         },
+
+        // Likes lookup
         {
           $lookup: {
             from: "likes",
@@ -194,26 +215,52 @@ export class CommunityPostRepository
             as: "likes",
           },
         },
+
+        // Lookup post creator from clients
         {
           $lookup: {
             from: "clients",
             localField: "userId",
             foreignField: "_id",
-            as: "userId",
+            as: "clientUser",
           },
         },
+        // Lookup post creator from vendors
         {
-          $unwind: {
-            path: "$userId",
-            preserveNullAndEmptyArrays: true,
+          $lookup: {
+            from: "vendors",
+            localField: "userId",
+            foreignField: "_id",
+            as: "vendorUser",
+          },
+        },
+        // Merge post creator
+        {
+          $addFields: {
+            mergedUser: {
+              $cond: [
+                { $gt: [{ $size: "$clientUser" }, 0] },
+                { $arrayElemAt: ["$clientUser", 0] },
+                { $arrayElemAt: ["$vendorUser", 0] },
+              ],
+            },
           },
         },
         {
           $addFields: {
-            userName: "$userId.name",
-            avatar: "$userId.profileImage",
+            userName: "$mergedUser.name",
+            avatar: "$mergedUser.profileImage",
           },
         },
+        {
+          $project: {
+            clientUser: 0,
+            vendorUser: 0,
+            mergedUser: 0,
+          },
+        },
+
+        // Calculate isLiked
         {
           $addFields: {
             isLiked: {
@@ -234,6 +281,8 @@ export class CommunityPostRepository
             },
           },
         },
+
+        // Final shape
         {
           $project: {
             media: 1,
@@ -248,16 +297,17 @@ export class CommunityPostRepository
             createdAt: 1,
             updatedAt: 1,
             isLiked: 1,
+            userName: 1,
+            avatar: 1,
           },
         },
       ]),
-      Comment.countDocuments({ postId: postId }),
+      Comment.countDocuments({ postId }),
     ]);
 
-    console.log("post details : ", { ...post[0], totalComments });
     return {
       ...post[0],
-      totalComments: totalComments,
+      totalComments,
     };
   }
 }

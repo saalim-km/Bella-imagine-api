@@ -172,5 +172,4 @@ export class CommunityQueryUsecase implements ICommunityQueryUsecase {
 
     return await this._communityMemberRepo.findMembers(filter,skip,-1,limit)
   }
-
 }
