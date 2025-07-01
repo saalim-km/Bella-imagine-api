@@ -13,6 +13,7 @@ import {
   fetchCommBySlugSchema,
   fetchCommunitySchema,
   getAllPostSchema,
+  getCommentsSchema,
   getPostDetailsSchema,
   updateCommuitySchema,
 } from "../../shared/utils/zod-validations/presentation/community.schema";
@@ -113,8 +114,13 @@ export class CommunityController implements ICommunityController {
 
   async leaveCommunity(req: Request, res: Response): Promise<void> {
     const userId = objectIdSchema.parse((req as CustomRequest).user._id);
+    const role = (req as CustomRequest).user.role
     const communityId = objectIdSchema.parse(req.params.communityId);
-    await this._communityCommand.leaveCommunity({ userId, communityId });
+    await this._communityCommand.leaveCommunity({
+      userId : userId,
+      communityId : communityId,
+      role : role as TRole
+     });
     ResponseHandler.success(res, SUCCESS_MESSAGES.LEAVE_SUCCESS);
   }
 
@@ -149,5 +155,13 @@ export class CommunityController implements ICommunityController {
     const parsed = addCommentSchema.parse({...req.body,userId : (req as CustomRequest).user._id})
     await this._communityPostUsecase.addComment({...parsed,role : (req as CustomRequest).user.role as TRole})
     ResponseHandler.success(res,SUCCESS_MESSAGES.COMMENT_CREATED)
+  }
+
+  async fetchComments(req: Request, res: Response): Promise<void> {
+    const {_id} = (req as CustomRequest).user;
+    const parsed = getCommentsSchema.parse({...req.query,userId : _id})
+    console.log('parsed data',parsed);
+    const comments = await this._communityPostQueryUsecase.getAllCommentsForUser(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,comments)
   }
 }

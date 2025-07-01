@@ -20,7 +20,6 @@ export class ClientRoute extends BaseRoute {
         .post('/client/community-join',verifyAuth,authorizeRole(['client']),asyncHandler(communityController.joinCommunity.bind(communityController)))
         .delete('/client/community-leave/:communityId',verifyAuth,authorizeRole(['client']),asyncHandler(communityController.leaveCommunity.bind(communityController)))
         .get('/client/post/:postId',verifyAuth,authorizeRole(['client']),asyncHandler(communityController.getPostDetails.bind(communityController)))
-        .post('/client/comment',verifyAuth,authorizeRole(['client']),asyncHandler(communityController.addComment.bind(communityController)))
 
         this.router.route('/client/notification')
         .patch(verifyAuth,authorizeRole(['client']),asyncHandler(clientController.readAllNotifications.bind(clientController)))
@@ -41,5 +40,9 @@ export class ClientRoute extends BaseRoute {
         this.router.route('/client/community-post')
         .post(verifyAuth,authorizeRole(['client']),upload.fields([{name : 'media' , maxCount : 4}]),asyncHandler(communityController.createPost.bind(communityController)))
         .get(verifyAuth,authorizeRole(['client']),asyncHandler(communityController.getAllPosts.bind(communityController)))
+
+        this.router.route('/client/comment')
+        .post(verifyAuth,authorizeRole(['client']),asyncHandler(communityController.addComment.bind(communityController)))
+        .get(verifyAuth,authorizeRole(['client']),asyncHandler(communityController.fetchComments.bind(communityController)))
     }
 }

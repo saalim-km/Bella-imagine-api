@@ -9,10 +9,10 @@ import { GetAllPostInput } from "../../domain/interfaces/usecase/types/community
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { IAwsS3Service } from "../../domain/interfaces/service/aws-service.interface";
 import { FilterQuery, Types } from "mongoose";
-import { ICommunityPost } from "../../domain/models/community";
+import { IComment, ICommunityPost } from "../../domain/models/community";
 import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
-import { GetPostDetailsInput } from "../../domain/types/community.types";
+import { GetCommentUsecaseInput, GetPostDetailsInput } from "../../domain/types/community.types";
 
 @injectable()
 export class CommunityPostQueryUsecase implements ICommunityPostQueryUsecase {
@@ -81,8 +81,8 @@ export class CommunityPostQueryUsecase implements ICommunityPostQueryUsecase {
     const post = await this._communityPostRepo.fetchPostDetails(input);
 
     // Replace user profile image with presigned URL if exists
-    if (post?.userId?.profileImage) {
-      post.userId.profileImage = await this._presignedUrl.getPresignedUrl(post.userId.profileImage);
+    if (post?.avatar) {
+      post.avatar = await this._presignedUrl.getPresignedUrl(post.avatar);
     }
 
     // Replace each media item with presigned URL if file exists
@@ -114,4 +114,15 @@ export class CommunityPostQueryUsecase implements ICommunityPostQueryUsecase {
 
     return post;
   }
+
+  async getAllCommentsForUser(input: GetCommentUsecaseInput): Promise<PaginatedResponse<IComment>> {
+    const {limit,page,userId} = input;
+
+    const skip = (page - 1) * limit;
+    return await this._commentRepo.fetchCommentsByUserId({
+      limit : limit,
+      skip : skip,
+      userId : userId
+    })
+  } 
 }

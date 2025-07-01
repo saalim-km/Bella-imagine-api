@@ -1,5 +1,5 @@
 import z, { string } from 'zod'
-import { ImageSchema, limitQuerySchema, nameSchema, objectIdSchema, pageQuerySchema, searchQuerySchema, slugSchema } from '../validators/validations'
+import { ImageSchema, limitQuerySchema, nameSchema, objectIdSchema, pageQuerySchema, roleSchema, searchQuerySchema, slugSchema } from '../validators/validations'
 
 export const createCommunitySchema = z.object({
     name: nameSchema,
@@ -96,4 +96,10 @@ export const addCommentSchema = z.object({
     postId : objectIdSchema,
     content : z.string(),
     userId : objectIdSchema
+})
+
+export const getCommentsSchema = z.object({
+    limit : limitQuerySchema,
+    page : pageQuerySchema,
+    userId : objectIdSchema,
 })

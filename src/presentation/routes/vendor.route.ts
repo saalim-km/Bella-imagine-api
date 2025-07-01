@@ -18,7 +18,6 @@ export class VendorRoute extends BaseRoute {
         .post('/vendor/community-join',verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.joinCommunity.bind(communityController)))
         .delete('/vendor/community-leave/:communityId',verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.leaveCommunity.bind(communityController)))
         .get('/vendor/post/:postId',verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.getPostDetails.bind(communityController)))
-        .post('/vendor/comment',verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.addComment.bind(communityController)))
         .get('/vendor/community',verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.fetchAllCommunitiesForUser.bind(communityController)))
 
         this.router.route('/vendor/details')
@@ -59,5 +58,9 @@ export class VendorRoute extends BaseRoute {
         this.router.route('/vendor/community-post')
         .post(verifyAuth,authorizeRole(['vendor']),upload.fields([{name : 'media' , maxCount : 4}]),asyncHandler(communityController.createPost.bind(communityController)))
         .get(verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.getAllPosts.bind(communityController)))
+
+        this.router.route('/vendor/comment')
+        .post(verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.addComment.bind(communityController)))
+        .get(verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.fetchComments.bind(communityController)))
     }
 }

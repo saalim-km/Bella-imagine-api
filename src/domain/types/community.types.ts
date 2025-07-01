@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 import { IComment, ICommunity, ICommunityMember, ILike, UserType } from "../models/community";
 import { PaginationQuery } from "./admin.type";
 import { IClient } from "../models/client";
+import { TRole } from "../../shared/constants/constants";
 
 export interface FetchAllCommunityInput extends Omit<PaginationQuery<ICommunity> , 'sort'> {}
 
@@ -48,10 +49,12 @@ export interface GetPostDetailsInput {
   page : number
 }
 
-export interface PostDetailsResponse extends Pick<IClient,'name' | 'profileImage'> , Omit<ICommunityPostResponse,'comments'> {
+export interface PostDetailsResponse extends  Omit<ICommunityPostResponse,'comments'> {
   likes : ILike;
   comments : IComment[];
   totalComments : number
+  userName : string;
+  avatar : string;
 }
 
 export interface CommunityMembersOutput extends Omit<ICommunityMember , 'userId'> {
@@ -60,4 +63,16 @@ export interface CommunityMembersOutput extends Omit<ICommunityMember , 'userId'
     name : string;
     profileImage : string
   }
+}
+
+export interface GetComentsInput {
+  userId : Types.ObjectId;
+  skip : number;
+  limit : number;
+}
+
+export interface GetCommentUsecaseInput {
+  userId : Types.ObjectId;
+  page : number;
+  limit : number;
 }

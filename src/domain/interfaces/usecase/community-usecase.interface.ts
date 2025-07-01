@@ -1,10 +1,11 @@
 import { Types } from "mongoose";
 import {
+  IComment,
   ICommunity,
   ICommunityMember,
   ICommunityPost,
 } from "../../models/community";
-import { CommunityMembersOutput, FetchCommunityBySlugOutput, GetPostDetailsInput } from "../../types/community.types";
+import { CommunityMembersOutput, FetchCommunityBySlugOutput, GetCommentUsecaseInput, GetPostDetailsInput } from "../../types/community.types";
 import { PaginatedResponse } from "./types/common.types";
 import {
   AddCommentInput,
@@ -59,4 +60,5 @@ export interface ICommunityPostQueryUsecase {
     input: GetAllPostInput
   ): Promise<PaginatedResponse<any>>;
   getPostDetails(input : GetPostDetailsInput) : Promise<any>
+  getAllCommentsForUser(input : GetCommentUsecaseInput) : Promise<PaginatedResponse<IComment>>
 }
