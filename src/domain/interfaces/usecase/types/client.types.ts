@@ -56,10 +56,10 @@ export interface UpdateClientProfileInput{
   clientId : Types.ObjectId;
   name: string;
   phoneNumber?: number;
-  location: {
-    address: string;
-    lat: number;
-    lng: number;
+  location ?: {
+    address?: string;
+    lat?: number;
+    lng?: number;
   };
   profileImage?: Express.Multer.File  
   email: string;

@@ -113,16 +113,21 @@ export class CommunityPostCommandUsecase
       }
     }
 
-    let newPost = await this._communityPostRepo.create({
-      communityId: communityId,
-      media: fileKeys || [],
-      mediaType: mediaType,
-      title: title,
-      content: content,
-      tags: tags || [],
-      userId: userId,
-      userType: role as UserType,
-    });
+    const [newPost] = await Promise.all([
+      this._communityPostRepo.create({
+        communityId: communityId,
+        media: fileKeys || [],
+        mediaType: mediaType,
+        title: title,
+        content: content,
+        tags: tags || [],
+        userId: userId,
+        userType: role as UserType,
+      }),
+      this._communityRepo.update(communityId,{
+        $inc: {postCount : 1}
+      })
+    ]);
 
     if (!newPost || !newPost._id) {
       throw new CustomError(

@@ -33,17 +33,18 @@ export class ClientProfileUsecase implements IClientProfileUsecase {
       );
     }
 
-    const geoLocation: GeoLocation = {
-      type: "Point",
-      coordinates: [location.lng, location.lat],
-    };
-
     const dataToUpdate: UpdateQuery<IClient> = {
       name: name,
-      location: location,
-      geoLocation: geoLocation,
-      phoneNumber: phoneNumber || ''
+      phoneNumber: phoneNumber || '',
     };
+
+    if (location && location !== undefined) {
+      dataToUpdate.location = location;
+      dataToUpdate.geoLocation = {
+      type: "Point",
+      coordinates: [location.lng, location.lat],
+      };
+    }
 
     if (profileImage) {
       const isFileExists = await this._awsService.isFileAvailableInAwsBucket(
