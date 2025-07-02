@@ -17,4 +17,5 @@ export interface IClientController {
     readAllNotifications(req: Request, res: Response) : Promise<void>
     getAllNotifications(req: Request, res: Response) : Promise<void>
     deleteNotifications(req: Request, res: Response) : Promise<void>
+    createConversation(req: Request, res: Response) : Promise<void>
 }

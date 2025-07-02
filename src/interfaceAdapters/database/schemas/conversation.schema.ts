@@ -16,11 +16,10 @@ const userSubSchema = new mongoose.Schema(
 
 export const conversationSchema = new mongoose.Schema<IConversation>(
   {
-    bookingId: { type: Schema.Types.ObjectId, required: true },
-    client: userSubSchema,
+    user: userSubSchema,
     vendor: userSubSchema,
     lastMessage: messageSchema,
-    clientUnreadCount: { type: Number, default: 0 },
+    userUnreadCount: { type: Number, default: 0 },
     vendorUnreadCount: { type: Number, default: 0 },
   },
   { timestamps: true }

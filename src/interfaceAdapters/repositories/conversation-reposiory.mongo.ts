@@ -27,11 +27,9 @@ export class ConversationRepository
 
   async findConersations(input: FindUsersForChat): Promise<IConversation[]> {
     const { userId, userType } = input;
-    console.log("in gete conversation repsoitory ✅✅✅");
-    console.log(`userid : ${userId} , usertype : ${userType}`);
     if (userType === "client") {
       return await this.model.find({
-        "client._id": userId,
+        "user._id": userId,
       }).sort({updatedAt : -1})
     } else {
       return await this.model.find({

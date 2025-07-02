@@ -71,10 +71,6 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       );
     }
 
-    const isSlotAvailable = await this._serviceRepository.checkCapacityExeeds({
-       date : bookingDate,
-       timeSlot : timeSlot as TimeSlot
-    })
 
     const adminCommission = ( totalPrice / 100 ) * 2;
     const newBooking = await this._bookingRepository.create({
@@ -123,7 +119,6 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       paymentIntentData
     );
 
-
     if (!paymentIntent || !paymentIntent.client_secret) {
       throw new CustomError(
         ERROR_MESSAGES.PAYMENT_INTENT_CREATION_FAILED,
@@ -155,9 +150,9 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       this._walletRepository.addPaymnetIdToWallet(clientId, newPayment._id!),
       this._serviceRepository.updateSlotCount(newBooking, -1),
       this._chatUsecase.createConversation({
-        clientId: clientId,
+        userId: clientId,
         vendorId: vendorId,
-        bookingId: newBooking._id,
+        userRole : client.role
       }),
     ]);
 

@@ -27,6 +27,7 @@ import { generateS3FileKey } from "../../shared/utils/helper/s3FileKeyGenerator"
 import { config } from "../../shared/config/config";
 import { cleanUpLocalFiles } from "../../shared/utils/helper/clean-local-file.helper";
 import logger from "../../shared/logger/logger";
+import { IVendorRepository } from "../../domain/interfaces/repository/vendor.repository";
 
 @injectable()
 export class CommunityPostCommandUsecase
@@ -42,7 +43,8 @@ export class CommunityPostCommandUsecase
     @inject("IAwsS3Service") private _awsS3Service: IAwsS3Service,
     @inject("IGetPresignedUrlUsecase")
     private presignedUrl: IGetPresignedUrlUsecase,
-    @inject("ILikeRepository") private _likeRepo: ILikeRepository
+    @inject("ILikeRepository") private _likeRepo: ILikeRepository,
+    @inject('IVendorRepository') private _vendorRepo : IVendorRepository
   ) {}
 
   async createPost(input: CreatePostInput): Promise<ICommunityPost> {
@@ -66,11 +68,16 @@ export class CommunityPostCommandUsecase
       );
     }
 
-    const user = await this._clientRepo.findById(userId);
+    let user;
+    if (role === "Client") {
+      user = await this._clientRepo.findById(userId);
+    } else {
+      user = await this._vendorRepo.findById(userId);
+    }
     if (!user) {
       throw new CustomError(
-        ERROR_MESSAGES.USER_NOT_FOUND,
-        HTTP_STATUS.NOT_FOUND
+      ERROR_MESSAGES.USER_NOT_FOUND,
+      HTTP_STATUS.NOT_FOUND
       );
     }
 

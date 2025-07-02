@@ -43,10 +43,10 @@ export class CommentRepository
       this.count({ userId: userId }),
     ]);
 
-    console.log("got the user comments here", comments[0]);
+    console.log("got the user comments here", comments);
 
     return {
-        data : [],
+        data : comments,
         total : count
     }
   }

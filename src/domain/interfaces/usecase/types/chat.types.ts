@@ -14,9 +14,9 @@ export interface UpdateLastSeenInput extends BaseUserInput {
 }
 
 export interface CreateConversationInput {
-  clientId: Types.ObjectId;
+  userId: Types.ObjectId;
+  userRole : TRole;
   vendorId: Types.ObjectId;
-  bookingId: Types.ObjectId;
 }
 
 export interface UploadMediaInput {

@@ -42,6 +42,7 @@ import {
 import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
 import { ICommunityRepository } from "../../domain/interfaces/repository/community.repository";
 import { INotificationUsecase } from "../../domain/interfaces/usecase/notification-usecase.interface";
+import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.interface";
 
 @injectable()
 export class ClientController implements IClientController {
@@ -63,7 +64,8 @@ export class ClientController implements IClientController {
     private _bookingQueryUsecase: IBookingQueryUsecase,
     @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
     @inject("INotificationUsecase")
-    private _notificationUsecase: INotificationUsecase
+    private _notificationUsecase: INotificationUsecase,
+    @inject('IChatUsecase') private _chatUsecase : IChatUsecase
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -241,5 +243,16 @@ export class ClientController implements IClientController {
     const userId = objectIdSchema.parse((req as CustomRequest).user._id);
     await this._notificationUsecase.clearNotifications(userId);
     ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
+  }
+
+  async createConversation(req: Request, res: Response): Promise<void> {
+    const userId = objectIdSchema.parse(req.body.userId)
+    const vendorId = objectIdSchema.parse(req.body.vendorId)
+    await this._chatUsecase.createConversation({
+      userId : userId,
+      vendorId : vendorId,
+      userRole : (req as CustomRequest).user.role as TRole
+    })
+    ResponseHandler.success(res,SUCCESS_MESSAGES.CREATED)
   }
 }

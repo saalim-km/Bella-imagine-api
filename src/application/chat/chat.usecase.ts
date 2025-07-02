@@ -168,14 +168,14 @@ export class ChatUsecase implements IChatUsecase {
   }
 
   async createConversation(input: CreateConversationInput): Promise<void> {
-    const { bookingId, clientId, vendorId } = input;
+    const { userId, vendorId , userRole} = input;
 
-    const [client, vendor] = await Promise.all([
-      this._clientRepo.findById(clientId),
+    const [user, vendor] = await Promise.all([
+      userRole === 'client' ? this._clientRepo.findById(userId) : this._vendorRepo.findById(userId),
       this._vendorRepo.findById(vendorId),
     ]);
 
-    if (!client || !vendor) {
+    if (!user || !vendor) {
       throw new CustomError(
         ERROR_MESSAGES.USER_NOT_FOUND,
         HTTP_STATUS.NOT_FOUND
@@ -183,23 +183,23 @@ export class ChatUsecase implements IChatUsecase {
     }
 
     const isConvExists = await this._conversationRepo.findOne({
-      "client._id": clientId,
+      "user._id": userId,
       "vendor._id": vendorId,
     });
+
     if (isConvExists) {
       return;
     }
 
     await this._conversationRepo.create({
-      bookingId: bookingId,
-      client: {
-        _id: clientId,
-        avatar: client.profileImage,
-        email: client.email,
-        isOnline: client.isOnline,
-        lastSeen: client.lastSeen.toDateString(),
-        name: client.name,
-        role: "client",
+      user: {
+        _id: userId,
+        avatar: user.profileImage,
+        email: user.email,
+        isOnline: user.isOnline,
+        lastSeen: user.lastSeen.toDateString(),
+        name: user.name,
+        role: userRole,
       },
       vendor: {
         _id: vendorId,

@@ -45,11 +45,10 @@ export interface  IMessage {
 
 export interface IConversation {
   _id?: Types.ObjectId
-  client : Partial<IUserEntityForChat>
+  user : Partial<IUserEntityForChat>
   vendor : Partial<IUserEntityForChat>
   lastMessage?: IMessage;
-  bookingId : Types.ObjectId;
-  clientUnreadCount?: number;
+  userUnreadCount?: number;
   vendorUnreadCount?: number;
   createdAt?: Date;
   updatedAt?: Date;
