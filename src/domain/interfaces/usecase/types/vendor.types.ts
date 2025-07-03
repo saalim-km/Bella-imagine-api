@@ -54,6 +54,7 @@ export interface GetWorkSampleInput {
   page : number;
   limit : number;
   title ?: string;
+  isPublished ?: boolean;
   service ?: Types.ObjectId
 }
 

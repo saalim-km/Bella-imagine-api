@@ -169,15 +169,13 @@ export class VendorController implements IVendorController {
   async updateBookingStatus(req: Request, res: Response): Promise<void> {
     const userId = (req as CustomRequest).user._id;
     const parsed = updateBookingSchema.parse({ ...req.query, userId });
-    await this._bookingCommandUsecase.updateBookingStatus(parsed);
+    await this._bookingCommandUsecase.updateBookingStatus({...parsed,userRole : (req as CustomRequest).user.role as TRole});
     ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
   }
 
   async createService(req: Request, res: Response): Promise<void> {
     const vendorId = objectIdSchema.parse((req as CustomRequest).user._id);
     const parsed = CreateServiceSchema.parse(req.body)
-    console.log('parsed data : ');
-    console.dir(parsed);
     await this._serviceCommandUsecase.createService({...parsed,vendor : vendorId})
     ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED)
   }
@@ -197,8 +195,6 @@ export class VendorController implements IVendorController {
   }
 
   async createWorkSample(req: Request, res: Response): Promise<void> {
-    console.log(req.body);
-    console.log(req.files);
     const parsed = createWorkSampleSchema.parse({ ...req.body, media: (req.files as { [fieldname: string]: Express.Multer.File[] } | undefined)?.media })
     console.log('parsed data',parsed);
     await this._serviceCommandUsecase.createWorkSample(parsed)
@@ -206,8 +202,10 @@ export class VendorController implements IVendorController {
   }
 
   async getWorkSamples(req: Request, res: Response): Promise<void> {
+    console.log(req.query);
     const vendorId = objectIdSchema.parse((req as CustomRequest).user._id);
     const parsed = getWorkSamplesSchema.parse(req.query);
+    console.log('parsed',parsed);
     const workSamples = await this._serviceQuery.getWorkSmaples({...parsed,vendor : vendorId})
     ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,workSamples)
   }

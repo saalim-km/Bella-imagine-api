@@ -138,8 +138,19 @@ export class VendorRepository
       {
         $lookup: {
           from: "worksamples",
-          localField: "_id",
-          foreignField: "vendor",
+          let: { vendorId: "$_id" },
+          pipeline: [
+        {
+          $match: {
+            $expr: {
+          $and: [
+            { $eq: ["$vendor", "$$vendorId"] },
+            { $eq: ["$isPublished", true] },
+          ],
+            },
+          },
+        },
+          ],
           as: "workSamples",
         },
       },

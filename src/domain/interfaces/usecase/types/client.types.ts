@@ -75,6 +75,7 @@ export interface updateBookingStatusInput {
   bookingId: Types.ObjectId;
   status: TBookingStatus;
   userId : Types.ObjectId;
+  userRole : TRole
 }
 
 export interface GetVendorsOutput extends Omit<IVendor , 'workSamples' | 'services'>{

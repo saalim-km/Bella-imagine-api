@@ -6,6 +6,9 @@ import { IConversation } from "../../domain/models/chat";
 import { IncrementUnreadCount } from "../../domain/types/chat.types";
 import { CustomError } from "../../shared/utils/helper/custom-error";
 import { FindUsersForChat } from "../../domain/interfaces/repository/booking.repository";
+import { IClient } from "../../domain/models/client";
+import { IVendor } from "../../domain/models/vendor";
+import { Types } from "mongoose";
 
 @injectable()
 export class ConversationRepository
@@ -36,5 +39,47 @@ export class ConversationRepository
         "vendor._id": userId,
       });
     }
+  }
+
+    async findUsersForChat(input: FindUsersForChat): Promise<IVendor[] | IClient[]> {
+    const {userId,userType} = input;
+    const isClient = userType == 'client';
+
+    console.log(userId,userType);
+
+    const result: (IVendor | IClient)[] = await this.model.aggregate([
+      {
+        $match : {
+          [isClient ? 'user._id' : 'vendor._id'] : new Types.ObjectId(userId),
+        },
+      },
+      {
+        $group : {
+          _id : `$${isClient ? 'vendor._id' : 'user._id'}`,
+        },
+      },
+      {
+        $lookup : {
+          from : isClient ? 'vendors' : 'clients',
+          localField: '_id',
+          foreignField : '_id',
+          as : 'user',
+        },
+      },
+      {$unwind : '$user'},
+      {
+        $project : {
+          _id : '$user._id',
+          role : '$user.role',
+          isOnline : '$user.isOnline',
+          lastSeen : '$user.lastSeen',
+          name : '$user.name',
+          avatar : '$user.profileImage'
+        }
+      }
+    ])
+
+    console.log(' got the result from reppository : ',result);
+    return result as (typeof isClient extends true ? IClient[] : IVendor[]);
   }
 }

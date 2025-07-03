@@ -163,9 +163,9 @@ export const updateWorkSampleSchema = createWorkSampleSchema
 
 
 export const getWorkSamplesSchema = z.object({
-  limit : limitQuerySchema,
-  title : searchQuerySchema,
-  service :  z
+  limit: limitQuerySchema,
+  title: searchQuerySchema,
+  service: z
     .string()
     .transform((val) => (val ? new Types.ObjectId(val) : undefined))
     .refine(
@@ -175,5 +175,13 @@ export const getWorkSamplesSchema = z.object({
       }
     )
     .optional(),
-  page : pageQuerySchema
-})
+  page: pageQuerySchema,
+  isPublished: z
+    .string()
+    .transform((val) => {
+      if (val === "true") return true;
+      if (val === "false") return false;
+      return undefined;
+    })
+    .optional(),
+});

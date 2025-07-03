@@ -21,6 +21,5 @@ export interface FindUsersForChat {
 export interface IBookingRepository extends IBaseRepository<IBooking> {
     findByIdAndUpdatePaymentStatus(bookingId : Types.ObjectId , status : PaymentStatus) : Promise<void>
     findBookings(input: FindBookingsInput): Promise<PaginatedResponse<IBooking>>
-    findUsersForChat(input :FindUsersForChat ) : Promise<IVendor[] | IClient[]>
 }
 

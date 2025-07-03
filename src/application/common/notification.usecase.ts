@@ -36,7 +36,7 @@ export class NotifiactionUsecase implements INotificationUsecase {
 
     async getAllNotifications(input: GetAllNotificationsInput): Promise<NotificationPaginatedResponse> {
         const {limit,page,userId} = input;
-        const skip = 0; // dont skip for scrolling pagination 
+        const skip = (page - 1) * limit;
         const filter : FilterQuery<INotification> = {receiverId : userId}
 
         const [notifications,count,unReadCount] = await Promise.all([
