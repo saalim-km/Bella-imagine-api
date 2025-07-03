@@ -6,7 +6,7 @@ import {
 import { IBookingRepository } from "../../domain/interfaces/repository/booking.repository";
 import { IServiceRepository } from "../../domain/interfaces/repository/service.repository";
 import { CustomError } from "../../shared/utils/helper/custom-error";
-import { BOOKING_CONFIRMATION_MAIL_CONTENT, ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
+import { BOOKING_CONFIRMATION_MAIL_CONTENT, ERROR_MESSAGES, HTTP_STATUS, TRole } from "../../shared/constants/constants";
 import { IClientRepository } from "../../domain/interfaces/repository/client.repository";
 import { IWalletRepository } from "../../domain/interfaces/repository/wallet.repository";
 import { IBookingCommandUsecase } from "../../domain/interfaces/usecase/booking-usecase.interface";
@@ -160,7 +160,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
   }
 
   async updateBookingStatus(input: updateBookingStatusInput): Promise<void> {
-    const { bookingId, status, userId } = input;
+    const { bookingId, status, userId ,userRole} = input;
     const booking = await this._bookingRepository.findById(bookingId);
     if (!booking) {
       throw new CustomError(
@@ -185,7 +185,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
     }
 
     if (status === "cancelled") {
-      await this.cancelBooking(bookingId);
+      await this.cancelBooking(bookingId,userRole);
       return;
     }
 
@@ -246,7 +246,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
     );
   }
 
-  async cancelBooking(bookingId: Types.ObjectId): Promise<void> {
+  async cancelBooking(bookingId: Types.ObjectId , role : TRole): Promise<void> {
     const booking = await this._bookingRepository.findById(bookingId);
     if (!booking) {
       throw new CustomError(
@@ -254,12 +254,14 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
         HTTP_STATUS.NOT_FOUND
       );
     }
+
     const bookingDate = new Date(booking.bookingDate);
     const now = new Date();
 
     const hoursDiff =
       (bookingDate.getTime() - now.getTime()) / (1000 * 60 * 60);
-    if (hoursDiff < 24) {
+
+    if (hoursDiff < 24 && role === 'client') {
       throw new CustomError(
         "Cancellations must be made at least 24 hours in advance.",
         HTTP_STATUS.BAD_REQUEST
