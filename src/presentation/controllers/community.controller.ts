@@ -6,7 +6,7 @@ import {
   ICommunityPostQueryUsecase,
   ICommunityQueryUsecase,
 } from "../../domain/interfaces/usecase/community-usecase.interface";
-import { Request, Response } from "express";
+import e, { Request, Response } from "express";
 import {
   addCommentSchema,
   createCommunitySchema,
@@ -16,6 +16,7 @@ import {
   getAllPostSchema,
   getCommentsSchema,
   getPostDetailsSchema,
+  getPostsSchema,
   updateCommuitySchema,
 } from "../../shared/utils/zod-validations/presentation/community.schema";
 import { ResponseHandler } from "../../shared/utils/helper/response-handler";
@@ -176,5 +177,18 @@ export class CommunityController implements ICommunityController {
     const commentId = objectIdSchema.parse(req.params.commentId)
     await this._communityPostUsecase.deleteComment(commentId)
     ResponseHandler.success(res,SUCCESS_MESSAGES.COMMENT_DELETED)
+  }
+
+  async getAllPostForUser(req: Request, res: Response): Promise<void> {
+    const {_id} = (req as CustomRequest).user
+    const parsed = getPostsSchema.parse({...req.query,userId : _id})
+    const post = await this._communityPostQueryUsecase.getAllPostForUser(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,post)
+  }
+
+  async deleteCommunityPost(req: Request, res: Response): Promise<void> {
+    const postId = objectIdSchema.parse(req.params.postId);
+    await this._communityPostUsecase.deletePost(postId)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DELETE_SUCCESS)
   }
 }

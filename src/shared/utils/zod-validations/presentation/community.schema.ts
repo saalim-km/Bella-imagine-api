@@ -108,3 +108,9 @@ export const editCommentSchema = z.object({
     commentId : objectIdSchema,
     content : z.string()
 })
+
+export const getPostsSchema = z.object({
+    limit : limitQuerySchema,
+    page : pageQuerySchema,
+    userId : objectIdSchema,
+})

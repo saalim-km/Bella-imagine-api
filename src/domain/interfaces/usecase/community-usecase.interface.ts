@@ -5,7 +5,7 @@ import {
   ICommunityMember,
   ICommunityPost,
 } from "../../models/community";
-import { CommunityMembersOutput, FetchCommunityBySlugOutput, GetCommentUsecaseInput, GetPostDetailsInput } from "../../types/community.types";
+import { CommunityMembersOutput, FetchCommunityBySlugOutput, GetCommentUsecaseInput, GetPostDetailsInput, GetPostForUserOutput, GetPostUsecaseInput } from "../../types/community.types";
 import { PaginatedResponse } from "./types/common.types";
 import {
   AddCommentInput,
@@ -56,6 +56,7 @@ export interface ICommunityPostCommandUsecase {
   addComment(input: AddCommentInput): Promise<void>;
   editComment(input : EditCommentInput) : Promise<void>
   deleteComment(commentId : Types.ObjectId) : Promise<void>
+  deletePost(postId : Types.ObjectId) : Promise<void>
 }
 
 export interface ICommunityPostQueryUsecase {
@@ -64,4 +65,5 @@ export interface ICommunityPostQueryUsecase {
   ): Promise<PaginatedResponse<any>>;
   getPostDetails(input : GetPostDetailsInput) : Promise<any>
   getAllCommentsForUser(input : GetCommentUsecaseInput) : Promise<PaginatedResponse<IComment>>
+  getAllPostForUser(input : GetPostUsecaseInput):Promise<PaginatedResponse<GetPostForUserOutput>>
 }

@@ -1,5 +1,5 @@
-import { Types } from "mongoose";
-import { IComment, ICommunity, ICommunityMember, ILike, UserType } from "../models/community";
+import { FilterQuery, Types } from "mongoose";
+import { IComment, ICommunity, ICommunityMember, ICommunityPost, ILike, UserType } from "../models/community";
 import { PaginationQuery } from "./admin.type";
 import { IClient } from "../models/client";
 import { TRole } from "../../shared/constants/constants";
@@ -49,6 +49,35 @@ export interface GetPostDetailsInput {
   page : number
 }
 
+export interface GetPostForUserInput {
+  filter : FilterQuery<ICommunityPost>
+  skip : number;
+  sort : number;
+  limit : number
+}
+
+
+export interface GetPostForUserOutput {
+  _id: Types.ObjectId;
+  communityId: Types.ObjectId;
+  userId: Types.ObjectId;
+  userType: UserType;
+  title: string;
+  content: string;
+  media: string[];
+  mediaType: 'image' | 'video' | 'mixed' | 'none';
+  isEdited: boolean;
+  likeCount: number;
+  commentCount: number;
+  tags: string[];
+  comments: Types.ObjectId[];
+  createdAt: Date | string;
+  updatedAt: Date | string;
+  communityName: string;
+  iconImage: string;
+  coverImage: string;
+}
+
 export interface PostDetailsResponse extends  Omit<ICommunityPostResponse,'comments'> {
   likes : ILike;
   comments : IComment[];
@@ -72,6 +101,11 @@ export interface GetComentsInput {
 }
 
 export interface GetCommentUsecaseInput {
+  userId : Types.ObjectId;
+  page : number;
+  limit : number;
+}
+export interface GetPostUsecaseInput {
   userId : Types.ObjectId;
   page : number;
   limit : number;

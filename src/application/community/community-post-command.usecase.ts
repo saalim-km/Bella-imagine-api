@@ -330,4 +330,13 @@ export class CommunityPostCommandUsecase
       this._commentRepo.delete(commentId)
     ])
   }
+
+  async deletePost(postId: Types.ObjectId): Promise<void> {
+    const isPostExists = await this._communityPostRepo.findById(postId);
+    if (!isPostExists) {
+      throw new CustomError(ERROR_MESSAGES.POST_NOT_EXISTS, HTTP_STATUS.NOT_FOUND);
+    }
+    
+    await this._communityPostRepo.deleteCommunityPost(postId)
+  }
 }

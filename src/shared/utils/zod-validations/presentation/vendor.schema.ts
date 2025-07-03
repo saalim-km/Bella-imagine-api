@@ -109,7 +109,6 @@ export const CreateServiceSchema = z
   })
   .strict();
 
-  
 export const getSeviceSchema = z.object({
   serviceTitle: searchQuerySchema,
   category: z
@@ -132,10 +131,6 @@ export const updateServiceSchema = CreateServiceSchema.extend({
   vendor: objectIdSchema.optional(),
 }).passthrough();
 
-
-
-
-
 export const createWorkSampleSchema = z.object({
   service: objectIdSchema,
   vendor: objectIdSchema,
@@ -145,7 +140,9 @@ export const createWorkSampleSchema = z.object({
   isPublished: parseBooleanSchema,
   media: z.preprocess(
     (val) => (Array.isArray(val) ? val : val ? [val] : []),
-    z.array(z.custom<Express.Multer.File>()).min(1, "At least one media file is required")
+    z
+      .array(z.custom<Express.Multer.File>())
+      .min(1, "At least one media file is required")
   ),
 });
 
@@ -160,7 +157,6 @@ export const updateWorkSampleSchema = createWorkSampleSchema
       z.array(z.custom<Express.Multer.File>()).optional()
     ),
   });
-
 
 export const getWorkSamplesSchema = z.object({
   limit: limitQuerySchema,

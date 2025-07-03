@@ -5,6 +5,8 @@ import { IComment, ICommunityPost } from "../../domain/models/community";
 import { ICommunityPostRepository } from "../../domain/interfaces/repository/community.repository";
 import {
   GetPostDetailsInput,
+  GetPostForUserInput,
+  GetPostForUserOutput,
   ICommunityPostResponse,
   PostDetailsResponse,
 } from "../../domain/types/community.types";
@@ -234,7 +236,7 @@ export class CommunityPostRepository
             as: "vendorUser",
           },
         },
-        // Merge post creator
+        // Merge post creator (merging the user who put the post)
         {
           $addFields: {
             mergedUser: {
@@ -260,7 +262,7 @@ export class CommunityPostRepository
           },
         },
 
-        // Calculate isLiked
+        // find  isLiked or not
         {
           $addFields: {
             isLiked: {
@@ -309,5 +311,59 @@ export class CommunityPostRepository
       ...post[0],
       totalComments,
     };
+  }
+
+  async fetchAllPostForUser(input: GetPostForUserInput): Promise<PaginatedResponse<GetPostForUserOutput>> {
+    const {filter,limit,skip,sort} = input;
+    const sortOrder: 1 | -1 = sort === 1 ? 1 : -1;
+    console.log(filter);
+    const [post , count] = await Promise.all([
+      this.model.aggregate([
+        {
+          $match : filter
+        },
+        {$skip : skip},
+        {$limit : limit},
+        {$sort : {createdAt : sortOrder}},
+        {
+          $lookup : {
+            from : 'communities',
+            localField : 'communityId',
+            foreignField : '_id',
+            as : 'community'
+          }
+        },
+        {
+          $unwind : {
+            path : '$community'
+          }
+        },
+        {
+          $addFields : {
+            communityName : '$community.name',
+            iconImage : '$community.iconImage',
+            coverImage : '$community.coverImage'
+          }
+        },
+        {
+          $project : {
+            "community" : 0
+          }
+        }
+      ]),
+      this.count(filter)
+    ])
+    
+    return {
+      data : post,
+      total : count
+    }
+  }
+
+  async deleteCommunityPost(postId: Types.ObjectId): Promise<void> {
+    await Promise.all([
+      Comment.deleteMany({postId : postId}),
+      this.model.findByIdAndDelete(postId)
+    ])
   }
 }
