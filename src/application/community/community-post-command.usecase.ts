@@ -46,7 +46,7 @@ export class CommunityPostCommandUsecase
     @inject("IGetPresignedUrlUsecase")
     private presignedUrl: IGetPresignedUrlUsecase,
     @inject("ILikeRepository") private _likeRepo: ILikeRepository,
-    @inject('IVendorRepository') private _vendorRepo : IVendorRepository
+    @inject("IVendorRepository") private _vendorRepo: IVendorRepository
   ) {}
 
   async createPost(input: CreatePostInput): Promise<ICommunityPost> {
@@ -78,8 +78,8 @@ export class CommunityPostCommandUsecase
     }
     if (!user) {
       throw new CustomError(
-      ERROR_MESSAGES.USER_NOT_FOUND,
-      HTTP_STATUS.NOT_FOUND
+        ERROR_MESSAGES.USER_NOT_FOUND,
+        HTTP_STATUS.NOT_FOUND
       );
     }
 
@@ -133,9 +133,9 @@ export class CommunityPostCommandUsecase
         userId: userId,
         userType: role as UserType,
       }),
-      this._communityRepo.update(communityId,{
-        $inc: {postCount : 1}
-      })
+      this._communityRepo.update(communityId, {
+        $inc: { postCount: 1 },
+      }),
     ]);
 
     if (!newPost || !newPost._id) {
@@ -293,50 +293,122 @@ export class CommunityPostCommandUsecase
     ]);
   }
 
-  //   async editPost(input: EditPostInput): Promise<void> {
-  //       const {_id,communityId,content,tags,title,userId,media,mediaType} = input;
+  async editPost(input: EditPostInput): Promise<void> {
+    const {
+      _id,
+      title,
+      content,
+      deletedImageKeys,
+      existingImageKeys,
+      newImages,
+      tags,
+    } = input;
 
-  //       const isPostExists = await this._communityPostRepo.findById(_id);
-  //       if(!isPostExists){
-  //         throw new CustomError(ERROR_MESSAGES.POST_NOT_EXISTS,HTTP_STATUS.NOT_FOUND)
-  //       }
+    console.log("editPost input:", input);
 
-  //   }
+    let uploadedKeys: string[] = [];
+    let fileKeys: string[] = existingImageKeys || [];
+
+    try {
+      // 1. Delete old images from S3 if needed
+      if (deletedImageKeys && deletedImageKeys.length > 0) {
+        const deletePromises = deletedImageKeys.map(async (key) => {
+          const isAvailable =
+            await this._awsS3Service.isFileAvailableInAwsBucket(key);
+          if (isAvailable) {
+            return await this._awsS3Service.deleteFileFromAws(key);
+          }
+        });
+        await Promise.all(deletePromises);
+      }
+
+      // 2. Upload new images to S3 if any
+      if (newImages && newImages.length > 0) {
+        const uploadPromises = newImages.map(async (image) => {
+          const fileKey = generateS3FileKey(
+            config.s3.communityPost,
+            image.path
+          );
+          await this._awsS3Service.uploadFileToAws(fileKey, image.path);
+          uploadedKeys.push(fileKey);
+          fileKeys.push(fileKey);
+        });
+
+        await Promise.all(uploadPromises);
+      }
+
+      // 3. Update the post in your DB
+      await this._communityPostRepo.update(_id, {
+        title,
+        content,
+        tags,
+        media: fileKeys,
+      });
+    } catch (error) {
+      // 4. Rollback: clean up uploaded images if something failed
+      if (uploadedKeys.length > 0) {
+        await Promise.allSettled(
+          uploadedKeys.map((key) => {
+            return this._awsS3Service
+              .deleteFileFromAws(key)
+              .catch((err) =>
+                console.error("Failed to clean up S3 file:", err)
+              );
+          })
+        );
+      }
+      throw error; // rethrow after cleanup
+    } finally {
+      // 5. Clean up local files regardless of success or failure
+      if (newImages && newImages.length > 0) {
+        await cleanUpLocalFiles(newImages);
+      }
+    }
+  }
 
   async editComment(input: EditCommentInput): Promise<void> {
-    const {commentId,content} = input;
-    const isCommentExists = await this._commentRepo.findById(commentId)
+    const { commentId, content } = input;
+    const isCommentExists = await this._commentRepo.findById(commentId);
 
-    if(!isCommentExists){
-      throw new CustomError(ERROR_MESSAGES.COMMENT_NOT_EXISTS,HTTP_STATUS.NOT_FOUND)
+    if (!isCommentExists) {
+      throw new CustomError(
+        ERROR_MESSAGES.COMMENT_NOT_EXISTS,
+        HTTP_STATUS.NOT_FOUND
+      );
     }
 
-    await this._commentRepo.update(commentId,{
-      content : content,
-    })
+    await this._commentRepo.update(commentId, {
+      content: content,
+    });
   }
 
   async deleteComment(commentId: Types.ObjectId): Promise<void> {
-    const isCommentExists = await this._commentRepo.findById(commentId)
+    const isCommentExists = await this._commentRepo.findById(commentId);
 
-    if(!isCommentExists){
-      throw new CustomError(ERROR_MESSAGES.COMMENT_NOT_EXISTS,HTTP_STATUS.NOT_FOUND)
+    if (!isCommentExists) {
+      throw new CustomError(
+        ERROR_MESSAGES.COMMENT_NOT_EXISTS,
+        HTTP_STATUS.NOT_FOUND
+      );
     }
 
     await Promise.all([
-      this._communityPostRepo.update(isCommentExists.postId,{
-        $inc : {commentCount : -1}
+      this._communityPostRepo.update(isCommentExists.postId, {
+        $inc: { commentCount: -1 },
       }),
-      this._commentRepo.delete(commentId)
-    ])
+      this._commentRepo.delete(commentId),
+    ]);
   }
 
   async deletePost(postId: Types.ObjectId): Promise<void> {
     const isPostExists = await this._communityPostRepo.findById(postId);
     if (!isPostExists) {
-      throw new CustomError(ERROR_MESSAGES.POST_NOT_EXISTS, HTTP_STATUS.NOT_FOUND);
+      throw new CustomError(
+        ERROR_MESSAGES.POST_NOT_EXISTS,
+        HTTP_STATUS.NOT_FOUND
+      );
     }
-    
-    await this._communityPostRepo.deleteCommunityPost(postId)
+
+    await this._communityPostRepo.deleteCommunityPost(postId);
   }
 }

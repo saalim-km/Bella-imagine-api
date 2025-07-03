@@ -44,6 +44,7 @@ export class ClientRoute extends BaseRoute {
         .post(verifyAuth,authorizeRole(['client']),upload.fields([{name : 'media' , maxCount : 4}]),asyncHandler(communityController.createPost.bind(communityController)))
         .get(verifyAuth,authorizeRole(['client']),asyncHandler(communityController.getAllPosts.bind(communityController)))
         .delete(verifyAuth,authorizeRole(['client']),asyncHandler(communityController.getAllPosts.bind(communityController)))
+        .put(verifyAuth,authorizeRole(['client']),upload.fields([{name : 'newImages[]', maxCount : 10}]),asyncHandler(communityController.editPost.bind(communityController)))
 
         this.router.route('/client/comment')
         .post(verifyAuth,authorizeRole(['client']),asyncHandler(communityController.addComment.bind(communityController)))

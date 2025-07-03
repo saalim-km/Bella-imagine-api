@@ -11,6 +11,7 @@ import {
   addCommentSchema,
   createCommunitySchema,
   editCommentSchema,
+  editPostSchema,
   fetchCommBySlugSchema,
   fetchCommunitySchema,
   getAllPostSchema,
@@ -173,7 +174,6 @@ export class CommunityController implements ICommunityController {
   }
   
   async deleteComment(req: Request, res: Response): Promise<void> {
-    console.log('',req.params);
     const commentId = objectIdSchema.parse(req.params.commentId)
     await this._communityPostUsecase.deleteComment(commentId)
     ResponseHandler.success(res,SUCCESS_MESSAGES.COMMENT_DELETED)
@@ -186,9 +186,19 @@ export class CommunityController implements ICommunityController {
     ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,post)
   }
 
+  async editPost(req: Request, res: Response): Promise<void> {
+    console.log(req.body);
+    console.log(req.files);  
+    const parsedData = editPostSchema.parse({...req.body,newImages : req.files})
+    console.dir(parsedData, { depth: null, colors: true });
+    console.log('newly added images',parsedData.newImages);
+    await this._communityPostUsecase.editPost(parsedData)
+  }
+
   async deleteCommunityPost(req: Request, res: Response): Promise<void> {
     const postId = objectIdSchema.parse(req.params.postId);
     await this._communityPostUsecase.deletePost(postId)
     ResponseHandler.success(res,SUCCESS_MESSAGES.DELETE_SUCCESS)
   }
+
 }

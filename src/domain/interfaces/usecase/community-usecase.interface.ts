@@ -51,7 +51,7 @@ export interface ICommunityPostCommandUsecase {
   createPost(input: CreatePostInput): Promise<ICommunityPost>;
   likePost(input : LikePostInput):  Promise<{success : boolean}>
   unLikePost(input : LikePostInput): Promise<{success : boolean}>
-  // editPost(input: EditPostInput): Promise<void>;
+  editPost(input: EditPostInput): Promise<void>;
   // deletePost(input: DeletePostInput): Promise<void>;
   addComment(input: AddCommentInput): Promise<void>;
   editComment(input : EditCommentInput) : Promise<void>

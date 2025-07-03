@@ -65,13 +65,12 @@ export interface GetAllPostInput extends Omit<PaginationInput , 'search' | 'crea
 
 export interface EditPostInput {
   _id : Types.ObjectId
-  communityId: Types.ObjectId;
-  userId: Types.ObjectId;
   title: string;
-  content: string;    
-  media ?: string[];
-  mediaType?: 'image' | 'video' | 'mixed' | 'none';
-  tags: string[];
+  content: string;
+  tags?: string[];
+  existingImageKeys?: string[];
+  deletedImageKeys?: string[];
+  newImages ?: Express.Multer.File[]  
 }
 
 export interface DeletePostInput {
