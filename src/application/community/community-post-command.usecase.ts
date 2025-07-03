@@ -13,6 +13,7 @@ import {
   AddCommentInput,
   CreateCommunityInput,
   CreatePostInput,
+  EditCommentInput,
   EditPostInput,
   LikePostInput,
 } from "../../domain/interfaces/usecase/types/community.types";
@@ -28,6 +29,7 @@ import { config } from "../../shared/config/config";
 import { cleanUpLocalFiles } from "../../shared/utils/helper/clean-local-file.helper";
 import logger from "../../shared/logger/logger";
 import { IVendorRepository } from "../../domain/interfaces/repository/vendor.repository";
+import { Types } from "mongoose";
 
 @injectable()
 export class CommunityPostCommandUsecase
@@ -300,4 +302,32 @@ export class CommunityPostCommandUsecase
   //       }
 
   //   }
+
+  async editComment(input: EditCommentInput): Promise<void> {
+    const {commentId,content} = input;
+    const isCommentExists = await this._commentRepo.findById(commentId)
+
+    if(!isCommentExists){
+      throw new CustomError(ERROR_MESSAGES.COMMENT_NOT_EXISTS,HTTP_STATUS.NOT_FOUND)
+    }
+
+    await this._commentRepo.update(commentId,{
+      content : content,
+    })
+  }
+
+  async deleteComment(commentId: Types.ObjectId): Promise<void> {
+    const isCommentExists = await this._commentRepo.findById(commentId)
+
+    if(!isCommentExists){
+      throw new CustomError(ERROR_MESSAGES.COMMENT_NOT_EXISTS,HTTP_STATUS.NOT_FOUND)
+    }
+
+    await Promise.all([
+      this._communityPostRepo.update(isCommentExists.postId,{
+        $inc : {commentCount : -1}
+      }),
+      this._commentRepo.delete(commentId)
+    ])
+  }
 }

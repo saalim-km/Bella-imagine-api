@@ -21,6 +21,7 @@ export class ClientRoute extends BaseRoute {
         .delete('/client/community-leave/:communityId',verifyAuth,authorizeRole(['client']),asyncHandler(communityController.leaveCommunity.bind(communityController)))
         .get('/client/post/:postId',verifyAuth,authorizeRole(['client']),asyncHandler(communityController.getPostDetails.bind(communityController)))
         .post('/client/conversation',verifyAuth,authorizeRole(['client']),asyncHandler(clientController.createConversation.bind(clientController)))
+        .delete('/client/comment/:commentId',verifyAuth,authorizeRole(['client']),asyncHandler(communityController.deleteComment.bind(communityController)))
 
         this.router.route('/client/notification')
         .patch(verifyAuth,authorizeRole(['client']),asyncHandler(clientController.readAllNotifications.bind(clientController)))
@@ -44,6 +45,7 @@ export class ClientRoute extends BaseRoute {
 
         this.router.route('/client/comment')
         .post(verifyAuth,authorizeRole(['client']),asyncHandler(communityController.addComment.bind(communityController)))
+        .patch(verifyAuth,authorizeRole(['client']),asyncHandler(communityController.editComment.bind(communityController)))
         .get(verifyAuth,authorizeRole(['client']),asyncHandler(communityController.fetchComments.bind(communityController)))
     }
 }

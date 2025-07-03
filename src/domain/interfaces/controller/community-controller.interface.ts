@@ -14,4 +14,6 @@ export interface ICommunityController {
   getPostDetails(req: Request, res: Response) : Promise<void>
   addComment(req: Request, res: Response) : Promise<void>
   fetchComments(req: Request, res: Response) : Promise<void>
+  editComment(req: Request, res: Response) : Promise<void>
+  deleteComment(req: Request, res: Response) : Promise<void>
 }

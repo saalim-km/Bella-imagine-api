@@ -103,3 +103,8 @@ export const getCommentsSchema = z.object({
     page : pageQuerySchema,
     userId : objectIdSchema,
 })
+
+export const editCommentSchema = z.object({
+    commentId : objectIdSchema,
+    content : z.string()
+})

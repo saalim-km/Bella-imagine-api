@@ -14,8 +14,10 @@ export const HTTP_STATUS = {
 };
 
 export const SUCCESS_MESSAGES = {
-  SERVICE_DELETED : 'Service has been successfully deleted',
-  WORKSAMPLE_DELETED : 'WorkSample has been successfully deleted',
+  COMMENT_DELETED: "Comment has been deleted successfully.",
+  COMMENT_EDITED: "Comment has been edited successfully.",
+  SERVICE_DELETED: 'Service has been successfully deleted',
+  WORKSAMPLE_DELETED: 'WorkSample has been successfully deleted',
   COMMENT_CREATED: "Your comment has been added.",
   LEAVE_SUCCESS: "You have left the community successfully.",
   CATEGORY_JOIN_REQUEST_SUCCESS: "Your request to join the category has been submitted.",
@@ -39,6 +41,7 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  COMMENT_NOT_EXISTS : 'Comment not exists',
   WORKSMAPLE_LINKED: 'Some work samples are linked to this service and it cannot be deleted.',
   POST_NOT_EXISTS: 'Post does not exist.',
   POST_CREATION_FAILED: 'Failed to create post. Please try again later.',

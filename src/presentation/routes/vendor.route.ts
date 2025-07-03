@@ -20,6 +20,7 @@ export class VendorRoute extends BaseRoute {
         .get('/vendor/post/:postId',verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.getPostDetails.bind(communityController)))
         .get('/vendor/community',verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.fetchAllCommunitiesForUser.bind(communityController)))
         .post('/vendor/conversation',verifyAuth,authorizeRole(['vendor']),asyncHandler(clientController.createConversation.bind(clientController)))
+        .delete('/vendor/comment/:commentId',verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.deleteComment.bind(communityController)))
 
         this.router.route('/vendor/details')
         .get(verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.getVendorDetails.bind(vendorController)))
@@ -62,6 +63,7 @@ export class VendorRoute extends BaseRoute {
 
         this.router.route('/vendor/comment')
         .post(verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.addComment.bind(communityController)))
+        .patch(verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.editComment.bind(communityController)))
         .get(verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.fetchComments.bind(communityController)))
     }
 }

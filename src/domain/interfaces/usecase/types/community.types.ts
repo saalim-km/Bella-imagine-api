@@ -86,6 +86,11 @@ export interface AddCommentInput {
   role : TRole
 }
 
+export interface EditCommentInput {
+  commentId : Types.ObjectId;
+  content : string
+}
+
 export interface LikePostInput {
   postId : Types.ObjectId;
   userId : Types.ObjectId;

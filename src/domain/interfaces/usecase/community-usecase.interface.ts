@@ -12,6 +12,7 @@ import {
   CreateCommunityInput,
   CreatePostInput,
   DeletePostInput,
+  EditCommentInput,
   EditPostInput,
   FetchAllCommunitiesInput,
   fetchCommBySlugInput,
@@ -53,6 +54,8 @@ export interface ICommunityPostCommandUsecase {
   // editPost(input: EditPostInput): Promise<void>;
   // deletePost(input: DeletePostInput): Promise<void>;
   addComment(input: AddCommentInput): Promise<void>;
+  editComment(input : EditCommentInput) : Promise<void>
+  deleteComment(commentId : Types.ObjectId) : Promise<void>
 }
 
 export interface ICommunityPostQueryUsecase {

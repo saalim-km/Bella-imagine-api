@@ -10,6 +10,7 @@ import { Request, Response } from "express";
 import {
   addCommentSchema,
   createCommunitySchema,
+  editCommentSchema,
   fetchCommBySlugSchema,
   fetchCommunitySchema,
   getAllPostSchema,
@@ -160,8 +161,20 @@ export class CommunityController implements ICommunityController {
   async fetchComments(req: Request, res: Response): Promise<void> {
     const {_id} = (req as CustomRequest).user;
     const parsed = getCommentsSchema.parse({...req.query,userId : _id})
-    console.log('parsed data',parsed);
     const comments = await this._communityPostQueryUsecase.getAllCommentsForUser(parsed)
     ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,comments)
+  }
+
+  async editComment(req: Request, res: Response): Promise<void> {
+    const parsed = editCommentSchema.parse(req.body)
+    await this._communityPostUsecase.editComment(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.COMMENT_EDITED)
+  }
+  
+  async deleteComment(req: Request, res: Response): Promise<void> {
+    console.log('',req.params);
+    const commentId = objectIdSchema.parse(req.params.commentId)
+    await this._communityPostUsecase.deleteComment(commentId)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.COMMENT_DELETED)
   }
 }
