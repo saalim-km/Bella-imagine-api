@@ -33,7 +33,7 @@ export class GetUsersUsecase implements IGetUsersUsecase {
       );
     }
 
-    let search: FilterQuery<IUser> = {};
+    const search: FilterQuery<IUser> = {};
 
     if (input) {
       if (input.isblocked !== undefined) {

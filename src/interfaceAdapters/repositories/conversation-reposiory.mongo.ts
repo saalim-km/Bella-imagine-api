@@ -4,7 +4,6 @@ import { BaseRepository } from "./base-repository.mongo";
 import { Conversation } from "../database/schemas/conversation.schema";
 import { IConversation } from "../../domain/models/chat";
 import { IncrementUnreadCount } from "../../domain/types/chat.types";
-import { CustomError } from "../../shared/utils/helper/custom-error";
 import { FindUsersForChat } from "../../domain/interfaces/repository/booking.repository";
 import { IClient } from "../../domain/models/client";
 import { IVendor } from "../../domain/models/vendor";

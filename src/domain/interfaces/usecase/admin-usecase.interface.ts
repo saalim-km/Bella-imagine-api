@@ -1,6 +1,5 @@
 import { Types } from "mongoose";
 import { ICategory } from "../../models/category";
-import { IClient } from "../../models/client";
 import { IUser } from "../../models/user-base";
 import { IVendor } from "../../models/vendor";
 import { CreateNewCategoryInput, GetCategoriesFilterInput, getCatJoinRequestInput, UpdateCategory, UpdateUserStatusInput, UpdateVendorRequestInput, UserDetailsInput, UsersFilterInput, UserStrategyFilterInput, UupdateCatReqInput, VendorRequestFilterInput } from "./types/admin.types";

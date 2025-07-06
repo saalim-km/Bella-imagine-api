@@ -5,8 +5,6 @@ import { PaymentStatus } from "../../models/payment";
 import { BookingQueryParams } from "../../../shared/utils/zod-validations/presentation/client.schema";
 import { PaginatedResponse } from "../usecase/types/common.types";
 import { TRole } from "../../../shared/constants/constants";
-import { IVendor } from "../../models/vendor";
-import { IClient } from "../../models/client";
 
 export interface FindBookingsInput extends BookingQueryParams {
   userId?: Types.ObjectId;

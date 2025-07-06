@@ -20,16 +20,19 @@ export class UserManagementUsecase implements IUserManagementUsecase {
 
   async updateBlockStatus(input: UpdateUserStatusInput): Promise<void> {
     switch (input.role) {
-      case "client":
+      case "client":{
         await this._clientRepository.update(input.id, {
           isblocked: input.isblocked,
         });
         break;
+      }
       case "vendor":
-        const vendor = await this._vendorRepository.update(input.id, {
+        {
+        await this._vendorRepository.update(input.id, {
           isblocked: input.isblocked,
         });
         break;
+      }
       default:
         throw new CustomError(
           ERROR_MESSAGES.INVALID_ROLE,
@@ -42,8 +45,12 @@ export class UserManagementUsecase implements IUserManagementUsecase {
     const status = input.status ? "accept" : "reject";
     const vendor = await this._vendorRepository.update(input.id, { isVerified: status });
 
+    if(!vendor){
+      throw new CustomError(ERROR_MESSAGES.VENDOR_NOT_FOUND,HTTP_STATUS.NOT_FOUND)
+    }
+
     if(status === 'reject'){
-      await this._vendorRepository.update(vendor?._id!,{verificationDocument : ''});
+      await this._vendorRepository.update(vendor._id,{verificationDocument : ''});
     }
   }
 }

@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { IWallet, PopulatedWallet } from "../../models/wallet";
+import { PopulatedWallet } from "../../models/wallet";
 import { creditAmountToWalletInput } from "./types/wallet.types";
 
 export interface IWalletUsecase {

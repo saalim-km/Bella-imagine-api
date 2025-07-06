@@ -153,7 +153,7 @@ export class ChatUsecase implements IChatUsecase {
     const enrichedMessages = await Promise.all(
       messages.map(async (message) => {
         if (message.mediaKey) {
-          let mediaUrl = await this._pregisnedUrl.getPresignedUrl(
+          const mediaUrl = await this._pregisnedUrl.getPresignedUrl(
             message.mediaKey
           );
 
@@ -237,7 +237,9 @@ export class ChatUsecase implements IChatUsecase {
     } finally {
       try {
         unlinkSync(media.path);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     return { key: fileKey, mediaUrl: mediaUrl };

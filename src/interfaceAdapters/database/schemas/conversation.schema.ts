@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 import { messageSchema } from "./message.schema";
 import { IConversation } from "../../../domain/models/chat";
 

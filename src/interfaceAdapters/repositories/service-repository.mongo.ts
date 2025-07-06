@@ -14,7 +14,7 @@ export class ServiceRepository extends BaseRepository<IService> implements IServ
     }
 
     async updateSlotCount(booking: IBooking , count : number): Promise<void> {
-        const {_id , bookingDate , timeSlot , serviceDetails } = booking;
+        const { bookingDate , timeSlot , serviceDetails } = booking;
         await this.model.updateOne({_id : serviceDetails._id},
             {
                 $inc: {

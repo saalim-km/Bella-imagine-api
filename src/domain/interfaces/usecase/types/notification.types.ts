@@ -1,5 +1,4 @@
 import { Types } from "mongoose";
-import { TRole } from "../../../../shared/constants/constants";
 import { INotification, TNotificationType } from "../../../models/notification";
 import { PaginationInput } from "./admin.types";
 

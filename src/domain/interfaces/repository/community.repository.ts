@@ -25,5 +25,4 @@ export interface ICommentRepository extends IBaseRepository<IComment> {
     fetchCommentsByUserId(input : GetComentsInput) : Promise<PaginatedResponse<IComment>>
 }
 
-export interface ILikeRepository extends IBaseRepository<ILike> {
-}
+export type ILikeRepository = IBaseRepository<ILike>

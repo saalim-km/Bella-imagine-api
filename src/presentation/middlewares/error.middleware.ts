@@ -1,10 +1,10 @@
-import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
+import { ErrorRequestHandler } from "express";
 import { ZodError } from "zod";
 import logger from "../../shared/logger/logger";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 
 // ✅ Centralized Error Handler with correct typing
-export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+export const errorHandler: ErrorRequestHandler = (err, req, res) => {
   // Handle Zod validation errors
   if (err instanceof ZodError) {
     logger.warn("Validation error");

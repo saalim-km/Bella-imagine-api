@@ -1,11 +1,10 @@
-import z, { string } from "zod";
+import z from "zod";
 import {
   ImageSchema,
   limitQuerySchema,
   nameSchema,
   objectIdSchema,
   pageQuerySchema,
-  roleSchema,
   searchQuerySchema,
   slugSchema,
 } from "../validators/validations";

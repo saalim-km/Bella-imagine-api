@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 import { PaginationInput } from "./admin.types";
 import { TRole } from "../../../../shared/constants/constants";
 import { BookingQueryParams } from "../../../../shared/utils/zod-validations/presentation/client.schema";
-import { TBookingStatus, TPaymentStatus } from "../../../../shared/types/booking.types";
+import { TBookingStatus } from "../../../../shared/types/booking.types";
 import { IVendor } from "../../../models/vendor";
 import { IWorkSample } from "../../../models/worksample";
 import { IService } from "../../../models/service";

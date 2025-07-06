@@ -9,13 +9,12 @@ import {
   GetCommunityMemberInput,
 } from "../../domain/interfaces/usecase/types/community.types";
 import { ICommunity } from "../../domain/models/community";
-import { FilterQuery, Types } from "mongoose";
+import { FilterQuery } from "mongoose";
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { CommunityMembersOutput, FetchCommunityBySlugOutput } from "../../domain/types/community.types";
 import { ICommunityMemberRepository } from "../../domain/interfaces/repository/community.repository";
-import { skip } from "node:test";
 import { ICommunityMember } from "../../domain/models/community";
 
 @injectable()
@@ -47,7 +46,7 @@ export class CommunityQueryUsecase implements ICommunityQueryUsecase {
     });
 
     const communities = await Promise.all(
-      data.map(async (comm, ind) => {
+      data.map(async (comm) => {
         if (comm.coverImage) {
           comm.coverImage = await this._presignedUrl.getPresignedUrl(
             comm.coverImage
@@ -134,7 +133,7 @@ export class CommunityQueryUsecase implements ICommunityQueryUsecase {
       });
 
     const communities = await Promise.all(
-      data.map(async (comm, ind) => {
+      data.map(async (comm) => {
         if (comm.coverImage) {
           comm.coverImage = await this._presignedUrl.getPresignedUrl(
             comm.coverImage

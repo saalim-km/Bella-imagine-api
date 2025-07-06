@@ -1,7 +1,6 @@
 import { Types } from "mongoose";
 import { INotification } from "../../models/notification";
 import { CreateNotificationInput, GetAllNotificationsInput, NotificationPaginatedResponse } from "./types/notification.types";
-import { PaginatedResponse } from "./types/common.types";
 
 export interface INotificationUsecase {
     createNotification(input : CreateNotificationInput) : Promise<INotification>

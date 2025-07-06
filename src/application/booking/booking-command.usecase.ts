@@ -6,7 +6,12 @@ import {
 import { IBookingRepository } from "../../domain/interfaces/repository/booking.repository";
 import { IServiceRepository } from "../../domain/interfaces/repository/service.repository";
 import { CustomError } from "../../shared/utils/helper/custom-error";
-import { BOOKING_CONFIRMATION_MAIL_CONTENT, ERROR_MESSAGES, HTTP_STATUS, TRole } from "../../shared/constants/constants";
+import {
+  BOOKING_CONFIRMATION_MAIL_CONTENT,
+  ERROR_MESSAGES,
+  HTTP_STATUS,
+  TRole,
+} from "../../shared/constants/constants";
 import { IClientRepository } from "../../domain/interfaces/repository/client.repository";
 import { IWalletRepository } from "../../domain/interfaces/repository/wallet.repository";
 import { IBookingCommandUsecase } from "../../domain/interfaces/usecase/booking-usecase.interface";
@@ -15,10 +20,8 @@ import { IPayment } from "../../domain/models/payment";
 import { IBooking } from "../../domain/models/booking";
 import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
 import { Types } from "mongoose";
-import { IConversationRepository } from "../../domain/interfaces/repository/conversation.repository";
 import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.interface";
 import { IEmailService } from "../../domain/interfaces/service/email-service.interface";
-import { TimeSlot } from "../../shared/types/service.types";
 
 @injectable()
 export class BookingCommandUsecase implements IBookingCommandUsecase {
@@ -32,7 +35,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
     @inject("IPaymentUsecaase") private _paymentUsecase: IPaymentUsecaase,
     @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
     @inject("IChatUsecase") private _chatUsecase: IChatUsecase,
-    @inject('IEmailService') private _emailService : IEmailService
+    @inject("IEmailService") private _emailService: IEmailService
   ) {}
 
   async createPaymentIntentAndBooking(
@@ -71,8 +74,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       );
     }
 
-
-    const adminCommission = ( totalPrice / 100 ) * 2;
+    const adminCommission = (totalPrice / 100) * 2;
     const newBooking = await this._bookingRepository.create({
       bookingDate: bookingDate,
       customLocation: customLocation || "",
@@ -95,7 +97,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
         termsAndConditions: service.termsAndConditions,
         location: service.location,
       },
-      adminCommision : adminCommission,
+      adminCommision: adminCommission,
       timeSlot: timeSlot,
       totalPrice: totalPrice,
       paymentStatus: "pending",
@@ -141,9 +143,17 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
     };
     const newPayment = await this._paymentUsecase.processPayment(paymentData);
 
-      
     await Promise.all([
-      this._emailService.send(client.email,'Your Bella Imagine Booking is Confirmed 🎟️',BOOKING_CONFIRMATION_MAIL_CONTENT({date : bookingDate , eventName : service.serviceTitle ,time : `${timeSlot.startTime} - ${timeSlot.endTime}` , stripeReceipt : 'nice'})),
+      this._emailService.send(
+        client.email,
+        "Your Bella Imagine Booking is Confirmed 🎟️",
+        BOOKING_CONFIRMATION_MAIL_CONTENT({
+          date: bookingDate,
+          eventName: service.serviceTitle,
+          time: `${timeSlot.startTime} - ${timeSlot.endTime}`,
+          stripeReceipt: "nice",
+        })
+      ),
       this._bookingRepository.update(newBooking._id, {
         paymentId: newPayment._id,
       }),
@@ -152,7 +162,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       this._chatUsecase.createConversation({
         userId: clientId,
         vendorId: vendorId,
-        userRole : client.role
+        userRole: client.role,
       }),
     ]);
 
@@ -160,7 +170,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
   }
 
   async updateBookingStatus(input: updateBookingStatusInput): Promise<void> {
-    const { bookingId, status, userId ,userRole} = input;
+    const { bookingId, status, userId, userRole } = input;
     const booking = await this._bookingRepository.findById(bookingId);
     if (!booking) {
       throw new CustomError(
@@ -185,7 +195,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
     }
 
     if (status === "cancelled") {
-      await this.cancelBooking(bookingId,userRole);
+      await this.cancelBooking(bookingId, userRole);
       return;
     }
 
@@ -220,22 +230,22 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       }
 
       if (updatedBooking.isClientApproved && updatedBooking.isVendorApproved) {
-        const amountForVendor = updatedBooking.totalPrice - (updatedBooking.totalPrice / 100) * 2
+        const amountForVendor =
+          updatedBooking.totalPrice - (updatedBooking.totalPrice / 100) * 2;
 
-          await this._bookingRepository.update(bookingId, {
-            status: "completed",
-          }),
+        await this._bookingRepository.update(bookingId, {
+          status: "completed",
+        });
 
         await Promise.all([
-        this._walletUsecase.creditAdminCommissionToWallet(bookingId),
-        this._walletUsecase.creditAmountToWallet({
-          amount : amountForVendor,
-          purpose: "wallet-credit",
-          bookingId: bookingId,
-          userId : updatedBooking.vendorId,
-        })
-        ])
-         
+          this._walletUsecase.creditAdminCommissionToWallet(bookingId),
+          this._walletUsecase.creditAmountToWallet({
+            amount: amountForVendor,
+            purpose: "wallet-credit",
+            bookingId: bookingId,
+            userId: updatedBooking.vendorId,
+          }),
+        ]);
       }
       return;
     }
@@ -246,7 +256,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
     );
   }
 
-  async cancelBooking(bookingId: Types.ObjectId , role : TRole): Promise<void> {
+  async cancelBooking(bookingId: Types.ObjectId, role: TRole): Promise<void> {
     const booking = await this._bookingRepository.findById(bookingId);
     if (!booking) {
       throw new CustomError(
@@ -261,7 +271,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
     const hoursDiff =
       (bookingDate.getTime() - now.getTime()) / (1000 * 60 * 60);
 
-    if (hoursDiff < 24 && role === 'client') {
+    if (hoursDiff < 24 && role === "client") {
       throw new CustomError(
         "Cancellations must be made at least 24 hours in advance.",
         HTTP_STATUS.BAD_REQUEST

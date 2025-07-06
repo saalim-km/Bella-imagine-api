@@ -22,7 +22,6 @@ import {
 import {
   BookingQuerySchema,
   createBookingSchema,
-  FetchAllCommunitiesSchema,
   getAllNotificationtSchema,
   getVendorDetailsSchema,
   getVendorsSchema,
@@ -40,7 +39,6 @@ import {
   IBookingQueryUsecase,
 } from "../../domain/interfaces/usecase/booking-usecase.interface";
 import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
-import { ICommunityRepository } from "../../domain/interfaces/repository/community.repository";
 import { INotificationUsecase } from "../../domain/interfaces/usecase/notification-usecase.interface";
 import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.interface";
 
@@ -169,6 +167,7 @@ export class ClientController implements IClientController {
     );
     const event: Stripe.Event = req.body;
     await this._stripeService.handleWebhookEvent(event);
+    ResponseHandler.success(res,SUCCESS_MESSAGES.PAYMENT_STATUS_UPDATED)
   }
 
   async getClientDetails(req: Request, res: Response): Promise<void> {
@@ -211,9 +210,9 @@ export class ClientController implements IClientController {
   }
 
   async updateBookingStatus(req: Request, res: Response): Promise<void> {
-    const userId = (req as CustomRequest).user._id;
-    const parsed = updateBookingSchema.parse({ ...req.query, userId });
-    await this._bookingCommandUsecase.updateBookingStatus(parsed);
+    const {_id , role} = (req as CustomRequest).user;
+    const parsed = updateBookingSchema.parse({ ...req.query, userId : _id });
+    await this._bookingCommandUsecase.updateBookingStatus({...parsed,userRole : role as TRole});
     ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
   }
 

@@ -10,7 +10,4 @@ export interface IBaseUserRepository<T> {
   sort: any) : Promise<T[]>
   findByEmail(email: string): Promise<T | null>;
   updateOnlineStatus(payload : {userId : Types.ObjectId , isOnline : boolean , lastSeen : string}): Promise<T | null>;
-  updateLastSeenById(userId: Types.ObjectId, lastSeen: string): Promise<void>;
-  findByIdAndUpdatePassword(userId : Types.ObjectId , hashedNewPassword : string) : Promise<void>
-  updateProfileById(userId : Types.ObjectId , data : Partial<T>) : Promise<void>
 }

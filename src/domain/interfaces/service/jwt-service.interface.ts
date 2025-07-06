@@ -1,5 +1,5 @@
-import { Jwt, JwtPayload } from "jsonwebtoken";
-import { TJwtPayload } from "../repository/types/auth.types";
+import { JwtPayload } from "jsonwebtoken";
+import { TJwtPayload } from "../../types/auth.types";
 
 export interface IJwtservice {
     generateAccessToken (data : TJwtPayload) : string

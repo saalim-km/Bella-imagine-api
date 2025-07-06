@@ -7,11 +7,10 @@ import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-
 import { IAwsS3Service } from "../../domain/interfaces/service/aws-service.interface";
 import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
-import { Types, UpdateQuery } from "mongoose";
+import { UpdateQuery } from "mongoose";
 import { config } from "../../shared/config/config";
 import path from "path";
 import { unlinkSync } from "fs";
-import { GeoLocation } from "../../domain/models/user-base";
 
 @injectable()
 export class ClientProfileUsecase implements IClientProfileUsecase {
@@ -23,7 +22,7 @@ export class ClientProfileUsecase implements IClientProfileUsecase {
   ) {}
 
   async updateClientProfile(input: UpdateClientProfileInput): Promise<IClient> {
-    const { name, clientId, email, location, phoneNumber, profileImage } =
+    const { name, clientId , location, phoneNumber, profileImage } =
       input;
     const client = await this._clientRepository.findById(clientId);
     if (!client) {

@@ -6,7 +6,6 @@ import { IVendor } from "../../models/vendor";
 import { IBaseRepository } from "./base.repository";
 import { GetQueryInput } from "../../types/admin.type";
 import { PaginatedResponse } from "../usecase/types/common.types";
-import { IClient } from "../../models/client";
 import { ClientVendorQuery } from "../../types/client.types";
 import { IWorkSample } from "../../models/worksample";
 import { GetVendorsOutput } from "../usecase/types/client.types";

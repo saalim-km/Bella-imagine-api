@@ -1,6 +1,4 @@
 import { injectable } from "tsyringe";
-import { BaseRepository } from "./base-repository.mongo";
-import { IAdmin } from "../../domain/models/admin";
 import { IAdminRepository } from "../../domain/interfaces/repository/admin-repository";
 import { Client } from "../database/schemas/client.schema";
 import { Vendor } from "../database/schemas/vendor.schema";

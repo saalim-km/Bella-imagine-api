@@ -27,7 +27,6 @@ import { MessageRepository } from "../../interfaceAdapters/repositories/message-
 import { INotificationRepository } from "../../domain/interfaces/repository/notification.repository";
 import { NotificationRepository } from "../../interfaceAdapters/repositories/notification-repository.mongo";
 import { CommunityPostRepository } from "../../interfaceAdapters/repositories/community-post-repository.mongo";
-import { IComment } from "../../domain/models/community";
 import { CommentRepository } from "../../interfaceAdapters/repositories/comment-reposiory.mongo";
 import { LikeRepository } from "../../interfaceAdapters/repositories/like-respository.mongo";
 import { IAdminRepository } from "../../domain/interfaces/repository/admin-repository";

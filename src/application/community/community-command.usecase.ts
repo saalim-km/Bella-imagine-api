@@ -53,7 +53,7 @@ export class CommunityCommandUsecase implements ICommunityCommandUsecase {
       );
     }
 
-    let newCommunity = {
+    const newCommunity = {
       name: input.name,
       category: category,
       description: input.description,
@@ -97,7 +97,7 @@ export class CommunityCommandUsecase implements ICommunityCommandUsecase {
       category,
     } = input;
 
-    let community = await this._communityRepository.findById(_id);
+    const community = await this._communityRepository.findById(_id);
     if (!community) {
       throw new CustomError(
         ERROR_MESSAGES.COMMUNITY_NO_EXIST,

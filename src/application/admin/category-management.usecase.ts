@@ -32,7 +32,7 @@ export class CategoryManagementUsecase implements ICategoryManagementUsecase {
     input: GetCategoriesFilterInput
   ): Promise<PaginatedResponse<ICategory>> {
     const skip = (input.page - 1) * input.limit;
-    let search: FilterQuery<ICategory> = {};
+    const search: FilterQuery<ICategory> = {};
 
     if (typeof input.status === "boolean") {
       search.status = input.status ? true : false;

@@ -6,7 +6,7 @@ import {
   ICommunityPostQueryUsecase,
   ICommunityQueryUsecase,
 } from "../../domain/interfaces/usecase/community-usecase.interface";
-import e, { Request, Response } from "express";
+import { Request, Response } from "express";
 import {
   addCommentSchema,
   createCommunitySchema,
@@ -130,6 +130,7 @@ export class CommunityController implements ICommunityController {
   async getCommunityMembers(req: Request, res: Response): Promise<void> {
     const parsed = getCommunityMemberSchema.parse({...req.query,slug : req.params.slug})
     const members = await this._communityQuery.fetchCommuityMembers(parsed)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,members)
   }
 
   async createPost(req: Request, res: Response): Promise<void> {
@@ -187,12 +188,9 @@ export class CommunityController implements ICommunityController {
   }
 
   async editPost(req: Request, res: Response): Promise<void> {
-    console.log(req.body);
-    console.log(req.files);  
     const parsedData = editPostSchema.parse({...req.body,newImages : req.files})
-    console.dir(parsedData, { depth: null, colors: true });
-    console.log('newly added images',parsedData.newImages);
     await this._communityPostUsecase.editPost(parsedData)
+    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
   }
 
   async deleteCommunityPost(req: Request, res: Response): Promise<void> {
@@ -200,5 +198,4 @@ export class CommunityController implements ICommunityController {
     await this._communityPostUsecase.deletePost(postId)
     ResponseHandler.success(res,SUCCESS_MESSAGES.DELETE_SUCCESS)
   }
-
 }

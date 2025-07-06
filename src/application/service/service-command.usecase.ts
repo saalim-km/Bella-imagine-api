@@ -64,7 +64,7 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
     const { media, service, title, vendor, description, tags, isPublished } =
       input;
     let filekeys: string[] = [];
-    let uploadedkeys: string[] = [];
+    const uploadedkeys: string[] = [];
 
     try {
       filekeys = media.map((image) =>
@@ -152,15 +152,14 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
       newImages,
     } = input;
 
-    console.log('updatrworksampe input : ',input);
+    console.log(vendor);
 
-    let uploadedKeys: string[] = [];
-    let fileKeys: string[] = existingImageKeys || [];
+    const uploadedKeys: string[] = [];
+    const fileKeys: string[] = existingImageKeys || [];
 
-    console.log('existing file keys : ',fileKeys);
     try {
       if (deletedImageKeys && deletedImageKeys.length > 0) {
-        let deletedPromises = deletedImageKeys.map(async (key) => {
+        const deletedPromises = deletedImageKeys.map(async (key) => {
           if (await this._awsS3Service.isFileAvailableInAwsBucket(key)) {
             return await this._awsS3Service.deleteFileFromAws(key);
           }
@@ -170,7 +169,7 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
       }
 
       if (newImages && newImages.length > 0) {
-        let uploadPromises = newImages.map(async (image) => {
+        const uploadPromises = newImages.map(async (image) => {
           const filekey = generateS3FileKey(config.s3.workSample, image.path);
           await this._awsS3Service.uploadFileToAws(filekey, image.path);
           uploadedKeys.push(filekey);
@@ -198,6 +197,7 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
           })
         );
       }
+      console.log(error);
     } finally {
       if (newImages && newImages.length > 0) {
         await cleanUpLocalFiles(newImages);

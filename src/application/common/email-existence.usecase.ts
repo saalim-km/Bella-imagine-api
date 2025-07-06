@@ -25,23 +25,29 @@ export class EmailExistenceUsecase implements IEmailExistenceUsecase<IUser> {
 
     switch (userRole) {
       case "client":
+        {
         const client = await this._clientRepository.findByEmail(email);
         return {
           success: !!client,
           data: client,
         };
+      }
       case "vendor":
+        {
         const vendor = await this._vendorRepository.findByEmail(email);
         return {
           success: !!vendor,
           data: vendor,
         };
+        }
       case 'admin' : 
+      {
         const admin = await this._clientRepository.findAdmin(email);
         return {
           success: !!admin,
           data: admin,
         };
+      }
       default:
         throw new CustomError(ERROR_MESSAGES.INVALID_ROLE, 400);
     }

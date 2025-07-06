@@ -9,7 +9,6 @@ import {
   FetchAllCommunityInput,
 } from "../../domain/types/community.types";
 import mongoose, { FilterQuery } from "mongoose";
-import { Category } from "../database/schemas/category.schema";
 
 @injectable()
 export class CommunityRepository

@@ -8,10 +8,8 @@ import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.
 import { GetAllPostInput } from "../../domain/interfaces/usecase/types/community.types";
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { IAwsS3Service } from "../../domain/interfaces/service/aws-service.interface";
-import { FilterQuery, Types } from "mongoose";
+import { FilterQuery } from "mongoose";
 import { IComment, ICommunityPost } from "../../domain/models/community";
-import { CustomError } from "../../shared/utils/helper/custom-error";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import {
   GetCommentUsecaseInput,
   GetPostDetailsInput,
@@ -34,19 +32,22 @@ export class CommunityPostQueryUsecase implements ICommunityPostQueryUsecase {
     const { limit, page, communityId, userId } = input;
     const skip = (page - 1) * limit;
 
-    let filter: FilterQuery<ICommunityPost> = {};
+    const filter: FilterQuery<ICommunityPost> = {};
 
     if (communityId && communityId !== undefined) {
       filter.communityId = communityId;
     }
 
-    let { data, total } = await this._communityPostRepo.fetchAllPost(
+    const allPost = await this._communityPostRepo.fetchAllPost(
       filter,
       userId,
       skip,
       limit,
       -1
     );
+
+    let data = allPost.data;
+    const total = allPost.total;
 
     data = await Promise.all(
       data.map(async (post) => {
@@ -148,12 +149,15 @@ export class CommunityPostQueryUsecase implements ICommunityPostQueryUsecase {
       userId: userId,
     };
 
-    let { data, total } = await this._communityPostRepo.fetchAllPostForUser({
+    const allPost = await this._communityPostRepo.fetchAllPostForUser({
       filter: filter,
       limit: limit,
       skip: skip,
       sort: -1,
     });
+
+    let data = allPost.data;
+    const total = allPost.total;
 
     data = await Promise.all(
       data.map(async (post) => {
@@ -162,7 +166,10 @@ export class CommunityPostQueryUsecase implements ICommunityPostQueryUsecase {
             post.media.map(async (media) => {
               const isFileExists =
                 await this._s3Service.isFileAvailableInAwsBucket(media);
-              return await this._presignedUrl.getPresignedUrl(media);
+              if (isFileExists) {
+                return await this._presignedUrl.getPresignedUrl(media);
+              }
+              return media;
             })
           );
         }
@@ -189,7 +196,7 @@ export class CommunityPostQueryUsecase implements ICommunityPostQueryUsecase {
           }
         }
 
-        return post
+        return post;
       })
     );
 

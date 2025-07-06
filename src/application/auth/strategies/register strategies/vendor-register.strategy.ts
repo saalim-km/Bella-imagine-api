@@ -45,14 +45,14 @@ export class VendorRegisterStrategy implements IRegisterUserStrategy {
       hashedNewPassword = await this._bcryptService.hash(input.password);
     }
 
-    let data: Partial<IVendor> = {};
+    const data: Partial<IVendor> = {};
     if (input.googleId) {
       data.name = input.name;
       data.email = input.email;
       data.googleId = input.googleId;
       data.profileImage = input.profileImage;
-      data.vendorId = generateVendorId(),
-      (data.password = ""),
+      data.vendorId = generateVendorId();
+      (data.password = "");
         (data.geoLocation = {
           type: "Point",
           coordinates: [0, 0],
@@ -65,10 +65,10 @@ export class VendorRegisterStrategy implements IRegisterUserStrategy {
         );
       }
       data.name = input.name;
-      data.vendorId = generateVendorId()
+      data.vendorId = generateVendorId();
       data.email = input.email;
       data.password = hashedNewPassword!;
-      (data.profileImage = ""),
+      (data.profileImage = "");
         (data.geoLocation = {
           type: "Point",
           coordinates: [0, 0],

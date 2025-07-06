@@ -14,6 +14,7 @@ export const HTTP_STATUS = {
 };
 
 export const SUCCESS_MESSAGES = {
+  PAYMENT_STATUS_UPDATED : 'Payment status updated successfully',
   COMMENT_DELETED: "Comment has been deleted successfully.",
   COMMENT_EDITED: "Comment has been edited successfully.",
   SERVICE_DELETED: 'Service has been successfully deleted',

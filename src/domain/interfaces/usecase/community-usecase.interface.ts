@@ -2,7 +2,6 @@ import { Types } from "mongoose";
 import {
   IComment,
   ICommunity,
-  ICommunityMember,
   ICommunityPost,
 } from "../../models/community";
 import { CommunityMembersOutput, FetchCommunityBySlugOutput, GetCommentUsecaseInput, GetPostDetailsInput, GetPostForUserOutput, GetPostUsecaseInput } from "../../types/community.types";
@@ -11,7 +10,6 @@ import {
   AddCommentInput,
   CreateCommunityInput,
   CreatePostInput,
-  DeletePostInput,
   EditCommentInput,
   EditPostInput,
   FetchAllCommunitiesInput,

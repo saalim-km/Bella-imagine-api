@@ -1,7 +1,6 @@
 import { Types } from "mongoose";
 import { PaginationInput } from "./admin.types";
 import { TRole } from "../../../../shared/constants/constants";
-import { UserType } from "../../../models/community";
 
 export interface BaseCommunityInput {
   name: string;
@@ -14,10 +13,9 @@ export interface BaseCommunityInput {
   iconImage?: Express.Multer.File;
 }
 
-export interface CreateCommunityInput extends BaseCommunityInput {
-}
+export type CreateCommunityInput = BaseCommunityInput 
 
-export interface FetchCommuityInput extends Omit<PaginationInput , 'createdAt'>{}
+export type FetchCommuityInput = Omit<PaginationInput , 'createdAt'>
 
 export interface fetchCommBySlugInput {
   userId : Types.ObjectId,
@@ -45,7 +43,7 @@ export interface JoinCommunityInput {
   role : TRole
 }
 
-export interface LeaveCommunityInput extends JoinCommunityInput{}
+export type LeaveCommunityInput = JoinCommunityInput
 
 export interface CreatePostInput {
   communityId: Types.ObjectId;

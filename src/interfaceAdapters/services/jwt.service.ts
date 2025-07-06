@@ -13,9 +13,9 @@ export class JwtService implements IJwtservice {
   private refreshExpireIn: string;
 
   constructor() {
-    (this.accessSecret = config.jwt.ACCESS_SECRET_KEY),
-      (this.accessExpireIn = config.jwt.ACCESS_EXPIRES_IN),
-      (this.refreshExpireIn = config.jwt.REFRESH_EXPIRES_IN),
+    (this.accessSecret = config.jwt.ACCESS_SECRET_KEY);
+      (this.accessExpireIn = config.jwt.ACCESS_EXPIRES_IN);
+      (this.refreshExpireIn = config.jwt.REFRESH_EXPIRES_IN);
       (this.refreshSecret = config.jwt.REFRESH_SECRET_KEY);
   }
 

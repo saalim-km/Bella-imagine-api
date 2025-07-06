@@ -1,6 +1,5 @@
 import { inject, injectable } from "tsyringe";
 import {
-  ICommunityCommandUsecase,
   ICommunityPostCommandUsecase,
 } from "../../domain/interfaces/usecase/community-usecase.interface";
 import {
@@ -11,7 +10,6 @@ import {
 } from "../../domain/interfaces/repository/community.repository";
 import {
   AddCommentInput,
-  CreateCommunityInput,
   CreatePostInput,
   EditCommentInput,
   EditPostInput,
@@ -23,7 +21,6 @@ import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { IClientRepository } from "../../domain/interfaces/repository/client.repository";
 import { IAwsS3Service } from "../../domain/interfaces/service/aws-service.interface";
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
-import { string } from "zod";
 import { generateS3FileKey } from "../../shared/utils/helper/s3FileKeyGenerator";
 import { config } from "../../shared/config/config";
 import { cleanUpLocalFiles } from "../../shared/utils/helper/clean-local-file.helper";
@@ -84,11 +81,11 @@ export class CommunityPostCommandUsecase
     }
 
     let fileKeys: string[] = [];
-    let uploadedKeys: string[] = [];
+    const uploadedKeys: string[] = [];
 
     if (media && media.length > 0) {
       try {
-        fileKeys = media.map((media, indx) => {
+        fileKeys = media.map((media) => {
           return generateS3FileKey(config.s3.communityPost, media.originalname);
         });
 
@@ -224,7 +221,7 @@ export class CommunityPostCommandUsecase
   }
 
   async unLikePost(input: LikePostInput): Promise<{ success: boolean }> {
-    const { postId, role, userId } = input;
+    const { postId , userId } = input;
 
     try {
       console.log("In unlike post usecase");
@@ -306,8 +303,8 @@ export class CommunityPostCommandUsecase
 
     console.log("editPost input:", input);
 
-    let uploadedKeys: string[] = [];
-    let fileKeys: string[] = existingImageKeys || [];
+    const uploadedKeys: string[] = [];
+    const fileKeys: string[] = existingImageKeys || [];
 
     try {
       // 1. Delete old images from S3 if needed

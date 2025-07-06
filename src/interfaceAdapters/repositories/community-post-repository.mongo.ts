@@ -1,13 +1,12 @@
 import { injectable } from "tsyringe";
 import { BaseRepository } from "./base-repository.mongo";
 import { CommunityPost } from "../database/schemas/community-post.schema";
-import { IComment, ICommunityPost } from "../../domain/models/community";
+import { ICommunityPost } from "../../domain/models/community";
 import { ICommunityPostRepository } from "../../domain/interfaces/repository/community.repository";
 import {
   GetPostDetailsInput,
   GetPostForUserInput,
   GetPostForUserOutput,
-  ICommunityPostResponse,
   PostDetailsResponse,
 } from "../../domain/types/community.types";
 import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";

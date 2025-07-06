@@ -3,15 +3,12 @@ import { BaseRepository } from "./base-repository.mongo";
 import { IBooking } from "../../domain/models/booking";
 import {
   FindBookingsInput,
-  FindUsersForChat,
   IBookingRepository,
 } from "../../domain/interfaces/repository/booking.repository";
 import { Booking } from "../database/schemas/booking.schema";
 import { Types } from "mongoose";
 import { PaymentStatus } from "../../domain/models/payment";
 import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";
-import { IClient } from "../../domain/models/client";
-import { IVendor } from "../../domain/models/vendor";
 
 @injectable()
 export class BookingRepository

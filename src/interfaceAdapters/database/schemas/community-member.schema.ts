@@ -1,4 +1,4 @@
-import mongoose, { Schema, Types } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { ICommunityMember } from "../../../domain/models/community";
 
 export const communityMember = new Schema<ICommunityMember>({

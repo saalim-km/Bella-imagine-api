@@ -5,7 +5,6 @@ import { ICommentRepository } from "../../domain/interfaces/repository/community
 import { Comment } from "../database/schemas/community-post-comment.schema";
 import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";
 import { GetComentsInput } from "../../domain/types/community.types";
-import { PopulateOption } from "mongoose";
 
 @injectable()
 export class CommentRepository

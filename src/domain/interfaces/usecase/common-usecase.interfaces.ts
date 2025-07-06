@@ -1,6 +1,6 @@
 import { TRole } from "../../../shared/constants/constants";
 import { IUser } from "../../models/user-base";
-import { IDecoded, IEmailCheckResult, SendEmailInput } from "./types/common.types";
+import { IDecoded, IEmailCheckResult } from "./types/common.types";
 
 export interface IEmailExistenceUsecase<T = IUser> {
     doesEmailExist(email : string , userRole : TRole) : Promise<IEmailCheckResult<T>>

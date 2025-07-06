@@ -11,7 +11,6 @@ import { IService } from "../../domain/models/service";
 import { PaginatedResult } from "../../shared/types/pagination.types";
 import { IWorkSample } from "../../domain/models/worksample";
 import { GetVendorsOutput } from "../../domain/interfaces/usecase/types/client.types";
-import { json } from "stream/consumers";
 
 @injectable()
 export class VendorRepository

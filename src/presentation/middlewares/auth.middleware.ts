@@ -113,7 +113,7 @@ export const decodeToken = async (
       next();
     } catch (tokenError) {
       // Access token is expired/invalid, try to refresh
-      console.log('Access token invalid, attempting refresh...');
+      console.log('Access token invalid, attempting refresh...',tokenError);
       res
         .status(HTTP_STATUS.UNAUTHORIZED)
         .json({ message: ERROR_MESSAGES.TOKEN_EXPIRED });

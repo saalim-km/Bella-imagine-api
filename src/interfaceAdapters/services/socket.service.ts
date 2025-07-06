@@ -30,7 +30,7 @@ export class SocketService implements ISocketService {
       },
       path: "/path/_chat",
       transports: ["websocket", "polling"],
-    })),
+    }));
       this.io.use(async (socket, next) => {
         const { userId, userType } = socket.handshake.auth;
         socket.data = { userId, userType };

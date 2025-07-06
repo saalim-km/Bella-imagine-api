@@ -1,4 +1,3 @@
-import { S3Client } from "@aws-sdk/client-s3";
 
 export interface IAwsS3Service {
     uploadFileToAws(key: string, filePath: string) : Promise<string>;

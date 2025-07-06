@@ -9,12 +9,11 @@ export interface PaginationQuery<T = any> {
     sort ?: number
 }
 
-export interface GetCategoryInput extends PaginationQuery<ICategory> {}
+export type GetCategoryInput = PaginationQuery<ICategory> 
 
-export interface GetQueryInput extends PaginationQuery<IUser> {
-}
+export type GetQueryInput = PaginationQuery<IUser> 
 
-export interface GetCatRequestInput extends Pick<PaginationQuery , 'limit' | 'skip'> {}
+export type  GetCatRequestInput = Pick<PaginationQuery , 'limit' | 'skip'> 
 
 export interface DashBoardStatsOuput {
     totalClients: number

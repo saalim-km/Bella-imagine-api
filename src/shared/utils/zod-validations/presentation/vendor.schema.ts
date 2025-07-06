@@ -1,6 +1,5 @@
-import { string, z } from "zod";
+import { z } from "zod";
 import {
-  ImageSchema,
   limitQuerySchema,
   objectIdSchema,
   pageQuerySchema,

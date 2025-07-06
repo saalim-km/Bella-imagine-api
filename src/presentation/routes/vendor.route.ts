@@ -22,6 +22,8 @@ export class VendorRoute extends BaseRoute {
         .post('/vendor/conversation',verifyAuth,authorizeRole(['vendor']),asyncHandler(clientController.createConversation.bind(clientController)))
         .delete('/vendor/comment/:commentId',verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.deleteComment.bind(communityController)))
         .get('/vendor/post',verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.getAllPostForUser.bind(communityController)))
+        .delete('/vendor/post/:postId',verifyAuth,authorizeRole(['vendor']),asyncHandler(communityController.deleteCommunityPost.bind(communityController)))
+
 
         this.router.route('/vendor/details')
         .get(verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.getVendorDetails.bind(vendorController)))

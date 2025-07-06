@@ -59,25 +59,42 @@ export class AdminController implements IAdminController {
   }
 
   async refreshToken(req: Request, res: Response): Promise<void> {
-    const user = (req as CustomRequest).user;
-    const accessToken = await this._refreshTokenUsecase.execute({
-      _id: user._id,
-      email: user.email,
-      role: user.role,
-      refreshToken: user.refresh_token,
-    });
+    try {
+      const user = (req as CustomRequest).user;
 
-    if (!user.role && user.role !== undefined) {
-      updateCookieWithAccessToken(
+      const accessToken = await this._refreshTokenUsecase.execute({
+        _id: user._id,
+        email: user.email,
+        role: user.role,
+        refreshToken: user.refresh_token,
+      });
+
+      // FIX: Correct the logic condition
+      if (user.role && user.role !== undefined) {
+        updateCookieWithAccessToken(
+          res,
+          accessToken,
+          `${user.role}_access_token`
+        );
+        ResponseHandler.success(res, SUCCESS_MESSAGES.REFRESH_TOKEN_SUCCESS);
+        return;
+      }
+
+      ResponseHandler.error(
         res,
-        accessToken,
-        `${user.role}_access_token`
+        ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
+        {},
+        HTTP_STATUS.UNAUTHORIZED
       );
-      ResponseHandler.success(res, SUCCESS_MESSAGES.REFRESH_TOKEN_SUCCESS);
-      return;
+    } catch (error) {
+      console.error("Refresh token error:", error);
+      ResponseHandler.error(
+        res,
+        ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
+        {},
+        HTTP_STATUS.UNAUTHORIZED
+      );
     }
-
-    ResponseHandler.error(res,ERROR_MESSAGES.UNAUTHORIZED_ACCESS,{},HTTP_STATUS.UNAUTHORIZED)
   }
 
   async getUsers(req: Request, res: Response): Promise<void> {
