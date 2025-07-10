@@ -4,7 +4,7 @@ import logger from "../../shared/logger/logger";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 
 // ✅ Centralized Error Handler with correct typing
-export const errorHandler: ErrorRequestHandler = (err, req, res) => {
+export const errorHandler: ErrorRequestHandler = (err, req, res,next) => {
   // Handle Zod validation errors
   if (err instanceof ZodError) {
     logger.warn("Validation error");

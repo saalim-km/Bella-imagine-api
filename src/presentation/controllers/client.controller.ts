@@ -27,6 +27,7 @@ import {
   getVendorsSchema,
   updateBookingSchema,
   updateClientProfile,
+  WalletQuerySchema,
 } from "../../shared/utils/zod-validations/presentation/client.schema";
 import {
   IClientProfileUsecase,
@@ -63,7 +64,7 @@ export class ClientController implements IClientController {
     @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
     @inject("INotificationUsecase")
     private _notificationUsecase: INotificationUsecase,
-    @inject('IChatUsecase') private _chatUsecase : IChatUsecase
+    @inject("IChatUsecase") private _chatUsecase: IChatUsecase
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -113,7 +114,7 @@ export class ClientController implements IClientController {
       );
     }
   }
-  
+
   async getVendors(req: Request, res: Response): Promise<void> {
     const parsed = getVendorsSchema.parse(req.query);
     const vendors = await this._vendorBrowsingUsecase.fetchAvailableVendors(
@@ -126,7 +127,7 @@ export class ClientController implements IClientController {
     const categories = await this._categoryManagementUsecase.getCategories({
       limit: 10,
       page: 1,
-      status : true
+      status: true,
     });
     ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, categories);
   }
@@ -167,7 +168,7 @@ export class ClientController implements IClientController {
     );
     const event: Stripe.Event = req.body;
     await this._stripeService.handleWebhookEvent(event);
-    ResponseHandler.success(res,SUCCESS_MESSAGES.PAYMENT_STATUS_UPDATED)
+    ResponseHandler.success(res, SUCCESS_MESSAGES.PAYMENT_STATUS_UPDATED);
   }
 
   async getClientDetails(req: Request, res: Response): Promise<void> {
@@ -202,17 +203,43 @@ export class ClientController implements IClientController {
     ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, bookings);
   }
 
-  async fetchWallet(req: Request, res: Response): Promise<void> {
+  async fetchWalletWithPagination(req: Request, res: Response): Promise<void> {
+    console.log(req.query);
     const { _id } = (req as CustomRequest).user;
     const parsedObjectId = objectIdSchema.parse(_id);
-    const wallet = await this._walletUsecase.fetchWallet(parsedObjectId);
-    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, wallet);
+
+    // Parse query parameters using Zod
+    const queryOptions = WalletQuerySchema.parse(req.query);
+
+    console.log('parsed :',queryOptions);
+    // Ensure pagination parameters are provided
+    if (!queryOptions.page || !queryOptions.limit) {
+      throw new Error("Page and limit parameters are required for pagination");
+    }
+
+    const result = await this._walletUsecase.fetchWalletWithPagination(
+      parsedObjectId,
+      queryOptions
+    );
+
+    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, {
+      wallet: result.wallet,
+      pagination: {
+        currentPage: result.currentPage,
+        totalPages: result.totalPages,
+        totalTransactions: result.totalTransactions,
+        limit: queryOptions.limit,
+      },
+    });
   }
 
   async updateBookingStatus(req: Request, res: Response): Promise<void> {
-    const {_id , role} = (req as CustomRequest).user;
-    const parsed = updateBookingSchema.parse({ ...req.query, userId : _id });
-    await this._bookingCommandUsecase.updateBookingStatus({...parsed,userRole : role as TRole});
+    const { _id, role } = (req as CustomRequest).user;
+    const parsed = updateBookingSchema.parse({ ...req.query, userId: _id });
+    await this._bookingCommandUsecase.updateBookingStatus({
+      ...parsed,
+      userRole: role as TRole,
+    });
     ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
   }
 
@@ -245,13 +272,13 @@ export class ClientController implements IClientController {
   }
 
   async createConversation(req: Request, res: Response): Promise<void> {
-    const userId = objectIdSchema.parse(req.body.userId)
-    const vendorId = objectIdSchema.parse(req.body.vendorId)
+    const userId = objectIdSchema.parse(req.body.userId);
+    const vendorId = objectIdSchema.parse(req.body.vendorId);
     await this._chatUsecase.createConversation({
-      userId : userId,
-      vendorId : vendorId,
-      userRole : (req as CustomRequest).user.role as TRole
-    })
-    ResponseHandler.success(res,SUCCESS_MESSAGES.CREATED)
+      userId: userId,
+      vendorId: vendorId,
+      userRole: (req as CustomRequest).user.role as TRole,
+    });
+    ResponseHandler.success(res, SUCCESS_MESSAGES.CREATED);
   }
 }

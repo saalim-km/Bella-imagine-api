@@ -347,3 +347,18 @@ export const getCommunityMemberSchema = z.object({
   limit : limitQuerySchema,
   slug : slugSchema
 })
+
+export const WalletQuerySchema = z.object({
+  page: pageQuerySchema.optional(),
+  limit: limitQuerySchema.optional(),
+  search: searchQuerySchema.optional(),
+  status: z
+    .enum(["all", "pending", "processing", "succeeded", "failed", "refunded", "partially_refunded"])
+    .default("all"),
+  purpose: z.string().optional(),
+  dateRange: z.enum(["all", "today", "week", "month", "year"]).default("all"),
+  sortField: z.enum(["date", "amount", "status", "purpose"]).default("date"),
+  sortOrder: z.enum(["asc", "desc"]).default("desc"),
+})
+
+export type WalletQueryInput = z.infer<typeof WalletQuerySchema>

@@ -15,7 +15,7 @@ export class ClientRoute extends BaseRoute {
         .get('/client/service/:serviceId',verifyAuth,authorizeRole(['client']),asyncHandler(clientController.getServiceDetails.bind(clientController)))
         .post('/client/create-payment-intent',verifyAuth,authorizeRole(['client']),asyncHandler(clientController.createPaymentIntent.bind(clientController)))
         .post('/client/webhook',clientController.handleWebhook.bind(clientController))
-        .get('/client/wallet',verifyAuth,authorizeRole(['client']),asyncHandler(clientController.fetchWallet.bind(clientController)))
+        .get('/client/wallet',verifyAuth,authorizeRole(['client']),asyncHandler(clientController.fetchWalletWithPagination.bind(clientController)))
         .get('/client/community/:slug',verifyAuth,authorizeRole(['client']),asyncHandler(communityController.fetchCommunityDetais.bind(communityController)))
         .post('/client/community-join',verifyAuth,authorizeRole(['client']),asyncHandler(communityController.joinCommunity.bind(communityController)))
         .delete('/client/community-leave/:communityId',verifyAuth,authorizeRole(['client']),asyncHandler(communityController.leaveCommunity.bind(communityController)))

@@ -58,7 +58,11 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       receiverType,
     } = input;
 
-    const service = await this._serviceRepository.findById(serviceId);
+    const [service, client] = await Promise.all([
+      this._serviceRepository.findById(serviceId),
+      this._clientRepository.findById(clientId),
+    ]);
+
     if (!service || !service._id) {
       throw new CustomError(
         ERROR_MESSAGES.SERVICE_NOT_FOUND,
@@ -66,15 +70,21 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       );
     }
 
-    const client = await this._clientRepository.findById(clientId);
     if (!client) {
       throw new CustomError(
         ERROR_MESSAGES.USER_NOT_FOUND,
         HTTP_STATUS.NOT_FOUND
       );
     }
-
     const adminCommission = (totalPrice / 100) * 2;
+    await this._serviceRepository.updateSlotCount(
+      {
+        bookingDate,
+        timeSlot,
+        serviceDetails: { _id: serviceId },
+      } as IBooking,
+      -1
+    );
     const newBooking = await this._bookingRepository.create({
       bookingDate: bookingDate,
       customLocation: customLocation || "",
@@ -158,7 +168,6 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
         paymentId: newPayment._id,
       }),
       this._walletRepository.addPaymnetIdToWallet(clientId, newPayment._id!),
-      this._serviceRepository.updateSlotCount(newBooking, -1),
       this._chatUsecase.createConversation({
         userId: clientId,
         vendorId: vendorId,

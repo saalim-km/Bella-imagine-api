@@ -9,7 +9,7 @@ export class VendorRoute extends BaseRoute {
         this.router
         .post('/vendor/logout', verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.logout.bind(vendorController)))
         .post('/vendor/refresh-token' , decodeToken,asyncHandler(vendorController.refreshToken.bind(vendorController)))
-        .get('/vendor/wallet', verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.fetchWallet.bind(vendorController)))
+        .get('/vendor/wallet', verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.fetchWalletWithPagination.bind(vendorController)))
         .get('/vendor/vendors',verifyAuth,authorizeRole(['vendor']),asyncHandler(clientController.getVendors.bind(clientController)))
         .get('/vendor/service/:serviceId',verifyAuth,authorizeRole(['vendor']),asyncHandler(clientController.getServiceDetails.bind(clientController)))
         .get('/vendor/photographer/:vendorId',verifyAuth,authorizeRole(['vendor']),asyncHandler(clientController.getVendorDetails.bind(clientController)))

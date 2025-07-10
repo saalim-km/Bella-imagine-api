@@ -9,6 +9,7 @@ import { creditAmountToWalletInput } from "../../domain/interfaces/usecase/types
 import { IBookingRepository } from "../../domain/interfaces/repository/booking.repository";
 import { IPaymentRepository } from "../../domain/interfaces/repository/payment.repository";
 import { IClientRepository } from "../../domain/interfaces/repository/client.repository";
+import { WalletQueryInput } from "../../shared/utils/zod-validations/presentation/client.schema";
 
 @injectable()
 export class WalletUsecase implements IWalletUsecase {
@@ -94,7 +95,7 @@ export class WalletUsecase implements IWalletUsecase {
 
     const adminCommission = (booking.totalPrice / 100) * 2; //  2% commission
 
-    const admin = await this._clientRepository.findOne({role : 'admin'});
+    const admin = await this._clientRepository.findOne({ role: "admin" });
     if (!admin || !admin._id) {
       throw new CustomError(
         ERROR_MESSAGES.ADMIN_NOT_FOUND,
@@ -104,7 +105,7 @@ export class WalletUsecase implements IWalletUsecase {
 
     const transaction = await this._paymentRepository.create({
       amount: adminCommission,
-      purpose: "commission-credit", 
+      purpose: "commission-credit",
       userId: admin._id,
       bookingId: bookingId,
       createrType: "Client",
@@ -128,7 +129,50 @@ export class WalletUsecase implements IWalletUsecase {
     });
   }
 
-  async fetchAdminWallet(): Promise<PopulatedWallet> {
-    return await this._walletRepository.fetchAdminWallet()
+  async fetchAdminWallet(queryOptions?: WalletQueryInput): Promise<PopulatedWallet> {
+    const wallet = await this._walletRepository.fetchAdminWallet(queryOptions)
+    if (!wallet) {
+      throw new CustomError(ERROR_MESSAGES.WALLET_NOT_FOUND, HTTP_STATUS.NOT_FOUND)
+    }
+    return wallet
+  }
+
+  async fetchWalletWithPagination(
+    userId: Types.ObjectId,
+    queryOptions: WalletQueryInput
+  ): Promise<{
+    wallet: PopulatedWallet;
+    totalTransactions: number;
+    currentPage: number;
+    totalPages: number;
+  }> {
+    console.log('fetchwalletwithpagination usecase');
+    const wallet = await this._walletRepository.findByUserId(
+      userId,
+      queryOptions
+    );
+    console.log('got wallet of ',wallet);
+    const totalTransactions = await this._walletRepository.getTransactionCount(
+      userId,
+      queryOptions
+    );
+
+    if (!wallet) {
+      throw new CustomError(
+        ERROR_MESSAGES.WALLET_NOT_FOUND,
+        HTTP_STATUS.NOT_FOUND
+      );
+    }
+
+    const totalPages = queryOptions.limit
+      ? Math.ceil(totalTransactions / queryOptions.limit)
+      : 1;
+
+    return {
+      wallet,
+      totalTransactions,
+      currentPage: queryOptions.page || 1,
+      totalPages,
+    };
   }
 }

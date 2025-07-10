@@ -312,57 +312,67 @@ export class CommunityPostRepository
     };
   }
 
-  async fetchAllPostForUser(input: GetPostForUserInput): Promise<PaginatedResponse<GetPostForUserOutput>> {
-    const {filter,limit,skip,sort} = input;
+  async fetchAllPostForUser(
+    input: GetPostForUserInput
+  ): Promise<PaginatedResponse<GetPostForUserOutput>> {
+    const { filter, limit, skip, sort } = input;
     const sortOrder: 1 | -1 = sort === 1 ? 1 : -1;
-    console.log(filter);
-    const [post , count] = await Promise.all([
+    console.log("sort order : ", sortOrder);
+
+    const [post, count] = await Promise.all([
       this.model.aggregate([
         {
-          $match : filter
+          $match: filter,
         },
-        {$skip : skip},
-        {$limit : limit},
-        {$sort : {createdAt : sortOrder}},
+        // FIXED: Sort immediately after match, before skip/limit
         {
-          $lookup : {
-            from : 'communities',
-            localField : 'communityId',
-            foreignField : '_id',
-            as : 'community'
-          }
+          $sort: { createdAt: sortOrder },
         },
         {
-          $unwind : {
-            path : '$community'
-          }
+          $skip: skip,
         },
         {
-          $addFields : {
-            communityName : '$community.name',
-            iconImage : '$community.iconImage',
-            coverImage : '$community.coverImage'
-          }
+          $limit: limit,
         },
         {
-          $project : {
-            "community" : 0
-          }
-        }
+          $lookup: {
+            from: "communities",
+            localField: "communityId",
+            foreignField: "_id",
+            as: "community",
+          },
+        },
+        {
+          $unwind: {
+            path: "$community",
+          },
+        },
+        {
+          $addFields: {
+            communityName: "$community.name",
+            iconImage: "$community.iconImage",
+            coverImage: "$community.coverImage",
+          },
+        },
+        {
+          $project: {
+            community: 0,
+          },
+        },
       ]),
-      this.count(filter)
-    ])
-    
+      this.count(filter),
+    ]);
+
     return {
-      data : post,
-      total : count
-    }
+      data: post,
+      total: count,
+    };
   }
 
   async deleteCommunityPost(postId: Types.ObjectId): Promise<void> {
     await Promise.all([
-      Comment.deleteMany({postId : postId}),
-      this.model.findByIdAndDelete(postId)
-    ])
+      Comment.deleteMany({ postId: postId }),
+      this.model.findByIdAndDelete(postId),
+    ]);
   }
 }

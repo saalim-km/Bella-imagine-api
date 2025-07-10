@@ -42,6 +42,7 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  TIME_SLOT_FULLY_BOOKED : "Capacity exceed for selected time slot",
   COMMENT_NOT_EXISTS : 'Comment not exists',
   WORKSMAPLE_LINKED: 'Some work samples are linked to this service and it cannot be deleted.',
   POST_NOT_EXISTS: 'Post does not exist.',

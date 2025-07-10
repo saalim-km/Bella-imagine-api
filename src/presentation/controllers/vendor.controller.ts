@@ -5,12 +5,15 @@ import {
   IGetUserDetailsUsecase,
 } from "../../domain/interfaces/usecase/admin-usecase.interface";
 import { Request, Response } from "express";
-import {
-  objectIdSchema,
-} from "../../shared/utils/zod-validations/validators/validations";
+import { objectIdSchema } from "../../shared/utils/zod-validations/validators/validations";
 import { CustomRequest } from "../middlewares/auth.middleware";
 import { ResponseHandler } from "../../shared/utils/helper/response-handler";
-import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES, TRole } from "../../shared/constants/constants";
+import {
+  ERROR_MESSAGES,
+  HTTP_STATUS,
+  SUCCESS_MESSAGES,
+  TRole,
+} from "../../shared/constants/constants";
 import {
   clearAuthCookies,
   updateCookieWithAccessToken,
@@ -21,14 +24,26 @@ import {
   getAllNotificationtSchema,
   updateBookingSchema,
   updateVendorProfileSchema,
+  WalletQuerySchema,
 } from "../../shared/utils/zod-validations/presentation/client.schema";
-import { IServiceCommandUsecase, IServiceQueryUsecase, IVendorProfileUsecase } from "../../domain/interfaces/usecase/vendor-usecase.interface";
+import {
+  IServiceCommandUsecase,
+  IServiceQueryUsecase,
+  IVendorProfileUsecase,
+} from "../../domain/interfaces/usecase/vendor-usecase.interface";
 import {
   IBookingCommandUsecase,
   IBookingQueryUsecase,
 } from "../../domain/interfaces/usecase/booking-usecase.interface";
 import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
-import { CreateServiceSchema, createWorkSampleSchema, getSeviceSchema, getWorkSamplesSchema, updateServiceSchema, updateWorkSampleSchema } from "../../shared/utils/zod-validations/presentation/vendor.schema";
+import {
+  CreateServiceSchema,
+  createWorkSampleSchema,
+  getSeviceSchema,
+  getWorkSamplesSchema,
+  updateServiceSchema,
+  updateWorkSampleSchema,
+} from "../../shared/utils/zod-validations/presentation/vendor.schema";
 import { INotificationUsecase } from "../../domain/interfaces/usecase/notification-usecase.interface";
 
 @injectable()
@@ -47,10 +62,11 @@ export class VendorController implements IVendorController {
     @inject("IBookingCommandUsecase")
     private _bookingCommandUsecase: IBookingCommandUsecase,
     @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
-    @inject('IServiceCommandUsecase') private _serviceCommandUsecase : IServiceCommandUsecase,
-    @inject('IServiceQueryUsecase') private _serviceQuery : IServiceQueryUsecase,
-    @inject('INotificationUsecase') private _notificationUsecase : INotificationUsecase
-    
+    @inject("IServiceCommandUsecase")
+    private _serviceCommandUsecase: IServiceCommandUsecase,
+    @inject("IServiceQueryUsecase") private _serviceQuery: IServiceQueryUsecase,
+    @inject("INotificationUsecase")
+    private _notificationUsecase: INotificationUsecase
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -143,7 +159,7 @@ export class VendorController implements IVendorController {
   }
 
   async getCategories(req: Request, res: Response): Promise<void> {
-    const categories = await this._categoryManagementUsecase.getCatForUsers()
+    const categories = await this._categoryManagementUsecase.getCatForUsers();
     ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, categories);
   }
 
@@ -160,90 +176,151 @@ export class VendorController implements IVendorController {
     );
   }
 
-  async fetchWallet(req: Request, res: Response): Promise<void> {
+  // async fetchWallet(req: Request, res: Response): Promise<void> {
+  //   const vendorId = objectIdSchema.parse((req as CustomRequest).user._id);
+  //   const wallet = await this._walletUsecase.fetchWallet(vendorId);
+  //   ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, wallet);
+  // }
+
+  async fetchWalletWithPagination(req: Request, res: Response): Promise<void> {
     const vendorId = objectIdSchema.parse((req as CustomRequest).user._id);
-    const wallet = await this._walletUsecase.fetchWallet(vendorId);
-    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, wallet);
+
+    // Parse query parameters using Zod
+    const queryOptions = WalletQuerySchema.parse(req.query);
+
+    // Ensure pagination parameters are provided
+    if (!queryOptions.page || !queryOptions.limit) {
+      throw new Error("Page and limit parameters are required for pagination");
+    }
+
+    const result = await this._walletUsecase.fetchWalletWithPagination(
+      vendorId,
+      queryOptions
+    );
+
+    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, {
+      wallet: result.wallet,
+      pagination: {
+        currentPage: result.currentPage,
+        totalPages: result.totalPages,
+        totalTransactions: result.totalTransactions,
+        limit: queryOptions.limit,
+      },
+    });
   }
 
   async updateBookingStatus(req: Request, res: Response): Promise<void> {
     const userId = (req as CustomRequest).user._id;
     const parsed = updateBookingSchema.parse({ ...req.query, userId });
-    await this._bookingCommandUsecase.updateBookingStatus({...parsed,userRole : (req as CustomRequest).user.role as TRole});
+    await this._bookingCommandUsecase.updateBookingStatus({
+      ...parsed,
+      userRole: (req as CustomRequest).user.role as TRole,
+    });
     ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
   }
 
   async createService(req: Request, res: Response): Promise<void> {
     const vendorId = objectIdSchema.parse((req as CustomRequest).user._id);
-    const parsed = CreateServiceSchema.parse(req.body)
-    await this._serviceCommandUsecase.createService({...parsed,vendor : vendorId})
-    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED)
+    const parsed = CreateServiceSchema.parse(req.body);
+    await this._serviceCommandUsecase.createService({
+      ...parsed,
+      vendor: vendorId,
+    });
+    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED);
   }
 
   async getServices(req: Request, res: Response): Promise<void> {
     const vendorId = objectIdSchema.parse((req as CustomRequest).user._id);
-    const parsed = getSeviceSchema.parse(req.query)
-    const services = await this._serviceQuery.getServices({...parsed,vendor : vendorId})
-    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,services)
+    const parsed = getSeviceSchema.parse(req.query);
+    const services = await this._serviceQuery.getServices({
+      ...parsed,
+      vendor: vendorId,
+    });
+    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, services);
   }
 
   async updateService(req: Request, res: Response): Promise<void> {
     const vendorId = objectIdSchema.parse((req as CustomRequest).user._id);
-    const parsed =  updateServiceSchema.parse(req.body)
-    await this._serviceCommandUsecase.updateService({...parsed,vendor : vendorId})
-    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
+    const parsed = updateServiceSchema.parse(req.body);
+    await this._serviceCommandUsecase.updateService({
+      ...parsed,
+      vendor: vendorId,
+    });
+    ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
   }
 
   async createWorkSample(req: Request, res: Response): Promise<void> {
-    const parsed = createWorkSampleSchema.parse({ ...req.body, media: (req.files as { [fieldname: string]: Express.Multer.File[] } | undefined)?.media })
-    console.log('parsed data',parsed);
-    await this._serviceCommandUsecase.createWorkSample(parsed)
-    ResponseHandler.success(res,SUCCESS_MESSAGES.CREATED);
+    const parsed = createWorkSampleSchema.parse({
+      ...req.body,
+      media: (
+        req.files as { [fieldname: string]: Express.Multer.File[] } | undefined
+      )?.media,
+    });
+    console.log("parsed data", parsed);
+    await this._serviceCommandUsecase.createWorkSample(parsed);
+    ResponseHandler.success(res, SUCCESS_MESSAGES.CREATED);
   }
 
   async getWorkSamples(req: Request, res: Response): Promise<void> {
     console.log(req.query);
     const vendorId = objectIdSchema.parse((req as CustomRequest).user._id);
     const parsed = getWorkSamplesSchema.parse(req.query);
-    console.log('parsed',parsed);
-    const workSamples = await this._serviceQuery.getWorkSmaples({...parsed,vendor : vendorId})
-    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,workSamples)
+    console.log("parsed", parsed);
+    const workSamples = await this._serviceQuery.getWorkSmaples({
+      ...parsed,
+      vendor: vendorId,
+    });
+    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, workSamples);
   }
 
   async deleteWorkSample(req: Request, res: Response): Promise<void> {
-    const workSmapleId = objectIdSchema.parse(req.params.workSampleId)
-    await this._serviceCommandUsecase.deleteWorkSmaple(workSmapleId)
-    ResponseHandler.success(res,SUCCESS_MESSAGES.DELETE_SUCCESS)
+    const workSmapleId = objectIdSchema.parse(req.params.workSampleId);
+    await this._serviceCommandUsecase.deleteWorkSmaple(workSmapleId);
+    ResponseHandler.success(res, SUCCESS_MESSAGES.DELETE_SUCCESS);
   }
-  
+
   async updateWorkSample(req: Request, res: Response): Promise<void> {
-    const parsed = updateWorkSampleSchema.parse({...req.body,newImages : (req.files as { [fieldname: string]: Express.Multer.File[] } | undefined)?.newImages});
-    await this._serviceCommandUsecase.updateWorkSample(parsed)
-    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
+    const parsed = updateWorkSampleSchema.parse({
+      ...req.body,
+      newImages: (
+        req.files as { [fieldname: string]: Express.Multer.File[] } | undefined
+      )?.newImages,
+    });
+    await this._serviceCommandUsecase.updateWorkSample(parsed);
+    ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
   }
 
   async readAllNotifications(req: Request, res: Response): Promise<void> {
-    const userId = objectIdSchema.parse((req as CustomRequest).user._id)
-    await this._notificationUsecase.readAllNotifications(userId)
-    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
+    const userId = objectIdSchema.parse((req as CustomRequest).user._id);
+    await this._notificationUsecase.readAllNotifications(userId);
+    ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
   }
-  
+
   async getAllNotifications(req: Request, res: Response): Promise<void> {
-    const userId = (req as CustomRequest).user._id
-    const parsed = getAllNotificationtSchema.parse({...req.query,userId : userId})
-    const notifications = await this._notificationUsecase.getAllNotifications(parsed)
-    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,notifications)
+    const userId = (req as CustomRequest).user._id;
+    const parsed = getAllNotificationtSchema.parse({
+      ...req.query,
+      userId: userId,
+    });
+    const notifications = await this._notificationUsecase.getAllNotifications(
+      parsed
+    );
+    ResponseHandler.success(
+      res,
+      SUCCESS_MESSAGES.DATA_RETRIEVED,
+      notifications
+    );
   }
 
   async deleteNotifications(req: Request, res: Response): Promise<void> {
-    const userId = objectIdSchema.parse((req as CustomRequest).user._id)
-    await this._notificationUsecase.clearNotifications(userId)
-    ResponseHandler.success(res,SUCCESS_MESSAGES.UPDATE_SUCCESS)
+    const userId = objectIdSchema.parse((req as CustomRequest).user._id);
+    await this._notificationUsecase.clearNotifications(userId);
+    ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
   }
 
   async deleteService(req: Request, res: Response): Promise<void> {
-    const serviceId = objectIdSchema.parse(req.params.serviceId)
-    await this._serviceCommandUsecase.deleteService(serviceId)
-    ResponseHandler.success(res,SUCCESS_MESSAGES.SERVICE_DELETED)
+    const serviceId = objectIdSchema.parse(req.params.serviceId);
+    await this._serviceCommandUsecase.deleteService(serviceId);
+    ResponseHandler.success(res, SUCCESS_MESSAGES.SERVICE_DELETED);
   }
 }
