@@ -1,4 +1,4 @@
-import { FilterQuery, Types } from "mongoose";
+import { FilterQuery } from "mongoose";
 import { IBooking } from "../../models/booking";
 import { IService } from "../../models/service";
 import { IBaseRepository } from "./base.repository";
