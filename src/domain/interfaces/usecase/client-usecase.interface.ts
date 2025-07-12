@@ -12,7 +12,6 @@ export interface IVendorBrowsingUseCase {
 
 
 
-
 export interface IClientProfileUsecase {
     updateClientProfile(input : UpdateClientProfileInput) : Promise<IClient>
 }

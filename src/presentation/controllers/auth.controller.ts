@@ -111,7 +111,7 @@ export class AuthController implements IAuthController {
   }
 
   async googleLogin(req: Request, res: Response): Promise<void> {
-        console.log('in google login controller');
+      console.log('in google login controller');
       const { credential, role, client_id } = req.body; 
       const user = await this._googleLogin.login({
         client_id : client_id,

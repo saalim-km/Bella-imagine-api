@@ -21,7 +21,7 @@ export class LoginUserUsecase implements IUserLoginUsecase {
 
     async loginUser(input : LoginUserInput): Promise<LoginUserOuput> {
         const strategy = this._strategies[input.role];
-
+        
         if(!strategy){
             throw new CustomError(ERROR_MESSAGES.INVALID_ROLE , HTTP_STATUS.BAD_REQUEST)
         }

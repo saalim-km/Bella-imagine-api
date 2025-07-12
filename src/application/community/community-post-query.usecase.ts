@@ -16,6 +16,7 @@ import {
   GetPostForUserOutput,
   GetPostUsecaseInput,
 } from "../../domain/types/community.types";
+import { Mapper } from "../../shared/utils/mapper";
 
 @injectable()
 export class CommunityPostQueryUsecase implements ICommunityPostQueryUsecase {
@@ -200,9 +201,8 @@ export class CommunityPostQueryUsecase implements ICommunityPostQueryUsecase {
       })
     );
 
-    console.log("data in usecase : ", data);
     return {
-      data: data,
+      data: Mapper.postMapperListForUser(data),
       total: total,
     };
   }

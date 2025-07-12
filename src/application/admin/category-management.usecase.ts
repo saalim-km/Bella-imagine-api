@@ -17,6 +17,7 @@ import { generateCategoryId } from "../../shared/utils/helper/id-generator";
 import { ICategoryRequest } from "../../domain/models/category-request";
 import { ICategoryRequestRepository } from "../../domain/interfaces/repository/category-request.repository";
 import { IVendorRepository } from "../../domain/interfaces/repository/vendor.repository";
+import { Mapper } from "../../shared/utils/mapper";
 
 @injectable()
 export class CategoryManagementUsecase implements ICategoryManagementUsecase {
@@ -30,7 +31,7 @@ export class CategoryManagementUsecase implements ICategoryManagementUsecase {
 
   async getCategories(
     input: GetCategoriesFilterInput
-  ): Promise<PaginatedResponse<ICategory>> {
+  ): Promise<PaginatedResponse<Partial<ICategory>>> {
     const skip = (input.page - 1) * input.limit;
     const search: FilterQuery<ICategory> = {};
 
@@ -41,11 +42,16 @@ export class CategoryManagementUsecase implements ICategoryManagementUsecase {
     if (input.search && input.search.trim() !== "") {
       search.title = input.search;
     }
-    return await this._categoryRepository.getAllCategories({
+    const {data,total}=  await this._categoryRepository.getAllCategories({
       filter: search,
       limit: input.limit,
       skip: skip,
     });
+
+    return {
+      data : Mapper.categoryListMapper(data) as ICategory[],
+      total : total
+    }
   }
 
   async updateCategoryStatus(categoryId: Types.ObjectId): Promise<void> {
@@ -71,10 +77,15 @@ export class CategoryManagementUsecase implements ICategoryManagementUsecase {
     input: getCatJoinRequestInput
   ): Promise<PaginatedResponse<ICategoryRequest>> {
     const skip = (input.page - 1) * input.limit;
-    return await this._categoryRequestRepository.findAllRequests({
+    const {data,total} =  await this._categoryRequestRepository.findAllRequests({
       limit: input.limit,
       skip: skip,
     });
+
+    return {
+      data : Mapper.categoryReqList(data),
+      total : total
+    }
   }
 
   async updateCategory(input: UpdateCategory): Promise<void> {

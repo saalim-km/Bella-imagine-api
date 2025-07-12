@@ -6,6 +6,7 @@ import { IGetPresignedUrlUsecase } from "../../../domain/interfaces/usecase/comm
 import { CustomError } from "../../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants/constants";
 import { IVendor } from "../../../domain/models/vendor";
+import { Mapper } from "../../../shared/utils/mapper";
 
 @injectable()
 export class GetVendorDetailsStrategy implements IGetUserDetailsStrategy<IVendor> {
@@ -14,13 +15,13 @@ export class GetVendorDetailsStrategy implements IGetUserDetailsStrategy<IVendor
         @inject('IGetPresignedUrlUsecase') private _getSigned : IGetPresignedUrlUsecase
     ){}
 
-    async getDetails(input: UserDetailsInput): Promise<IVendor> {
+    async getDetails(input: UserDetailsInput): Promise<Partial<IVendor>> {
         const vendor = await this._vendorRepository.findVendorDetailsById(input.id) 
         if(!vendor){
             throw new CustomError(ERROR_MESSAGES.USER_NOT_FOUND , HTTP_STATUS.NOT_FOUND)
         }
 
-        if(vendor.profileImage){
+        if(vendor.profileImage && !vendor.profileImage.includes('google')){
             vendor.profileImage = await this._getSigned.getPresignedUrl(vendor.profileImage)
         }
 
@@ -30,6 +31,6 @@ export class GetVendorDetailsStrategy implements IGetUserDetailsStrategy<IVendor
             vendor.verificationDocument = await this._getSigned.getPresignedUrl(vendor.verificationDocument)
         }
 
-        return vendor;
+        return Mapper.vendorMapper(vendor)
     }
 }

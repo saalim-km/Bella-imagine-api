@@ -6,6 +6,7 @@ import { LoginUserInput, LoginUserOuput } from "../../../../domain/interfaces/us
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../../shared/constants/constants";
 import { IClient } from "../../../../domain/models/client";
 import { CustomError } from "../../../../shared/utils/helper/custom-error";
+import { Mapper } from "../../../../shared/utils/mapper";
 
 @injectable()
 export class VendorLoginStrategy implements ILoginUserStrategy {
@@ -38,13 +39,7 @@ export class VendorLoginStrategy implements ILoginUserStrategy {
             vendor.data.profileImage = await this._getPresignedUrl.getPresignedUrl(vendor.data.profileImage);
         }
 
-        return {
-            _id : vendor.data._id.toString(),
-            name : vendor.data.name,
-            email : vendor.data.email,
-            role : vendor.data.role,
-            avatar : vendor.data.profileImage
-        }
+        return Mapper.userMapper(vendor.data)
     }
 
 }

@@ -101,7 +101,7 @@ export class CommunityController implements ICommunityController {
   async fetchAllCommunitiesForUser(req: Request, res: Response): Promise<void> {
     const userId = objectIdSchema.parse((req as CustomRequest).user._id);
     const parsed = FetchAllCommunitiesSchema.parse(req.query);
-    const communities = await this._communityQuery.fetchAllCommunities({
+    const communities = await this._communityQuery.fetchAllCommunitiesForUsers({
       ...parsed,
       userId: userId,
     });

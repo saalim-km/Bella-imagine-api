@@ -11,19 +11,19 @@ export interface IGetUsersUsecase {
 }
 
 export interface IGetUsersStrategy<T = IUser> {
-  getUsers(input: UserStrategyFilterInput): Promise<PaginatedResponse<T>>;
+  getUsers(input: UserStrategyFilterInput): Promise<PaginatedResponse<Partial<T>>>;
 }
 
 export interface IGetUserDetailsUsecase {
-  getUserDetail(input: UserDetailsInput): Promise<IUser>;
+  getUserDetail(input: UserDetailsInput): Promise<Omit<IUser,'password'>>;
 }
 
 export interface IGetUserDetailsStrategy<T = IUser> {
-  getDetails(input: UserDetailsInput): Promise<T>;
+  getDetails(input: UserDetailsInput): Promise<Partial<T>>;
 }
 
 export interface IGetVendorRequestUsecase {
-  getVendorRequests(input : VendorRequestFilterInput): Promise<PaginatedResponse<IVendor>>
+  getVendorRequests(input : VendorRequestFilterInput): Promise<PaginatedResponse<Partial<IVendor>>>
 }
 
 export interface IUserManagementUsecase {
@@ -33,7 +33,7 @@ export interface IUserManagementUsecase {
 
 export interface ICategoryManagementUsecase {
   createNewCategory(input : CreateNewCategoryInput) : Promise<void>
-  getCategories(input : GetCategoriesFilterInput): Promise<PaginatedResponse<ICategory>>
+  getCategories(input : GetCategoriesFilterInput): Promise<PaginatedResponse<Partial<ICategory>>>
   updateCategory(input : UpdateCategory) : Promise<void>
   updateCategoryStatus(categoryId : Types.ObjectId) : Promise<void> 
   getCatJoinRequest(input : getCatJoinRequestInput) : Promise<PaginatedResponse<ICategoryRequest>>

@@ -10,6 +10,7 @@ import { IBookingRepository } from "../../domain/interfaces/repository/booking.r
 import { IPaymentRepository } from "../../domain/interfaces/repository/payment.repository";
 import { IClientRepository } from "../../domain/interfaces/repository/client.repository";
 import { WalletQueryInput } from "../../shared/utils/zod-validations/presentation/client.schema";
+import { Mapper } from "../../shared/utils/mapper";
 
 @injectable()
 export class WalletUsecase implements IWalletUsecase {
@@ -21,17 +22,6 @@ export class WalletUsecase implements IWalletUsecase {
     private _paymentRepository: IPaymentRepository, // Assuming a payment repository is needed
     @inject("IClientRepository") private _clientRepository: IClientRepository // Assuming a client repository is needed
   ) {}
-
-  async fetchWallet(userId: Types.ObjectId): Promise<PopulatedWallet> {
-    const wallet = await this._walletRepository.findByUserId(userId);
-    if (!wallet) {
-      throw new CustomError(
-        ERROR_MESSAGES.WALLET_NOT_FOUND,
-        HTTP_STATUS.NOT_FOUND
-      );
-    }
-    return wallet;
-  }
 
   async creditAmountToWallet(input: creditAmountToWalletInput): Promise<void> {
     const { amount, purpose, userId, bookingId } = input;
@@ -169,7 +159,7 @@ export class WalletUsecase implements IWalletUsecase {
       : 1;
 
     return {
-      wallet,
+      wallet : Mapper.mapWalletData(wallet),
       totalTransactions,
       currentPage: queryOptions.page || 1,
       totalPages,
