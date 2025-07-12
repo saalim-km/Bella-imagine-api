@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 import { IWallet, PopulatedWallet } from "../../models/wallet";
-import { CreateWalletInput, UpdateWalletBalanceInput } from "../../types/wallet.types";
+import { CreateWalletInput, UpdateWalletBalanceInput, WalletQueryOptions } from "../../types/wallet.types";
 import { IBaseRepository } from "./base.repository";
 
 
@@ -15,5 +15,7 @@ export interface IWalletRepository extends IBaseRepository<IWallet> {
     updateWalletBalanceAndAddPaymentId(
         input: UpdateWalletBalanceInput
     ): Promise<void>;
-    fetchAdminWallet() : Promise<PopulatedWallet>
+    fetchAdminWallet(options?: WalletQueryOptions): Promise<PopulatedWallet>
+    getTransactionCount(userId: Types.ObjectId, options?: WalletQueryOptions): Promise<number> 
+    findByUserId(userId: Types.ObjectId, options?: WalletQueryOptions): Promise<PopulatedWallet>
 }

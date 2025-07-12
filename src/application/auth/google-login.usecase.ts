@@ -38,7 +38,7 @@ export class GoogleLoginUsecase implements IGoogleLoginUsecase {
     (this.registerStrategies = {
       client: this._clientRegisterStrategy,
       vendor: this._vendorRegisterStrategy,
-    }),
+    });
       (this.loginStrategies = {
         client: this._clientLoginStrategy,
         vendor: this._vendortLoginStrategy,

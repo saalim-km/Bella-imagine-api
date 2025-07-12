@@ -3,7 +3,7 @@ import { IVerifyOtpUsecase } from "../../domain/interfaces/usecase/auth-usecase.
 import { VerifyOtpInput } from "../../domain/interfaces/usecase/types/auth.types";
 import { IOtpService } from "../../domain/interfaces/service/otp-service.interface";
 import { CustomError } from "../../shared/utils/helper/custom-error";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
+import { HTTP_STATUS } from "../../shared/constants/constants";
 
 @injectable()
 export class VerifyOtpUsecase implements IVerifyOtpUsecase {
@@ -12,6 +12,7 @@ export class VerifyOtpUsecase implements IVerifyOtpUsecase {
     ){}
     async verifyOtp(input: VerifyOtpInput): Promise<void> {
         const isValidOtp = await this._otpService.verifyOtp(input.email,input.otp)
+        console.log('valid otp :',isValidOtp);
         if(!isValidOtp.success) {
             throw new CustomError(isValidOtp.message, HTTP_STATUS.BAD_REQUEST)
         }

@@ -1,5 +1,5 @@
-import mongoose, { Schema, Types } from "mongoose";
-import { ICommunityMember } from "../../../domain/models/community-member";
+import mongoose, { Schema } from "mongoose";
+import { ICommunityMember } from "../../../domain/models/community";
 
 export const communityMember = new Schema<ICommunityMember>({
     communityId : {
@@ -9,8 +9,12 @@ export const communityMember = new Schema<ICommunityMember>({
     },
     userId : {
         type : Schema.Types.ObjectId,
-        ref : 'User',
+        refPath : 'userType',
         required : true
+    },
+    userType : {
+        type : String,
+        enum : ['Client','Vendor']
     },
     postCount : {
         type : Number,

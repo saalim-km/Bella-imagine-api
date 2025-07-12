@@ -3,13 +3,13 @@ import http from "http";
 import cors from 'cors'
 import cookieparser from 'cookie-parser';
 import { config } from "../../shared/config/config";
-import { AuthRoute } from "../routes/auth/auth.routes";
-import { PrivateRoute } from "../routes/common/private.route";
+import { AuthRoute } from "../routes/auth.routes";
+import { PrivateRoute } from "../routes/private.route";
 import { errorHandler } from "../middlewares/error.middleware";
 import logger from "../../shared/logger/logger";
 import { globalRateLimit } from "../middlewares/rate-limit.middleware";
 import { socketService } from "../di/resolver";
-import { ChatRoute } from "../routes/chat/chat.route";
+import { ChatRoute } from "../routes/chat.route";
 
 
 export class Server {

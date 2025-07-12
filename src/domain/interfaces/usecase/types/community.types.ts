@@ -1,5 +1,6 @@
 import { Types } from "mongoose";
 import { PaginationInput } from "./admin.types";
+import { TRole } from "../../../../shared/constants/constants";
 
 export interface BaseCommunityInput {
   name: string;
@@ -12,10 +13,9 @@ export interface BaseCommunityInput {
   iconImage?: Express.Multer.File;
 }
 
-export interface CreateCommunityInput extends BaseCommunityInput {
-}
+export type CreateCommunityInput = BaseCommunityInput 
 
-export interface FetchCommuityInput extends Omit<PaginationInput , 'createdAt'>{}
+export type FetchCommuityInput = Omit<PaginationInput , 'createdAt'>
 
 export interface fetchCommBySlugInput {
   userId : Types.ObjectId,
@@ -34,12 +34,62 @@ export interface FetchAllCommunitiesInput extends Omit<PaginationInput,'createdA
 }
 
 export interface GetCommunityMemberInput extends Omit<PaginationInput , 'search' | 'createdAt'> {
-  communityId : Types.ObjectId
+  slug : string
 }
 
 export interface JoinCommunityInput {
   userId : Types.ObjectId,
-  communityId : Types.ObjectId
+  communityId : Types.ObjectId,
+  role : TRole
 }
 
-export interface LeaveCommunityInput extends JoinCommunityInput{}
+export type LeaveCommunityInput = JoinCommunityInput
+
+export interface CreatePostInput {
+  communityId: Types.ObjectId;
+  userId: Types.ObjectId;
+  title: string;
+  content?: string;    
+  media ?: Express.Multer.File[];
+  mediaType ?: 'image' | 'video' | 'mixed' | 'none';
+  tags?: string[];
+  role : 'Client' | 'Vendor'
+}
+
+export interface GetAllPostInput extends Omit<PaginationInput , 'search' | 'createdAt'> {
+  communityId ?: Types.ObjectId;
+  userId : Types.ObjectId
+}
+
+export interface EditPostInput {
+  _id : Types.ObjectId
+  title: string;
+  content: string;
+  tags?: string[];
+  existingImageKeys?: string[];
+  deletedImageKeys?: string[];
+  newImages ?: Express.Multer.File[]  
+}
+
+export interface DeletePostInput {
+  postId : Types.ObjectId;
+  userId : Types.ObjectId;
+}
+
+export interface AddCommentInput {
+  postId : Types.ObjectId
+  userId : Types.ObjectId;
+  content : string;
+  role : TRole
+}
+
+export interface EditCommentInput {
+  commentId : Types.ObjectId;
+  content : string
+}
+
+export interface LikePostInput {
+  postId : Types.ObjectId;
+  userId : Types.ObjectId;
+  role : TRole
+}

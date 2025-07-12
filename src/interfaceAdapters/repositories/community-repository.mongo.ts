@@ -9,7 +9,6 @@ import {
   FetchAllCommunityInput,
 } from "../../domain/types/community.types";
 import mongoose, { FilterQuery } from "mongoose";
-import { Category } from "../database/schemas/category.schema";
 
 @injectable()
 export class CommunityRepository
@@ -64,7 +63,9 @@ export class CommunityRepository
     const { filter, limit, skip, sort, membership, userId } = input;
 
     // Base query for Community collection
-    let query: FilterQuery<ICommunity> = {};
+    let query: FilterQuery<ICommunity> = {
+      isPrivate : filter.isPrivate
+    };
 
     // Apply category filter
     if (filter.category && filter.category !== "all") {

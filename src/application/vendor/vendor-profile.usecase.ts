@@ -8,7 +8,7 @@ import {
 import { IVendor } from "../../domain/models/vendor";
 import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
-import { Types, UpdateQuery } from "mongoose";
+import { UpdateQuery } from "mongoose";
 import { IAwsS3Service } from "../../domain/interfaces/service/aws-service.interface";
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { config } from "../../shared/config/config";
@@ -16,7 +16,6 @@ import path from "path";
 import { unlinkSync } from "fs";
 import { ICategoryRepository } from "../../domain/interfaces/repository/category.repository";
 import { ICategoryRequestRepository } from "../../domain/interfaces/repository/category-request.repository";
-import { IWalletRepository } from "../../domain/interfaces/repository/wallet.repository";
 import { GeoLocation } from "../../domain/models/user-base";
 
 @injectable()
@@ -61,6 +60,10 @@ export class VendorProfileUsecase implements IVendorProfileUsecase {
       name: name,
       location: location,
       geoLocation: geoLocation,
+      portfolioWebsite : portfolioWebsite || "",
+      phoneNumber : phoneNumber || "",
+      description : profileDescription || "",
+      languages : languages || []
     };
 
     if (profileImage) {
@@ -98,19 +101,6 @@ export class VendorProfileUsecase implements IVendorProfileUsecase {
       );
       unlinkSync(verificationDocument.path);
       dataToUpdate.verificationDocument = fileKey;
-    }
-
-    if (languages && languages.length > 0) {
-      dataToUpdate.languages = languages;
-    }
-    if (phoneNumber && phoneNumber !== undefined) {
-      dataToUpdate.phoneNumber = phoneNumber;
-    }
-    if (portfolioWebsite && portfolioWebsite !== undefined) {
-      dataToUpdate.portfolioWebsite = portfolioWebsite;
-    }
-    if (profileDescription && profileDescription !== undefined) {
-      dataToUpdate.description = profileDescription;
     }
 
     const updatedVendor = await this._vendorRepository.update(

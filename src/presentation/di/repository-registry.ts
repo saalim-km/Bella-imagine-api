@@ -17,14 +17,20 @@ import { IBookingRepository } from "../../domain/interfaces/repository/booking.r
 import { BookingRepository } from "../../interfaceAdapters/repositories/booking-repository.mongo";
 import { IPaymentRepository } from "../../domain/interfaces/repository/payment.repository";
 import { PaymentRepository } from "../../interfaceAdapters/repositories/payment-repository.mongo";
-import { ICommunityRepository } from "../../domain/interfaces/repository/community.repository";
+import { ICommentRepository, ICommunityMemberRepository, ICommunityPostRepository, ICommunityRepository, ILikeRepository } from "../../domain/interfaces/repository/community.repository";
 import { CommunityRepository } from "../../interfaceAdapters/repositories/community-repository.mongo";
-import { ICommunityMemberRepository } from "../../domain/interfaces/repository/community-member.repository";
 import { CommunityMemberRepository } from "../../interfaceAdapters/repositories/community-member-repository.mongo";
 import { IConversationRepository } from "../../domain/interfaces/repository/conversation.repository";
 import { ConversationRepository } from "../../interfaceAdapters/repositories/conversation-reposiory.mongo";
 import { IMessageRepository } from "../../domain/interfaces/repository/message.repository";
 import { MessageRepository } from "../../interfaceAdapters/repositories/message-repository.mongo";
+import { INotificationRepository } from "../../domain/interfaces/repository/notification.repository";
+import { NotificationRepository } from "../../interfaceAdapters/repositories/notification-repository.mongo";
+import { CommunityPostRepository } from "../../interfaceAdapters/repositories/community-post-repository.mongo";
+import { CommentRepository } from "../../interfaceAdapters/repositories/comment-reposiory.mongo";
+import { LikeRepository } from "../../interfaceAdapters/repositories/like-respository.mongo";
+import { IAdminRepository } from "../../domain/interfaces/repository/admin-repository";
+import { AdminRepository } from "../../interfaceAdapters/repositories/admin-repository.mongo";
 
 export class RepositoryRegistry {
     static registerRepositories() : void {
@@ -79,6 +85,26 @@ export class RepositoryRegistry {
 
         container.register<IMessageRepository>('IMessageRepository' , {
             useClass : MessageRepository
+        })
+
+        container.register<INotificationRepository>('INotificationRepository' , {
+            useClass : NotificationRepository
+        })
+
+        container.register<ICommunityPostRepository>('ICommunityPostRepository' , {
+            useClass : CommunityPostRepository
+        })
+
+        container.register<ICommentRepository>('ICommentRepository' , {
+            useClass : CommentRepository
+        })
+
+        container.register<ILikeRepository>('ILikeRepository', {
+            useClass : LikeRepository
+        })
+
+        container.register<IAdminRepository>('IAdminRepository' , {
+            useClass : AdminRepository
         })
     }
 }

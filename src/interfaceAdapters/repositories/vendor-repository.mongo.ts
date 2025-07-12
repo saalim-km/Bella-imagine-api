@@ -11,7 +11,6 @@ import { IService } from "../../domain/models/service";
 import { PaginatedResult } from "../../shared/types/pagination.types";
 import { IWorkSample } from "../../domain/models/worksample";
 import { GetVendorsOutput } from "../../domain/interfaces/usecase/types/client.types";
-import { json } from "stream/consumers";
 
 @injectable()
 export class VendorRepository
@@ -62,10 +61,11 @@ export class VendorRepository
   async fetchVendorListingsForClients(
     input: ClientVendorQuery
   ): Promise<PaginatedResponse<GetVendorsOutput>> {
-    console.log(JSON.stringify(input, null, 2));
+
 
     const { limit = 10, skip, sort = { createdAt: -1 }, filter } = input;
 
+    console.log(JSON.stringify(input, null, 2));
     const {
       categories,
       tags,
@@ -76,13 +76,11 @@ export class VendorRepository
       geoLocation,
     } = filter;
 
-    console.log(minCharge, maxCharge);
-    console.log("location triggered : ", geoLocation);
-
     // Build the initial match conditions (excluding geoLocation)
     const matchStage: any = {
       isblocked: false,
       role: "vendor",
+      isVerified : 'accept'
     };
 
     // Filter by languages
@@ -113,7 +111,7 @@ export class VendorRepository
           },
           distanceField: "distance", // Store calculated distance in 'distance' field
           minDistance: 0, // 1km minimum
-          maxDistance: 10000, // 10km maximum
+          maxDistance: 20000, // 20km maximum
           spherical: true, // Use spherical geometry for 2dsphere index
           query: matchStage, // Apply initial filters (isblocked, role, etc.)
         },
@@ -139,8 +137,19 @@ export class VendorRepository
       {
         $lookup: {
           from: "worksamples",
-          localField: "_id",
-          foreignField: "vendor",
+          let: { vendorId: "$_id" },
+          pipeline: [
+        {
+          $match: {
+            $expr: {
+          $and: [
+            { $eq: ["$vendor", "$$vendorId"] },
+            { $eq: ["$isPublished", true] },
+          ],
+            },
+          },
+        },
+          ],
           as: "workSamples",
         },
       },
@@ -324,7 +333,6 @@ export class VendorRepository
       { $count: "total" }
     );
 
-    console.log(JSON.stringify(pipeline, null, 2));
     // Execute aggregation and count
     const [vendors, count] = await Promise.all([
       this.model.aggregate(pipeline),

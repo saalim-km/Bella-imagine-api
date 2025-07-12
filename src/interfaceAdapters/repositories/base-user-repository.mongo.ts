@@ -27,14 +27,4 @@ export class BaseUserRepository<T> extends BaseRepository<T> implements IBaseUse
             }
         });
     }
-
-    async updateLastSeenById(userId: Types.ObjectId, lastSeen: string): Promise<void> {
-        
-    }
-
-    async findByIdAndUpdatePassword(userId: Types.ObjectId, hashedNewPassword: string): Promise<void> {
-    }
-
-    async updateProfileById(userId: Types.ObjectId, data: Partial<T>): Promise<void> {
-    }
 }

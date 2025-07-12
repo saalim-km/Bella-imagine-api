@@ -64,7 +64,7 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
     const { media, service, title, vendor, description, tags, isPublished } =
       input;
     let filekeys: string[] = [];
-    let uploadedkeys: string[] = [];
+    const uploadedkeys: string[] = [];
 
     try {
       filekeys = media.map((image) =>
@@ -76,7 +76,6 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
         try {
           await this._awsS3Service.uploadFileToAws(fileKey, image.path);
           uploadedkeys.push(fileKey);
-          return filekeys;
         } catch (error) {
           console.error(`Failed to upload ${image.originalname}:`, error);
           throw error;
@@ -153,12 +152,14 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
       newImages,
     } = input;
 
-    let uploadedKeys: string[] = [];
-    let fileKeys: string[] = existingImageKeys || [];
+    console.log(vendor);
+
+    const uploadedKeys: string[] = [];
+    const fileKeys: string[] = existingImageKeys || [];
 
     try {
       if (deletedImageKeys && deletedImageKeys.length > 0) {
-        let deletedPromises = deletedImageKeys.map(async (key) => {
+        const deletedPromises = deletedImageKeys.map(async (key) => {
           if (await this._awsS3Service.isFileAvailableInAwsBucket(key)) {
             return await this._awsS3Service.deleteFileFromAws(key);
           }
@@ -168,7 +169,7 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
       }
 
       if (newImages && newImages.length > 0) {
-        let uploadPromises = newImages.map(async (image) => {
+        const uploadPromises = newImages.map(async (image) => {
           const filekey = generateS3FileKey(config.s3.workSample, image.path);
           await this._awsS3Service.uploadFileToAws(filekey, image.path);
           uploadedKeys.push(filekey);
@@ -196,10 +197,25 @@ export class ServiceCommandUsecase implements IServiceCommandUsecase {
           })
         );
       }
+      console.log(error);
     } finally {
       if (newImages && newImages.length > 0) {
         await cleanUpLocalFiles(newImages);
       }
     }
+  }
+
+  async deleteService(serviceId: Types.ObjectId): Promise<void> {
+    const service = await this._serviceRepo.findById(serviceId);
+    if(!service) {
+      throw new CustomError(ERROR_MESSAGES.SERVICE_NOT_FOUND,HTTP_STATUS.NOT_FOUND)
+    }
+
+    const isWorkSamplesLinked = await this._workSampleRepo.findOne({service : serviceId});
+    if(isWorkSamplesLinked) {
+      throw new CustomError(ERROR_MESSAGES.WORKSMAPLE_LINKED , HTTP_STATUS.BAD_REQUEST)
+    }
+
+    await this._serviceRepo.delete(serviceId)
   }
 }

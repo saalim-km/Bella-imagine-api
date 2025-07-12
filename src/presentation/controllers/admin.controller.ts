@@ -7,10 +7,15 @@ import {
   updateCookieWithAccessToken,
 } from "../../shared/utils/helper/cookie-helper";
 import { ResponseHandler } from "../../shared/utils/helper/response-handler";
-import { SUCCESS_MESSAGES } from "../../shared/constants/constants";
+import {
+  ERROR_MESSAGES,
+  HTTP_STATUS,
+  SUCCESS_MESSAGES,
+} from "../../shared/constants/constants";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import {
   ICategoryManagementUsecase,
+  IDashboardUsecase,
   IGetUserDetailsUsecase,
   IGetUsersUsecase,
   IGetVendorRequestUsecase,
@@ -29,6 +34,7 @@ import {
 import { objectIdSchema } from "../../shared/utils/zod-validations/validators/validations";
 import { UpdateCategory } from "../../domain/interfaces/usecase/types/admin.types";
 import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
+import { WalletQuerySchema } from "../../shared/utils/zod-validations/presentation/client.schema";
 
 @injectable()
 export class AdminController implements IAdminController {
@@ -44,7 +50,8 @@ export class AdminController implements IAdminController {
     private _userManagmentUsecase: IUserManagementUsecase,
     @inject("ICategoryManagementUsecase")
     private _categoryManagmentUsecase: ICategoryManagementUsecase,
-    @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase
+    @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
+    @inject("IDashboardUsecase") private _dashboardUsecase: IDashboardUsecase
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -57,18 +64,42 @@ export class AdminController implements IAdminController {
   }
 
   async refreshToken(req: Request, res: Response): Promise<void> {
-    const user = (req as CustomRequest).user;
-    const accessToken = await this._refreshTokenUsecase.execute({
-      _id: user._id,
-      email: user.email,
-      role: user.role,
-      refreshToken: user.refresh_token,
-    });
+    try {
+      const user = (req as CustomRequest).user;
 
-    updateCookieWithAccessToken(res, accessToken, `${user.role}_access_token`);
-    ResponseHandler.success(res, SUCCESS_MESSAGES.REFRESH_TOKEN_SUCCESS, {
-      accessToken,
-    });
+      const accessToken = await this._refreshTokenUsecase.execute({
+        _id: user._id,
+        email: user.email,
+        role: user.role,
+        refreshToken: user.refresh_token,
+      });
+
+      // FIX: Correct the logic condition
+      if (user.role && user.role !== undefined) {
+        updateCookieWithAccessToken(
+          res,
+          accessToken,
+          `${user.role}_access_token`
+        );
+        ResponseHandler.success(res, SUCCESS_MESSAGES.REFRESH_TOKEN_SUCCESS);
+        return;
+      }
+
+      ResponseHandler.error(
+        res,
+        ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
+        {},
+        HTTP_STATUS.UNAUTHORIZED
+      );
+    } catch (error) {
+      console.error("Refresh token error:", error);
+      ResponseHandler.error(
+        res,
+        ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
+        {},
+        HTTP_STATUS.UNAUTHORIZED
+      );
+    }
   }
 
   async getUsers(req: Request, res: Response): Promise<void> {
@@ -141,9 +172,44 @@ export class AdminController implements IAdminController {
     ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
   }
 
-  async getWallet(req: Request, res: Response): Promise<void> {
-    const wallet = await this._walletUsecase.fetchAdminWallet();
-    console.log('got admin wallet',wallet);
-    ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,wallet) 
+  // async getWallet(req: Request, res: Response): Promise<void> {
+  //   const wallet = await this._walletUsecase.fetchAdminWallet();
+  //   console.log('got admin wallet',wallet);
+  //   ResponseHandler.success(res,SUCCESS_MESSAGES.DATA_RETRIEVED,wallet)
+  // }
+
+  async fetchWalletWithPagination(req: Request, res: Response): Promise<void> {
+    console.log(req.query);
+    const { _id } = (req as CustomRequest).user;
+    const parsedObjectId = objectIdSchema.parse(_id);
+
+    // Parse query parameters using Zod
+    const queryOptions = WalletQuerySchema.parse(req.query);
+
+    console.log('parsed :',queryOptions);
+    // Ensure pagination parameters are provided
+    if (!queryOptions.page || !queryOptions.limit) {
+      throw new Error("Page and limit parameters are required for pagination");
+    }
+
+    const result = await this._walletUsecase.fetchWalletWithPagination(
+      parsedObjectId,
+      queryOptions
+    );
+
+    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, {
+      wallet: result.wallet,
+      pagination: {
+        currentPage: result.currentPage,
+        totalPages: result.totalPages,
+        totalTransactions: result.totalTransactions,
+        limit: queryOptions.limit,
+      },
+    });
+  }
+
+  async fetchDashBoard(req: Request, res: Response): Promise<void> {
+    const data = await this._dashboardUsecase.fetchDashBoardStats();
+    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, data);
   }
 }

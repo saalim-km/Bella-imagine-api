@@ -8,7 +8,12 @@ import {
   updateCookieWithAccessToken,
 } from "../../shared/utils/helper/cookie-helper";
 import { ResponseHandler } from "../../shared/utils/helper/response-handler";
-import { SUCCESS_MESSAGES, TRole } from "../../shared/constants/constants";
+import {
+  ERROR_MESSAGES,
+  HTTP_STATUS,
+  SUCCESS_MESSAGES,
+  TRole,
+} from "../../shared/constants/constants";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import {
   ICategoryManagementUsecase,
@@ -17,26 +22,26 @@ import {
 import {
   BookingQuerySchema,
   createBookingSchema,
-  FetchAllCommunitiesSchema,
+  getAllNotificationtSchema,
   getVendorDetailsSchema,
   getVendorsSchema,
   updateBookingSchema,
   updateClientProfile,
+  WalletQuerySchema,
 } from "../../shared/utils/zod-validations/presentation/client.schema";
 import {
   IClientProfileUsecase,
   IVendorBrowsingUseCase,
 } from "../../domain/interfaces/usecase/client-usecase.interface";
-import {
-  objectIdSchema,
-} from "../../shared/utils/zod-validations/validators/validations";
+import { objectIdSchema } from "../../shared/utils/zod-validations/validators/validations";
 import { IStripeService } from "../../domain/interfaces/service/stripe-service.interface";
 import {
   IBookingCommandUsecase,
   IBookingQueryUsecase,
 } from "../../domain/interfaces/usecase/booking-usecase.interface";
 import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
-import { ICommunityRepository } from "../../domain/interfaces/repository/community.repository";
+import { INotificationUsecase } from "../../domain/interfaces/usecase/notification-usecase.interface";
+import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.interface";
 
 @injectable()
 export class ClientController implements IClientController {
@@ -57,6 +62,9 @@ export class ClientController implements IClientController {
     @inject("IBookingQueryUsecase")
     private _bookingQueryUsecase: IBookingQueryUsecase,
     @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
+    @inject("INotificationUsecase")
+    private _notificationUsecase: INotificationUsecase,
+    @inject("IChatUsecase") private _chatUsecase: IChatUsecase
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -69,18 +77,42 @@ export class ClientController implements IClientController {
   }
 
   async refreshToken(req: Request, res: Response): Promise<void> {
-    const user = (req as CustomRequest).user;
-    const accessToken = await this._refreshTokenUsecase.execute({
-      _id: user._id,
-      email: user.email,
-      role: user.role,
-      refreshToken: user.refresh_token,
-    });
+    try {
+      const user = (req as CustomRequest).user;
 
-    updateCookieWithAccessToken(res, accessToken, `${user.role}_access_token`);
-    ResponseHandler.success(res, SUCCESS_MESSAGES.REFRESH_TOKEN_SUCCESS, {
-      accessToken,
-    });
+      const accessToken = await this._refreshTokenUsecase.execute({
+        _id: user._id,
+        email: user.email,
+        role: user.role,
+        refreshToken: user.refresh_token,
+      });
+
+      // FIX: Correct the logic condition
+      if (user.role && user.role !== undefined) {
+        updateCookieWithAccessToken(
+          res,
+          accessToken,
+          `${user.role}_access_token`
+        );
+        ResponseHandler.success(res, SUCCESS_MESSAGES.REFRESH_TOKEN_SUCCESS);
+        return;
+      }
+
+      ResponseHandler.error(
+        res,
+        ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
+        {},
+        HTTP_STATUS.UNAUTHORIZED
+      );
+    } catch (error) {
+      console.error("Refresh token error:", error);
+      ResponseHandler.error(
+        res,
+        ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
+        {},
+        HTTP_STATUS.UNAUTHORIZED
+      );
+    }
   }
 
   async getVendors(req: Request, res: Response): Promise<void> {
@@ -95,6 +127,7 @@ export class ClientController implements IClientController {
     const categories = await this._categoryManagementUsecase.getCategories({
       limit: 10,
       page: 1,
+      status: true,
     });
     ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, categories);
   }
@@ -135,6 +168,7 @@ export class ClientController implements IClientController {
     );
     const event: Stripe.Event = req.body;
     await this._stripeService.handleWebhookEvent(event);
+    ResponseHandler.success(res, SUCCESS_MESSAGES.PAYMENT_STATUS_UPDATED);
   }
 
   async getClientDetails(req: Request, res: Response): Promise<void> {
@@ -169,17 +203,82 @@ export class ClientController implements IClientController {
     ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, bookings);
   }
 
-  async fetchWallet(req: Request, res: Response): Promise<void> {
+  async fetchWalletWithPagination(req: Request, res: Response): Promise<void> {
+    console.log(req.query);
     const { _id } = (req as CustomRequest).user;
     const parsedObjectId = objectIdSchema.parse(_id);
-    const wallet = await this._walletUsecase.fetchWallet(parsedObjectId);
-    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, wallet);
+
+    // Parse query parameters using Zod
+    const queryOptions = WalletQuerySchema.parse(req.query);
+
+    console.log('parsed :',queryOptions);
+    // Ensure pagination parameters are provided
+    if (!queryOptions.page || !queryOptions.limit) {
+      throw new Error("Page and limit parameters are required for pagination");
+    }
+
+    const result = await this._walletUsecase.fetchWalletWithPagination(
+      parsedObjectId,
+      queryOptions
+    );
+
+    ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, {
+      wallet: result.wallet,
+      pagination: {
+        currentPage: result.currentPage,
+        totalPages: result.totalPages,
+        totalTransactions: result.totalTransactions,
+        limit: queryOptions.limit,
+      },
+    });
   }
 
   async updateBookingStatus(req: Request, res: Response): Promise<void> {
-    const userId = (req as CustomRequest).user._id;
-    const parsed = updateBookingSchema.parse({ ...req.query, userId });
-    await this._bookingCommandUsecase.updateBookingStatus(parsed);
+    const { _id, role } = (req as CustomRequest).user;
+    const parsed = updateBookingSchema.parse({ ...req.query, userId: _id });
+    await this._bookingCommandUsecase.updateBookingStatus({
+      ...parsed,
+      userRole: role as TRole,
+    });
     ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
+  }
+
+  async readAllNotifications(req: Request, res: Response): Promise<void> {
+    const userId = objectIdSchema.parse((req as CustomRequest).user._id);
+    await this._notificationUsecase.readAllNotifications(userId);
+    ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
+  }
+
+  async getAllNotifications(req: Request, res: Response): Promise<void> {
+    const userId = (req as CustomRequest).user._id;
+    const parsed = getAllNotificationtSchema.parse({
+      ...req.query,
+      userId: userId,
+    });
+    const notifications = await this._notificationUsecase.getAllNotifications(
+      parsed
+    );
+    ResponseHandler.success(
+      res,
+      SUCCESS_MESSAGES.DATA_RETRIEVED,
+      notifications
+    );
+  }
+
+  async deleteNotifications(req: Request, res: Response): Promise<void> {
+    const userId = objectIdSchema.parse((req as CustomRequest).user._id);
+    await this._notificationUsecase.clearNotifications(userId);
+    ResponseHandler.success(res, SUCCESS_MESSAGES.UPDATE_SUCCESS);
+  }
+
+  async createConversation(req: Request, res: Response): Promise<void> {
+    const userId = objectIdSchema.parse(req.body.userId);
+    const vendorId = objectIdSchema.parse(req.body.vendorId);
+    await this._chatUsecase.createConversation({
+      userId: userId,
+      vendorId: vendorId,
+      userRole: (req as CustomRequest).user.role as TRole,
+    });
+    ResponseHandler.success(res, SUCCESS_MESSAGES.CREATED);
   }
 }

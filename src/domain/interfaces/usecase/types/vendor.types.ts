@@ -1,5 +1,4 @@
 import { Types } from "mongoose";
-import { number } from "zod";
 import { IService } from "../../../models/service";
 
 export interface UpdatevendorProfileInput {
@@ -54,6 +53,7 @@ export interface GetWorkSampleInput {
   page : number;
   limit : number;
   title ?: string;
+  isPublished ?: boolean;
   service ?: Types.ObjectId
 }
 

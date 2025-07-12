@@ -8,3 +8,14 @@ export interface UpdateWalletBalanceInput {
     paymentId : Types.ObjectId,
     balanceAmount : number
 }
+
+export interface WalletQueryOptions {
+  search?: string
+  status?: string
+  purpose?: string
+  dateRange?: string
+  sortField?: string
+  sortOrder?: "asc" | "desc"
+  page?: number
+  limit?: number
+}

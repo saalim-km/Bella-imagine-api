@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { config } from "../../../shared/config/config";
+import logger from "../../../shared/logger/logger";
 
 export class MongoConnect {
     private MongoUrl : string;
@@ -11,7 +12,7 @@ export class MongoConnect {
     async connect() {
         try {
             await mongoose.connect(this.MongoUrl);
-            console.log('Database connect aayi 🕺');
+            logger.info('Database connect aayi');
 
             mongoose.connection.on("error", (error) => {
                 console.error("MongoDB connection error:", error);

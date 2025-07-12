@@ -9,14 +9,13 @@ import {
   GetCommunityMemberInput,
 } from "../../domain/interfaces/usecase/types/community.types";
 import { ICommunity } from "../../domain/models/community";
-import { FilterQuery, Types } from "mongoose";
+import { FilterQuery } from "mongoose";
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
-import { FetchCommunityBySlugOutput } from "../../domain/types/community.types";
-import { ICommunityMemberRepository } from "../../domain/interfaces/repository/community-member.repository";
-import { skip } from "node:test";
-import { ICommunityMember } from "../../domain/models/community-member";
+import { CommunityMembersOutput, FetchCommunityBySlugOutput } from "../../domain/types/community.types";
+import { ICommunityMemberRepository } from "../../domain/interfaces/repository/community.repository";
+import { ICommunityMember } from "../../domain/models/community";
 
 @injectable()
 export class CommunityQueryUsecase implements ICommunityQueryUsecase {
@@ -47,7 +46,7 @@ export class CommunityQueryUsecase implements ICommunityQueryUsecase {
     });
 
     const communities = await Promise.all(
-      data.map(async (comm, ind) => {
+      data.map(async (comm) => {
         if (comm.coverImage) {
           comm.coverImage = await this._presignedUrl.getPresignedUrl(
             comm.coverImage
@@ -113,7 +112,7 @@ export class CommunityQueryUsecase implements ICommunityQueryUsecase {
   ): Promise<PaginatedResponse<ICommunity>> {
     const { category, membership, search, sort, limit, page } = input;
     const skip = (page - 1) * limit;
-    const filter: FilterQuery<ICommunity> = {};
+    const filter: FilterQuery<ICommunity> = {isPrivate : false};
     if (category && category !== undefined) {
       filter.category = category;
     }
@@ -134,7 +133,7 @@ export class CommunityQueryUsecase implements ICommunityQueryUsecase {
       });
 
     const communities = await Promise.all(
-      data.map(async (comm, ind) => {
+      data.map(async (comm) => {
         if (comm.coverImage) {
           comm.coverImage = await this._presignedUrl.getPresignedUrl(
             comm.coverImage
@@ -156,15 +155,20 @@ export class CommunityQueryUsecase implements ICommunityQueryUsecase {
     }
   }
 
-  async fetchCommuityMembers(input : GetCommunityMemberInput): Promise<PaginatedResponse<ICommunityMember>> {
-    const {communityId,limit,page} = input;
-    const skip = (page - 1) * limit;
-    const members = await this._communityMemberRepo.findAll({},skip,limit,-1)
-
-    console.log('got the members : ',members);
-    return {
-      data : members,
-      total : 0
+  async fetchCommuityMembers(input : GetCommunityMemberInput): Promise<PaginatedResponse<CommunityMembersOutput>> {
+    const {slug,limit,page} = input;
+    
+    const isCommunityExists = await this._communityRepository.findBySlug(slug)
+    if(!isCommunityExists){
+      throw new CustomError(ERROR_MESSAGES.COMMUNITY_NO_EXIST,HTTP_STATUS.NOT_FOUND)
     }
+
+    const skip = (page - 1) * limit;
+
+    const filter : FilterQuery<ICommunityMember> = {
+      communityId : isCommunityExists._id
+    }
+
+    return await this._communityMemberRepo.findMembers(filter,skip,-1,limit)
   }
 }

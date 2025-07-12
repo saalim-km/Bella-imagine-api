@@ -3,15 +3,12 @@ import { BaseRepository } from "./base-repository.mongo";
 import { IBooking } from "../../domain/models/booking";
 import {
   FindBookingsInput,
-  FindUsersForChat,
   IBookingRepository,
 } from "../../domain/interfaces/repository/booking.repository";
 import { Booking } from "../database/schemas/booking.schema";
 import { Types } from "mongoose";
 import { PaymentStatus } from "../../domain/models/payment";
 import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";
-import { IClient } from "../../domain/models/client";
-import { IVendor } from "../../domain/models/vendor";
 
 @injectable()
 export class BookingRepository
@@ -117,45 +114,5 @@ export class BookingRepository
     ]);
 
     return { data, total };
-  }
-
-  async findUsersForChat(input: FindUsersForChat): Promise<IVendor[] | IClient[]> {
-    const {userId,userType} = input;
-    const isClient = userType == 'client';
-
-    const result: (IVendor | IClient)[] = await this.model.aggregate([
-      {
-        $match : {
-          [isClient ? 'userId' : 'vendorId'] : new Types.ObjectId(userId),
-        },
-      },
-      {
-        $group : {
-          _id : `$${isClient ? 'vendorId' : 'userId'}`,
-        },
-      },
-      {
-        $lookup : {
-          from : isClient ? 'vendors' : 'clients',
-          localField: '_id',
-          foreignField : '_id',
-          as : 'user',
-        },
-      },
-      {$unwind : '$user'},
-      {
-        $project : {
-          _id : '$user._id',
-          role : '$user.role',
-          isOnline : '$user.isOnline',
-          lastSeen : '$user.lastSeen',
-          name : '$user.name',
-          avatar : '$user.profileImage'
-        }
-      }
-    ])
-
-    console.log(' got the result from reppository : ',result);
-    return result as (typeof isClient extends true ? IClient[] : IVendor[]);
   }
 }

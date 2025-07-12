@@ -22,7 +22,6 @@ export class OtpService implements IOtpService {
     }
 
     async storeOtp(otp: string, email: string): Promise<void> {
-        const newOtp = this.generateOtp()
         const hashedOtp = await this._bcryptService.hash(otp);
         const key = this.getRedisKey(email);
         await this.redisService.set(key, hashedOtp, 60);

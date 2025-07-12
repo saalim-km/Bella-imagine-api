@@ -23,7 +23,7 @@ export class CategoryRequestRepository
     const { skip, limit } = input;
 
       const [requests , count] = await Promise.all([
-        CategoryRequest.find()
+        this.model.find()
       .populate({
         path: "vendorId",
         select: "name email",

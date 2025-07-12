@@ -38,7 +38,7 @@ export class ServiceQueryUsecase implements IServiceQueryUsecase {
     }
 
     async getWorkSmaples(input: GetWorkSampleInput): Promise<PaginatedResponse<IWorkSample>> {
-        const {limit,page,service,title,vendor} = input;
+        const {limit,page,service,title,vendor,isPublished} = input;
         const skip = (page - 1) * limit;
         let filter : FilterQuery<IWorkSample> = {vendor : vendor}
         if(service && service!== undefined) {
@@ -51,6 +51,10 @@ export class ServiceQueryUsecase implements IServiceQueryUsecase {
             }
         }
 
+        if(isPublished !== undefined ){
+            filter.isPublished = isPublished
+        }
+        
         const {data , total} =  await this._workSampleRepo.getWorkSamples(filter,skip,limit)
         await Promise.all(
         data.map(async (sample) => {

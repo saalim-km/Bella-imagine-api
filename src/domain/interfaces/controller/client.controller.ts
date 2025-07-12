@@ -12,6 +12,11 @@ export interface IClientController {
     getClientDetails(req: Request, res: Response) : Promise<void>
     updateClientDetails(req: Request, res: Response) : Promise<void>
     getallBookings(req: Request, res: Response) : Promise<void>
-    fetchWallet(req: Request, res: Response) : Promise<void>
+    // fetchWallet(req: Request, res: Response) : Promise<void>
     updateBookingStatus(req: Request, res: Response) : Promise<void>
+    readAllNotifications(req: Request, res: Response) : Promise<void>
+    getAllNotifications(req: Request, res: Response) : Promise<void>
+    deleteNotifications(req: Request, res: Response) : Promise<void>
+    createConversation(req: Request, res: Response) : Promise<void>
+    // fetchWalletWithPagination(req: Request, res: Response): Promise<void>
 }

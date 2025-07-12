@@ -1,5 +1,3 @@
-import { INVALID } from "zod";
-
 export type TRole = "client" | "vendor" | "admin";
 
 export type TStatus = "blocked" | "unblocked";
@@ -16,93 +14,105 @@ export const HTTP_STATUS = {
 };
 
 export const SUCCESS_MESSAGES = {
-  LEAVE_SUCCESS : 'Community Leaved',
-  CATEGORY_JOIN_REQUEST_SUCCESS: "Category join request sent successfully.",
+  PAYMENT_STATUS_UPDATED : 'Payment status updated successfully',
+  COMMENT_DELETED: "Comment has been deleted successfully.",
+  COMMENT_EDITED: "Comment has been edited successfully.",
+  SERVICE_DELETED: 'Service has been successfully deleted',
+  WORKSAMPLE_DELETED: 'WorkSample has been successfully deleted',
+  COMMENT_CREATED: "Your comment has been added.",
+  LEAVE_SUCCESS: "You have left the community successfully.",
+  CATEGORY_JOIN_REQUEST_SUCCESS: "Your request to join the category has been submitted.",
   CLIENT_SECRET_SUCCESS: "Client secret generated successfully.",
-  REFRESH_TOKEN_SUCCESS : "Access token created successfully",
-  OTP_VERIFY_SUCCESS : 'OTP verified successfully',
-  JOINED_SUCESS :"Joined",
-  BOOKING_SUCCESS: "Booking completed.",
-  CREATED: "Created successfully.",
-  LOGIN_SUCCESS: "Login successful.",
-  REGISTRATION_SUCCESS: "Registration completed successfully.",
-  OTP_SEND_SUCCESS: "OTP sent successfully",
-  LOGOUT_SUCCESS: "Logged out successfully.",
-  UPDATE_SUCCESS: "Updated successfully.",
-  DELETE_SUCCESS: "Deleted successfully.",
-  OPERATION_SUCCESS: "Operation completed successfully.",
-  PASSWORD_RESET_SUCCESS: "Password reset successfully.",
-  VERIFICATION_SUCCESS: "Verification completed successfully.",
+  REFRESH_TOKEN_SUCCESS: "Session refreshed. You're all set.",
+  OTP_VERIFY_SUCCESS: "OTP verified successfully.",
+  JOINED_SUCESS: "You've joined successfully.",
+  BOOKING_SUCCESS: "Your booking is confirmed.",
+  CREATED: "Successfully created.",
+  LOGIN_SUCCESS: "You’re signed in.",
+  REGISTRATION_SUCCESS: "Account registered successfully.",
+  OTP_SEND_SUCCESS: "OTP has been sent to your email.",
+  LOGOUT_SUCCESS: "You’ve been logged out.",
+  UPDATE_SUCCESS: "Changes saved successfully.",
+  DELETE_SUCCESS: "Item deleted successfully.",
+  OPERATION_SUCCESS: "The operation was completed successfully.",
+  PASSWORD_RESET_SUCCESS: "Your password has been reset.",
+  VERIFICATION_SUCCESS: "Verification completed.",
   DATA_RETRIEVED: "Data retrieved successfully.",
-  ACTION_SUCCESS: "Action performed successfully.",
+  ACTION_SUCCESS: "Action completed successfully.",
 };
 
 export const ERROR_MESSAGES = {
-  CATEGORY_ALREADY_ADDED_IN_PROFILE : 'Category already added in profile',
-  WORKSMAPLE_NOT_FOUND : 'Worksample not found',
-  REGISTERATION_FAILED : 'Registeration failed',
-  SOCKET_NOT_INITIAZIDE : 'Socket not initialized',
-  DIDNT_JOINED_COMMUNITY : "Didn't joined community yet",
-  ALREADY_MEMBER : 'Already a member of this community',
-  INVALID_SLUG : 'Invalid slug',
-  COMMUNIY_EXISTS : 'Community already exists.',
-  ADMIN_NOT_FOUND: "Admin not found",
-  INVALID_AMOUNT: "Invalid amount provided.",
-  UNAUTHORIZED_USER: "Unauthorized user.",
-  INVALID_BOOKING_STATUS: "Invalid booking status provided.",
-  PAYMENT_INTENT_CREATION_FAILED: "Failed to create payment intent, please try again later.",
-  WALLET_NOT_FOUND: "Wallet not found",
-  BOOKING_ALREADY_COMPLETED_OR_CANCELLED: "Booking already completed or cancelled", 
-  CATEGORY_JOIN_REQUEST_LIMIT:' You can only join up to 3 categories',
-  CATEGORY_JOIN_REQUEST_EXISTS: "Category join request already exists",
-  FAILED_TO_CREATE_PAYMENT: "Failed to create payment, please try again later.",
-  PAYMENT_FAILED : 'Failed to process payment, server is down please try again layer',
-  SERVICE_NOT_FOUND : 'Service not found',
-  USER_BLOCKED : "User blocked by admin",
-  OTP_EXPIRED : 'OTP expired',
-  PASSWORD_REQUIRED : "Password is required",
-  USER_LOGIN_WITHOUT_PASSWORD : 'The email address you entered is already registered with Google. Please log in using Google, or use a different email to continue.',
-  VENDOR_NOT_FOUND : 'Vendor Not Found',
-  COMMUNITY_NO_EXIST : "Community didn't exist",
-  NO_SUCH_DATA: "No such data found.",
-  INVALID_OTP: "Invalid OTP",
-  INVALID_PASSWORD: "Invalid password",
-  INVALID_ROLE: "Invalid Role",
-  CONTEST_NOT_FOUND: "Contest not found",
-  ALREADY_EXISTS: "Already exists",
-  MISSING_REQUIRED_FIELDS: "Required fields are missing",
-  NO_CHARGE_FOUND: "No charge found for this payment",
-  CONFIRM_PAYMENT_FAILED: "Failed to confirm payment",
-  FAILED_TO_PROCESS_REFUND: "Failed to process refund",
-  WRONG_ID: "Wrong ID",
-  ID_REQUIRED: "ID required",
-  TOKEN_EXPIRED: "Token Expired",
-  EMAIL_NOT_FOUND: "Email Not Found",
-  BOOKING_NOT_FOUND: "Booking Not Found",
-  ID_NOT_PROVIDED: "Id Not Provided",
-  FORBIDDEN:
-    "Access denied. You do not have permission to access this resource.",
-  BLOCKED: "Access denied: Your account has been blocked.",
-  NOT_ALLOWED: "You are not allowed",
-  EMAIL_EXISTS: "Email Already Exists",
-  REQUEST_NOT_FOUND: "Category Request Not Found",
-  CATEGORY_EXISTS: "Category Already Exists",
-  CATEGORY_NOT_FOUND: "Category Not Found",
-  INVALID_TOKEN: "Invalid token",
-  INVALID_CREDENTIALS: "Invalid credentials provided.",
-  INVALID_DATAS : "Didn't meet the required data to update",
-  USER_NOT_FOUND: "User not found.",
-  UNAUTHORIZED_ACCESS: "Unauthorized access.",
-  SERVER_ERROR: "An error occurred, please try again later.",
-  VALIDATION_ERROR: "Validation error occurred.",
-  MISSING_PARAMETERS: "Missing required parameters.",
-  WRONG_CURRENT_PASSWORD: "Current password is wrong",
-  SAME_CURR_NEW_PASSWORD: "Please enter a different password from current",
-  INVALID_BOOKING_DATE: "The requested booking date is not available",
-  INVALID_TIME_SLOT: "The requested time slot is not available",
-  TIME_SLOT_FULL: "The requested time slot is already at full capacity",
-  ROUTE_NOT_FOUND: "Route not found.",
+  TIME_SLOT_FULLY_BOOKED : "Capacity exceed for selected time slot",
+  COMMENT_NOT_EXISTS : 'Comment not exists',
+  WORKSMAPLE_LINKED: 'Some work samples are linked to this service and it cannot be deleted.',
+  POST_NOT_EXISTS: 'Post does not exist.',
+  POST_CREATION_FAILED: 'Failed to create post. Please try again later.',
+  ENOUGH_DATA_TO_CREATE_NOTIFICATION: 'Insufficient data to create notification.',
+  CATEGORY_ALREADY_ADDED_IN_PROFILE: 'Category is already added to the profile.',
+  WORKSMAPLE_NOT_FOUND: 'Work sample not found.',
+  REGISTERATION_FAILED: 'Registration failed.',
+  SOCKET_NOT_INITIAZIDE: 'Socket is not initialized.',
+  DIDNT_JOINED_COMMUNITY: "You haven't joined the community yet.",
+  ALREADY_MEMBER: 'You are already a member of this community.',
+  INVALID_SLUG: 'Invalid slug provided.',
+  COMMUNIY_EXISTS: 'Community already exists.',
+  ADMIN_NOT_FOUND: 'Admin not found.',
+  INVALID_AMOUNT: 'Invalid amount provided.',
+  UNAUTHORIZED_USER: 'Unauthorized user.',
+  INVALID_BOOKING_STATUS: 'Invalid booking status.',
+  PAYMENT_INTENT_CREATION_FAILED: 'Failed to create payment intent. Please try again later.',
+  WALLET_NOT_FOUND: 'Wallet not found.',
+  BOOKING_ALREADY_COMPLETED_OR_CANCELLED: 'Booking has already been completed or cancelled.',
+  CATEGORY_JOIN_REQUEST_LIMIT: 'You can only join up to 3 categories.',
+  CATEGORY_JOIN_REQUEST_EXISTS: 'Category join request already exists.',
+  FAILED_TO_CREATE_PAYMENT: 'Failed to create payment. Please try again later.',
+  PAYMENT_FAILED: 'Payment processing failed. Server is down. Please try again later.',
+  SERVICE_NOT_FOUND: 'Service not found.',
+  USER_BLOCKED: 'This user has been blocked by the admin.',
+  OTP_EXPIRED: 'OTP has expired.',
+  PASSWORD_REQUIRED: 'Password is required.',
+  USER_LOGIN_WITHOUT_PASSWORD: 'This email is registered via Google. Please log in using Google or use a different email.',
+  VENDOR_NOT_FOUND: 'Vendor not found.',
+  COMMUNITY_NO_EXIST: 'Community does not exist.',
+  NO_SUCH_DATA: 'No matching data found.',
+  INVALID_OTP: 'Invalid OTP.',
+  INVALID_PASSWORD: 'Invalid password.',
+  INVALID_ROLE: 'Invalid role.',
+  CONTEST_NOT_FOUND: 'Contest not found.',
+  ALREADY_EXISTS: 'Already exists.',
+  MISSING_REQUIRED_FIELDS: 'Required fields are missing.',
+  NO_CHARGE_FOUND: 'No charge found for this payment.',
+  CONFIRM_PAYMENT_FAILED: 'Failed to confirm payment.',
+  FAILED_TO_PROCESS_REFUND: 'Failed to process refund.',
+  WRONG_ID: 'Invalid ID provided.',
+  ID_REQUIRED: 'ID is required.',
+  TOKEN_EXPIRED: 'Token has expired.',
+  EMAIL_NOT_FOUND: 'Email not found.',
+  BOOKING_NOT_FOUND: 'Booking not found.',
+  ID_NOT_PROVIDED: 'ID was not provided.',
+  FORBIDDEN: 'Access denied. You do not have permission to access this resource.',
+  BLOCKED: 'Access denied. Your account has been blocked.',
+  NOT_ALLOWED: 'You are not allowed to perform this action.',
+  EMAIL_EXISTS: 'Email already exists.',
+  REQUEST_NOT_FOUND: 'Category request not found.',
+  CATEGORY_EXISTS: 'Category already exists.',
+  CATEGORY_NOT_FOUND: 'Category not found.',
+  INVALID_TOKEN: 'Invalid token.',
+  INVALID_CREDENTIALS: 'Invalid credentials provided.',
+  INVALID_DATAS: 'Insufficient data to update.',
+  USER_NOT_FOUND: 'User not found.',
+  UNAUTHORIZED_ACCESS: 'Unauthorized access.',
+  SERVER_ERROR: 'An unexpected error occurred. Please try again later.',
+  VALIDATION_ERROR: 'A validation error occurred.',
+  MISSING_PARAMETERS: 'Missing required parameters.',
+  WRONG_CURRENT_PASSWORD: 'The current password is incorrect.',
+  SAME_CURR_NEW_PASSWORD: 'New password must be different from the current password.',
+  INVALID_BOOKING_DATE: 'The requested booking date is unavailable.',
+  INVALID_TIME_SLOT: 'The requested time slot is invalid.',
+  TIME_SLOT_FULL: 'The requested time slot is full.',
+  ROUTE_NOT_FOUND: 'Route not found.',
 };
+
 
 const EMAIL_WRAPPER = (content: string) => `
   <div style="max-width: 600px; margin: 0 auto; padding: 40px 30px; font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #ffffff; color: #333; border-radius: 8px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);">
@@ -149,4 +159,25 @@ export const RESET_PASSWORD_MAIL_CONTENT = (otp: string) =>
     </div>
     <p style="font-size: 16px; line-height: 1.6;">This code is valid for a limited time. If you didn’t request this, simply ignore the message.</p>
     <p style="margin-top: 24px; font-size: 16px;">Stay safe,<br /><strong>The Bella Imagine Team</strong></p>
+`);
+
+export const BOOKING_CONFIRMATION_MAIL_CONTENT = (bookingDetails: {
+  eventName: string;
+  date: string;
+  time: string;
+  stripeReceipt : string
+}) =>
+  EMAIL_WRAPPER(`
+    <h1 style="color: #1F2122; font-size: 24px; margin-bottom: 16px;">Your Booking is Confirmed 🎉</h1>
+    <p style="font-size: 16px; line-height: 1.6;">
+      Thank you for booking with <strong>Bella Imagine</strong>! Here are your event details:
+    </p>
+    <div style="margin: 24px 0; padding: 20px; background-color: #f9f9f9; border-radius: 8px;">
+      <p style="font-size: 16px; margin: 8px 0;"><strong>Event:</strong> ${bookingDetails.eventName}</p>
+      <p style="font-size: 16px; margin: 8px 0;"><strong>Date:</strong> ${bookingDetails.date}</p>
+      <p style="font-size: 16px; margin: 8px 0;"><strong>Time:</strong> ${bookingDetails.time}</p>
+    </div>
+    <p style="font-size: 16px; line-height: 1.6;">We can't wait to see you there! Make sure to arrive a little early and bring your confirmation details with you.</p>
+    <p style="font-size: 16px; line-height: 1.6;">If you have any questions or need to make changes, please contact our support team anytime.</p>
+    <p style="margin-top: 24px; font-size: 16px;">Cheers,<br /><strong>The Bella Imagine Team</strong></p>
 `);

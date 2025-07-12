@@ -1,6 +1,5 @@
-import { string, z } from "zod";
+import { z } from "zod";
 import {
-  ImageSchema,
   limitQuerySchema,
   objectIdSchema,
   pageQuerySchema,
@@ -109,7 +108,6 @@ export const CreateServiceSchema = z
   })
   .strict();
 
-  
 export const getSeviceSchema = z.object({
   serviceTitle: searchQuerySchema,
   category: z
@@ -132,10 +130,6 @@ export const updateServiceSchema = CreateServiceSchema.extend({
   vendor: objectIdSchema.optional(),
 }).passthrough();
 
-
-
-
-
 export const createWorkSampleSchema = z.object({
   service: objectIdSchema,
   vendor: objectIdSchema,
@@ -145,7 +139,9 @@ export const createWorkSampleSchema = z.object({
   isPublished: parseBooleanSchema,
   media: z.preprocess(
     (val) => (Array.isArray(val) ? val : val ? [val] : []),
-    z.array(z.custom<Express.Multer.File>()).min(1, "At least one media file is required")
+    z
+      .array(z.custom<Express.Multer.File>())
+      .min(1, "At least one media file is required")
   ),
 });
 
@@ -161,11 +157,10 @@ export const updateWorkSampleSchema = createWorkSampleSchema
     ),
   });
 
-
 export const getWorkSamplesSchema = z.object({
-  limit : limitQuerySchema,
-  title : searchQuerySchema,
-  service :  z
+  limit: limitQuerySchema,
+  title: searchQuerySchema,
+  service: z
     .string()
     .transform((val) => (val ? new Types.ObjectId(val) : undefined))
     .refine(
@@ -175,5 +170,13 @@ export const getWorkSamplesSchema = z.object({
       }
     )
     .optional(),
-  page : pageQuerySchema
-})
+  page: pageQuerySchema,
+  isPublished: z
+    .string()
+    .transform((val) => {
+      if (val === "true") return true;
+      if (val === "false") return false;
+      return undefined;
+    })
+    .optional(),
+});

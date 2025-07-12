@@ -27,7 +27,7 @@ import { ClientResetPasswordStrategy } from "../../application/auth/strategies/r
 import { VendorResetPasswordStrategy } from "../../application/auth/strategies/reset password/vendor-reset-password.usecase";
 import { ResetPasswordUsecase } from "../../application/auth/reset-password.usecase";
 import { IRefreshTokenUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
-import { ICategoryManagementUsecase, IGetUserDetailsStrategy, IGetUserDetailsUsecase, IGetUsersStrategy, IGetUsersUsecase, IGetVendorRequestUsecase, IUserManagementUsecase } from "../../domain/interfaces/usecase/admin-usecase.interface";
+import { ICategoryManagementUsecase, IDashboardUsecase, IGetUserDetailsStrategy, IGetUserDetailsUsecase, IGetUsersStrategy, IGetUsersUsecase, IGetVendorRequestUsecase, IUserManagementUsecase } from "../../domain/interfaces/usecase/admin-usecase.interface";
 import { GetUsersUsecase } from "../../application/admin/get-users.usecase";
 import { GetClientsUsecase } from "../../application/admin/strategies/get-clients.strategy";
 import { GetVendorsUsecase } from "../../application/admin/strategies/get-vendors.strategy";
@@ -51,7 +51,7 @@ import { WalletUsecase } from "../../application/wallet/wallet.usecase";
 import { IBookingCommandUsecase, IBookingQueryUsecase } from "../../domain/interfaces/usecase/booking-usecase.interface";
 import { IPaymentUsecaase } from "../../domain/interfaces/usecase/payment.usecase";
 import { PaymentUsecase } from "../../application/payment/payment.usecase";
-import { ICommunityCommandUsecase, ICommunityQueryUsecase } from "../../domain/interfaces/usecase/community-usecase.interface";
+import { ICommunityCommandUsecase, ICommunityPostCommandUsecase, ICommunityPostQueryUsecase, ICommunityQueryUsecase } from "../../domain/interfaces/usecase/community-usecase.interface";
 import { CommunityCommandUsecase } from "../../application/community/community-command.usecase";
 import { CommunityQueryUsecase } from "../../application/community/community-query.usecase";
 import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.interface";
@@ -59,6 +59,11 @@ import { GoogleLoginUsecase } from "../../application/auth/google-login.usecase"
 import { ServiceCommandUsecase } from "../../application/service/service-command.usecase";
 import { ServiceQueryUsecase } from "../../application/service/service-query.usecase";
 import { ChatUsecase } from "../../application/chat/chat.usecase";
+import { INotificationUsecase } from "../../domain/interfaces/usecase/notification-usecase.interface";
+import { NotifiactionUsecase } from "../../application/common/notification.usecase";
+import { CommunityPostCommandUsecase } from "../../application/community/community-post-command.usecase";
+import { CommunityPostQueryUsecase } from "../../application/community/community-post-query.usecase";
+import { DashBoardUsecase } from "../../application/admin/dashboard.usecase";
 
 export class UsecaseRegistry {
     // Static method to register all use cases and strategies
@@ -195,6 +200,22 @@ export class UsecaseRegistry {
 
         container.register<IServiceQueryUsecase>('IServiceQueryUsecase' ,{
             useClass : ServiceQueryUsecase
+        })
+
+        container.register<INotificationUsecase>('INotificationUsecase' , {
+            useClass : NotifiactionUsecase
+        })
+
+        container.register<ICommunityPostCommandUsecase>('ICommunityPostCommandUsecase',{
+            useClass : CommunityPostCommandUsecase
+        })
+
+        container.register<ICommunityPostQueryUsecase>('ICommunityPostQueryUsecase' , {
+            useClass : CommunityPostQueryUsecase
+        })
+
+        container.register<IDashboardUsecase>('IDashboardUsecase' , {
+            useClass : DashBoardUsecase
         })
     }
 }

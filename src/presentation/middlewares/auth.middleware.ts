@@ -90,7 +90,8 @@ export const decodeToken = async (
   try {
     logger.info('access token expire triggered')
     const token = extractToken(req);
-console.log(token);
+    console.log('extracted token for decoding : ',token);
+    
     if (!token) {
       res
         .status(HTTP_STATUS.UNAUTHORIZED)
@@ -98,17 +99,32 @@ console.log(token);
       return;
     }
 
-    const user = tokenService.decodeRefreshToken(token?.access_token);
-    console.log('user from access token decode : ',user);
-    (req as CustomRequest).user = {
-      _id: user?._id,
-      email: user?.email,
-      role: user?.role,
-      access_token: token.access_token,
-      refresh_token: token.refresh_token,
-    };
-    next();
-  } catch (error) {}
+    try {
+      // verify refresh token to create new access with it
+      const user = tokenService.verifyRefreshToken(token?.refresh_token);
+      console.log('user from access token decode : ',user);
+      (req as CustomRequest).user = {
+        _id: user?._id,
+        email: user?.email,
+        role: user?.role,
+        access_token: "",
+        refresh_token: token.refresh_token,
+      };
+      next();
+    } catch (tokenError) {
+      // Access token is expired/invalid, try to refresh
+      console.log('Access token invalid, attempting refresh...',tokenError);
+      res
+        .status(HTTP_STATUS.UNAUTHORIZED)
+        .json({ message: ERROR_MESSAGES.TOKEN_EXPIRED });
+      return;
+    }
+  } catch (error) {
+    console.error('Token decode error:', error);
+    res
+      .status(HTTP_STATUS.UNAUTHORIZED)
+      .json({ message: ERROR_MESSAGES.UNAUTHORIZED_ACCESS });
+  }
 };
 
 export const authorizeRole = (allowedRoles: string[]) => {

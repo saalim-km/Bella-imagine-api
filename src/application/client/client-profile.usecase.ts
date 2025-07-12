@@ -7,11 +7,10 @@ import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-
 import { IAwsS3Service } from "../../domain/interfaces/service/aws-service.interface";
 import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
-import { Types, UpdateQuery } from "mongoose";
+import { UpdateQuery } from "mongoose";
 import { config } from "../../shared/config/config";
 import path from "path";
 import { unlinkSync } from "fs";
-import { GeoLocation } from "../../domain/models/user-base";
 
 @injectable()
 export class ClientProfileUsecase implements IClientProfileUsecase {
@@ -23,9 +22,7 @@ export class ClientProfileUsecase implements IClientProfileUsecase {
   ) {}
 
   async updateClientProfile(input: UpdateClientProfileInput): Promise<IClient> {
-    console.log("in the updateclient profie usecase");
-    console.log(input);
-    const { name, clientId, email, location, phoneNumber, profileImage } =
+    const { name, clientId , location, phoneNumber, profileImage } =
       input;
     const client = await this._clientRepository.findById(clientId);
     if (!client) {
@@ -35,16 +32,18 @@ export class ClientProfileUsecase implements IClientProfileUsecase {
       );
     }
 
-    const geoLocation: GeoLocation = {
-      type: "Point",
-      coordinates: [location.lng, location.lat],
-    };
-
     const dataToUpdate: UpdateQuery<IClient> = {
       name: name,
-      location: location,
-      geoLocation: geoLocation,
+      phoneNumber: phoneNumber || '',
     };
+
+    if (location && location !== undefined) {
+      dataToUpdate.location = location;
+      dataToUpdate.geoLocation = {
+      type: "Point",
+      coordinates: [location.lng, location.lat],
+      };
+    }
 
     if (profileImage) {
       const isFileExists = await this._awsService.isFileAvailableInAwsBucket(
@@ -62,10 +61,6 @@ export class ClientProfileUsecase implements IClientProfileUsecase {
       unlinkSync(profileImage.path);
       client.profileImage = fileKey;
       dataToUpdate.profileImage = fileKey;
-    }
-
-    if (phoneNumber && phoneNumber !== undefined) {
-      dataToUpdate.phoneNumber = phoneNumber;
     }
 
     const updatedClient = await this._clientRepository.update(

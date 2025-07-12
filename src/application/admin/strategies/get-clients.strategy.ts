@@ -12,7 +12,7 @@ export class GetClientsUsecase implements IGetUsersStrategy<IClient> {
     ){}
 
     async getUsers(input: UserStrategyFilterInput): Promise<PaginatedResponse<IClient>> {
-        const {limit , page , createdAt , isblocked , search} = input;
+        const {limit , page , createdAt , search} = input;
         const skip = (page - 1) * limit;
         return await this._clientRepository.findAllClients({filter : search! ,limit : limit , skip : skip , sort : createdAt })
     }

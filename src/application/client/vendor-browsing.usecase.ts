@@ -44,7 +44,7 @@ export class VendorBrowsingUsecase implements IVendorBrowsingUseCase {
     } = input;
     const skip = (page - 1) * limit;
 
-    let filter: FilterQuery<IVendor> = {};
+    const filter: FilterQuery<IVendor> = {};
 
     if (location && location.lat !== 0 && location.lng !== 0) {
       filter.geoLocation = {
@@ -77,13 +77,17 @@ export class VendorBrowsingUsecase implements IVendorBrowsingUseCase {
       filter.tags = tags;
     }
 
-    let {data,total} = await this._vendorRepsitory.fetchVendorListingsForClients({
+    const vendors = await this._vendorRepsitory.fetchVendorListingsForClients({
       filter: filter,
       limit: limit,
       skip: skip,
       sort: sortBy ? sortBy : { createdAt: -1 },
     });
 
+
+    let data = vendors.data;
+    const total = vendors.total;
+    
     data = await Promise.all(
       data.map(async(vendor) => {
         if(vendor.profileImage) {

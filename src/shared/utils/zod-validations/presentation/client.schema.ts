@@ -6,6 +6,7 @@ import {
   objectIdSchema,
   pageQuerySchema,
   searchQuerySchema,
+  slugSchema,
 } from "../validators/validations";
 import { Types } from "mongoose";
 
@@ -119,19 +120,31 @@ export const updateClientProfile = z.object({
     (val) =>
       typeof val === "string" && val.trim() !== "" ? Number(val) : undefined,
     z.number().int().nonnegative().optional()
-  ),
-  location: z.object({
-    address: z.string().min(1, "Address is required"),
-    lat: z.preprocess(
-      (val) => (val !== undefined ? Number(val) : undefined),
-      z.number().min(1, "Latitude is required")
-    ),
-    lng: z.preprocess(
-      (val) => (val !== undefined ? Number(val) : undefined),
-      z.number().min(1, "Longitude is required")
-    ),
-  }),
-  profileImage: ImageSchema,
+  ).optional(),
+  location: z.preprocess(
+    (val) => {
+      if (
+        val &&
+        typeof val === "object" &&
+        (("lat" in val) || ("lng" in val) || ("address" in val))
+      ) {
+        return {
+          lat: "lat" in val && val.lat !== undefined ? Number((val as any).lat) : undefined,
+          lng: "lng" in val && val.lng !== undefined ? Number((val as any).lng) : undefined,
+          address: "address" in val ? (val as any).address : undefined,
+        };
+      }
+      return undefined;
+    },
+    z
+      .object({
+        address: z.string().optional(),
+        lat: z.number().optional(),
+        lng: z.number().optional(),
+      })
+      .optional()
+  ).optional(),
+  profileImage: ImageSchema.optional(),
   email: z.string().email("Invalid email address"),
 });
 
@@ -322,3 +335,30 @@ export const uploadMediaChat = z.object({
     .transform((file) => file as Express.Multer.File),
   conversationId: z.string(),
 });
+
+export const getAllNotificationtSchema = z.object({
+  page : pageQuerySchema,
+  limit : limitQuerySchema,
+  userId : objectIdSchema
+})
+
+export const getCommunityMemberSchema = z.object({
+  page : pageQuerySchema,
+  limit : limitQuerySchema,
+  slug : slugSchema
+})
+
+export const WalletQuerySchema = z.object({
+  page: pageQuerySchema.optional(),
+  limit: limitQuerySchema.optional(),
+  search: searchQuerySchema.optional(),
+  status: z
+    .enum(["all", "pending", "processing", "succeeded", "failed", "refunded", "partially_refunded"])
+    .default("all"),
+  purpose: z.string().optional(),
+  dateRange: z.enum(["all", "today", "week", "month", "year"]).default("all"),
+  sortField: z.enum(["date", "amount", "status", "purpose"]).default("date"),
+  sortOrder: z.enum(["asc", "desc"]).default("desc"),
+})
+
+export type WalletQueryInput = z.infer<typeof WalletQuerySchema>

@@ -1,7 +1,6 @@
 import { injectable } from "tsyringe";
 import {
   DeleteObjectCommand,
-  ErrorDetails,
   GetObjectCommand,
   HeadObjectCommand,
   PutObjectCommand,

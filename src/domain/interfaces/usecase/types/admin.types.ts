@@ -22,8 +22,8 @@ export interface UserDetailsInput {
   role: TRole;
 }
 
-export interface VendorRequestFilterInput
-  extends Pick<UsersFilterInput, "createdAt" | "limit" | "page" | "search"> {}
+export type VendorRequestFilterInput
+  = Pick<UsersFilterInput, "createdAt" | "limit" | "page" | "search"> 
 
 export interface UpdateUserStatusInput extends UserDetailsInput {
   isblocked : boolean
@@ -44,7 +44,7 @@ export interface CreateNewCategoryInput {
   status : boolean
 }
 
-export interface getCatJoinRequestInput extends Pick<PaginationInput , 'limit' | 'page' > {}
+export type getCatJoinRequestInput = Pick<PaginationInput , 'limit' | 'page' > 
 
 export interface UpdateCategory {
   id : Types.ObjectId,
