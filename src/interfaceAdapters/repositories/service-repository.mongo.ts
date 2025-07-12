@@ -25,9 +25,13 @@ export class ServiceRepository
       {
         _id: serviceDetails._id,
         "availableDates.date": bookingDate,
-        "availableDates.timeSlots.startTime": timeSlot.startTime,
-        "availableDates.timeSlots.endTime": timeSlot.endTime,
-        "availableDates.timeSlots.capacity": { $gte: Math.abs(count) },
+        "availableDates.timeSlots": {
+          $elemMatch: {
+            startTime: timeSlot.startTime,
+            endTime: timeSlot.endTime,
+            capacity: { $gte: count < 0 ? Math.abs(count) : 0 },
+          },
+        },
       },
       {
         $inc: {
@@ -40,6 +44,7 @@ export class ServiceRepository
           {
             "slotElem.startTime": timeSlot.startTime,
             "slotElem.endTime": timeSlot.endTime,
+            "slotElem.capacity": { $gte: count < 0 ? Math.abs(count) : 0 },
           },
         ],
       }
