@@ -6,6 +6,7 @@ import { CustomError } from "../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { INotificationRepository } from "../../domain/interfaces/repository/notification.repository";
 import { FilterQuery, Types } from "mongoose";
+import { Mapper } from "../../shared/utils/mapper";
 
 @injectable()
 export class NotifiactionUsecase implements INotificationUsecase {
@@ -46,7 +47,7 @@ export class NotifiactionUsecase implements INotificationUsecase {
         ])
 
         return {
-            data : notifications,
+            data : Mapper.notificationList(notifications),
             total : count,
             unReadTotal : unReadCount
         }

@@ -33,6 +33,9 @@ export interface ICommunityQueryUsecase {
   fetchAllCommunities(
     input: FetchAllCommunitiesInput
   ): Promise<PaginatedResponse<ICommunity>>;
+  fetchAllCommunitiesForUsers(
+    input: FetchAllCommunitiesInput
+  ): Promise<PaginatedResponse<ICommunity>>;
   fetchCommuityMembers(
     input: GetCommunityMemberInput
   ): Promise<PaginatedResponse<CommunityMembersOutput>>;

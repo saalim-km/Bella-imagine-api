@@ -176,12 +176,6 @@ export class VendorController implements IVendorController {
     );
   }
 
-  // async fetchWallet(req: Request, res: Response): Promise<void> {
-  //   const vendorId = objectIdSchema.parse((req as CustomRequest).user._id);
-  //   const wallet = await this._walletUsecase.fetchWallet(vendorId);
-  //   ResponseHandler.success(res, SUCCESS_MESSAGES.DATA_RETRIEVED, wallet);
-  // }
-
   async fetchWalletWithPagination(req: Request, res: Response): Promise<void> {
     const vendorId = objectIdSchema.parse((req as CustomRequest).user._id);
 

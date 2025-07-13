@@ -5,6 +5,7 @@ import { VendorRequestFilterInput } from "../../domain/interfaces/usecase/types/
 import { PaginatedResponse } from "../../domain/interfaces/usecase/types/common.types";
 import { IVendor } from "../../domain/models/vendor";
 import { FilterQuery } from "mongoose";
+import { Mapper } from "../../shared/utils/mapper";
 
 @injectable()
 export class GetVendorRequestUsecase implements IGetVendorRequestUsecase {
@@ -14,7 +15,7 @@ export class GetVendorRequestUsecase implements IGetVendorRequestUsecase {
 
   async getVendorRequests(
     input: VendorRequestFilterInput
-  ): Promise<PaginatedResponse<IVendor>> {
+  ): Promise<PaginatedResponse<Partial<IVendor>>> {
     let search: FilterQuery<IVendor> = { role: "vendor" };
     let sort: number = -1;
     const skip = (input.page - 1) * input.limit;
@@ -38,8 +39,9 @@ export class GetVendorRequestUsecase implements IGetVendorRequestUsecase {
         this._vendorRepository.count(search)
     ])
 
+
     return {
-        data : users,
+        data : Mapper.vendorListMapper(users) as unknown as IVendor[],
         total : count
     }
   }

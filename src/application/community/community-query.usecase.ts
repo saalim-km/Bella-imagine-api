@@ -16,6 +16,7 @@ import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { CommunityMembersOutput, FetchCommunityBySlugOutput } from "../../domain/types/community.types";
 import { ICommunityMemberRepository } from "../../domain/interfaces/repository/community.repository";
 import { ICommunityMember } from "../../domain/models/community";
+import { Mapper } from "../../shared/utils/mapper";
 
 @injectable()
 export class CommunityQueryUsecase implements ICommunityQueryUsecase {
@@ -151,6 +152,54 @@ export class CommunityQueryUsecase implements ICommunityQueryUsecase {
 
     return {
       data : communities,
+      total: total
+    }
+  }
+
+  async fetchAllCommunitiesForUsers(
+    input: FetchAllCommunitiesInput
+  ): Promise<PaginatedResponse<ICommunity>> {
+    const { category, membership, search, sort, limit, page } = input;
+    const skip = (page - 1) * limit;
+    const filter: FilterQuery<ICommunity> = {isPrivate : false};
+    if (category && category !== undefined) {
+      filter.category = category;
+    }
+    if (search && search.trim() !== "") {
+      filter.name = search;
+      filter.slug = search;
+      filter.description = search;
+    }
+
+    const { data, total } =
+      await this._communityRepository.fetchAllCommunitiesForUsers({
+        filter: filter,
+        limit: limit,
+        skip: skip,
+        sort: sort,
+        userId: input.userId,
+        membership : membership
+      });
+
+    const communities = await Promise.all(
+      data.map(async (comm) => {
+        if (comm.coverImage) {
+          comm.coverImage = await this._presignedUrl.getPresignedUrl(
+            comm.coverImage
+          );
+        }
+        if (comm.iconImage) {
+          comm.iconImage = await this._presignedUrl.getPresignedUrl(
+            comm.iconImage
+          );
+        }
+        return comm;
+      })
+    );
+
+
+    return {
+      data : Mapper.communityList(communities),
       total: total
     }
   }

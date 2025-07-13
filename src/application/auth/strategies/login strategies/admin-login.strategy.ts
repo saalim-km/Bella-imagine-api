@@ -6,6 +6,7 @@ import { LoginUserInput, LoginUserOuput } from "../../../../domain/interfaces/us
 import { CustomError } from "../../../../shared/utils/helper/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../../shared/constants/constants";
 import { IClient } from "../../../../domain/models/client";
+import { Mapper } from "../../../../shared/utils/mapper";
 
 @injectable()
 export class AdminLoginStrategy implements ILoginUserStrategy {
@@ -34,13 +35,8 @@ export class AdminLoginStrategy implements ILoginUserStrategy {
             admin.data.profileImage = await this._getPresignedUrl.getPresignedUrl(admin.data.profileImage);
         }
 
-        return {
-            _id : admin.data._id.toString(),
-            name : admin.data.name,
-            email : admin.data.email,
-            role : admin.data.role,
-            avatar : admin.data.profileImage
-        }
+        return Mapper.userMapper(admin.data)
+        
     }
 
 }

@@ -4,8 +4,14 @@ import {
   ILoginUserStrategy,
   IRegisterUserStrategy,
 } from "../../domain/interfaces/usecase/auth-usecase.interfaces";
-import { IEmailExistenceUsecase, IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
-import { GoogleLoginInput, LoginUserOuput } from "../../domain/interfaces/usecase/types/auth.types";
+import {
+  IEmailExistenceUsecase,
+  IGetPresignedUrlUsecase,
+} from "../../domain/interfaces/usecase/common-usecase.interfaces";
+import {
+  GoogleLoginInput,
+  LoginUserOuput,
+} from "../../domain/interfaces/usecase/types/auth.types";
 import { CustomError } from "../../shared/utils/helper/custom-error";
 import { OAuth2Client } from "google-auth-library";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
@@ -13,10 +19,13 @@ import { config } from "../../shared/config/config";
 import { IAwsS3Service } from "../../domain/interfaces/service/aws-service.interface";
 import { IRedisService } from "../../domain/interfaces/service/redis-service.interface";
 import logger from "../../shared/logger/logger";
+import { IUser } from "../../domain/models/user-base";
+import { IClient } from "../../domain/models/client";
+import { IVendor } from "../../domain/models/vendor";
 
 @injectable()
 export class GoogleLoginUsecase implements IGoogleLoginUsecase {
-      private registerStrategies: Record<string, IRegisterUserStrategy>;
+  private registerStrategies: Record<string, IRegisterUserStrategy>;
   private loginStrategies: Record<string, ILoginUserStrategy>;
   private client: OAuth2Client;
   constructor(
@@ -30,24 +39,24 @@ export class GoogleLoginUsecase implements IGoogleLoginUsecase {
     private _vendortLoginStrategy: ILoginUserStrategy,
     @inject("IGetPresignedUrlUsecase")
     private _pregisnedUrl: IGetPresignedUrlUsecase,
-    @inject('IEmailExistenceUsecase') private _userExistence : IEmailExistenceUsecase,
-    @inject('IAwsS3Service') private _awsS3Service : IAwsS3Service,
-        @inject("IRedisService") private _redisService: IRedisService
-    
+    @inject("IEmailExistenceUsecase")
+    private _userExistence: IEmailExistenceUsecase,
+    @inject("IAwsS3Service") private _awsS3Service: IAwsS3Service,
+    @inject("IRedisService") private _redisService: IRedisService
   ) {
-    (this.registerStrategies = {
+    this.registerStrategies = {
       client: this._clientRegisterStrategy,
       vendor: this._vendorRegisterStrategy,
-    });
-      (this.loginStrategies = {
-        client: this._clientLoginStrategy,
-        vendor: this._vendortLoginStrategy,
-      });
+    };
+    this.loginStrategies = {
+      client: this._clientLoginStrategy,
+      vendor: this._vendortLoginStrategy,
+    };
     this.client = new OAuth2Client();
   }
 
   async login(input: GoogleLoginInput): Promise<LoginUserOuput> {
-    const {client_id,credential,role} = input;
+    const { client_id, credential, role } = input;
     const registerStrategy = this.registerStrategies[role];
     const loginStrategy = this.loginStrategies[role];
 
@@ -83,7 +92,10 @@ export class GoogleLoginUsecase implements IGoogleLoginUsecase {
     }
 
     const oppositeRole = role === "client" ? "vendor" : "client";
-    const {data} = await this._userExistence.doesEmailExist(email , oppositeRole)
+    const { data } = await this._userExistence.doesEmailExist(
+      email,
+      oppositeRole
+    );
     if (data) {
       throw new CustomError(
         `This email is already registered as a ${oppositeRole}. Please log in using the correct role.`,
@@ -91,89 +103,55 @@ export class GoogleLoginUsecase implements IGoogleLoginUsecase {
       );
     }
 
-    
-    const {data : existingUser} = await this._userExistence.doesEmailExist(email,role);
+    const { data: existingUser } = await this._userExistence.doesEmailExist(
+      email,
+      role
+    );
 
     if (existingUser) {
-      if (existingUser.googleId) {
-        if (existingUser?.profileImage) {
-          logger.warn('google profile hit in googel login auth : ')
-          const cachedUrl = await this._pregisnedUrl.getPresignedUrl(`${config.s3.profile}:${existingUser._id}`)
-          if (cachedUrl) {
-            existingUser.profileImage = cachedUrl;
-          } else {
-            const isFileAvailable =
-              await this._awsS3Service.isFileAvailableInAwsBucket(
-                existingUser.profileImage
-              );
-            if (isFileAvailable) {
-              const presignedUrl = await this._awsS3Service.getFileUrlFromAws(
-                existingUser.profileImage,
-                config.redis.REDIS_PRESIGNED_URL_EXPIRY
-              );
-              existingUser.profileImage = presignedUrl;
-              await this._redisService.set(
-                `profile-url:${existingUser._id}`,
-                presignedUrl,
-                config.redis.REDIS_PRESIGNED_URL_EXPIRY
-              );
-            }
-          }
-        }
-
-        return {
-          email,
-          role,
-          _id: existingUser._id.toString(),
-          name: existingUser.name,
-          avatar: existingUser.profileImage ? existingUser.profileImage : ''
-        };
-      } else {
+      if (!existingUser.googleId) {
         throw new CustomError(
           "Try logging in with password",
           HTTP_STATUS.CONFLICT
         );
       }
+
+      if (existingUser.profileImage) {
+        logger.warn("google profile hit in google login auth");
+        await this.attachPresignedProfileUrl(existingUser);
+      }
+
+
+      console.log('got the user after attaching profileImage : ',existingUser);
+      return {
+        _id : existingUser._id.toHexString(),
+        avatar : existingUser.profileImage,
+        email : existingUser.email,
+        name : existingUser.name,
+        role : existingUser.role
+      }
     }
 
     // Register the new user
     await registerStrategy.register({
-        email : email,
-        name : name,
-        password : '',
-        role : role,
-        googleId : googleId,
-        profileImage : profileImage ? profileImage : '',
+      email: email,
+      name: name,
+      password: "",
+      role: role,
+      googleId: googleId,
+      profileImage: profileImage ? profileImage : "",
     });
 
-    const {data : newUser} = await this._userExistence.doesEmailExist(email,role)
-    console.log('new user from google login usecase : ',newUser);
-    if(!newUser || !newUser._id) {
-        throw new CustomError(ERROR_MESSAGES.REGISTERATION_FAILED,HTTP_STATUS.BAD_REQUEST)
-    }
-    // Inside the newUser block
-    if (newUser?.profileImage) {
-      const cachedUrl = await this._redisService.get(`${config.s3.profile}:${newUser._id}`);
-      if (cachedUrl) {
-        newUser.profileImage = cachedUrl;
-      } else {
-        const isFileAvailable =
-          await this._awsS3Service.isFileAvailableInAwsBucket(
-            newUser.profileImage
-          );
-        if (isFileAvailable) {
-          const presignedUrl = await this._awsS3Service.getFileUrlFromAws(
-            newUser.profileImage,
-            config.redis.REDIS_PRESIGNED_URL_EXPIRY
-          );
-          newUser.profileImage = presignedUrl;
-          await this._redisService.set(
-            `profile-url:${newUser._id}`,
-            presignedUrl,
-            config.redis.REDIS_PRESIGNED_URL_EXPIRY
-          );
-        }
-      }
+    const { data: newUser } = await this._userExistence.doesEmailExist(
+      email,
+      role
+    );
+    console.log("new user from google login usecase : ", newUser);
+    if (!newUser || !newUser._id) {
+      throw new CustomError(
+        ERROR_MESSAGES.REGISTERATION_FAILED,
+        HTTP_STATUS.BAD_REQUEST
+      );
     }
 
     return {
@@ -181,7 +159,15 @@ export class GoogleLoginUsecase implements IGoogleLoginUsecase {
       role,
       _id: newUser._id.toString(),
       name: newUser.name,
-      avatar: newUser.profileImage.toString() || '',
+      avatar: newUser.profileImage.toString() || "",
     };
+  }
+
+  private async attachPresignedProfileUrl(
+    user: IUser | IClient | IVendor
+  ): Promise<void> {
+    if(user.profileImage.includes('google'))return;
+    const presignedUrl = await this._pregisnedUrl.getPresignedUrl(user.profileImage);
+    user.profileImage = presignedUrl;
   }
 }

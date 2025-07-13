@@ -14,6 +14,7 @@ import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import { IGetPresignedUrlUsecase } from "../../domain/interfaces/usecase/common-usecase.interfaces";
 import { IService } from "../../domain/models/service";
 import { IServiceRepository } from "../../domain/interfaces/repository/service.repository";
+import { Mapper } from "../../shared/utils/mapper";
 
 @injectable()
 export class VendorBrowsingUsecase implements IVendorBrowsingUseCase {
@@ -161,7 +162,7 @@ export class VendorBrowsingUsecase implements IVendorBrowsingUseCase {
     );
 
     return {
-      ...vendor,
+      ...Mapper.vendorMapper(vendor),
       services,
       servicePagination: {
         page: servicePage,
