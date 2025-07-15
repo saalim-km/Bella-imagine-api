@@ -12,4 +12,5 @@ export interface IServiceRepository extends IBaseRepository<IService> {
     limit: number,
     sort: number
   ): Promise<PaginatedResponse<IService>>;
+  incrementSlot(booking: IBooking): Promise<void>
 }

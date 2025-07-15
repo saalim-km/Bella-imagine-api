@@ -42,6 +42,7 @@ import {
 import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
 import { INotificationUsecase } from "../../domain/interfaces/usecase/notification-usecase.interface";
 import { IChatUsecase } from "../../domain/interfaces/usecase/chat-usecase.interface";
+import { ILogoutUseCases } from "../../domain/interfaces/usecase/auth-usecase.interfaces";
 
 @injectable()
 export class ClientController implements IClientController {
@@ -64,7 +65,8 @@ export class ClientController implements IClientController {
     @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
     @inject("INotificationUsecase")
     private _notificationUsecase: INotificationUsecase,
-    @inject("IChatUsecase") private _chatUsecase: IChatUsecase
+    @inject("IChatUsecase") private _chatUsecase: IChatUsecase,
+    @inject("ILogoutUseCases") private _logoutUseCase: ILogoutUseCases
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -72,7 +74,9 @@ export class ClientController implements IClientController {
     const accessTokenName = `${user.role}_access_token`;
     const refreshTokenName = `${user.role}_refresh_token`;
 
-    clearAuthCookies(res, accessTokenName, refreshTokenName);
+    await this._logoutUseCase.logout(user.access_token, user.refresh_token);
+
+    // clearAuthCookies(res, accessTokenName, refreshTokenName);
     ResponseHandler.success(res, SUCCESS_MESSAGES.LOGOUT_SUCCESS);
   }
 
@@ -211,7 +215,7 @@ export class ClientController implements IClientController {
     // Parse query parameters using Zod
     const queryOptions = WalletQuerySchema.parse(req.query);
 
-    console.log('parsed :',queryOptions);
+    console.log("parsed :", queryOptions);
     // Ensure pagination parameters are provided
     if (!queryOptions.page || !queryOptions.limit) {
       throw new Error("Page and limit parameters are required for pagination");

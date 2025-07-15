@@ -4,7 +4,7 @@ import { TJwtPayload } from "../../types/auth.types";
 export interface IJwtservice {
     generateAccessToken (data : TJwtPayload) : string
     generateRefreshToken (data : TJwtPayload) : string
-    verifyAccessToken (token : string) : JwtPayload | null;
-    verifyRefreshToken (token : string) : JwtPayload | null;
+    verifyAccessToken (token : string) : TJwtPayload | null;
+    verifyRefreshToken (token : string) : TJwtPayload | null;
     decodeRefreshToken(token : string) : JwtPayload | null;
 }

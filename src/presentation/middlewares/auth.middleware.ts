@@ -3,8 +3,11 @@ import { JwtPayload } from "jsonwebtoken";
 import { JwtService } from "../../interfaceAdapters/services/jwt.service";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import logger from "../../shared/logger/logger";
+import { RedisService } from "../../interfaceAdapters/services/redis.service";
+import { CustomError } from "../../shared/utils/helper/custom-error";
 
 const tokenService = new JwtService();
+const redisService = new RedisService()
 
 export interface CustomJwtPayload extends JwtPayload {
   _id: string;
@@ -46,6 +49,13 @@ export const verifyAuth = async (
       res
         .status(HTTP_STATUS.UNAUTHORIZED)
         .json({ message: ERROR_MESSAGES.UNAUTHORIZED_ACCESS });
+      return;
+    }
+    
+    const isBlacklisted = await redisService.isAccessTokenBlacklisted(token.access_token);
+    console.log('access token blacklisted status : ',isBlacklisted);
+    if (isBlacklisted) {
+      res.json({ message: ERROR_MESSAGES.TOKEN_BLACKLISTED });
       return;
     }
 
@@ -103,11 +113,19 @@ export const decodeToken = async (
       // verify refresh token to create new access with it
       const user = tokenService.verifyRefreshToken(token?.refresh_token);
       console.log('user from access token decode : ',user);
+
+      if (!user) {
+        res
+          .status(HTTP_STATUS.UNAUTHORIZED)
+          .json({ message: ERROR_MESSAGES.UNAUTHORIZED_ACCESS });
+        return;
+      }
+
       (req as CustomRequest).user = {
         _id: user?._id,
         email: user?.email,
         role: user?.role,
-        access_token: "",
+        access_token: token.access_token,
         refresh_token: token.refresh_token,
       };
       next();

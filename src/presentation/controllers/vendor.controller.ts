@@ -45,6 +45,7 @@ import {
   updateWorkSampleSchema,
 } from "../../shared/utils/zod-validations/presentation/vendor.schema";
 import { INotificationUsecase } from "../../domain/interfaces/usecase/notification-usecase.interface";
+import { ILogoutUseCases } from "../../domain/interfaces/usecase/auth-usecase.interfaces";
 
 @injectable()
 export class VendorController implements IVendorController {
@@ -66,7 +67,8 @@ export class VendorController implements IVendorController {
     private _serviceCommandUsecase: IServiceCommandUsecase,
     @inject("IServiceQueryUsecase") private _serviceQuery: IServiceQueryUsecase,
     @inject("INotificationUsecase")
-    private _notificationUsecase: INotificationUsecase
+    private _notificationUsecase: INotificationUsecase,
+    @inject("ILogoutUseCases") private _logoutUseCase: ILogoutUseCases
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -74,6 +76,8 @@ export class VendorController implements IVendorController {
     const accessTokenName = `${user.role}_access_token`;
     const refreshTokenName = `${user.role}_refresh_token`;
 
+    await this._logoutUseCase.logout(user.access_token, user.refresh_token);
+    
     clearAuthCookies(res, accessTokenName, refreshTokenName);
     ResponseHandler.success(res, SUCCESS_MESSAGES.LOGOUT_SUCCESS);
   }

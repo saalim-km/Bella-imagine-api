@@ -35,6 +35,7 @@ import { objectIdSchema } from "../../shared/utils/zod-validations/validators/va
 import { UpdateCategory } from "../../domain/interfaces/usecase/types/admin.types";
 import { IWalletUsecase } from "../../domain/interfaces/usecase/wallet-usecase.interface";
 import { WalletQuerySchema } from "../../shared/utils/zod-validations/presentation/client.schema";
+import { ILogoutUseCases } from "../../domain/interfaces/usecase/auth-usecase.interfaces";
 
 @injectable()
 export class AdminController implements IAdminController {
@@ -51,7 +52,8 @@ export class AdminController implements IAdminController {
     @inject("ICategoryManagementUsecase")
     private _categoryManagmentUsecase: ICategoryManagementUsecase,
     @inject("IWalletUsecase") private _walletUsecase: IWalletUsecase,
-    @inject("IDashboardUsecase") private _dashboardUsecase: IDashboardUsecase
+    @inject("IDashboardUsecase") private _dashboardUsecase: IDashboardUsecase,
+    @inject("ILogoutUseCases") private _logoutUseCase: ILogoutUseCases
   ) {}
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -59,6 +61,8 @@ export class AdminController implements IAdminController {
     const accessTokenName = `${user.role}_access_token`;
     const refreshTokenName = `${user.role}_refresh_token`;
 
+    await this._logoutUseCase.logout(user.access_token, user.refresh_token);
+    
     clearAuthCookies(res, accessTokenName, refreshTokenName);
     ResponseHandler.success(res, SUCCESS_MESSAGES.LOGOUT_SUCCESS);
   }
@@ -186,7 +190,7 @@ export class AdminController implements IAdminController {
     // Parse query parameters using Zod
     const queryOptions = WalletQuerySchema.parse(req.query);
 
-    console.log('parsed :',queryOptions);
+    console.log("parsed :", queryOptions);
     // Ensure pagination parameters are provided
     if (!queryOptions.page || !queryOptions.limit) {
       throw new Error("Page and limit parameters are required for pagination");

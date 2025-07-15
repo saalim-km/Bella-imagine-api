@@ -45,3 +45,7 @@ export interface IResetPasswordStrategy {
 export interface IGoogleLoginUsecase {
     login(input : GoogleLoginInput) : Promise<LoginUserOuput>
 }
+
+export interface ILogoutUseCases {
+    logout(accessToken: string, refreshToken: string): Promise<void>
+}

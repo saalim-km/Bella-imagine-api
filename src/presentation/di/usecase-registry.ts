@@ -4,6 +4,7 @@ import {
     IGenerateTokenUsecase,
     IGoogleLoginUsecase,
     ILoginUserStrategy,
+    ILogoutUseCases,
     IRegisterUserStrategy,
     IRegisterUserUsecase,
     IResetPasswordStrategy,
@@ -64,6 +65,7 @@ import { NotifiactionUsecase } from "../../application/common/notification.useca
 import { CommunityPostCommandUsecase } from "../../application/community/community-post-command.usecase";
 import { CommunityPostQueryUsecase } from "../../application/community/community-post-query.usecase";
 import { DashBoardUsecase } from "../../application/admin/dashboard.usecase";
+import { LogoutUseCase } from "../../application/auth/logout.usecase";
 
 export class UsecaseRegistry {
     // Static method to register all use cases and strategies
@@ -216,6 +218,10 @@ export class UsecaseRegistry {
 
         container.register<IDashboardUsecase>('IDashboardUsecase' , {
             useClass : DashBoardUsecase
+        })
+
+        container.register<ILogoutUseCases>('ILogoutUseCases',{
+            useClass : LogoutUseCase
         })
     }
 }

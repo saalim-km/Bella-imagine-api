@@ -297,7 +297,7 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       this._bookingRepository.update(bookingId, {
         status: "cancelled",
       }),
-      this._serviceRepository.updateSlotCount(booking, 1),
+      this._serviceRepository.incrementSlot(booking),
     ]);
   }
 }

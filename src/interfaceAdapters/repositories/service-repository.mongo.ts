@@ -79,4 +79,35 @@ export class ServiceRepository
       total: count,
     };
   }
+
+  async incrementSlot(booking: IBooking): Promise<void> {
+    const { bookingDate, timeSlot, serviceDetails } = booking;
+
+    await this.model.updateOne(
+      {
+        _id: serviceDetails._id,
+        "availableDates.date": bookingDate,
+        "availableDates.timeSlots": {
+          $elemMatch: {
+            startTime: timeSlot.startTime,
+            endTime: timeSlot.endTime,
+          },
+        },
+      },
+      {
+        $inc: {
+          "availableDates.$[dateElem].timeSlots.$[slotElem].capacity": 1,
+        },
+      },
+      {
+        arrayFilters: [
+          { "dateElem.date": bookingDate },
+          {
+            "slotElem.startTime": timeSlot.startTime,
+            "slotElem.endTime": timeSlot.endTime,
+          },
+        ],
+      }
+    );
+  }
 }

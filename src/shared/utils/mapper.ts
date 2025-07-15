@@ -188,22 +188,18 @@ export class Mapper {
   }
 
 
-  static commentMapper(comment : any) {
-    return {
-      _id : comment._id,
-      content : comment.content,
-      createdAt : comment.createdAt,
-      userType : comment.userType,
-      postId : comment.postId,
-      post : [
-        {
-          title : 
-        }
-      ]
-    }
-  }
-
-  static commentMapperList(comments : any)  {
-    return 
-  }
+  // static commentMapper(comment : any) {
+  //   return {
+  //     _id : comment._id,
+  //     content : comment.content,
+  //     createdAt : comment.createdAt,
+  //     userType : comment.userType,
+  //     postId : comment.postId,
+  //     post : [
+  //       {
+  //         title : 
+  //       }
+  //     ]
+  //   }
+  // }
 }

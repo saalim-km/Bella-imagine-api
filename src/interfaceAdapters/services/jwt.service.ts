@@ -34,7 +34,7 @@ export class JwtService implements IJwtservice {
     return refreshToken
   }
 
- verifyAccessToken(token: string): JwtPayload | null {
+ verifyAccessToken(token: string): TJwtPayload | null {
     try {
       return jwt.verify(token, this.accessSecret) as TJwtPayload;
     } catch (error) {
@@ -43,7 +43,7 @@ export class JwtService implements IJwtservice {
     }
   }
 
-  verifyRefreshToken(token: string): JwtPayload | null {
+  verifyRefreshToken(token: string): TJwtPayload | null {
     try {
       return jwt.verify(token, this.refreshSecret) as TJwtPayload;
     } catch (error) {
