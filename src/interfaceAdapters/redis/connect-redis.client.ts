@@ -1,20 +1,24 @@
 import { createClient } from "redis";
+import { config } from "../../shared/config/config";
+import logger from "../../shared/logger/logger";
 
 export const redisClient = createClient({
   socket: {
     host: "localhost",
     port: 6379,
   },
-  // password: "your-password", // only if you set one explicitly
 });
 
-redisClient.on("error", (err) => console.error("Redis error:", err));
-redisClient.on("connect", () => console.log("Redis connected"));
+redisClient.on("error", (error) => {
+  logger.error("Redis Client Error: ", error);
+});
 
-(async () => {
-  await redisClient.connect();
-  await redisClient.set("test", "123");
-  const val = await redisClient.get("test");
-  console.log("GET test =", val);
-  await redisClient.disconnect();
-})();
+export async function connectRedis() {
+  try {
+    await redisClient.connect();
+    logger.info("Redis connected successfully");
+  } catch (error: any) {
+    logger.error("Redis connection failed: ", error);
+    throw error;
+  }
+}
