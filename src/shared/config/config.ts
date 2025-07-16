@@ -65,7 +65,7 @@ export const config = {
     REDIS_USERNAME : process.env.REDIS_USERNAME || '',
     REDIS_PASS : process.env.REDIS_PASS || '',
     REDIS_HOST : process.env.REDIS_HOST || '',
-    REDIS_PORT : process.env.REDIS_PORT || '',
+    REDIS_PORT : process.env.REDIS_PORT || '6379',
     REDIS_PRESIGNED_URL_EXPIRY : process.env.REDIS_PRESIGNRED_URL_EXPIRY ? parseInt(process.env.REDIS_PRESIGNRED_URL_EXPIRY, 10) || 86400 : 86400
   }
 };
