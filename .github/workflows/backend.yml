@@ -37,8 +37,7 @@ jobs:
           username: ${{ secrets.EC2_USER }} # EC2 User (should be 'deployer') from GitHub Secrets
           key: ${{ secrets.EC2_SSH_KEY }} # SSH Private Key from GitHub Secrets
           script: |
-            # Assuming you cloned it into /home/deployer/BELLA-IMAGINE-API
-            cd /home/${{ secrets.EC2_USER }}/BELLA-IMAGINE-API || exit
+            cd Bella-imagine-api/ || exit
 
             # Pull latest code from GitHub
             git pull origin main
