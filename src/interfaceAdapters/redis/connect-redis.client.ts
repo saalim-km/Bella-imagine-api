@@ -3,6 +3,7 @@ import { config } from "../../shared/config/config";
 import logger from "../../shared/logger/logger";
 
 export const redisClient = createClient({
+  password: "LaKzDMsCYDZ3rdJtlWTD21CL3U8FzxpH",
   socket: {
     host: "localhost",
     port: 6379,
