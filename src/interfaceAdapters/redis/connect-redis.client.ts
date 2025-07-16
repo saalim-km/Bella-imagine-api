@@ -2,6 +2,14 @@ import { createClient } from "redis";
 import { config } from "../../shared/config/config";
 import logger from "../../shared/logger/logger";
 
+logger.debug("Redis Connection Configuration:", {
+  host: config.redis.REDIS_HOST,
+  port: config.redis.REDIS_PORT,
+  username: config.redis.REDIS_USERNAME ? "*****" : "undefined",
+  password: config.redis.REDIS_PASS ? "*****" : "undefined",
+  tlsEnabled: true
+});
+
 export const redisClient = createClient({
   username: config.redis.REDIS_USERNAME,
   password: config.redis.REDIS_PASS,
