@@ -4,10 +4,9 @@ import { ICategoryRequest } from "../../domain/models/category-request";
 import { IClient } from "../../domain/models/client";
 import { ICommunity, ICommunityPost } from "../../domain/models/community";
 import { INotification } from "../../domain/models/notification";
-import { IPayment } from "../../domain/models/payment";
 import { IUserBase } from "../../domain/models/user-base";
 import { IVendor } from "../../domain/models/vendor";
-import { IWallet, PopulatedWallet } from "../../domain/models/wallet";
+import { PopulatedWallet } from "../../domain/models/wallet";
 import { GetPostForUserOutput } from "../../domain/types/community.types";
 
 type UserListItem = {
@@ -186,7 +185,6 @@ export class Mapper {
   static postMapperListForUser(posts : GetPostForUserOutput[]): any {
     return posts.map(this.postMapper)
   }
-
 
   // static commentMapper(comment : any) {
   //   return {
