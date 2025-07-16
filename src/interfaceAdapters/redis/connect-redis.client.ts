@@ -5,7 +5,7 @@ import logger from "../../shared/logger/logger";
 export const redisClient = createClient({
   password: "LaKzDMsCYDZ3rdJtlWTD21CL3U8FzxpH",
   socket: {
-    host: "localhost",
+    host: "127.0.0.1",
     port: 6379,
   },
 });
