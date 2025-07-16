@@ -54,7 +54,7 @@ jobs:
             # IMPORTANT: Replace 'backend-api' with the actual name you gave your PM2 process
             # For example, if you started it with `pm2 start index.js --name my-backend-app`, use 'my-backend-app'
             # If your entry file is 'index.js' and you just did `pm2 start index.js`, PM2 might name it 'index'
-            pm2 restart 0 # <--- VERIFY THIS NAME!
+            pm2 restart bella-imagine-api # <--- VERIFY THIS NAME!
 
             # Save PM2 process list to retain after reboot
             pm2 save
