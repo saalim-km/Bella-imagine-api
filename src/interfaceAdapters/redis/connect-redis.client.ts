@@ -2,14 +2,11 @@ import { createClient } from "redis";
 import { config } from "../../shared/config/config";
 import logger from "../../shared/logger/logger";
 
-
 export const redisClient = createClient({
-  username: config.redis.REDIS_USERNAME,
   password: config.redis.REDIS_PASS,
   socket: {
     host: config.redis.REDIS_HOST,
     port: parseInt(config.redis.REDIS_PORT, 10),
-    tls : true  
   },
 });
 
