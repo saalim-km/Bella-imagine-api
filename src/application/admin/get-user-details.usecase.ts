@@ -18,7 +18,7 @@ export class GetuserDetailsUsecase implements IGetUserDetailsUsecase {
         }
     }
 
-    async getUserDetail(input: UserDetailsInput): Promise<Omit<IUser,'password'>> {
+    async getUserDetail(input: UserDetailsInput): Promise<Partial<IUser>> {
         const strategy = this._strategies[input.role];
 
         if(!strategy){

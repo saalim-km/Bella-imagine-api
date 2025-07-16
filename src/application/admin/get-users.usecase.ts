@@ -24,7 +24,7 @@ export class GetUsersUsecase implements IGetUsersUsecase {
       vendor: this._vendorStrategy,
     };
   }
-  async getUsers(input: UsersFilterInput): Promise<PaginatedResponse<IUser>> {
+  async getUsers(input: UsersFilterInput): Promise<PaginatedResponse<Partial<IUser>>> {
     const strategy = await this._strategies[input.role];
     if (!strategy) {
       throw new CustomError(

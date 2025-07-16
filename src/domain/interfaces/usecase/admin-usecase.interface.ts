@@ -7,7 +7,7 @@ import { PaginatedResponse } from "./types/common.types";
 import { ICategoryRequest } from "../../models/category-request";
 
 export interface IGetUsersUsecase {
-  getUsers(input: UsersFilterInput): Promise<PaginatedResponse<IUser>>;
+  getUsers(input: UsersFilterInput): Promise<PaginatedResponse<Partial<IUser>>>
 }
 
 export interface IGetUsersStrategy<T = IUser> {
@@ -15,7 +15,7 @@ export interface IGetUsersStrategy<T = IUser> {
 }
 
 export interface IGetUserDetailsUsecase {
-  getUserDetail(input: UserDetailsInput): Promise<Omit<IUser,'password'>>;
+  getUserDetail(input: UserDetailsInput): Promise<Partial<IUser>> ;
 }
 
 export interface IGetUserDetailsStrategy<T = IUser> {
