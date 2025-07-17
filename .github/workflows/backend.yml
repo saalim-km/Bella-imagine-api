@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd /Bella-imagine-api
+            cd ~/Bella-imagine-api
 
             echo "Pulling latest code..."
             git pull origin main
