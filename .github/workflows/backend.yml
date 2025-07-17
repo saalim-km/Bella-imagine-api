@@ -22,11 +22,19 @@ jobs:
           script: |
             cd ~/Bella-imagine-api
 
-            echo "Pulling latest code..."
+            echo "🔄 Pulling latest code..."
             git pull origin main
 
-            echo "Building Docker containers..."
+            echo "🧹 Stopping old containers..."
             docker compose down
-            docker compose up --build
 
-            echo "Deployment done!"
+            echo "🐳 Building and starting containers..."
+            docker compose up -d --build
+
+            echo "🧪 Checking running containers..."
+            docker compose ps
+
+            echo "📜 Tail logs from app container..."
+            docker compose logs --tail=50 app
+
+            echo "✅ Deployment complete!"
