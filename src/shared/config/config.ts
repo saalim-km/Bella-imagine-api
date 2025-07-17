@@ -15,7 +15,7 @@ export const config = {
   // Server Configuration
   server: {
     HOST: process.env.HOST || "localhost",
-    PORT: process.env.PORT || 5000,
+    PORT: process.env.PORT || 3002,
     NODE_ENV: process.env.NODE_ENV || "development",
   },
 

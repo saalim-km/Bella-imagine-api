@@ -6,21 +6,20 @@ import { Server } from "./presentation/http/server";
 import { config } from "./shared/config/config";
 
 async function bootstrap() {
-    try {
-        const connectMongo = new MongoConnect();
-        await connectMongo.connect();
+  try {
+    const connectMongo = new MongoConnect();
+    await connectMongo.connect();
 
-        await connectRedis();
+    await connectRedis();
 
-        const server = new Server();
-        server.getServer().listen(config.server.PORT, () => {
-            logger.info(`Server started running on port: ${config.server.PORT} ✅`);
-        });
-
-    } catch (error) {
-        logger.error("Startup error:", error);
-        process.exit(1);
-    }
+    const server = new Server();
+    server.getServer().listen(Number(config.server.PORT), "0.0.0.0", () => {
+      logger.info(`Server started running on port: ${config.server.PORT} ✅`);
+    });
+  } catch (error) {
+    logger.error("Startup error:", error);
+    process.exit(1);
+  }
 }
 
 bootstrap();
