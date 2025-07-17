@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    depends_on:
+      - redis
+    env_file: .env
+    ports: 
+    - "3002:3002" # or your API port
+
+  redis:
+    image: redis:latest
+    command: redis-server --requirepass LaKzDMsCYDZ3rdJtlWTD21CL3U8FzxpH
+    ports:
+      - "6379:6379"

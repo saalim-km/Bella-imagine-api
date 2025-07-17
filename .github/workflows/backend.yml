@@ -1,65 +1,32 @@
-name: Backend CI/CD
+name: Docker CI/CD to EC2
 
 on:
   push:
     branches:
-      - main # Trigger on pushes to the main branch
+      - main
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest # Runner environment for the job
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # Action to checkout your repository code
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4 # Action to set up Node.js (adjust version if needed)
-        with:
-          node-version: "22" # Specify your Node.js version
-
-      - name: Install dependencies
-        # Run npm install in the root of the checked-out repository (BELLA-IMAGINE-API)
-        run: npm install
-
-      # - name: Run tests (optional, but highly recommended)
-      #   run: npm test
-      #   # Add a `if: failure()` condition to send notifications if tests fail
-
-      - name: Build (if your backend has a build step, e.g., TypeScript)
-        # Check your package.json for a "build" script. If not present, remove this step.
-        run: npm run build
+        uses: actions/checkout@v4
 
       - name: Deploy to EC2
-        uses: appleboy/ssh-action@v1.0.3 # Action to execute commands over SSH
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.EC2_HOST }} # EC2 Host (Elastic IP or domain) from GitHub Secrets
-          username: ${{ secrets.EC2_USER }} # EC2 User (should be 'deployer') from GitHub Secrets
-          key: ${{ secrets.EC2_SSH_KEY }} # SSH Private Key from GitHub Secrets
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd Bella-imagine-api/ || exit
+            cd /Bella-imagine-api
 
-            # Pull latest code from GitHub
+            echo "Pulling latest code..."
             git pull origin main
 
-            # Install dependencies (only if package.json changed, for efficiency)
-            # Use --production to skip dev dependencies
-            npm install --production
+            echo "Building Docker containers..."
+            docker compose down
+            docker compose up -d --build
 
-            # Run build again on EC2 if your backend is a TypeScript project
-            # If your backend doesn't have a build step, remove this line
-            npm run build
-
-            # Restart PM2 process
-            # IMPORTANT: Replace 'backend-api' with the actual name you gave your PM2 process
-            # For example, if you started it with `pm2 start index.js --name my-backend-app`, use 'my-backend-app'
-            # If your entry file is 'index.js' and you just did `pm2 start index.js`, PM2 might name it 'index'
-            pm2 restart bella-imagine-api # <--- VERIFY THIS NAME!
-
-            # Save PM2 process list to retain after reboot
-            pm2 save
-
-            # Reload Nginx (only if you made Nginx config changes on EC2)
-            # If you only update code, Nginx reload is not strictly necessary for backend changes
-            # sudo systemctl reload nginx
-            echo "Backend deployment complete!"
+            echo "Deployment done!"
