@@ -153,6 +153,7 @@ export class Mapper {
 
   static communityMapper(comm : ICommunity) : Partial<ICommunity> {
     return {
+      _id : comm._id,
       name : comm.name,
       slug : comm.slug,
       description : comm.description,
