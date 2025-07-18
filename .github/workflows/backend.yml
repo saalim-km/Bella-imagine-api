@@ -37,4 +37,4 @@ jobs:
             echo "📜 Tail logs from app container..."
             docker compose logs --tail=50 app
 
-            echo "✅ Deployment complete!"
+            echo "✅ Deployment complete!"            
