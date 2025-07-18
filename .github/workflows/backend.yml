@@ -26,18 +26,18 @@ jobs:
             git pull origin main
 
             echo "🧹 Stopping old containers..."
-            docker compose down
+            sudo docker compose down
 
             echo "🐳 Building and starting containers..."
-            docker compose build --no-cache
+            sudo docker compose build --no-cache
 
             echo "🚀 Starting containers..."
-            docker compose up -d
-            
+            sudo docker compose up -d
+
             echo "🧪 Checking running containers..."
-            docker compose ps
+            sudo docker compose ps
 
             echo "📜 Tail logs from app container..."
-            docker compose logs --tail=50 app
+            sudo docker compose logs --tail=50 app
 
             echo "✅ Deployment complete!"  
