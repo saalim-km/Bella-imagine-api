@@ -30,9 +30,11 @@ export class ConversationRepository
   async findConersations(input: FindUsersForChat): Promise<IConversation[]> {
     const { userId, userType } = input;
     if (userType === "client") {
-      return await this.model.find({
-        "user._id": userId,
-      }).sort({updatedAt : -1})
+      return await this.model
+        .find({
+          "user._id": userId,
+        })
+        .sort({ updatedAt: -1 });
     } else {
       return await this.model.find({
         "vendor._id": userId,
@@ -40,45 +42,48 @@ export class ConversationRepository
     }
   }
 
-    async findUsersForChat(input: FindUsersForChat): Promise<IVendor[] | IClient[]> {
-    const {userId,userType} = input;
-    const isClient = userType == 'client';
+  async findUsersForChat(
+    input: FindUsersForChat
+  ): Promise<IVendor[] | IClient[]> {
+    const { userId, userType } = input;
+    const isClient = userType == "client";
 
-    console.log(userId,userType);
+    console.log(userId, userType);
 
     const result: (IVendor | IClient)[] = await this.model.aggregate([
       {
-        $match : {
-          [isClient ? 'user._id' : 'vendor._id'] : new Types.ObjectId(userId),
+        $match: {
+          [isClient ? "user._id" : "vendor._id"]: new Types.ObjectId(userId),
+        },
+        $sort : { updatedAt: -1 },
+      },
+      {
+        $group: {
+          _id: `$${isClient ? "vendor._id" : "user._id"}`,
         },
       },
       {
-        $group : {
-          _id : `$${isClient ? 'vendor._id' : 'user._id'}`,
+        $lookup: {
+          from: isClient ? "vendors" : "clients",
+          localField: "_id",
+          foreignField: "_id",
+          as: "user",
         },
       },
+      { $unwind: "$user" },
       {
-        $lookup : {
-          from : isClient ? 'vendors' : 'clients',
-          localField: '_id',
-          foreignField : '_id',
-          as : 'user',
+        $project: {
+          _id: "$user._id",
+          role: "$user.role",
+          isOnline: "$user.isOnline",
+          lastSeen: "$user.lastSeen",
+          name: "$user.name",
+          avatar: "$user.profileImage",
         },
       },
-      {$unwind : '$user'},
-      {
-        $project : {
-          _id : '$user._id',
-          role : '$user.role',
-          isOnline : '$user.isOnline',
-          lastSeen : '$user.lastSeen',
-          name : '$user.name',
-          avatar : '$user.profileImage'
-        }
-      }
-    ])
+    ]);
 
-    console.log(' got the result from reppository : ',result);
-    return result as (typeof isClient extends true ? IClient[] : IVendor[]);
+    console.log(" got the result from reppository : ", result);
+    return result as typeof isClient extends true ? IClient[] : IVendor[];
   }
 }
