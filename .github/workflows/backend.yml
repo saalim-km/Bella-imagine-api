@@ -29,7 +29,7 @@ jobs:
             docker compose down
 
             echo "🐳 Building and starting containers..."
-            docker compose up -d --build
+            docker compose up -d --build --no-cache
 
             echo "🧪 Checking running containers..."
             docker compose ps
@@ -37,4 +37,4 @@ jobs:
             echo "📜 Tail logs from app container..."
             docker compose logs --tail=50 app
 
-            echo "✅ Deployment complete!"            
+            echo "✅ Deployment complete!"  
