@@ -55,7 +55,6 @@ export class ConversationRepository
         $match: {
           [isClient ? "user._id" : "vendor._id"]: new Types.ObjectId(userId),
         },
-        $sort : { updatedAt: -1 },
       },
       {
         $group: {
