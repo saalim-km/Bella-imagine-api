@@ -17,6 +17,7 @@ import { unlinkSync } from "fs";
 import { ICategoryRepository } from "../../domain/interfaces/repository/category.repository";
 import { ICategoryRequestRepository } from "../../domain/interfaces/repository/category-request.repository";
 import { GeoLocation } from "../../domain/models/user-base";
+import { Mapper } from "../../shared/utils/mapper";
 
 @injectable()
 export class VendorProfileUsecase implements IVendorProfileUsecase {
@@ -126,7 +127,7 @@ export class VendorProfileUsecase implements IVendorProfileUsecase {
         );
     }
 
-    return updatedVendor;
+    return Mapper.vendorMapper(updatedVendor) as IVendor;
   }
 
   async createCategoryJoinRequest(
