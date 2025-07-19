@@ -171,6 +171,7 @@ export class ClientController implements IClientController {
       "------------------------webhook triggered--------------------"
     );
     const event: Stripe.Event = req.body;
+    console.log("Received webhook event:", event.type);
     await this._stripeService.handleWebhookEvent(event);
     ResponseHandler.success(res, SUCCESS_MESSAGES.PAYMENT_STATUS_UPDATED);
   }
