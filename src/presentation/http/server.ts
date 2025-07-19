@@ -1,7 +1,7 @@
 import express, { Application } from "express";
 import http from "http";
-import cors from 'cors'
-import cookieparser from 'cookie-parser';
+import cors from "cors";
+import cookieparser from "cookie-parser";
 import { config } from "../../shared/config/config";
 import { AuthRoute } from "../routes/auth.routes";
 import { PrivateRoute } from "../routes/private.route";
@@ -10,7 +10,6 @@ import logger from "../../shared/logger/logger";
 import { globalRateLimit } from "../middlewares/rate-limit.middleware";
 import { socketService } from "../di/resolver";
 import { ChatRoute } from "../routes/chat.route";
-
 
 export class Server {
   private _app: Application;
@@ -37,7 +36,10 @@ export class Server {
 
     // Middleware to parse cookies
     this._app.use(cookieparser());
-    
+
+    this._app.use(express.json({ limit: "10mb" }));
+    this._app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
     // Middleware to log requests
     this._app.use((req, res, next) => {
       logger.info(`${req.method} ${req.url}`);
@@ -57,7 +59,7 @@ export class Server {
   private configureRoutes(): void {
     this._app.use("/api/v_1/auth", new AuthRoute().router);
     this._app.use("/api/v_1/_pvt", new PrivateRoute().router);
-    this._app.use('/api/v_1/_chat', new ChatRoute().router)
+    this._app.use("/api/v_1/_chat", new ChatRoute().router);
   }
 
   private configureErrorHandler(): void {
