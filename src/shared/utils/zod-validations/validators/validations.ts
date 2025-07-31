@@ -112,6 +112,4 @@ export const slugSchema = z.string().transform((val) => {
 });
 
 
-
-
-salimkm
+console.log('exmaple');
