@@ -46,6 +46,7 @@ import {
 } from "../../shared/utils/zod-validations/presentation/vendor.schema";
 import { INotificationUsecase } from "../../domain/interfaces/usecase/notification-usecase.interface";
 import { ILogoutUseCases } from "../../domain/interfaces/usecase/auth-usecase.interfaces";
+import { parse } from "path";
 
 @injectable()
 export class VendorController implements IVendorController {
