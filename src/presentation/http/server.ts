@@ -27,7 +27,7 @@ export class Server {
   private configureMiddleware(): void {
     this._app.use(
       cors({
-        origin: config.cors.ALLOWED_ORIGIN,
+        origin: ['https://bellaimagine.salimkm.tech','https://www.bellaimagine.salimkm.tech'],
         methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
         allowedHeaders: ["Authorization", "Content-Type", "stripe-signature"],
         credentials: true,
