@@ -1,24 +1,13 @@
-# Use a lighter base image
-FROM node:22-slim
+FROM node:22
 
-# Set working directory
-WORKDIR /app
+COPY  package*.json ./
 
-# Copy only what's needed first
-COPY package*.json ./
+RUN npm install
 
-# Install dependencies
-RUN npm install --omit=dev
+COPY  . .
 
-# Copy source code
-COPY ./src ./src
-COPY tsconfig.json ./
-
-# Build TypeScript
 RUN npm run build
 
-# Expose port
 EXPOSE 3002
 
-# Start the app
 CMD ["npm", "run", "start"]
