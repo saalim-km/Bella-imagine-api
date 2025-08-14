@@ -256,7 +256,7 @@ export const BookingQuerySchema = z
           typeof val === "string" && val.trim() !== ""
             ? Number(val)
             : undefined,
-        z.number().max(1000000)
+        z.number().max(100000)
       )
       .default(0)
       .describe("Minimum price filter"),
@@ -266,7 +266,7 @@ export const BookingQuerySchema = z
           typeof val === "string" && val.trim() !== ""
             ? Number(val)
             : undefined,
-        z.number().max(1000000)
+        z.number().max(100000)
       )
       .default(100000)
       .describe("Maximum price filter"),
