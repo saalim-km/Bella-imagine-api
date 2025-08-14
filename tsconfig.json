@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "incremental": true,
-    "noEmitOnError": true,     
+    "incremental": true,   
     "isolatedModules": true,                  
     "target": "es2016",                                  
     "experimentalDecorators": true,                   
