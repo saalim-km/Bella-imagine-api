@@ -188,6 +188,8 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
       );
     }
 
+    const isClient = booking.userId.toString() === userId.toString();
+    const isVendor = booking.vendorId.toString() === userId.toString();
     if (booking.status === "completed" || booking.status === "cancelled") {
       throw new CustomError(
         ERROR_MESSAGES.BOOKING_ALREADY_COMPLETED_OR_CANCELLED,
@@ -204,14 +206,15 @@ export class BookingCommandUsecase implements IBookingCommandUsecase {
     }
 
     if (status === "cancelled") {
+      if(isClient && booking.isClientApproved){
+        throw new CustomError(ERROR_MESSAGES.SESSION_ALREADY_COMPLETED,HTTP_STATUS.BAD_REQUEST)
+      }
       await this.cancelBooking(bookingId, userRole);
       return;
     }
 
     if (status === "completed") {
       console.log("entering completed status update logic");
-      const isClient = booking.userId.toString() === userId.toString();
-      const isVendor = booking.vendorId.toString() === userId.toString();
 
       if (!isClient && !isVendor) {
         throw new CustomError(
