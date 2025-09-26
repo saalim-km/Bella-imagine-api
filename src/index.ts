@@ -4,6 +4,8 @@ import { connectRedis } from "./interfaceAdapters/redis/connect-redis.client";
 import logger from "./shared/logger/logger";
 import { Server } from "./presentation/http/server";
 import { config } from "./shared/config/config";
+import dotenv from "dotenv";
+dotenv.config()
 
 async function bootstrap() {
   try {
@@ -21,5 +23,6 @@ async function bootstrap() {
     process.exit(1);
   }
 }
+
 
 bootstrap();

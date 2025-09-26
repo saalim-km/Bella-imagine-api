@@ -110,6 +110,3 @@ export const ImageSchema = z
 export const slugSchema = z.string().transform((val) => {
   return val.startsWith("r/") ? val : `r/${val}`;
 });
-
-
-console.log('exmaple');

@@ -2,7 +2,6 @@ import express, { Application } from "express";
 import http from "http";
 import cors from "cors";
 import cookieparser from "cookie-parser";
-import { config } from "../../shared/config/config";
 import { AuthRoute } from "../routes/auth.routes";
 import { PrivateRoute } from "../routes/private.route";
 import { errorHandler } from "../middlewares/error.middleware";
@@ -27,7 +26,7 @@ export class Server {
   private configureMiddleware(): void {
     this._app.use(
       cors({
-        origin: ['https://www.bellaimagine.salimkm.tech', 'https://bellaimagine.salimkm.tech'],
+        origin: ['https://bellaimagine.salimkm.tech','https://www.bellaimagine.salimkm.tech'],
         methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
         allowedHeaders: ["Authorization", "Content-Type", "stripe-signature"],
         credentials: true,
@@ -46,7 +45,6 @@ export class Server {
       next();
     });
 
-    this._app.use(express.json());
 
     // Rate limiting
     this._app.use(globalRateLimit);

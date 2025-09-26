@@ -1,4 +1,4 @@
-name: Docker CI/CD to EC2
+name: CI/CD to GCP VM
 
 on:
   push:
@@ -16,28 +16,22 @@ jobs:
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
+          host: ${{ secrets.GCP_VM_HOST  }}
+          username: ${{ secrets.GCP_VM_USER  }}
+          key: ${{ secrets.GCP_VM_SSH_KEY  }}
           script: |
             cd ~/Bella-imagine-api
 
-            echo "🔄 Pulling latest code..."
+            echo "Pulling latest changes from main branch..."
             git pull origin main
 
-            echo "🧹 Stopping old containers..."
-            sudo docker compose down
+            echo "Installing dependencies..."
+            npm install
 
-            echo "🐳 Building and starting containers..."
-            sudo docker compose build --no-cache
+            echo "Building TypeScript files..."
+            npm run build
 
-            echo "🚀 Starting containers..."
-            sudo docker compose up -d
+            echo "Restarting the application using PM2..."
+            pm2 restart all || pm2 start dist/index.js --name "bella-imagine-api"
 
-            echo "🧪 Checking running containers..."
-            sudo docker compose ps
-
-            echo "📜 Tail logs from app container..."
-            sudo docker compose logs --tail=50 app
-
-            echo "✅ Deployment complete!"  
+            echo "Deployment completed successfully."

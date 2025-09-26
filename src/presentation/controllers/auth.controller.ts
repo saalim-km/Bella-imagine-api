@@ -11,7 +11,6 @@ import {
   IVerifyOtpUsecase,
 } from "../../domain/interfaces/usecase/auth-usecase.interfaces";
 import {
-  LoginInputDto,
   RegisterInputDto,
   ResetPasswordDto,
   SendOtpEmailInputDto,
@@ -70,8 +69,7 @@ export class AuthController implements IAuthController {
   }
 
   async login(req: Request, res: Response): Promise<void> {
-    const payload = req.body as LoginInputDto;
-    const validatedData = userLoginSchema.parse(payload);
+    const validatedData = userLoginSchema.parse(req.body);
 
     const user = await this._loginUserUsecase.loginUser(validatedData);
 
