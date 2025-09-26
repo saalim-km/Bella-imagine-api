@@ -4,10 +4,12 @@ import { JwtService } from "../../interfaceAdapters/services/jwt.service";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import logger from "../../shared/logger/logger";
 import { RedisService } from "../../interfaceAdapters/services/redis.service";
-import { CustomError } from "../../shared/utils/helper/custom-error";
+import { Vendor } from "../../interfaceAdapters/database/schemas/vendor.schema";
+import { clearAuthCookies } from "../../shared/utils/helper/cookie-helper";
+import { Client } from "../../interfaceAdapters/database/schemas/client.schema";
 
 const tokenService = new JwtService();
-const redisService = new RedisService()
+const redisService = new RedisService();
 
 export interface CustomJwtPayload extends JwtPayload {
   _id: string;
@@ -51,9 +53,11 @@ export const verifyAuth = async (
         .json({ message: ERROR_MESSAGES.UNAUTHORIZED_ACCESS });
       return;
     }
-    
-    const isBlacklisted = await redisService.isAccessTokenBlacklisted(token.access_token);
-    console.log('access token blacklisted status : ',isBlacklisted);
+
+    const isBlacklisted = await redisService.isAccessTokenBlacklisted(
+      token.access_token
+    );
+    console.log("access token blacklisted status : ", isBlacklisted);
     if (isBlacklisted) {
       res.json({ message: ERROR_MESSAGES.TOKEN_BLACKLISTED });
       return;
@@ -62,6 +66,28 @@ export const verifyAuth = async (
     const user = tokenService.verifyAccessToken(
       token.access_token
     ) as CustomJwtPayload;
+
+    if (user.role === "vendor") {
+      const vendor = await Vendor.findById(user._id);
+      if (vendor?.isblocked) {
+        clearAuthCookies(
+          res,
+          `${user.role}_access_token`,
+          `${user.role}_refresh_token`
+        );
+        res.status(HTTP_STATUS.UNAUTHORIZED).json(ERROR_MESSAGES.USER_BLOCKED);
+      }
+    } else {
+      const client = await Client.findById(user._id);
+      if (client?.isblocked) {
+        clearAuthCookies(
+          res,
+          `${user.role}_access_token`,
+          `${user.role}_refresh_token`
+        );
+        res.status(HTTP_STATUS.UNAUTHORIZED).json(ERROR_MESSAGES.USER_BLOCKED);
+      }
+    }
 
     if (!user || !user._id) {
       res
@@ -98,10 +124,10 @@ export const decodeToken = async (
   next: NextFunction
 ) => {
   try {
-    logger.info('access token expire triggered')
+    logger.info("access token expire triggered");
     const token = extractToken(req);
-    console.log('extracted token for decoding : ',token);
-    
+    console.log("extracted token for decoding : ", token);
+
     if (!token) {
       res
         .status(HTTP_STATUS.UNAUTHORIZED)
@@ -112,7 +138,7 @@ export const decodeToken = async (
     try {
       // verify refresh token to create new access with it
       const user = tokenService.verifyRefreshToken(token?.refresh_token);
-      console.log('user from access token decode : ',user);
+      console.log("user from access token decode : ", user);
 
       if (!user) {
         res
@@ -131,14 +157,14 @@ export const decodeToken = async (
       next();
     } catch (tokenError) {
       // Access token is expired/invalid, try to refresh
-      console.log('Access token invalid, attempting refresh...',tokenError);
+      console.log("Access token invalid, attempting refresh...", tokenError);
       res
         .status(HTTP_STATUS.UNAUTHORIZED)
         .json({ message: ERROR_MESSAGES.TOKEN_EXPIRED });
       return;
     }
   } catch (error) {
-    console.error('Token decode error:', error);
+    console.error("Token decode error:", error);
     res
       .status(HTTP_STATUS.UNAUTHORIZED)
       .json({ message: ERROR_MESSAGES.UNAUTHORIZED_ACCESS });
