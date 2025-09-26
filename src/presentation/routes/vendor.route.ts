@@ -56,7 +56,7 @@ export class VendorRoute extends BaseRoute {
         this
         .router.route('/vendor/work-sample')
         .post(verifyAuth,authorizeRole(['vendor']),upload.fields([{name : 'media' , maxCount : 10}]),asyncHandler(vendorController.createWorkSample.bind(vendorController)))
-        .get(verifyAuth,authorizeRole(['vendor']),upload.fields([{name : 'media' , maxCount : 10}]),asyncHandler(vendorController.getWorkSamples.bind(vendorController)))
+        .get(verifyAuth,authorizeRole(['vendor']),asyncHandler(vendorController.getWorkSamples.bind(vendorController)))
         .put(verifyAuth,authorizeRole(['vendor']),upload.fields([{name : 'newImages' , maxCount : 10}]),asyncHandler(vendorController.updateWorkSample.bind(vendorController)))
 
 

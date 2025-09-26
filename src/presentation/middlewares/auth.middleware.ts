@@ -4,7 +4,6 @@ import { JwtService } from "../../interfaceAdapters/services/jwt.service";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants/constants";
 import logger from "../../shared/logger/logger";
 import { RedisService } from "../../interfaceAdapters/services/redis.service";
-import { CustomError } from "../../shared/utils/helper/custom-error";
 
 const tokenService = new JwtService();
 const redisService = new RedisService()

@@ -11,7 +11,6 @@ import {
   IVerifyOtpUsecase,
 } from "../../domain/interfaces/usecase/auth-usecase.interfaces";
 import {
-  LoginInputDto,
   RegisterInputDto,
   ResetPasswordDto,
   SendOtpEmailInputDto,
