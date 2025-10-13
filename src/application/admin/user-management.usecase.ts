@@ -45,13 +45,15 @@ export class UserManagementUsecase implements IUserManagementUsecase {
   async updateVendorRequest(input: UpdateVendorRequestInput): Promise<void> {
     const status : TvendorRequestStatus  = input.status ? "accept" : "reject";
     const vendor = await this._vendorRepository.findById(input.id)
-
+    console.log(input.id,vendor?._id);
+    console.log(status);
+    console.log(vendor);
     if(!vendor){
       throw new CustomError(ERROR_MESSAGES.VENDOR_NOT_FOUND,HTTP_STATUS.NOT_FOUND)
     }
 
     if(status === 'reject'){
-      await this._vendorRepository.update(input.id,{verificationDocument : ''});
+      await this._vendorRepository.update(input.id,{verificationDocument : '' , isVerified : status});
       return;
     }
     
