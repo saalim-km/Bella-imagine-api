@@ -9,7 +9,7 @@ export const config = {
 
   // cors configuration
   cors: {
-    ALLOWED_ORIGIN: process.env.CORS_ALLOWED_ORIGIN || "https://bellaimagine.salimkm.tech",
+    ALLOWED_ORIGIN: ['https://bellaimagine.salimkm.tech','https://www.bellaimagine.salimkm.tech'],
   },
 
   // Server Configuration
