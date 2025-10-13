@@ -43,6 +43,7 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const ERROR_MESSAGES = {
+  VENDOR_PROFILE_INCOMPLETE : "Vendor profile is incomplete",
   SESSION_ALREADY_COMPLETED : "Session already marked as completed",
   TOKEN_BLACKLISTED : "Access token is blacklisted. Please log in again.",
   TIME_SLOT_FULLY_BOOKED : "Capacity exceed for selected time slot",
