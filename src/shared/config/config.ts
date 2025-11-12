@@ -4,12 +4,12 @@ dotenv.config();
 export const config = {
   // database configuration
   database: {
-    URI: process.env.DATABASE_URI || "mongodb://localhost:27017/zyra-moments",
+    URI: process.env.DATABASE_URI || "",
   },
 
   // cors configuration
   cors: {
-    ALLOWED_ORIGIN: process.env.CORS_ALLOWED_ORIGIN || "https://bellaimagine.salimkm.tech",
+    ALLOWED_ORIGIN: process.env.CORS_ALLOWED_ORIGIN || "https://bellaimagine.salimkm.online",
   },
 
   // Server Configuration
