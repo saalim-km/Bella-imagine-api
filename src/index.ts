@@ -1,11 +1,11 @@
 import "reflect-metadata";
 import dotenv from "dotenv";
 dotenv.config()
+import { config } from "./shared/config/config";
 import { MongoConnect } from "./interfaceAdapters/database/mongodb/connect-mongo";
 import { connectRedis } from "./interfaceAdapters/redis/connect-redis.client";
 import logger from "./shared/logger/logger";
 import { Server } from "./presentation/http/server";
-import { config } from "./shared/config/config";
 
 async function bootstrap() {
   try {
