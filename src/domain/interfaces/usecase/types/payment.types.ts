@@ -9,4 +9,3 @@ export interface CreatePaymentIntenServicetInput {
     clientId : string;
   }
 }
-

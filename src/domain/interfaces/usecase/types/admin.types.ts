@@ -35,6 +35,8 @@ export interface UpdateVendorRequestInput {
   reason ?: string;
 }
 
+export type TvendorRequestStatus = 'accept' | 'reject';
+
 export interface GetCategoriesFilterInput extends Omit<PaginationInput,'createdAt'> {
   status ?: boolean
 }

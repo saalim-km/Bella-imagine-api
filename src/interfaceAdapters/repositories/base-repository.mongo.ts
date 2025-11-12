@@ -14,7 +14,7 @@ export class BaseRepository<T> implements IBaseRepository<T> {
     async findById(id: Types.ObjectId , populate : string[] = []): Promise<T | null> {
         const query = this.model.findById(id);
         populate.forEach((path)=> query.populate({path : path}))
-        return await query.exec()
+        return await query.exec();
     }
 
     async count(filter: FilterQuery<T>): Promise<number> {
